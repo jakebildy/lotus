@@ -63,7 +63,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
               onTap: (() {
                 HapticFeedback.heavyImpact();
                 AudioPlayer().play(AssetSource('sounds/old-gong.m4a'));
-                Get.to(CountdownPage(time: _duration), transition: Transition.circularReveal);
+                Get.to(CountdownPage(time: _duration), transition: Transition.circularReveal, duration: Duration(seconds: 1));
               }),
               child: Hero(
                 tag: "PLAY_BUTTON",

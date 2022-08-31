@@ -108,15 +108,15 @@ class _CountdownPageState extends State<CountdownPage> with TickerProviderStateM
                           height: MediaQuery.of(context).size.height / 2,
                           ringColor: Colors.black12,
                           ringGradient: null,
-                          fillColor: Color.fromARGB(255, 2, 29, 52),
+                          fillColor: Colors.white,
                           fillGradient: null,
-                          backgroundColor: Colors.transparent,
+                          backgroundColor: Colors.black38,
                           backgroundGradient: null,
                           strokeWidth: 10.0,
                           strokeCap: StrokeCap.round,
                           textStyle: const TextStyle(
                             fontSize: 50.0,
-                            color: Color.fromARGB(255, 2, 29, 52),
+                            color: Colors.white,
                             fontWeight: FontWeight.bold,
     
                           ),
