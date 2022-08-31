@@ -40,6 +40,7 @@ dependencies:
   audioplayers: ^1.0.1
   get_storage: ^2.0.3
   animated_counter: ^1.0.0
+  wave: ^0.2.2
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +78,8 @@ flutter:
     - assets/sounds/old-gong.m4a
     - assets/lotus.png
     - assets/bonsai_circle.png
+    - assets/water_vibes.webp
+    - assets/lotus2.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

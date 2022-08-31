@@ -22,6 +22,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     // backgroundColor: Color(0xff87CEEB),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +63,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
               onTap: (() {
                 HapticFeedback.heavyImpact();
                 AudioPlayer().play(AssetSource('sounds/old-gong.m4a'));
-                Get.to(CountdownPage(time: _duration), transition: Transition.downToUp);
+                Get.to(CountdownPage(time: _duration), transition: Transition.circularReveal);
               }),
               child: Hero(
                 tag: "PLAY_BUTTON",
