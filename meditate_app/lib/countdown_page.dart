@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/streak_count_page.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key, required this.time}) : super(key: key);
@@ -120,7 +121,7 @@ class _CountdownPageState extends State<CountdownPage> with TickerProviderStateM
                       }
                     }
                     
-                    Navigator.of(context).pop();
+                    Get.to(StreakCountPage());
                   },
 
                   // This Callback will execute when the Countdown Changes.

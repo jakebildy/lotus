@@ -33,7 +33,7 @@ class SaveController extends GetxController {
       print("last_meditated hasn't been set yet.");
       return 0;
     } else {
-      int numDays = DateTime.parse(getValue("last_meditated")).difference(date).inDays;
+      int numDays = DateTime.parse(getValue("last_meditated")).difference(date).inDays.abs();
 
       if (numDays <= 1) {
         print("NumDays < 1");
@@ -45,7 +45,7 @@ class SaveController extends GetxController {
           return int.parse(getValue("streak"));
         }
       } else {
-        saveValue("streak", '0');
+         updateStreak(0);
         return 0;
       }
     }

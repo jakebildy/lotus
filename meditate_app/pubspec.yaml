@@ -39,6 +39,7 @@ dependencies:
   get: ^4.6.5
   audioplayers: ^1.0.1
   get_storage: ^2.0.3
+  animated_counter: ^1.0.0
 
 dev_dependencies:
   flutter_test:
