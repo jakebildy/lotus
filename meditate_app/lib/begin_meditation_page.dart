@@ -30,15 +30,15 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
             Stack(
               alignment: Alignment.center,
               children: [
-                SizedBox(height: 200),
+                SizedBox(height: 00),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,0,0,285),
+                  padding: const EdgeInsets.fromLTRB(0,0,0,60),
                   child: Container(
-                    height: 150,
-                    child: Image.asset("assets/bonsai_circle.png")),
+                    height: 330,
+                    child: Image.asset("assets/turtle_timer.png")),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,100,0,0),
+                  padding: const EdgeInsets.fromLTRB(0,0,0,0),
                   child: Container(
                     height: 400,
                     width: 240,

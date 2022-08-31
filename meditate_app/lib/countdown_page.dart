@@ -148,9 +148,7 @@ class _CountdownPageState extends State<CountdownPage> with TickerProviderStateM
                             //Save the streak day
                             DateTime now = new DateTime.now();
                             DateTime date = new DateTime(now.year, now.month, now.day);
-                            print("saving last_meditated to ${date.toIso8601String()}");
-                            saveController.saveValue("last_meditated", date.toIso8601String());
-
+ 
                             String streakValue = saveController.getValue("streak");
                             if (streakValue == "") {
                               print("Streak value is empty.");
@@ -167,6 +165,9 @@ class _CountdownPageState extends State<CountdownPage> with TickerProviderStateM
                                 print("You already meditated today. Not updating streak!");
                               }
                             }
+
+                            print("saving last_meditated to ${date.toIso8601String()}");
+                            saveController.saveValue("last_meditated", date.toIso8601String());
                             
                             Get.to(StreakCountPage());
                           },

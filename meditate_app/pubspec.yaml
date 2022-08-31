@@ -80,6 +80,7 @@ flutter:
     - assets/bonsai_circle.png
     - assets/water_vibes.webp
     - assets/lotus2.png
+    - assets/turtle_timer.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
