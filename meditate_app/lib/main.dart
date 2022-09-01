@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Meditate',
+      darkTheme: ThemeData.dark(),
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),

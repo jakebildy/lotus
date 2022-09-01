@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:duration_picker/duration_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -18,9 +19,10 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
   
   Duration _duration = const Duration(hours: 0, minutes: 5);
   Duration NO_TIME = const Duration(hours: 0, minutes: 0);
-
+      
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
      // backgroundColor: Color(0xff87CEEB),
       body: Center(

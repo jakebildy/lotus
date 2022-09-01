@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
@@ -43,6 +44,9 @@ class _CountdownPageState extends State<CountdownPage> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+         var brightness = SchedulerBinding.instance!.window.platformBrightness;
+      bool isDarkMode = brightness == Brightness.dark;
+      
     return Stack(
               children: [
           Container(
@@ -57,7 +61,7 @@ class _CountdownPageState extends State<CountdownPage> with TickerProviderStateM
 ),
 
         Scaffold(
-         backgroundColor: Color(0xff87CEEB),
+         backgroundColor: isDarkMode ? Colors.black : Color(0xff87CEEB),
           body: Stack(
             children: [
                 // Padding(

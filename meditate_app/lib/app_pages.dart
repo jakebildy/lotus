@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -22,13 +23,18 @@ class _AppPagesState extends State<AppPages> {
   Widget build(BuildContext context) {
 
     SaveController saveController = Get.find();
-    
+     var brightness = SchedulerBinding.instance!.window.platformBrightness;
+      bool isDarkMode = brightness == Brightness.dark;
+ 
     return Obx(
       () => Scaffold(
           appBar: AppBar(
           elevation: 1,
-          backgroundColor: Colors.white,
-          actions: [
+          backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          centerTitle: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(children: [
@@ -55,7 +61,7 @@ class _AppPagesState extends State<AppPages> {
                ],)
               ),
             
-          ],
+          ],)
         ),
         body: _page == 0 ? const BeginMeditationPage() : const ShopPage(),
         bottomNavigationBar: BottomNavigationBar(
