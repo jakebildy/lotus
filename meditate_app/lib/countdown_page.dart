@@ -158,7 +158,7 @@ class _CountdownPageState extends State<CountdownPage> with TickerProviderStateM
                               print("Streak value is empty.");
                               saveController.updateStreak(1);
                             } else {
-                              int numDays = DateTime.parse(saveController.getValue("last_meditated")).difference(date).inDays;
+                              int numDays = DateTime.parse(saveController.getValue("last_meditated")).difference(date).inDays.abs();
                               if (numDays == 1) {
                                 saveController.updateStreak(int.parse(streakValue) + 1);
                                  print("Streak value is updated to ${int.parse(streakValue) + 1}.");
