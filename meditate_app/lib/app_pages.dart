@@ -30,7 +30,7 @@ class _AppPagesState extends State<AppPages> {
       () => Scaffold(
           appBar: AppBar(
           elevation: 1,
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          backgroundColor: isDarkMode ? Colors.grey[850] : Colors.white,
           centerTitle: true,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,8 +40,9 @@ class _AppPagesState extends State<AppPages> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(children: [
-                const Text("🔥",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
+                Container(
+                  height: 27,
+                  child: Image.asset("assets/streak_icon.png")),
                 const SizedBox(width: 3,),
                 Text(saveController.streak.toString(),
                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color:  saveController.streak.value == 0 ? Colors.grey : isDarkMode ? Colors.white : Colors.black),),
@@ -62,8 +63,9 @@ class _AppPagesState extends State<AppPages> {
               Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(children: [
-                const Text("💎",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.grey),),
+                Container(
+                  height: 27,
+                  child: Image.asset("assets/gem_icon.png")),
                 const SizedBox(width: 3,),
                 const Text("0",
                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color:Colors.grey),),

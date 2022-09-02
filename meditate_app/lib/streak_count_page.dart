@@ -16,17 +16,13 @@ class StreakCountPage extends StatefulWidget {
 class _StreakCountPageState extends State<StreakCountPage> with TickerProviderStateMixin  {
 
   late int streak;
-  late CreatureCounter cre;
-
+  double opacity = 0;
   @override
   void initState() {
     super.initState();
     SaveController saveController = Get.find();
     streak = saveController.streak.value - 1 < 0 ? 0 : saveController.streak.value - 1;
-     cre = CreatureCounter(
-        vsync: this,
-        initialCounter: streak,
-        initialColors: [Colors.deepOrange, Colors.deepOrangeAccent, Colors.pink, Colors.purple, ]);
+   
     increaseCount();
   }
 
@@ -34,24 +30,28 @@ class _StreakCountPageState extends State<StreakCountPage> with TickerProviderSt
     await Future.delayed(Duration(seconds: 1));
     setState(() {
        streak+=1;
-       cre.incrementCounter();
+       opacity = 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+     // backgroundColor: Colors.white,
       body: Container(
         
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: 300,
-                width: 409,
-                child: cre.build(context)),
+            AnimatedOpacity(
+   	          duration: const Duration(milliseconds: 800),
+              opacity: opacity,
+                child: Container(
+                  height: 300,
+                  width: 409,
+                  child: Image.asset("assets/fire_joypixel.gif")),
+              ),
 
                 Container(
                 

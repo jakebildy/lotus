@@ -74,6 +74,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/streak_icon.png
+    - assets/gem_icon.png
     - assets/enlightenment_cheatsheet.jpeg
     - assets/sounds/old-gong.m4a
     - assets/lotus.png
@@ -81,6 +82,7 @@ flutter:
     - assets/water_vibes.webp
     - assets/lotus2.png
     - assets/turtle_timer.png
+    - assets/fire_joypixel.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

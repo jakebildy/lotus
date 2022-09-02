@@ -10,6 +10,7 @@ class SaveController extends GetxController {
 
   SaveController() {
     streak.value = loadStreak();
+    totalMinutes.value = int.parse(getValue('total_minutes'));
     update();
     print("Streak is set to ${streak.value}");
   }
