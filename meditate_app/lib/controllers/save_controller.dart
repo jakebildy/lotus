@@ -6,6 +6,7 @@ class SaveController extends GetxController {
   final storage = GetStorage();
 
   RxInt streak = 0.obs;
+  RxInt totalMinutes = 0.obs;
 
   SaveController() {
     streak.value = loadStreak();
@@ -54,6 +55,12 @@ class SaveController extends GetxController {
   void updateStreak(int newValue) {
     saveValue("streak", newValue.toString());
     streak.value = newValue;
+    update();
+  }
+
+  void updateTotalAmount(int newValue) {
+    saveValue("total_minutes", newValue.toString());
+    totalMinutes.value = newValue;
     update();
   }
 }

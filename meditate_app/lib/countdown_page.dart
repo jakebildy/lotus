@@ -170,6 +170,14 @@ class _CountdownPageState extends State<CountdownPage> with TickerProviderStateM
                               }
                             }
 
+                            //update total meditation amount
+                            String totalAmount = saveController.getValue("total_minutes");
+                            if (totalAmount == "") { 
+                              saveController.updateTotalAmount(widget.time.inMinutes);
+                            } else {
+                               saveController.updateTotalAmount(int.parse(totalAmount) + widget.time.inMinutes);
+                            }
+
                             print("saving last_meditated to ${date.toIso8601String()}");
                             saveController.saveValue("last_meditated", date.toIso8601String());
                             

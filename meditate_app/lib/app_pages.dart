@@ -35,6 +35,8 @@ class _AppPagesState extends State<AppPages> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+            
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(children: [
@@ -42,11 +44,20 @@ class _AppPagesState extends State<AppPages> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),),
                 const SizedBox(width: 3,),
                 Text(saveController.streak.toString(),
-               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color:  saveController.streak.value == 0 ? Colors.grey :Colors.black),),
+               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color:  saveController.streak.value == 0 ? Colors.grey : isDarkMode ? Colors.white : Colors.black),),
                 const SizedBox(width: 10,),
                
                ],)
               ),
+
+                Column(
+                  children: [
+                     Text("You've meditated for",
+                    style: TextStyle( fontSize: 13,  color: isDarkMode ? Colors.white70 : Colors.grey),),
+                    Text("${saveController.totalMinutes} min",
+                    style: TextStyle( fontSize: 20,  color: isDarkMode ? Colors.white : Colors.black),),
+                  ],
+                ),
     
               Padding(
               padding: const EdgeInsets.all(8.0),
