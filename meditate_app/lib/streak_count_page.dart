@@ -5,9 +5,13 @@ import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:animated_counter/animated_counter.dart';
+import 'package:meditate_app/new_gems_page.dart';
 
 class StreakCountPage extends StatefulWidget {
-  const StreakCountPage({Key? key}) : super(key: key);
+
+  final int gemsAmount;
+
+  const StreakCountPage({Key? key, required this.gemsAmount}) : super(key: key);
 
   @override
   State<StreakCountPage> createState() => _StreakCountPageState();
@@ -44,6 +48,7 @@ class _StreakCountPageState extends State<StreakCountPage> with TickerProviderSt
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              
             AnimatedOpacity(
    	          duration: const Duration(milliseconds: 800),
               opacity: opacity,
@@ -76,11 +81,11 @@ class _StreakCountPageState extends State<StreakCountPage> with TickerProviderSt
                 
                 GestureDetector(
                   onTap: () {
-                   Get.offAll(AppPages());
+                   Get.to(NewGemsPage(gemsAmount: widget.gemsAmount,));
                   },
                   child: Container(
                     
-                    color: Colors.blue,
+                    color: Color.fromARGB(255, 16, 77, 127),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
                     child: Text("Continue", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),),

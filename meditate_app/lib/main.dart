@@ -27,9 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Meditate',
       darkTheme: ThemeData.dark(),
-      theme: ThemeData(
-        primarySwatch: Colors.brown,
-      ),
+      theme: ThemeData.dark(),
       home: const AppPages(),
     );
   }

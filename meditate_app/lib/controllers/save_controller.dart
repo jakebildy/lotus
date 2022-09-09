@@ -7,10 +7,24 @@ class SaveController extends GetxController {
 
   RxInt streak = 0.obs;
   RxInt totalMinutes = 0.obs;
+  RxInt gems = 0.obs;
+  RxBool hasDoneStreakToday = false.obs;
+
+  RxBool ambienceOn = true.obs;
+
+  void updateAmbience() {
+    ambienceOn.value = !ambienceOn.value;
+    update();
+  }
 
   SaveController() {
     streak.value = loadStreak();
-    totalMinutes.value = int.parse(getValue('total_minutes'));
+    if (getValue('total_minutes') != "") {
+      totalMinutes.value = int.parse(getValue('total_minutes'));
+    }
+    if (getValue('gems') != "") {
+      gems.value = int.parse(getValue('gems'));
+    }
     update();
     print("Streak is set to ${streak.value}");
   }
@@ -38,6 +52,10 @@ class SaveController extends GetxController {
       int numDays = DateTime.parse(getValue("last_meditated")).difference(date).inDays.abs();
 
       if (numDays <= 1) {
+        if (numDays < 1) {
+          hasDoneStreakToday.value = true;
+          update();
+        }
         print("NumDays < 1");
         if (getValue("streak") == "") {
           print("Streak hasn't been saved yet!!");
@@ -54,6 +72,7 @@ class SaveController extends GetxController {
   }
 
   void updateStreak(int newValue) {
+    hasDoneStreakToday.value = true;
     saveValue("streak", newValue.toString());
     streak.value = newValue;
     update();
@@ -62,6 +81,12 @@ class SaveController extends GetxController {
   void updateTotalAmount(int newValue) {
     saveValue("total_minutes", newValue.toString());
     totalMinutes.value = newValue;
+    update();
+  }
+
+    void updateGems(int newValue) {
+    saveValue("gems", newValue.toString());
+    gems.value = newValue;
     update();
   }
 }
