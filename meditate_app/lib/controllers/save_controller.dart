@@ -12,9 +12,19 @@ class SaveController extends GetxController {
 
   RxBool ambienceOn = true.obs;
 
+  RxList lastSevenDays = new RxList();
+
   void updateAmbience() {
     ambienceOn.value = !ambienceOn.value;
     update();
+  }
+
+  double streakAverage() {
+    double sum = 0;
+    for (double i in lastSevenDays) {
+      sum += i;
+    }
+    return sum/7;
   }
 
   SaveController() {
@@ -22,6 +32,19 @@ class SaveController extends GetxController {
     if (getValue('total_minutes') != "") {
       totalMinutes.value = int.parse(getValue('total_minutes'));
     }
+
+    DateTime today = DateTime.now();
+    for (int i = 0; i < 7; i++) {
+       if (getValue('meditation-${today.day}-${today.month}-${today.year}') != "") {
+         lastSevenDays.add(double.parse(getValue('meditation-${today.day}-${today.month}-${today.year}')));
+         print("VALUE");
+         print(getValue('meditation-${today.day}-${today.month}-${today.year}'));
+        } else {
+          lastSevenDays.add(0.0);
+        }
+        today = today.subtract(Duration(days: 1));
+    }
+
     if (getValue('gems') != "") {
       gems.value = int.parse(getValue('gems'));
     }
@@ -78,9 +101,20 @@ class SaveController extends GetxController {
     update();
   }
 
-  void updateTotalAmount(int newValue) {
+  void updateTotalAmount(int newValue, int amountNew) {
     saveValue("total_minutes", newValue.toString());
     totalMinutes.value = newValue;
+
+    DateTime today = DateTime.now();
+     if (getValue('meditation-${today.day}-${today.month}-${today.year}') == "") {
+        saveValue('meditation-${today.day}-${today.month}-${today.year}', amountNew.toString());
+     } else {
+       saveValue('meditation-${today.day}-${today.month}-${today.year}', 
+          (double.parse(getValue('meditation-${today.day}-${today.month}-${today.year}')) + amountNew).toString());
+     }
+
+    lastSevenDays[0] += amountNew;
+
     update();
   }
 

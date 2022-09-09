@@ -47,9 +47,16 @@ class _AppPagesState extends State<AppPages> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(children: [
                   Container(
-                    height: 27,
+                  height: 27,
                     child: saveController.hasDoneStreakToday.value
-                     ? Image.asset("assets/streak_icon.png") : Image.asset("assets/streak_icon_grey.png")),
+                     ? saveController.streakAverage() < 20 ? 
+                          Image.asset("assets/streak_icon.png") :
+                        saveController.streakAverage() < 40 ? 
+                          Image.asset("assets/streak_icon_yellow.png") :
+                        saveController.streakAverage() < 60 ? 
+                          Image.asset("assets/streak_icon_blue.png") :
+                        Image.asset("assets/streak_icon_rainbow.png") 
+                          : Image.asset("assets/streak_icon_grey.png")),
                   const SizedBox(width: 3,),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0,4.0,0,0),

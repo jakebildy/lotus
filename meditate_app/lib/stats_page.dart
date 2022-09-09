@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/streak_count_page.dart';
 
@@ -40,7 +41,7 @@ class _StatsPageState extends State<StatsPage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 150,
+              height: 270,
               decoration: BoxDecoration(
                       color: isDarkMode ? Colors.black12 : Colors.white,
                       border: Border.all(
@@ -51,7 +52,9 @@ class _StatsPageState extends State<StatsPage> {
                       ),
               child: Column(children: [
                 SizedBox(height: 10,),
-                Text("Last Week", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                Text("This Week", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+                SizedBox(height: 20,),
+                StreakChart()
               ],)
             ),
         ),
@@ -77,7 +80,7 @@ class _StatsPageState extends State<StatsPage> {
                    padding: const EdgeInsets.all(15.0),
                    child: Container(
                      width: 60,
-                     child: Image.asset("assets/streak_icon.png")),
+                     child: Image.asset("assets/streak_icon_blue.png")),
                  ),
                  SizedBox(width: 10,),
                  Padding(
@@ -97,9 +100,9 @@ class _StatsPageState extends State<StatsPage> {
                      SizedBox(height: 10,),
                      Text("Yellow: 20-40 Minutes/Day", style: TextStyle(color: Colors.yellow)),
                      SizedBox(height: 10,),
-                     Text("White: 40-60 Minutes/Day", style: TextStyle(color: Colors.white)),
+                     Text("Blue: 40-60 Minutes/Day", style: TextStyle(color: Colors.blue)),
                      SizedBox(height: 10,),
-                     Text("Blue: 60+ Minutes/Day", style: TextStyle(color: Colors.blue)),
+                     Text("Rainbow: 60+ Minutes/Day", style: TextStyle(color: Colors.pink)),
                    ],),
                  )
                  ],
