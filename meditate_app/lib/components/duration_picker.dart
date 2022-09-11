@@ -71,8 +71,11 @@ class _DialPainter extends CustomPainter {
     }
 
     // Draw the inner background circle
-    canvas.drawCircle(centerPoint, radius * 0.88,
-        Paint()..color = Color(0xff4E3524),);
+    canvas.drawCircle(
+      centerPoint,
+      radius * 0.88,
+      Paint()..color = Colors.grey[850]!,
+    );
 
     // Get the offset point for an angle value of theta, and a distance of _radius
     Offset getOffsetForTheta(double theta, double _radius) {
@@ -84,7 +87,6 @@ class _DialPainter extends CustomPainter {
     final handlePaint = Paint()..color = accentColor;
     final handlePoint = getOffsetForTheta(theta, radius - 10.0);
     canvas.drawCircle(handlePoint, 16.0, handlePaint);
-
 
     // Get the appropriate base unit string
     String getBaseUnitString() {
@@ -124,10 +126,8 @@ class _DialPainter extends CustomPainter {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: '$secondaryUnits$baseUnits',
-            style: Theme.of(context)
-                .textTheme
-                .headline2!
-                .copyWith(fontSize: size.shortestSide * 0.15, color: Colors.white)),
+            style: Theme.of(context).textTheme.headline2!.copyWith(
+                fontSize: size.shortestSide * 0.15, color: Colors.white)),
         textDirection: TextDirection.ltr)
       ..layout();
     var middleForValueText = Offset(
@@ -563,7 +563,9 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
     final labels = <TextPainter>[];
     for (var duration in baseUnitMarkerValues) {
       var painter = TextPainter(
-        text: TextSpan(style: TextStyle(color: Colors.white), text: _durationToBaseUnitString(duration)),
+        text: TextSpan(
+            style: TextStyle(color: Colors.white),
+            text: _durationToBaseUnitString(duration)),
         textDirection: TextDirection.ltr,
       )..layout();
       labels.add(painter);
@@ -605,7 +607,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
             selectedValue: selectedDialValue,
             labels: _buildBaseUnitLabels(theme.textTheme),
             backgroundColor: backgroundColor,
-            accentColor: Colors.brown,
+            accentColor: Colors.grey[850]!,
             theta: _theta.value,
             textDirection: Directionality.of(context),
           ),

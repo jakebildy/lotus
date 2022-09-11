@@ -3,8 +3,8 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meditate_app/app_pages.dart';
-import 'package:meditate_app/begin_meditation_page.dart';
-import 'package:meditate_app/countdown_page.dart';
+import 'package:meditate_app/pages/begin_meditation_page.dart';
+import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 
 Future<void> main() async {
@@ -32,4 +32,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

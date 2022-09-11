@@ -8,14 +8,30 @@ class SaveController extends GetxController {
   RxInt streak = 0.obs;
   RxInt totalMinutes = 0.obs;
   RxInt gems = 0.obs;
-  RxBool hasDoneStreakToday = false.obs;
 
-  RxBool ambienceOn = true.obs;
+  RxInt eggs = 0.obs;
+  RxInt totalEggs = 0.obs;
+
+  RxDouble hatchProgressEggOne = 0.0.obs;
+
+  RxBool hasDoneStreakToday = false.obs;
 
   RxList lastSevenDays = new RxList();
 
+  //Saved Settings
+  RxInt defaultMeditationTime = 5.obs;
+  RxBool ambienceOn = true.obs;
+
   void updateAmbience() {
     ambienceOn.value = !ambienceOn.value;
+    saveValue("ambience_on", ambienceOn.value.toString());
+    update();
+  }
+
+  void updateDefaultMeditationTime(int newVal) {
+    defaultMeditationTime.value = newVal;
+    saveValue(
+        "default_meditation_time", defaultMeditationTime.value.toString());
     update();
   }
 
@@ -24,7 +40,19 @@ class SaveController extends GetxController {
     for (double i in lastSevenDays) {
       sum += i;
     }
-    return sum/7;
+    return sum / 7;
+  }
+
+  String streakIconURL() {
+    return hasDoneStreakToday.value
+        ? streakAverage() < 20
+            ? "assets/streak_icon.png"
+            : streakAverage() < 40
+                ? "assets/streak_icon_yellow.png"
+                : streakAverage() < 60
+                    ? "assets/streak_icon_blue.png"
+                    : "assets/streak_icon_rainbow.png"
+        : "assets/streak_icon_grey.png";
   }
 
   SaveController() {
@@ -35,19 +63,38 @@ class SaveController extends GetxController {
 
     DateTime today = DateTime.now();
     for (int i = 0; i < 7; i++) {
-       if (getValue('meditation-${today.day}-${today.month}-${today.year}') != "") {
-         lastSevenDays.add(double.parse(getValue('meditation-${today.day}-${today.month}-${today.year}')));
-         print("VALUE");
-         print(getValue('meditation-${today.day}-${today.month}-${today.year}'));
-        } else {
-          lastSevenDays.add(0.0);
-        }
-        today = today.subtract(Duration(days: 1));
+      if (getValue('meditation-${today.day}-${today.month}-${today.year}') !=
+          "") {
+        lastSevenDays.add(double.parse(
+            getValue('meditation-${today.day}-${today.month}-${today.year}')));
+        print("VALUE");
+        print(getValue('meditation-${today.day}-${today.month}-${today.year}'));
+      } else {
+        lastSevenDays.add(0.0);
+      }
+      today = today.subtract(Duration(days: 1));
     }
 
     if (getValue('gems') != "") {
       gems.value = int.parse(getValue('gems'));
     }
+
+    if (getValue('eggs') != "") {
+      eggs.value = int.parse(getValue('eggs'));
+    }
+    if (getValue('total_eggs') != "") {
+      totalEggs.value = int.parse(getValue('total_eggs'));
+    }
+
+    if (getValue('ambience_on') != "") {
+      ambienceOn.value = getValue('ambience_on').toLowerCase() == 'true';
+    }
+
+    if (getValue('default_meditation_time') != "") {
+      defaultMeditationTime.value =
+          int.parse(getValue('default_meditation_time'));
+    }
+
     update();
     print("Streak is set to ${streak.value}");
   }
@@ -66,13 +113,16 @@ class SaveController extends GetxController {
 
   int loadStreak() {
     print("Loading streak!");
-       DateTime now = new DateTime.now();
-      DateTime date = new DateTime(now.year, now.month, now.day);
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
     if (getValue("last_meditated") == "") {
       print("last_meditated hasn't been set yet.");
       return 0;
     } else {
-      int numDays = DateTime.parse(getValue("last_meditated")).difference(date).inDays.abs();
+      int numDays = DateTime.parse(getValue("last_meditated"))
+          .difference(date)
+          .inDays
+          .abs();
 
       if (numDays <= 1) {
         if (numDays < 1) {
@@ -88,7 +138,7 @@ class SaveController extends GetxController {
           return int.parse(getValue("streak"));
         }
       } else {
-         updateStreak(0);
+        updateStreak(0);
         return 0;
       }
     }
@@ -106,21 +156,39 @@ class SaveController extends GetxController {
     totalMinutes.value = newValue;
 
     DateTime today = DateTime.now();
-     if (getValue('meditation-${today.day}-${today.month}-${today.year}') == "") {
-        saveValue('meditation-${today.day}-${today.month}-${today.year}', amountNew.toString());
-     } else {
-       saveValue('meditation-${today.day}-${today.month}-${today.year}', 
-          (double.parse(getValue('meditation-${today.day}-${today.month}-${today.year}')) + amountNew).toString());
-     }
+    if (getValue('meditation-${today.day}-${today.month}-${today.year}') ==
+        "") {
+      saveValue('meditation-${today.day}-${today.month}-${today.year}',
+          amountNew.toString());
+    } else {
+      saveValue(
+          'meditation-${today.day}-${today.month}-${today.year}',
+          (double.parse(getValue(
+                      'meditation-${today.day}-${today.month}-${today.year}')) +
+                  amountNew)
+              .toString());
+    }
 
     lastSevenDays[0] += amountNew;
 
     update();
   }
 
-    void updateGems(int newValue) {
+  void updateGems(int newValue) {
     saveValue("gems", newValue.toString());
     gems.value = newValue;
+    update();
+  }
+
+  void updateEggs(int newValue) {
+    saveValue("eggs", newValue.toString());
+    eggs.value = newValue;
+    update();
+  }
+
+  void updateTotalEggs(int newValue) {
+    saveValue("total_eggs", newValue.toString());
+    totalEggs.value = newValue;
     update();
   }
 }

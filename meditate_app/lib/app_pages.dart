@@ -3,12 +3,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/begin_meditation_page.dart';
+import 'package:meditate_app/pages/begin_meditation_page.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/stats_page.dart';
-import 'package:meditate_app/turtles_page.dart';
+import 'package:meditate_app/pages/stats_page.dart';
+import 'package:meditate_app/pages/turtles_page.dart';
 
-import 'shop_page.dart';
+import 'pages/shop_page.dart';
 
 class AppPages extends StatefulWidget {
   const AppPages({Key? key}) : super(key: key);
@@ -18,56 +18,63 @@ class AppPages extends StatefulWidget {
 }
 
 class _AppPagesState extends State<AppPages> {
-
   int _page = 0;
 
   @override
   Widget build(BuildContext context) {
-
     SaveController saveController = Get.find();
-     var brightness = SchedulerBinding.instance!.window.platformBrightness;
-      bool isDarkMode = true;
- 
+    var brightness = SchedulerBinding.instance!.window.platformBrightness;
+    bool isDarkMode = true;
+
     return Obx(
       () => Scaffold(
-          appBar: AppBar(
-          elevation: 1,
-          backgroundColor: isDarkMode ? Colors.grey[850] : Colors.white,
-          centerTitle: true,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            
-
-           GestureDetector(
-                onTap: () {
-                  Get.to(StatsPage());
-                },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(children: [
-                  Container(
-                  height: 27,
-                    child: saveController.hasDoneStreakToday.value
-                     ? saveController.streakAverage() < 20 ? 
-                          Image.asset("assets/streak_icon.png") :
-                        saveController.streakAverage() < 40 ? 
-                          Image.asset("assets/streak_icon_yellow.png") :
-                        saveController.streakAverage() < 60 ? 
-                          Image.asset("assets/streak_icon_blue.png") :
-                        Image.asset("assets/streak_icon_rainbow.png") 
-                          : Image.asset("assets/streak_icon_grey.png")),
-                  const SizedBox(width: 3,),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0,4.0,0,0),
-                    child: Text(saveController.streak.toString(),
-                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color:  saveController.streak.value == 0 || !saveController.hasDoneStreakToday.value ? DateTime.now().hour > 21 && saveController.streak.value > 0? Colors.red : Colors.grey : isDarkMode ? Colors.white : Colors.black),),
-                  ),
-                  const SizedBox(width: 10,),
-                 
-                 ],)
+        appBar: AppBar(
+            elevation: 1,
+            backgroundColor: isDarkMode ? Colors.grey[850] : Colors.white,
+            centerTitle: true,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Get.to(StatsPage());
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Container(
+                              height: 27,
+                              child:
+                                  Image.asset(saveController.streakIconURL())),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
+                            child: Text(
+                              saveController.streak.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: saveController.streak.value == 0 ||
+                                          !saveController
+                                              .hasDoneStreakToday.value
+                                      ? DateTime.now().hour > 21 &&
+                                              saveController.streak.value > 0
+                                          ? Colors.red
+                                          : Colors.grey
+                                      : isDarkMode
+                                          ? Colors.white
+                                          : Colors.black),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      )),
                 ),
-            ),
 
                 // Column(
                 //   children: [
@@ -77,60 +84,86 @@ class _AppPagesState extends State<AppPages> {
                 //     style: TextStyle( fontSize: 20,  color: isDarkMode ? Colors.white : Colors.black),),
                 //   ],
                 // ),
-    
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _page = 1;
-                  });
-                },
-                child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(children: [
-                  Container(
-                    height: 27,
-                    child: Image.asset("assets/gem_icon.png")),
-                  const SizedBox(width: 3,),
-                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,4.0,0,0),
-                   child: Text(saveController.gems.value.toString(),
-                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: saveController.gems.value == 0 ? Colors.grey : isDarkMode ? Colors.white : Colors.black),),
-                 ),
-                  const SizedBox(width: 10,),
-                 
-                 ],)
+
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _page = 1;
+                    });
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Container(
+                              height: 27,
+                              child: Image.asset("assets/gem_icon.png")),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
+                            child: Text(
+                              saveController.gems.value.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: saveController.gems.value == 0
+                                      ? Colors.grey
+                                      : isDarkMode
+                                          ? Colors.white
+                                          : Colors.black),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      )),
                 ),
-              ),
-            
-          ],)
-        ),
-        body: _page == 0 ? const BeginMeditationPage() : _page == 1 ? const ShopPage() : const TurtlesPage(),
+              ],
+            )),
+        body: _page == 0
+            ? const BeginMeditationPage()
+            : _page == 1
+                ? const ShopPage()
+                : const TurtlesPage(),
         bottomNavigationBar: BottomNavigationBar(
-          onTap: ((value) => setState(() {
-            _page = value;
-          })),
-          currentIndex: _page,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: [
+            onTap: ((value) => setState(() {
+                  _page = value;
+                })),
+            currentIndex: _page,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            items: [
               BottomNavigationBarItem(
-                icon: _page == 0 ? Container(
-                  height: 30,
-                  child: Image.asset("assets/meditate_selected.png")) : Container(
-                    height: 30,
-                    child: Image.asset("assets/meditate_unselected.png")), 
-                label: "Home"),
-               BottomNavigationBarItem(icon: _page == 1 ? Container(
-                  height: 30,
-                  child: Image.asset("assets/store_selected.png")) : Container(
-                    height: 30,
-                    child: Image.asset("assets/store_unselected.png")), label: "Shop"),
-                 BottomNavigationBarItem(icon: _page == 2 ? Container(
-                  height: 30,
-                  child: Image.asset("assets/turtle_selected.png")) : Container(
-                    height: 30, 
-                    child: Image.asset("assets/turtle_unselected.png")), label: "Turtles"),
-        ]),
+                  icon: _page == 0
+                      ? Container(
+                          height: 30,
+                          child: Image.asset("assets/meditate_selected.png"))
+                      : Container(
+                          height: 30,
+                          child: Image.asset("assets/meditate_unselected.png")),
+                  label: "Home"),
+              BottomNavigationBarItem(
+                  icon: _page == 1
+                      ? Container(
+                          height: 30,
+                          child: Image.asset("assets/store_selected.png"))
+                      : Container(
+                          height: 30,
+                          child: Image.asset("assets/store_unselected.png")),
+                  label: "Shop"),
+              BottomNavigationBarItem(
+                  icon: _page == 2
+                      ? Container(
+                          height: 30,
+                          child: Image.asset("assets/turtle_selected.png"))
+                      : Container(
+                          height: 30,
+                          child: Image.asset("assets/turtle_unselected.png")),
+                  label: "Turtles"),
+            ]),
       ),
     );
   }

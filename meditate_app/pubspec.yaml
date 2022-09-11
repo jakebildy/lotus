@@ -43,6 +43,7 @@ dependencies:
   wave: ^0.2.2
   flutter_native_splash: ^2.2.8
   fl_chart: ^0.45.1
+  floating_bubbles: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -92,7 +93,6 @@ flutter:
     - assets/streak_icon.png
     - assets/gem_icon.png
     - assets/enlightenment_cheatsheet.jpeg
-    - assets/sounds/old-gong.m4a
     - assets/sounds/tibetan_chime.wav
     - assets/lotus.png
     - assets/bonsai_circle.png
@@ -119,6 +119,7 @@ flutter:
     - assets/streak_icon_yellow.png
     - assets/streak_icon_rainbow.png
     - assets/streak_icon_blue.png
+    - assets/egg.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
