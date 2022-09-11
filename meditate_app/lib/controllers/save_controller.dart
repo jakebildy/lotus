@@ -18,6 +18,8 @@ class SaveController extends GetxController {
 
   RxList lastSevenDays = new RxList();
 
+  RxInt streakFreezes = 0.obs;
+
   //Saved Settings
   RxInt defaultMeditationTime = 5.obs;
   RxBool ambienceOn = true.obs;
@@ -85,6 +87,9 @@ class SaveController extends GetxController {
     if (getValue('total_eggs') != "") {
       totalEggs.value = int.parse(getValue('total_eggs'));
     }
+    if (getValue('streak_freezes') != "") {
+      streakFreezes.value = int.parse(getValue('streak_freezes'));
+    }
 
     if (getValue('ambience_on') != "") {
       ambienceOn.value = getValue('ambience_on').toLowerCase() == 'true';
@@ -138,8 +143,27 @@ class SaveController extends GetxController {
           return int.parse(getValue("streak"));
         }
       } else {
-        updateStreak(0);
-        return 0;
+        //If you lose your streak
+
+        //Use a streak freeze if possible
+        if (streakFreezes.value > 0) {
+          //idk how this edge case could happen but maybe it could
+          if (getValue("streak") == "") {
+            print("Streak hasn't been saved yet!!");
+
+            return 0;
+          } else {
+            DateTime yesterday =
+                DateTime.now().subtract(const Duration(days: 1));
+            saveValue("last_meditated", yesterday.toIso8601String());
+            updateStreakFreezes(streakFreezes.value - 1);
+            print("Parsing streak...");
+            return int.parse(getValue("streak"));
+          }
+        } else {
+          updateStreak(0);
+          return 0;
+        }
       }
     }
   }
@@ -189,6 +213,12 @@ class SaveController extends GetxController {
   void updateTotalEggs(int newValue) {
     saveValue("total_eggs", newValue.toString());
     totalEggs.value = newValue;
+    update();
+  }
+
+  void updateStreakFreezes(int newValue) {
+    saveValue("streak_freezes", newValue.toString());
+    streakFreezes.value = newValue;
     update();
   }
 }
