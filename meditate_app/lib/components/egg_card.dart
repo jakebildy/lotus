@@ -2,51 +2,80 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:meditate_app/components/shake_widget.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 
 class EggCard extends StatelessWidget {
+  final int index;
 
-  EggCard({Key? key}) : super(key: key);
-  
+  EggCard({Key? key, required this.index}) : super(key: key);
+
   final shakeKey = GlobalKey<ShakeWidgetState>();
-  
+
   @override
   Widget build(BuildContext context) {
-    
+    SaveController save = Get.find();
+
     return GestureDetector(
       onTap: () {
         HapticFeedback.mediumImpact();
         shakeKey.currentState?.shake();
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          key: UniqueKey(),
-          backgroundColor: Colors.greenAccent,
-          content: Text("Meditate consecutive days to hatch this egg!")));
+            key: UniqueKey(),
+            backgroundColor: Colors.greenAccent,
+            content: Text("Meditate consecutive days to hatch this egg!")));
       },
       child: Card(
-        child:Padding(
+        child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-               ShakeWidget(
-              // 4. pass the GlobalKey as an argument
-              key: shakeKey,
-              // 5. configure the animation parameters
-              shakeCount: 3,
-              shakeOffset: 10,
-              shakeDuration: Duration(milliseconds: 500),
-              // 6. Add the child widget that will be animated
-              child: Image.asset("assets/egg.png", height: 60,)),
-              SizedBox(height: 10,),
-              Stack(
-                children: [
-                   Container(color: Colors.black26, width: MediaQuery.of(context).size.width/3-10, height: 4,),
-              //    Container(color: Colors.greenAccent, width: ( (MediaQuery.of(context).size.width/9-10)), height: 4,),
-                ],
+              ShakeWidget(
+                  // 4. pass the GlobalKey as an argument
+                  key: shakeKey,
+                  // 5. configure the animation parameters
+                  shakeCount: 3,
+                  shakeOffset: 10,
+                  shakeDuration: Duration(milliseconds: 500),
+                  // 6. Add the child widget that will be animated
+                  child: Image.asset(
+                    save.hatchProgressEggOne.value == 1 && index == 0
+                        ? "assets/egg_crack_1.png"
+                        : save.hatchProgressEggOne.value == 2 && index == 0
+                            ? "assets/egg_crack_2.png"
+                            : "assets/egg.png",
+                    height: 60,
+                  )),
+              SizedBox(
+                height: 10,
+              ),
+              Obx(
+                () => Stack(
+                  children: [
+                    Container(
+                      color: Colors.black26,
+                      width: MediaQuery.of(context).size.width / 3 - 10,
+                      height: 4,
+                    ),
+                    save.hatchProgressEggOne.value != 0 && index == 0
+                        ? Container(
+                            color: Colors.greenAccent,
+                            width: save.hatchProgressEggOne.value == 0
+                                ? 0
+                                : save.hatchProgressEggOne.value == 1
+                                    ? 30
+                                    : 60,
+                            height: 4,
+                          )
+                        : Container(),
+                  ],
+                ),
               )
             ],
           ),
-        )
+        ),
       ),
     );
   }

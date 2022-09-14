@@ -1,11 +1,11 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:floating_bubbles/floating_bubbles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/util/eggquation.dart';
@@ -60,7 +60,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
             ),
             Positioned.fill(
                 child: FloatingBubbles.alwaysRepeating(
-              noOfBubbles: 10,
+              noOfBubbles: 20,
               colorsOfBubbles: [
                 Colors.white.withAlpha(30),
               ],
@@ -146,7 +146,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 30.0),
                           child: _duration == NO_TIME ||
-                                  _duration < const Duration(minutes: 5)
+                                  _duration < const Duration(minutes: 1)
                               ? Container(
                                   height: 50,
                                   child: Padding(
@@ -163,6 +163,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                               : GestureDetector(
                                   onTap: (() {
                                     HapticFeedback.heavyImpact();
+
                                     if (_duration.inMinutes >= 5) {
                                       saveController
                                           .updateDefaultMeditationTime(

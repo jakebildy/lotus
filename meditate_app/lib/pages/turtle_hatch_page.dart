@@ -5,22 +5,43 @@ import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:animated_counter/animated_counter.dart';
-import 'package:meditate_app/pages/new_egg_page.dart';
+import 'package:meditate_app/pages/new_gems_page.dart';
+import 'package:meditate_app/util/turtles.dart';
 
-class NewGemsPage extends StatefulWidget {
+class TurtleHatchPage extends StatefulWidget {
   final int gemsAmount;
   final bool foundEgg;
+  final int turtleToHatch;
 
-  const NewGemsPage(
-      {Key? key, required this.gemsAmount, required this.foundEgg})
+  const TurtleHatchPage(
+      {Key? key,
+      required this.gemsAmount,
+      required this.foundEgg,
+      required this.turtleToHatch})
       : super(key: key);
 
   @override
-  State<NewGemsPage> createState() => _NewGemsPageState();
+  State<TurtleHatchPage> createState() => _TurtleHatchPageState();
 }
 
-class _NewGemsPageState extends State<NewGemsPage>
+class _TurtleHatchPageState extends State<TurtleHatchPage>
     with TickerProviderStateMixin {
+  double opacity = 0;
+  @override
+  void initState() {
+    super.initState();
+    SaveController saveController = Get.find();
+
+    increaseCount();
+  }
+
+  Future<void> increaseCount() async {
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      opacity = 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,31 +51,30 @@ class _NewGemsPageState extends State<NewGemsPage>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 800),
+              opacity: opacity,
               child: Container(
-                  height: 200, child: Image.asset("assets/gems_chest.png")),
-            ),
-            SizedBox(
-              height: 50,
+                  height: 300,
+                  width: 409,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset("assets/turtles/0.png"),
+                      Image.asset("assets/turtles/${widget.turtleToHatch}.png"),
+                    ],
+                  )),
             ),
             Container(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("+" + widget.gemsAmount.toString(),
-                  style: TextStyle(fontSize: 120, color: Colors.greenAccent)),
-            )),
-            Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  "You earned " + widget.gemsAmount.toString() + " gems!",
+              child: Text("Your egg hatched!",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             )),
             Container(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("The longer you meditate, the more gems you'll earn",
+              child: Text("You found a ${TURTLES[widget.turtleToHatch].name}.",
                   style: TextStyle(fontSize: 14)),
             )),
             SizedBox(
@@ -62,11 +82,10 @@ class _NewGemsPageState extends State<NewGemsPage>
             ),
             GestureDetector(
               onTap: () {
-                if (widget.foundEgg) {
-                  Get.offAll(NewEggPage());
-                } else {
-                  Get.offAll(AppPages());
-                }
+                Get.offAll(NewGemsPage(
+                  gemsAmount: widget.gemsAmount,
+                  foundEgg: widget.foundEgg,
+                ));
               },
               child: Container(
                   color: Color.fromARGB(255, 16, 77, 127),

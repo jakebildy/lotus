@@ -6,13 +6,20 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:animated_counter/animated_counter.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
+import 'package:meditate_app/pages/turtle_hatch_page.dart';
 
 class StreakCountPage extends StatefulWidget {
   final int gemsAmount;
   final bool foundEgg;
+  final bool alreadyMeditatedToday;
+  final int turtleToHatch;
 
   const StreakCountPage(
-      {Key? key, required this.gemsAmount, required this.foundEgg})
+      {Key? key,
+      required this.gemsAmount,
+      required this.foundEgg,
+      required this.alreadyMeditatedToday,
+      required this.turtleToHatch})
       : super(key: key);
 
   @override
@@ -27,9 +34,11 @@ class _StreakCountPageState extends State<StreakCountPage>
   void initState() {
     super.initState();
     SaveController saveController = Get.find();
-    streak = saveController.streak.value - 1 < 0
-        ? 0
-        : saveController.streak.value - 1;
+    streak = widget.alreadyMeditatedToday
+        ? saveController.streak.value
+        : saveController.streak.value - 1 < 0
+            ? 0
+            : saveController.streak.value - 1;
 
     increaseCount();
   }
@@ -37,7 +46,9 @@ class _StreakCountPageState extends State<StreakCountPage>
   Future<void> increaseCount() async {
     await Future.delayed(Duration(seconds: 1));
     setState(() {
-      streak += 1;
+      if (!widget.alreadyMeditatedToday) {
+        streak += 1;
+      }
       opacity = 1;
     });
   }
@@ -82,10 +93,18 @@ class _StreakCountPageState extends State<StreakCountPage>
             ),
             GestureDetector(
               onTap: () {
-                Get.to(NewGemsPage(
-                  gemsAmount: widget.gemsAmount,
-                  foundEgg: widget.foundEgg,
-                ));
+                if (widget.turtleToHatch >= 0) {
+                  Get.offAll(TurtleHatchPage(
+                    gemsAmount: widget.gemsAmount,
+                    foundEgg: widget.foundEgg,
+                    turtleToHatch: widget.turtleToHatch,
+                  ));
+                } else {
+                  Get.offAll(NewGemsPage(
+                    gemsAmount: widget.gemsAmount,
+                    foundEgg: widget.foundEgg,
+                  ));
+                }
               },
               child: Container(
                   color: Color.fromARGB(255, 16, 77, 127),

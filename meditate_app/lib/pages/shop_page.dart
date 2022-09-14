@@ -15,6 +15,8 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
+  final int STREAK_FREEZE_PRICE = 80;
+
   @override
   Widget build(BuildContext context) {
     var brightness = SchedulerBinding.instance.window.platformBrightness;
@@ -26,11 +28,11 @@ class _ShopPageState extends State<ShopPage> {
         children: [
           GestureDetector(
             onTap: () {
-              if (save.gems.value >= 70) {
+              if (save.gems.value >= STREAK_FREEZE_PRICE) {
                 if (save.streakFreezes < 2) {
                   print("Purchasing Streak Freeze!");
                   HapticFeedback.lightImpact();
-                  save.updateGems(save.gems.value - 70);
+                  save.updateGems(save.gems.value - STREAK_FREEZE_PRICE);
                   save.updateStreakFreezes(save.streakFreezes.value + 1);
                 } else {
                   ScaffoldMessenger.of(context).clearSnackBars();
@@ -103,7 +105,7 @@ class _ShopPageState extends State<ShopPage> {
                                 width: 5,
                               ),
                               Text(
-                                "70",
+                                "${STREAK_FREEZE_PRICE}",
                                 style: TextStyle(
                                     color: Colors.greenAccent,
                                     fontWeight: FontWeight.bold),

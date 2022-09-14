@@ -9,6 +9,7 @@ import 'package:meditate_app/components/turtle_card.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 class TurtlesPage extends StatefulWidget {
   const TurtlesPage({Key? key}) : super(key: key);
@@ -41,7 +42,8 @@ class _TurtlesPageState extends State<TurtlesPage> {
                         "Turtles",
                         style: TextStyle(fontSize: 18),
                       ),
-                      Text("0/100", style: TextStyle(fontSize: 12)),
+                      Text("0/${TURTLES.length}",
+                          style: TextStyle(fontSize: 12)),
                     ],
                   ),
                 ),
@@ -66,9 +68,13 @@ class _TurtlesPageState extends State<TurtlesPage> {
                   crossAxisCount: 3,
                   crossAxisSpacing: 4.0,
                   mainAxisSpacing: 8.0,
-                  children: List.generate(100, (index) {
+                  children: List.generate(TURTLES.length, (index) {
                     return Center(
-                      child: TurtleCard(unlocked: index < 5),
+                      child: Obx(
+                        () => TurtleCard(
+                            unlocked: saveController.unlockedTurtles[index] > 0,
+                            id: index),
+                      ),
                     );
                   })),
               saveController.eggs == 0
@@ -92,7 +98,9 @@ class _TurtlesPageState extends State<TurtlesPage> {
                       children:
                           List.generate(saveController.eggs.value, (index) {
                         return Center(
-                          child: EggCard(),
+                          child: EggCard(
+                            index: index,
+                          ),
                         );
                       })),
             ],

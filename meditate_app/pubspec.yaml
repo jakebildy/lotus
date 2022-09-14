@@ -120,6 +120,22 @@ flutter:
     - assets/streak_icon_rainbow.png
     - assets/streak_icon_blue.png
     - assets/egg.png
+    - assets/egg_crack_1.png
+    - assets/egg_crack_2.png
+    - assets/turtles/1.png
+    - assets/turtles/2.png
+    - assets/turtles/3.png
+    - assets/turtles/4.png
+    - assets/turtles/5.png
+    - assets/turtles/6.png
+    - assets/turtles/7.png
+    - assets/turtles/8.png
+    - assets/turtles/9.png
+    - assets/turtles/10.png
+    - assets/turtles/11.png
+    - assets/turtles/12.png
+    - assets/turtles/13.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

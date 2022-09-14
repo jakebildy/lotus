@@ -1,6 +1,7 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 class SaveController extends GetxController {
   final storage = GetStorage();
@@ -12,13 +13,15 @@ class SaveController extends GetxController {
   RxInt eggs = 0.obs;
   RxInt totalEggs = 0.obs;
 
-  RxDouble hatchProgressEggOne = 0.0.obs;
+  RxInt hatchProgressEggOne = 0.obs;
 
   RxBool hasDoneStreakToday = false.obs;
 
   RxList lastSevenDays = new RxList();
 
   RxInt streakFreezes = 0.obs;
+
+  RxList unlockedTurtles = RxList();
 
   //Saved Settings
   RxInt defaultMeditationTime = 5.obs;
@@ -57,8 +60,17 @@ class SaveController extends GetxController {
         : "assets/streak_icon_grey.png";
   }
 
+  Tier streakTier() {
+    return streakAverage() < 20
+        ? Tier.ORANGE
+        : streakAverage() < 40
+            ? Tier.YELLOW
+            : streakAverage() < 60
+                ? Tier.BLUE
+                : Tier.RAINBOW;
+  }
+
   SaveController() {
-    streak.value = loadStreak();
     if (getValue('total_minutes') != "") {
       totalMinutes.value = int.parse(getValue('total_minutes'));
     }
@@ -87,8 +99,19 @@ class SaveController extends GetxController {
     if (getValue('total_eggs') != "") {
       totalEggs.value = int.parse(getValue('total_eggs'));
     }
+    if (getValue('egg_progress_one') != "") {
+      hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
+    }
     if (getValue('streak_freezes') != "") {
       streakFreezes.value = int.parse(getValue('streak_freezes'));
+    }
+
+    for (int i = 0; i < TURTLES.length; i++) {
+      if (getValue('turtle-${i}') != "") {
+        unlockedTurtles.add(int.parse(getValue('turtle-${i}')));
+      } else {
+        unlockedTurtles.add(0);
+      }
     }
 
     if (getValue('ambience_on') != "") {
@@ -99,6 +122,8 @@ class SaveController extends GetxController {
       defaultMeditationTime.value =
           int.parse(getValue('default_meditation_time'));
     }
+
+    streak.value = loadStreak();
 
     update();
     print("Streak is set to ${streak.value}");
@@ -153,8 +178,8 @@ class SaveController extends GetxController {
 
             return 0;
           } else {
-            DateTime yesterday =
-                DateTime.now().subtract(const Duration(days: 1));
+            DateTime today = DateTime.now();
+            DateTime yesterday = today.subtract(const Duration(days: 1));
             saveValue("last_meditated", yesterday.toIso8601String());
             updateStreakFreezes(streakFreezes.value - 1);
             print("Parsing streak...");
@@ -213,6 +238,18 @@ class SaveController extends GetxController {
   void updateTotalEggs(int newValue) {
     saveValue("total_eggs", newValue.toString());
     totalEggs.value = newValue;
+    update();
+  }
+
+  void updateHatchProgress(int newValue) {
+    saveValue("egg_progress_one", newValue.toString());
+    hatchProgressEggOne.value = newValue;
+    update();
+  }
+
+  void addUnlockedTurtle(int i, int addAmount) {
+    saveValue("turtle-${i}", (unlockedTurtles[i] + addAmount).toString());
+    unlockedTurtles[i] += addAmount;
     update();
   }
 
