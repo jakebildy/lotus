@@ -154,8 +154,9 @@ class _CountdownPageState extends State<CountdownPage>
                   waveAmplitude: 0,
                 ),
 
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                ListView(
+                  physics: NeverScrollableScrollPhysics(),
+                  //mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Center(
                       child: Stack(
@@ -171,7 +172,7 @@ class _CountdownPageState extends State<CountdownPage>
                           meditationComplete
                               ? Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 560.0),
+                                      EdgeInsets.fromLTRB(0, 120, 0, 560.0),
                                   child: Container(
                                       child: Column(
                                     children: [
@@ -196,8 +197,13 @@ class _CountdownPageState extends State<CountdownPage>
                                   )),
                                 )
                               : Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 400),
+                                  padding: EdgeInsets.fromLTRB(
+                                      0,
+                                      0,
+                                      0,
+                                      MediaQuery.of(context).size.height < 680
+                                          ? 400
+                                          : 360),
                                   child: CircularCountDownTimer(
                                     // Countdown duration in Seconds.
                                     duration: widget.time.inSeconds,
@@ -298,8 +304,13 @@ class _CountdownPageState extends State<CountdownPage>
                                           ),
                                   ))
                               : Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 100),
+                                  padding: EdgeInsets.fromLTRB(
+                                      0,
+                                      0,
+                                      0,
+                                      MediaQuery.of(context).size.height < 680
+                                          ? 130
+                                          : 100),
                                   child: IconButton(
                                     iconSize: 50,
                                     onPressed: () {
@@ -343,8 +354,13 @@ class _CountdownPageState extends State<CountdownPage>
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                             child: isPaused
                                 ? Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0, 10, 0, 20.0),
+                                    padding: EdgeInsets.fromLTRB(
+                                        0,
+                                        10,
+                                        0,
+                                        MediaQuery.of(context).size.height < 680
+                                            ? 60
+                                            : 20.0),
                                     child: GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).pop();

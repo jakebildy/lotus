@@ -72,8 +72,9 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                   .circle, // circle is the default. No need to explicitly mention if its a circle.
             )),
             Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: ListView(
+                physics: NeverScrollableScrollPhysics(),
+                //mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Stack(
                     alignment: Alignment.center,
@@ -125,9 +126,11 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                     }),
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: 30,
-                        ),
+                        MediaQuery.of(context).size.height < 680
+                            ? Container()
+                            : SizedBox(
+                                height: 30,
+                              ),
                         Text(
                           saveController.ambienceOn.value
                               ? "Ambience: ON"
