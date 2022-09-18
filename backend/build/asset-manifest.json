@@ -1,0 +1,37 @@
+{
+  "files": {
+    "main.css": "/static/css/main.54caf272.chunk.css",
+    "main.js": "/static/js/main.b27d24b9.chunk.js",
+    "main.js.map": "/static/js/main.b27d24b9.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.5b9f1b41.js",
+    "runtime-main.js.map": "/static/js/runtime-main.5b9f1b41.js.map",
+    "static/js/2.dc100023.chunk.js": "/static/js/2.dc100023.chunk.js",
+    "static/js/2.dc100023.chunk.js.map": "/static/js/2.dc100023.chunk.js.map",
+    "static/js/3.dab6bb6b.chunk.js": "/static/js/3.dab6bb6b.chunk.js",
+    "static/js/3.dab6bb6b.chunk.js.map": "/static/js/3.dab6bb6b.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.54caf272.chunk.css.map": "/static/css/main.54caf272.chunk.css.map",
+    "static/js/2.dc100023.chunk.js.LICENSE.txt": "/static/js/2.dc100023.chunk.js.LICENSE.txt",
+    "static/media/AppDemo2.76400727.gif": "/static/media/AppDemo2.76400727.gif",
+    "static/media/BeCreative.f45b7326.jpg": "/static/media/BeCreative.f45b7326.jpg",
+    "static/media/BecomeAFashionInfluencer.05b59080.png": "/static/media/BecomeAFashionInfluencer.05b59080.png",
+    "static/media/EasyToUse.1a92765a.png": "/static/media/EasyToUse.1a92765a.png",
+    "static/media/FitsVideo2.36af2072.gif": "/static/media/FitsVideo2.36af2072.gif",
+    "static/media/HomePageBackground.10e1d2a7.jpg": "/static/media/HomePageBackground.10e1d2a7.jpg",
+    "static/media/IncreaseSales.c5ffc2e6.png": "/static/media/IncreaseSales.c5ffc2e6.png",
+    "static/media/ItsFree.7046daa9.png": "/static/media/ItsFree.7046daa9.png",
+    "static/media/ReceiveACommission.54329de3.png": "/static/media/ReceiveACommission.54329de3.png",
+    "static/media/StylistsBG.d2b92f0b.png": "/static/media/StylistsBG.d2b92f0b.png",
+    "static/media/App.css": "/static/media/Termina_Bold.a5fc8553.ttf",
+    "static/media/WhyCreateWithUs.3a87a0af.png": "/static/media/WhyCreateWithUs.3a87a0af.png",
+    "static/media/WhyWorkWithUs.59fd17f8.png": "/static/media/WhyWorkWithUs.59fd17f8.png",
+    "static/media/background1.390f0ad5.png": "/static/media/background1.390f0ad5.png",
+    "static/media/fits_bag_empty.2eb69c15.png": "/static/media/fits_bag_empty.2eb69c15.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5b9f1b41.js",
+    "static/js/2.dc100023.chunk.js",
+    "static/css/main.54caf272.chunk.css",
+    "static/js/main.b27d24b9.chunk.js"
+  ]
+}

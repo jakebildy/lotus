@@ -1,5 +1,8 @@
 import 'package:http/http.dart' as http;
+import 'package:meditate_app/api/analytics_api.dart';
 import 'package:meditate_app/api/auth_api.dart';
+import 'package:meditate_app/api/follow_api.dart';
+import 'package:meditate_app/api/search_api.dart';
 import 'package:meditate_app/api/user_api.dart';
 
 const String LOCAL_URL = "localhost:8000";
@@ -10,8 +13,11 @@ const bool TESTING = false;
 Map<String, String> _cookies = {};
 Map<String, String> get cookiesMap => _cookies;
 
-AuthApi auth = new AuthApi();
-UserApi user = new UserApi();
+AuthApi auth = AuthApi();
+UserApi user = UserApi();
+AnalyticsApi analytics = AnalyticsApi();
+FollowApi follow = FollowApi();
+SearchApi search = SearchApi();
 
 String get url => TESTING ? LOCAL_URL : REMOTE_URL;
 // String get socketUrl => TESTING ? LOCAL_URL : REMOTE_URL_SOCKET;

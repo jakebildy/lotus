@@ -1,0 +1,93 @@
+import 'package:get/get.dart';
+import 'package:meditate_app/models/follow.dart';
+import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/models/follow.dart';
+import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/models/user.dart';
+
+class FollowController extends GetxController {
+  RxList<User> stylistsFollowing = new RxList();
+  RxList<String> sellersFollowingIDs = new RxList();
+  RxList<String> stylistsFollowingIDs = new RxList();
+  //Note: for now, brands are unable to follow people,
+  //and thus all followers are also users. This may change in the future.
+  RxList<User> followers = new RxList();
+  RxList<Follow> following = new RxList();
+
+  FollowController() {
+    fetchFollows();
+  }
+
+  Future<List<Follow>> getStylistFollowers(User stylist) async {
+    List<Follow> _followers = new List.empty();
+    try {
+      _followers = await Api.follow.getStylistFollowers(stylist);
+    } catch (e) {
+      print(e);
+    }
+    return _followers;
+  }
+
+  Future<List<Follow>> getStylistFollowing(User stylist) async {
+    List<Follow> _followers = new List.empty();
+    try {
+      _followers = await Api.follow.getStylistFollowing(stylist);
+    } catch (e) {
+      print(e);
+    }
+    return _followers;
+  }
+
+  Future<void> fetchFollows() async {
+    try {
+      print("Fetching follows...");
+      List<Follow> _followers = await Api.follow.getFollowers();
+      List<Follow> _following = await Api.follow.getFollowing();
+      following.value = _followers;
+      followers.value = [];
+      sellersFollowingIDs.value = [];
+      stylistsFollowing.value = [];
+      stylistsFollowingIDs.value = [];
+      for (Follow follow in _followers) {
+        if (follow.type == "Stylist") {
+          followers.add(follow.user);
+        }
+      }
+
+      for (Follow follow in _following) {
+        if (follow.type == "Stylist") {
+          stylistsFollowing.add(follow.stylist!);
+          stylistsFollowingIDs.add(follow.stylist!.id!);
+        }
+      }
+    } catch (error, trace) {
+      print(error);
+      print(trace);
+    }
+    update();
+  }
+
+  Future<void> followStylist(User stylist) async {
+    if (stylistsFollowingIDs.contains(stylist.id)) {
+      stylistsFollowing.remove(stylist);
+      stylistsFollowingIDs.remove(stylist.id);
+      try {
+        await Api.follow.unfollowStylist(stylist);
+      } catch (error, trace) {
+        print(error);
+        print(trace);
+      }
+    } else {
+      stylistsFollowing.add(stylist);
+      stylistsFollowingIDs.add(stylist.id!);
+      try {
+        await Api.follow.followStylist(stylist);
+      } catch (error, trace) {
+        print(error);
+        print(trace);
+      }
+    }
+
+    update();
+  }
+}

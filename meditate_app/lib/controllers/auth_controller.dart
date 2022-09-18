@@ -8,7 +8,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meditate_app/api/pictures_api.dart';
 import 'package:meditate_app/app_pages.dart';
+import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/search_controller.dart';
+import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as Api;
 import 'package:meditate_app/services/push_notification_service.dart';
@@ -67,6 +70,8 @@ class AuthController extends GetxController {
     user.listen((User user) {
       print("🔥AUTH: User value has been set ${user.username}");
       pushNotificationService.updateDeviceToken();
+      Get.put(FollowController());
+      Get.put(SearchController());
     });
   }
 

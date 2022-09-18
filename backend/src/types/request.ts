@@ -1,0 +1,9 @@
+import { Request } from 'express';
+import { SellerI } from '../models/seller.model';
+import { UserI } from '../models/user.model';
+
+export interface RequestI extends Request {
+  rawBody?: string;
+  user?: UserI;
+  seller?: SellerI;
+}

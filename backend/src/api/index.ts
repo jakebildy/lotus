@@ -1,0 +1,32 @@
+import express from "express";
+import { UserAuthRouter } from "./auth.route";
+import { router as testRouter } from "./test.route";
+import { UserRouter } from "./user.route";
+import {SellerRouter} from "./seller.route";
+import { ClothingItemRouter } from "./clothing-item.route";
+import { router as followRouter } from "./follow.route";
+import { router as likeRouter } from "./like.route";
+import { router as reveryRouter } from "./revery.route";
+import { router as outfit } from "./outfit.route";
+import { router as stripe } from "./stripe.route";
+import { router as purchases } from "./purchase.route";
+import { router as cashout } from "./cashout.route";
+import { router as stats } from "./stats.route";
+import { router as boards } from "./board.route";
+
+export const Api = express.Router();
+
+Api.use("/test", testRouter);
+Api.use(UserRouter);
+Api.use(UserAuthRouter);
+Api.use(SellerRouter);
+Api.use(ClothingItemRouter);
+Api.use(followRouter);
+Api.use(likeRouter);
+Api.use(reveryRouter);
+Api.use(outfit);
+Api.use(stripe);
+Api.use(purchases);
+Api.use(cashout);
+Api.use(stats);
+Api.use(boards);
