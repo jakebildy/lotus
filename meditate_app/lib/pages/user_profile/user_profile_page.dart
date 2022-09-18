@@ -125,28 +125,36 @@ class _UserProfilePageState extends State<UserProfilePage>
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(
                             width: 1.0,
-                            color: followController.stylistsFollowing
-                                    .map((element) => element.id)
-                                    .contains(widget.user.id)
-                                ? Colors.white24
-                                : Colors.teal),
+                            color: auth.user.value.id == widget.user.id
+                                ? Colors.white
+                                : followController.stylistsFollowing
+                                        .map((element) => element.id)
+                                        .contains(widget.user.id)
+                                    ? Colors.white24
+                                    : Colors.teal),
                         shape: StadiumBorder(),
                       ),
                       onPressed: () {
-                        followController.followStylist(widget.user);
+                        if (auth.user.value.id != widget.user.id) {
+                          followController.followStylist(widget.user);
+                        }
                       },
                       child: Text(
-                          followController.stylistsFollowing
-                                  .map((element) => element.id)
-                                  .contains(widget.user.id)
-                              ? "Following"
-                              : "Follow",
-                          style: TextStyle(
-                              color: followController.stylistsFollowing
+                          auth.user.value.id == widget.user.id
+                              ? "You"
+                              : followController.stylistsFollowing
                                       .map((element) => element.id)
                                       .contains(widget.user.id)
-                                  ? Colors.grey
-                                  : Colors.tealAccent))),
+                                  ? "Following"
+                                  : "Follow",
+                          style: TextStyle(
+                              color: auth.user.value.id == widget.user.id
+                                  ? Colors.white
+                                  : followController.stylistsFollowing
+                                          .map((element) => element.id)
+                                          .contains(widget.user.id)
+                                      ? Colors.grey
+                                      : Colors.tealAccent))),
                 ),
               ],
             ),

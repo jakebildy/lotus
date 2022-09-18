@@ -7,61 +7,51 @@ class User {
   final String fullName;
   final String email;
   final String username;
-
-  final String streetAddress;
-  final String apt;
-  final String city;
-  final String state;
-  final String zipcode;
-  final DateTime lastSeenActivity;
   final DateTime createdAt;
-  final String clothingGender;
 
-  final bool showGenderPopup;
+  final int streak;
+  final int totalMinutes;
+  final int gems;
+  final int eggs;
+  final int totalEggs;
+  final int hatchProgressEggOne;
 
   static User deletedUser = User(
       id: "-1",
       email: "...",
       fullName: "Deleted User",
       username: "null",
-      lastSeenActivity: DateTime.now(),
       createdAt: DateTime.now());
 
-  const User(
-      {this.id,
-      required this.email,
-      required this.fullName,
-      required this.username,
-      required this.lastSeenActivity,
-      required this.createdAt,
-      this.avatar = SHREK,
-      this.streetAddress = "",
-      this.apt = "",
-      this.city = "",
-      this.state = "",
-      this.zipcode = "",
-      this.clothingGender = "",
-      this.showGenderPopup = false});
+  const User({
+    this.id,
+    required this.email,
+    required this.fullName,
+    required this.username,
+    required this.createdAt,
+    this.avatar = SHREK,
+    this.streak = 0,
+    this.totalMinutes = 0,
+    this.gems = 0,
+    this.eggs = 0,
+    this.totalEggs = 0,
+    this.hatchProgressEggOne = 0,
+  });
 
   static User fromJson(Map<String, dynamic> map) {
     return User(
-        id: map["_id"],
-        email: map["email"] ?? "",
-        fullName: map['fullName'] ?? "",
-        username:
-            (map["username"] ?? "user22").replaceAll(" ", "").toLowerCase(),
-        lastSeenActivity: DateTime.parse(
-            map["lastSeenActivity"] ?? "2011-10-05T14:48:00.000Z"),
-        createdAt:
-            DateTime.parse(map["createdAt"] ?? "2011-10-05T14:48:00.000Z"),
-        avatar: map["avatar"] ?? SHREK,
-        streetAddress: map["streetAddress"] ?? "",
-        apt: map["apt"] ?? "",
-        city: map["city"] ?? "",
-        state: map["state"] ?? "",
-        zipcode: map["zipcode"] ?? "",
-        clothingGender: map["clothingGender"] ?? "All",
-        showGenderPopup: map["clothingGender"] != null ? false : true);
+      id: map["_id"],
+      email: map["email"] ?? "",
+      fullName: map['fullName'] ?? "",
+      username: (map["username"] ?? "user22").replaceAll(" ", "").toLowerCase(),
+      createdAt: DateTime.parse(map["createdAt"] ?? "2011-10-05T14:48:00.000Z"),
+      avatar: map["avatar"] ?? SHREK,
+      streak: int.parse(map["streak"] ?? "0"),
+      totalMinutes: int.parse(map["totalMinutes"] ?? "0"),
+      eggs: int.parse(map["eggs"] ?? "0"),
+      totalEggs: int.parse(map["totalEggs"] ?? "0"),
+      hatchProgressEggOne: int.parse(map["hatchProgressEggOne"] ?? "0"),
+    );
   }
 
   //Iterates through a list of maps and returns a list of User objects

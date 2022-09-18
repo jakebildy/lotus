@@ -23,7 +23,6 @@ User DummyUser = User(
   email: "...",
   fullName: "Loading User",
   username: "null",
-  lastSeenActivity: DateTime.now(),
   createdAt: DateTime.now(),
 );
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/user_profile/user_profile_page.dart';
@@ -16,7 +17,7 @@ class FollowerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FollowController follow = Get.find();
-
+    AuthController auth = Get.find();
     return Obx(
       () => GestureDetector(
         onTap: () {
@@ -60,32 +61,48 @@ class FollowerWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    follow.stylistsFollowing
-                            .map((element) => element.id)
-                            .contains(user.id)
+                    auth.user.value.id == user.id
                         ? Align(
                             alignment: Alignment.centerRight,
-                            child: Container(
-                                height: 40,
-                                child: Icon(Icons.arrow_forward_ios_rounded)))
-                        : Align(
-                            alignment: Alignment.centerRight,
                             child: Padding(
-                              padding: const EdgeInsets.all(0.0),
-                              child: OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    side: BorderSide(
-                                        width: 1.0, color: Colors.teal),
-                                    shape: StadiumBorder(),
-                                  ),
-                                  onPressed: () {
-                                    follow.followStylist(user);
-                                  },
-                                  child: Text("Follow",
-                                      style:
-                                          TextStyle(color: Colors.tealAccent))),
-                            ),
-                          )
+                                padding: const EdgeInsets.all(0.0),
+                                child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      side: BorderSide(
+                                          width: 1.0, color: Colors.white),
+                                      shape: StadiumBorder(),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text("You",
+                                        style:
+                                            TextStyle(color: Colors.white)))))
+                        : follow.stylistsFollowing
+                                .map((element) => element.id)
+                                .contains(user.id)
+                            ? Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                    height: 40,
+                                    child:
+                                        Icon(Icons.arrow_forward_ios_rounded)))
+                            : Align(
+                                alignment: Alignment.centerRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        side: BorderSide(
+                                            width: 1.0, color: Colors.teal),
+                                        shape: StadiumBorder(),
+                                      ),
+                                      onPressed: () {
+                                        follow.followStylist(user);
+                                      },
+                                      child: Text("Follow",
+                                          style: TextStyle(
+                                              color: Colors.tealAccent))),
+                                ),
+                              )
                   ],
                 ),
                 Divider()

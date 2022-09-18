@@ -44,16 +44,9 @@ class UserApi {
     }
   }
 
-  Future<User> updateUser(String fullName, String streetAddress, String apt,
-      String city, String state, String zipcode, String clothingGender) async {
+  Future<User> updateUser(String fullName) async {
     final Map<String, String> map = {
       "fullName": fullName,
-      "streetAddress": streetAddress,
-      "apt": apt,
-      "city": city,
-      "state": state,
-      "zipcode": zipcode,
-      "clothingGender": clothingGender
     };
 
     final String body = jsonEncode(map);
