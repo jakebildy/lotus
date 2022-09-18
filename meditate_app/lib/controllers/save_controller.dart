@@ -90,6 +90,8 @@ class SaveController extends GetxController {
       totalMinutes.value = int.parse(getValue('total_minutes'));
     }
 
+    lastSevenDays = RxList.empty();
+
     DateTime today = DateTime.now();
     for (int i = 0; i < 7; i++) {
       if (getValue('meditation-${today.day}-${today.month}-${today.year}') !=
@@ -277,5 +279,20 @@ class SaveController extends GetxController {
     saveValue("streak_freezes", newValue.toString());
     streakFreezes.value = newValue;
     update();
+  }
+
+  String COOKIES_KEY = "cookies";
+
+  Future<void> saveCookies(String cookies) async {
+    print("saving cookies: $cookies -> $COOKIES_KEY");
+    storage.write(COOKIES_KEY, cookies);
+  }
+
+  String getCookies() {
+    return storage.read(COOKIES_KEY) ?? "";
+  }
+
+  Future<void> clearCookies() async {
+    storage.remove(COOKIES_KEY);
   }
 }

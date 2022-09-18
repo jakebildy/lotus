@@ -176,13 +176,22 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                         transition: Transition.circularReveal,
                                         duration: Duration(seconds: 1));
                                   }),
-                                  child: Hero(
-                                      tag: "PLAY_BUTTON",
-                                      child: const Icon(
-                                        Icons.play_arrow,
-                                        size: 50,
-                                        color: Colors.white,
-                                      ))),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.cyan,
+                                        borderRadius:
+                                            BorderRadius.circular(60)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Hero(
+                                          tag: "PLAY_BUTTON",
+                                          child: const Icon(
+                                            Icons.play_arrow,
+                                            size: 50,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                  )),
                         ),
                       ],
                     ),

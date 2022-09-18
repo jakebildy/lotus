@@ -7,6 +7,7 @@ import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/util/util.dart';
 
 class StatsPage extends StatefulWidget {
   const StatsPage({Key? key}) : super(key: key);
@@ -79,7 +80,9 @@ class _StatsPageState extends State<StatsPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      StreakChart()
+                      StreakChart(
+                        height: 200,
+                      )
                     ],
                   )),
             ),
@@ -114,9 +117,17 @@ class _StatsPageState extends State<StatsPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Streak Tier",
+                            (saveController.streakTier() == Tier.ORANGE
+                                ? "Level 0: Hatchling"
+                                : saveController.streakTier() == Tier.YELLOW
+                                    ? "Level 1: Champion"
+                                    : saveController.streakTier() == Tier.BLUE
+                                        ? "Level 2: Expert"
+                                        : "Level 3: Turtlemaster"),
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: tierColor()),
                           ),
                           SizedBox(
                             height: 5,
@@ -124,46 +135,32 @@ class _StatsPageState extends State<StatsPage> {
                           Container(
                               width: 200,
                               child: Text(
-                                  "Higher Tiers can find new turtles.\n\nReach new Streak Tiers by increasing your average meditation length. Your Tier updates at the end of the week.\n")),
+                                  "Higher levels can find new turtles.\n\nReach new levels by increasing your average meditation length. Your level updates at the end of the week.\n")),
                           SizedBox(
                             height: 5,
-                          ),
-                          Text(
-                            "You are at the " +
-                                (saveController.streakTier() == Tier.ORANGE
-                                    ? "Orange"
-                                    : saveController.streakTier() == Tier.BLUE
-                                        ? "Blue"
-                                        : saveController.streakTier() ==
-                                                Tier.YELLOW
-                                            ? "Yellow"
-                                            : "Rainbow") +
-                                " Tier",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                           SizedBox(
                             height: 20,
                           ),
                           Text(
-                            "Orange: 0-20 Minutes/Day",
+                            "Hatchling: 0-20 Minutes/Day",
                             style: TextStyle(color: Colors.orange),
                           ),
                           SizedBox(
                             height: 10,
                           ),
-                          Text("Yellow: 20-40 Minutes/Day",
+                          Text("Champion: 20-40 Minutes/Day",
                               style: TextStyle(color: Colors.yellow)),
                           SizedBox(
                             height: 10,
                           ),
-                          Text("Blue: 40-60 Minutes/Day",
-                              style: TextStyle(color: Colors.blue)),
+                          Text("Expert: 40-60 Minutes/Day",
+                              style: TextStyle(color: Colors.lightBlueAccent)),
                           SizedBox(
                             height: 10,
                           ),
-                          Text("Rainbow: 60+ Minutes/Day",
-                              style: TextStyle(color: Colors.pink)),
+                          Text("Turtlemaster: 60+ Minutes/Day",
+                              style: TextStyle(color: Colors.redAccent)),
                         ],
                       ),
                     )
