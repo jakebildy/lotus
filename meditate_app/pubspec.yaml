@@ -38,6 +38,7 @@ dependencies:
   duration_picker: ^1.1.0+1
   get: ^4.6.5
   audioplayers: ^1.0.1
+  ocarina: ^0.1.2
   get_storage: ^2.0.3
   animated_counter: ^1.0.0
   wave: ^0.2.2

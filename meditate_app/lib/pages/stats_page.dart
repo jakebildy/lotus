@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 class StatsPage extends StatefulWidget {
   const StatsPage({Key? key}) : super(key: key);
@@ -85,7 +86,7 @@ class _StatsPageState extends State<StatsPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                height: 270,
+                height: 340,
                 decoration: BoxDecoration(
                   color: isDarkMode ? Colors.black12 : Colors.white,
                   border: Border.all(
@@ -101,7 +102,8 @@ class _StatsPageState extends State<StatsPage> {
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
                           width: 60,
-                          child: Image.asset(saveController.streakIconURL())),
+                          child: Image.asset(
+                              saveController.streakIconURLBBright())),
                     ),
                     SizedBox(
                       width: 10,
@@ -122,9 +124,26 @@ class _StatsPageState extends State<StatsPage> {
                           Container(
                               width: 200,
                               child: Text(
-                                  "Reach new levels by increasing the length of your average meditation. \n\nUnlocks new colors.\n")),
+                                  "Higher Tiers can find new turtles.\n\nReach new Streak Tiers by increasing your average meditation length. Your Tier updates at the end of the week.\n")),
                           SizedBox(
-                            height: 10,
+                            height: 5,
+                          ),
+                          Text(
+                            "You are at the " +
+                                (saveController.streakTier() == Tier.ORANGE
+                                    ? "Orange"
+                                    : saveController.streakTier() == Tier.BLUE
+                                        ? "Blue"
+                                        : saveController.streakTier() ==
+                                                Tier.YELLOW
+                                            ? "Yellow"
+                                            : "Rainbow") +
+                                " Tier",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          SizedBox(
+                            height: 20,
                           ),
                           Text(
                             "Orange: 0-20 Minutes/Day",

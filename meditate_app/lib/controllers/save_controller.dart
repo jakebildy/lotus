@@ -60,6 +60,16 @@ class SaveController extends GetxController {
         : "assets/streak_icon_grey.png";
   }
 
+  String streakIconURLBBright() {
+    return streakAverage() < 20
+        ? "assets/streak_icon.png"
+        : streakAverage() < 40
+            ? "assets/streak_icon_yellow.png"
+            : streakAverage() < 60
+                ? "assets/streak_icon_blue.png"
+                : "assets/streak_icon_rainbow.png";
+  }
+
   Tier streakTier() {
     return streakAverage() < 20
         ? Tier.ORANGE
@@ -71,6 +81,11 @@ class SaveController extends GetxController {
   }
 
   SaveController() {
+    loadData();
+  }
+
+  void loadData() {
+    print("Loading Data!");
     if (getValue('total_minutes') != "") {
       totalMinutes.value = int.parse(getValue('total_minutes'));
     }
@@ -154,6 +169,10 @@ class SaveController extends GetxController {
           .inDays
           .abs();
 
+      if (numDays >= 1) {
+        hasDoneStreakToday.value = false;
+      }
+
       if (numDays <= 1) {
         if (numDays < 1) {
           hasDoneStreakToday.value = true;
@@ -178,7 +197,8 @@ class SaveController extends GetxController {
 
             return 0;
           } else {
-            DateTime today = DateTime.now();
+            DateTime now = new DateTime.now();
+            DateTime today = DateTime(now.year, now.month, now.day);
             DateTime yesterday = today.subtract(const Duration(days: 1));
             saveValue("last_meditated", yesterday.toIso8601String());
             updateStreakFreezes(streakFreezes.value - 1);

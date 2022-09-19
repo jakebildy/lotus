@@ -51,7 +51,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                 borderRadius: BorderRadius.circular(0),
                 child: Container(
                     height: MediaQuery.of(context).size.height,
-                    width: 380,
+                    width: MediaQuery.of(context).size.width,
                     child: Image.asset(
                       "assets/ocean_background.jpeg",
                       fit: BoxFit.fill,

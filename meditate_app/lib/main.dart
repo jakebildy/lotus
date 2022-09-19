@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meditate_app/app_pages.dart';
@@ -16,6 +17,23 @@ Future<void> main() async {
   }
   Get.put(SaveController());
   runApp(const MyApp());
+  SystemChannels.lifecycle.setMessageHandler((msg) {
+    switch (msg) {
+      case 'AppLifecycleState.paused':
+        {
+          print(msg);
+        }
+        break;
+      case 'AppLifecycleState.resumed':
+        {
+          print(msg);
+          SaveController save = Get.find();
+          save.loadData();
+        }
+        break;
+    }
+    return Future.value();
+  });
 }
 
 class MyApp extends StatelessWidget {

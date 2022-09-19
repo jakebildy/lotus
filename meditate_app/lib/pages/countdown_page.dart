@@ -11,6 +11,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:ocarina/ocarina.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -33,7 +34,6 @@ class _CountdownPageState extends State<CountdownPage>
   bool addExtraTime = false;
 
   late AnimationController _playPauseController;
-  late AudioPlayer audioPlayer;
 
   late AudioPlayer bell;
 
@@ -49,21 +49,29 @@ class _CountdownPageState extends State<CountdownPage>
     bell.setVolume(10.0);
     bell.play(AssetSource('sounds/tibetan_chime.wav'));
 
-    audioPlayer = new AudioPlayer();
     if (saveController.ambienceOn.value) {
-      audioPlayer.setReleaseMode(ReleaseMode.loop);
-      audioPlayer.setVolume(20.0);
-      audioPlayer.play(AssetSource('sounds/water_sounds.wav'));
+      playAmbience();
     }
 
     super.initState();
+  }
+
+  final player = OcarinaPlayer(
+    asset: 'assets/sounds/water_sounds.wav',
+    loop: true,
+    volume: 0.8,
+  );
+
+  Future<void> playAmbience() async {
+    await player.load();
+    await player.play();
   }
 
   // Dispose the controller
   @override
   void dispose() {
     _playPauseController.dispose();
-    audioPlayer.dispose();
+    player.dispose();
     _timer.cancel();
     bell.dispose();
     super.dispose();
@@ -240,7 +248,7 @@ class _CountdownPageState extends State<CountdownPage>
                                       // Here, do whatever you want
                                       isEnded = true;
                                       debugPrint('Countdown Ended');
-                                      audioPlayer.dispose();
+                                      player.dispose();
                                       bell.dispose();
 
                                       AudioPlayer endingBell = AudioPlayer();
@@ -304,14 +312,14 @@ class _CountdownPageState extends State<CountdownPage>
                                       } else if (isPaused) {
                                         print("Resuming countdown...");
                                         _controller.resume();
-                                        audioPlayer.resume();
+                                        player.resume();
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.forward();
                                         isPaused = false;
                                       } else {
                                         print("Pausing countdown...");
                                         _controller.pause();
-                                        audioPlayer.pause();
+                                        player.pause();
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.reverse();
                                         isPaused = true;
