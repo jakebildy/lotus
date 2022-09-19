@@ -10,11 +10,8 @@ import { Api } from "./api";
 import cookieParser from "cookie-parser";
 import * as mongoConnection from "./connections/mongo.connection";
 import path from 'path';
-import * as ReveryService from "./services/revery.service";
-import * as StripeService from "./services/stripe.service";
 import { RequestI } from "./types/request";
-import * as CourierService from "./services/courier.service";
-import { sendSaleSundayNotification } from "./services/salesunday.service";
+
 
 const BUILD_DIRECTORY = "../build/";
 

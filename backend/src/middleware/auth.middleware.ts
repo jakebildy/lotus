@@ -1,9 +1,8 @@
 import { NextFunction, Response } from "express";
 import * as UserService from "../services/user.service";
-import * as SellerService from "../services/seller.service";
 import { RequestI } from "../types/request";
 
-export async function userAuth(req: RequestI, res: Response, next: NextFunction): Promise<void|Response<any, Record<string, any>>> {
+export async function userAuth(req: RequestI, res: Response, next: NextFunction): Promise<void | Response<any, Record<string, any>>> {
 	//try to get auth jwt from cookies and load user object into req
 	try {
 		const userJwt = req.cookies["user"];
@@ -13,11 +12,11 @@ export async function userAuth(req: RequestI, res: Response, next: NextFunction)
 		return next();
 	} catch (e) {
 		//unauthorized
-		return res.status(401).send(e + ", " +  req.url).end();
+		return res.status(401).send(e + ", " + req.url).end();
 	}
 }
 
-export async function adminAuth(req: RequestI, res: Response, next: NextFunction): Promise<void|Response<any, Record<string, any>>> {
+export async function adminAuth(req: RequestI, res: Response, next: NextFunction): Promise<void | Response<any, Record<string, any>>> {
 	//try to get auth jwt from cookies and load user object into req
 	try {
 		// const userJwt = req.cookies["user"];
@@ -30,20 +29,6 @@ export async function adminAuth(req: RequestI, res: Response, next: NextFunction
 		return next();
 	} catch (e) {
 		//unauthorized
-		return res.status(401).send(e + ", " +  req.url).end();
-	}
-}
-
-export async function sellerAuth(req: RequestI, res: Response, next: NextFunction): Promise<void|Response<any, Record<string, any>>> {
-	//try to get auth jwt from cookies and load user object into req
-	try {
-		const sellerJwt = req.cookies["seller"];
-		const seller = await SellerService.getSellerFromJwt(sellerJwt);
-		if (!seller) throw "Unauthorized";
-		req.seller = seller;
-		return next();
-	} catch (e) {
-		//unauthorized
-		return res.status(401).send(e + ", " +  req.url).end();
+		return res.status(401).send(e + ", " + req.url).end();
 	}
 }

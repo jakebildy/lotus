@@ -31,6 +31,10 @@ const List<Turtle> TURTLES = [
   Turtle(name: "White Dwarf Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
   Turtle(name: "Poseidon Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  Turtle(name: "Watermelon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
+  Turtle(name: "Honeyshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  Turtle(name: "Citrus Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
 ];
 
 int getTurtleToHatch() {

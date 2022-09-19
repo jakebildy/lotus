@@ -25,7 +25,8 @@ class EggCard extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             key: UniqueKey(),
             backgroundColor: Colors.greenAccent,
-            content: Text("Meditate consecutive days to hatch this egg!")));
+            content: Text(
+                "Meditate ${(3 - save.hatchProgressEggOne.value).toString()} more day${(3 - save.hatchProgressEggOne.value) > 1 ? "s" : ""} to hatch this egg!")));
       },
       child: Card(
         child: Padding(
