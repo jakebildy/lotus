@@ -1,6 +1,5 @@
 import { ObjectId } from "mongoose";
 import { Follow, FollowI, FollowType } from "../models/follow.model";
-import { SellerI } from "../models/seller.model";
 import { User, UserI } from "../models/user.model";
 import { sendPushNotification } from "../services/notifications.service";
 
@@ -12,7 +11,6 @@ import { sendPushNotification } from "../services/notifications.service";
 // /unfollow/seller/:id	
 
 type UserOrId = string | ObjectId | UserI;
-type SellerOrId = string | ObjectId | SellerI;
 
 const POPULATE = ["stylist", "seller", "user"];
 
@@ -51,17 +49,3 @@ export async function unfollowStylist(user: UserOrId, stylist: UserOrId): Promis
   return await Follow.findOneAndDelete({ user, stylist }).populate(POPULATE).exec();
 }
 
-
-// Follow a seller.
-export async function followSeller(user: UserOrId, seller: SellerOrId): Promise<FollowI | null> {
-  const _follow = await Follow.findOne({ user, seller }).populate(POPULATE).exec();
-  if (_follow) return _follow;
-    //@ts-ignore
-  return (await Follow.create({ user, seller, type: FollowType.Seller })).populate(POPULATE).exec();
-}
-
-// Unflollow a seller
-export async function unfollowSeller(user: UserOrId, seller: SellerOrId): Promise<FollowI | null> {
-    //@ts-ignore
-  return (await Follow.findOneAndDelete({ user, seller })).populate(POPULATE).exec();
-}
