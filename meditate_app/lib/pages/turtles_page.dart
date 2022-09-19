@@ -81,14 +81,10 @@ class _TurtlesPageState extends State<TurtlesPage> {
                   ? Center(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: GestureDetector(
-                            onTap: () {
-                              Get.to(const NewEggPage());
-                            },
-                            child: Text(
-                              "The longer you meditate, the higher your chance of finding an egg 🥚",
-                              textAlign: TextAlign.center,
-                            )),
+                        child: Text(
+                          "The longer you meditate, the higher your chance of finding an egg 🥚",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     )
                   : GridView.count(
