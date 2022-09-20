@@ -18,6 +18,9 @@ export interface UserI {
   totalEggs?: number,
   hatchProgressEggOne?: number,
 
+  lastMeditated?: Date,
+  meditationTimes?: Array<number>,
+  meditationTimesAsOf?: Date,
 
   // streetAddress?: string;
   // apt?: string;
@@ -47,6 +50,10 @@ const UserSchema = new mongoose.Schema<UserI>(
     gems: { type: Number, required: false },
     totalEggs: { type: Number, required: false },
     hatchProgressEggOne: { type: Number, required: false },
+
+    lastMeditated: { type: Date, required: false },
+    meditationTimes: { type: Array, required: false },
+    meditationTimesAsOf: { type: Date, required: false },
 
     // streetAddress: { type: String, required: false },
     // apt: { type: String, required: false },

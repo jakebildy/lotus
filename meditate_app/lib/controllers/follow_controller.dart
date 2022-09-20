@@ -57,10 +57,8 @@ class FollowController extends GetxController {
       }
 
       for (Follow follow in _following) {
-        if (follow.type == "Stylist") {
-          stylistsFollowing.add(follow.stylist!);
-          stylistsFollowingIDs.add(follow.stylist!.id!);
-        }
+        stylistsFollowing.add(follow.stylist!);
+        stylistsFollowingIDs.add(follow.stylist!.id!);
       }
     } catch (error, trace) {
       print(error);

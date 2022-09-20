@@ -15,12 +15,17 @@ class User {
   final int eggs;
   final int totalEggs;
   final int hatchProgressEggOne;
+  final DateTime lastMeditated;
+  final List<double> meditationTimes;
+  final DateTime meditationTimesAsOf;
 
   static User deletedUser = User(
       id: "-1",
       email: "...",
       fullName: "Deleted User",
       username: "null",
+      lastMeditated: DateTime.now(),
+      meditationTimesAsOf: DateTime.now(),
       createdAt: DateTime.now());
 
   const User({
@@ -29,6 +34,9 @@ class User {
     required this.fullName,
     required this.username,
     required this.createdAt,
+    required this.lastMeditated,
+    this.meditationTimes = const [],
+    required this.meditationTimesAsOf,
     this.avatar = SHREK,
     this.streak = 0,
     this.totalMinutes = 0,
@@ -51,6 +59,11 @@ class User {
       eggs: map["eggs"] ?? 0,
       totalEggs: map["totalEggs"] ?? 0,
       hatchProgressEggOne: map["hatchProgressEggOne"] ?? 0,
+      lastMeditated:
+          DateTime.parse(map["lastMeditated"] ?? "2011-10-05T14:48:00.000Z"),
+      meditationTimes: map["meditationTimes"],
+      meditationTimesAsOf: DateTime.parse(
+          map["meditationTimesAsOf"] ?? "2011-10-05T14:48:00.000Z"),
     );
   }
 

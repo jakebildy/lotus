@@ -72,6 +72,10 @@ export interface UserUpdate {
   totalEggs?: number,
   hatchProgressEggOne?: number,
 
+  lastMeditated?: Date,
+  meditationTimes?: Array<number>,
+  meditationTimesAsOf?: Date,
+
 }
 
 

@@ -92,6 +92,27 @@ class SaveController extends GetxController {
     await Api.user.updateUserAttribute("totalEggs", totalEggs.value);
     await Api.user
         .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
+
+    if (getValue("last_meditated") != "") {
+      await Api.user.updateUserAttribute(
+          "lastMeditated", DateTime.parse(getValue("last_meditated")));
+    }
+
+    List<double> meditationTimes = [];
+    DateTime today = DateTime.now();
+    DateTime date = new DateTime(today.year, today.month, today.day);
+    for (int i = 0; i < 7; i++) {
+      if (getValue('meditation-${today.day}-${today.month}-${today.year}') !=
+          "") {
+        meditationTimes.add(double.parse(
+            getValue('meditation-${today.day}-${today.month}-${today.year}')));
+      } else {
+        meditationTimes.add(0.0);
+      }
+      today = today.subtract(Duration(days: 1));
+    }
+    await Api.user.updateUserAttribute("meditationTimes", meditationTimes);
+    await Api.user.updateUserAttribute("meditationTimesAsOf", date);
   }
 
   void loadData() {
@@ -159,6 +180,7 @@ class SaveController extends GetxController {
 
   Future<void> saveValue(String key, String value) async {
     storage.write(key, value);
+    uploadLocalData();
   }
 
   String getValue(String key) {

@@ -253,11 +253,11 @@ class _ProfilePageState extends State<ProfilePage>
                           controller: tabController,
                           physics: NeverScrollableScrollPhysics(),
                           children: [
-                            followController.following.length == 0
+                            followController.stylistsFollowing.length == 0
                                 ? Column(
                                     children: [
                                       SizedBox(
-                                        height: 10,
+                                        height: 20,
                                       ),
                                       Text(
                                         "You don't have any friends yet - add some!",
@@ -280,7 +280,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 ? Column(
                                     children: [
                                       SizedBox(
-                                        height: 10,
+                                        height: 20,
                                       ),
                                       Text(
                                         "You don't have any followers yet!",

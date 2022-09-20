@@ -8,7 +8,7 @@ import 'package:meditate_app/api/user_api.dart';
 const String LOCAL_URL = "localhost:8000";
 const String REMOTE_URL = "shellevate.uc.r.appspot.com";
 
-const bool TESTING = false;
+const bool TESTING = true;
 
 Map<String, String> _cookies = {};
 Map<String, String> get cookiesMap => _cookies;

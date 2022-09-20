@@ -24,6 +24,8 @@ User DummyUser = User(
   fullName: "Loading User",
   username: "null",
   createdAt: DateTime.now(),
+  lastMeditated: DateTime.now(),
+  meditationTimesAsOf: DateTime.now(),
 );
 
 class AuthController extends GetxController {
