@@ -12,16 +12,16 @@ export interface UserI {
   lastSeenActivity?: Date,
   deviceToken?: string,
 
-  streetAddress?: string;
-  apt?: string;
-  city?: string;
-  state?: string;
-  zipcode?: string;
+  // streetAddress?: string;
+  // apt?: string;
+  // city?: string;
+  // state?: string;
+  // zipcode?: string;
 
-  clothingGender?: string;
+  // clothingGender?: string;
 
-  // Stylists
-  cashoutPending?: boolean;
+  // // Stylists
+  // cashoutPending?: boolean;
 }
 
 const UserSchema = new mongoose.Schema<UserI>(
@@ -35,16 +35,16 @@ const UserSchema = new mongoose.Schema<UserI>(
     lastSeenActivity: { type: Date, required: true },
     deviceToken: { type: String, required: false },
 
-    streetAddress: { type: String, required: false },
-    apt: { type: String, required: false },
-    city: { type: String, required: false },
-    state: { type: String, required: false },
-    zipcode: { type: String, required: false },
+    // streetAddress: { type: String, required: false },
+    // apt: { type: String, required: false },
+    // city: { type: String, required: false },
+    // state: { type: String, required: false },
+    // zipcode: { type: String, required: false },
 
-    clothingGender: { type: String, required: false },
+    // clothingGender: { type: String, required: false },
 
-    // Stylist
-    cashoutPending: { type: Boolean, default: false },
+    // // Stylist
+    // cashoutPending: { type: Boolean, default: false },
   },
   {
     versionKey: false,

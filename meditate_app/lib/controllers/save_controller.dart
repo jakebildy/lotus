@@ -91,6 +91,7 @@ class SaveController extends GetxController {
     }
 
     lastSevenDays = RxList.empty();
+    unlockedTurtles = RxList.empty();
 
     DateTime today = DateTime.now();
     for (int i = 0; i < 7; i++) {

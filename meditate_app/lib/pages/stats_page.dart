@@ -118,12 +118,12 @@ class _StatsPageState extends State<StatsPage> {
                         children: [
                           Text(
                             (saveController.streakTier() == Tier.ORANGE
-                                ? "Level 0: Hatchling"
+                                ? "Level 1: Hatchling"
                                 : saveController.streakTier() == Tier.YELLOW
-                                    ? "Level 1: Champion"
+                                    ? "Level 2: Champion"
                                     : saveController.streakTier() == Tier.BLUE
-                                        ? "Level 2: Expert"
-                                        : "Level 3: Turtlemaster"),
+                                        ? "Level 3: Expert"
+                                        : "Level 4: Turtlemaster"),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
