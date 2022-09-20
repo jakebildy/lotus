@@ -196,7 +196,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                                 height: 10,
                               ),
                               Text(
-                                saveController.streak.value.toString(),
+                                widget.user.streak.toString(),
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
@@ -229,7 +229,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                             height: 10,
                           ),
                           Text(
-                            saveController.totalMinutes.value.toString(),
+                            widget.user.totalMinutes.toString(),
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),

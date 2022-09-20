@@ -2,6 +2,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/api/index.dart' as Api;
 
 class SaveController extends GetxController {
   final storage = GetStorage();
@@ -82,6 +83,15 @@ class SaveController extends GetxController {
 
   SaveController() {
     loadData();
+  }
+
+  Future<void> uploadLocalData() async {
+    await Api.user.updateUserAttribute("streak", streak.value);
+    await Api.user.updateUserAttribute("totalMinutes", totalMinutes.value);
+    await Api.user.updateUserAttribute("gems", gems.value);
+    await Api.user.updateUserAttribute("totalEggs", totalEggs.value);
+    await Api.user
+        .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
   }
 
   void loadData() {

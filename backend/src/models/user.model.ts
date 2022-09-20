@@ -12,6 +12,13 @@ export interface UserI {
   lastSeenActivity?: Date,
   deviceToken?: string,
 
+  streak?: number,
+  totalMinutes?: number,
+  gems?: number,
+  totalEggs?: number,
+  hatchProgressEggOne?: number,
+
+
   // streetAddress?: string;
   // apt?: string;
   // city?: string;
@@ -34,6 +41,12 @@ const UserSchema = new mongoose.Schema<UserI>(
     avatar: { type: String, required: true, default: defaultImage },
     lastSeenActivity: { type: Date, required: true },
     deviceToken: { type: String, required: false },
+
+    streak: { type: Number, required: false },
+    totalMinutes: { type: Number, required: false },
+    gems: { type: Number, required: false },
+    totalEggs: { type: Number, required: false },
+    hatchProgressEggOne: { type: Number, required: false },
 
     // streetAddress: { type: String, required: false },
     // apt: { type: String, required: false },

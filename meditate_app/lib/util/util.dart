@@ -70,12 +70,13 @@ String formatMonth(DateTime date) {
   DateTime now = DateTime.now().toLocal();
   final today = DateTime(now.year, now.month, now.day);
   final tomorrow = DateTime(now.year, now.month, now.day + 1);
+  date = date.toLocal();
   final aDate = DateTime(date.year, date.month, date.day);
 
   if (aDate == today) {
-    return "Today";
+    return "today";
   } else if (aDate == tomorrow) {
-    return "Tomorrow";
+    return "today";
   } else if (now.difference(date).inDays <= 6 &&
       now.difference(date).inDays > 0 &&
       now.isBefore(date)) {

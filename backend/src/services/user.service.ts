@@ -66,15 +66,17 @@ export interface UserUpdate {
   displayName?: string,
   deviceToken?: string,
 
-  streetAddress?: string;
-  apt?: string;
-  city?: string;
-  state?: string;
-  zipcode?: string;
+  streak?: number,
+  totalMinutes?: number,
+  gems?: number,
+  totalEggs?: number,
+  hatchProgressEggOne?: number,
+
 }
 
 
-export async function updateUser(user: UserI, userUpdate: UserUpdate): Promise<UserI|null> {
+export async function updateUser(user: UserI, userUpdate: UserUpdate): Promise<UserI | null> {
+  console.log("!!!!!!!");
   await User.findByIdAndUpdate(user, {
     ...userUpdate,
     username: user.username
@@ -98,14 +100,14 @@ export async function getJwtFromUser(user: UserI): Promise<string> {
   return jwt.sign({ _id: user._id }, JWT_PRIVATE_KEY);
 }
 
-export async function getUserFromJwt(token: string): Promise<UserI|null> {
+export async function getUserFromJwt(token: string): Promise<UserI | null> {
   if (!JWT_PRIVATE_KEY) throw "process.env.JWT_PRIVATE_KEY is not defined!";
   const jwtPayload = jwt.verify(token, JWT_PRIVATE_KEY);
   const user = await User.findById((<UserI>jwtPayload)._id);
   return user;
 }
 
-export async function uploadAvatar(user: UserI, fileName: string, base64: string): Promise<UserI|null> {
+export async function uploadAvatar(user: UserI, fileName: string, base64: string): Promise<UserI | null> {
   const file: FileI | null = await uploadFile({ name: fileName, data: base64 } as FileI, user);
   if (!file) throw "Failed to upload avatar";
 

@@ -60,6 +60,24 @@ class UserApi {
     }
   }
 
+  Future<User> updateUserAttribute(
+      String attributeName, dynamic attribute) async {
+    final Map<String, dynamic> map = {
+      attributeName: attribute,
+    };
+
+    final String body = jsonEncode(map);
+    final response = await http.post(Api.https(url, "/api/user/update"),
+        body: body, headers: Api.headers);
+    print("updateUserAttribute!!");
+    if (response.statusCode == 200) {
+      print(json.decode(response.body));
+      return User.fromJson(json.decode(response.body));
+    } else {
+      throw (response.body);
+    }
+  }
+
   Future<User> updateLastSeenActivity() async {
     final Map<String, String> map = {
       "lastSeenActivity": DateTime.now().toUtc().toIso8601String(),

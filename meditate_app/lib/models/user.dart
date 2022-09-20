@@ -46,11 +46,11 @@ class User {
       username: (map["username"] ?? "user22").replaceAll(" ", "").toLowerCase(),
       createdAt: DateTime.parse(map["createdAt"] ?? "2011-10-05T14:48:00.000Z"),
       avatar: map["avatar"] ?? SHREK,
-      streak: int.parse(map["streak"] ?? "0"),
-      totalMinutes: int.parse(map["totalMinutes"] ?? "0"),
-      eggs: int.parse(map["eggs"] ?? "0"),
-      totalEggs: int.parse(map["totalEggs"] ?? "0"),
-      hatchProgressEggOne: int.parse(map["hatchProgressEggOne"] ?? "0"),
+      streak: map["streak"] ?? 0,
+      totalMinutes: map["totalMinutes"] ?? 0,
+      eggs: map["eggs"] ?? 0,
+      totalEggs: map["totalEggs"] ?? 0,
+      hatchProgressEggOne: map["hatchProgressEggOne"] ?? 0,
     );
   }
 

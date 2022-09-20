@@ -71,6 +71,8 @@ class AuthController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
+      SaveController saveController = Get.find();
+      saveController.uploadLocalData();
     });
   }
 
