@@ -10,7 +10,9 @@ import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/login_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
+import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
@@ -39,7 +41,15 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     SaveController saveController = Get.find();
     AuthController auth = Get.find();
-    FollowController followController = Get.find();
+    FollowController followController;
+    if (Get.isRegistered<FollowController>()) {
+      followController = Get.find();
+    } else {
+      followController = Get.put(FollowController());
+    }
+    if (!Get.isRegistered<SearchController>()) {
+      Get.put(SearchController());
+    }
 
     return Obx(
       () => ListView(
