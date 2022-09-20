@@ -12,7 +12,7 @@ import { sendPushNotification } from "../services/notifications.service";
 
 type UserOrId = string | ObjectId | UserI;
 
-const POPULATE = ["stylist", "seller", "user"];
+const POPULATE = ["stylist", "user"];
 
 // Returns a list of stylist and brands that a user is following
 export async function getFollowing(user: UserOrId): Promise<FollowI[] | null> {

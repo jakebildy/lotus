@@ -4,7 +4,6 @@ import { UserI } from './user.model';
 
 
 export enum FollowType {
-  Seller = 'Seller',
   Stylist = 'Stylist'
 }
 

@@ -49,6 +49,8 @@ class FollowController extends GetxController {
       stylistsFollowing.value = [];
       stylistsFollowingIDs.value = [];
       for (Follow follow in _followers) {
+        print("Follow:");
+        print(follow);
         if (follow.type == "Stylist") {
           followers.add(follow.user);
         }

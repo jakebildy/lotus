@@ -53,7 +53,7 @@ class FollowerWidget extends StatelessWidget {
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),
                             Text(
-                              "30 total minutes",
+                              "4🔥 • 30 min total",
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 14),
                             ),
