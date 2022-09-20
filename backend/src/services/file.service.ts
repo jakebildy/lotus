@@ -5,9 +5,9 @@ import { ObjectId } from 'mongoose';
 import { UserI } from '../models/user.model';
 
 const storage = new Storage();
-const myBucket = storage.bucket('fitsapp');
+const myBucket = storage.bucket('shellevate');
 
-const STORAGE_BASE_URL = 'https://storage.googleapis.com/fitsapp/';
+const STORAGE_BASE_URL = 'https://storage.googleapis.com/shellevate/';
 
 export const toUrl = (fileName: string): string => {
   return STORAGE_BASE_URL + fileName;
@@ -19,7 +19,7 @@ export const getExtension = (name: string): string => {
   return _extension;
 };
 
-export const uploadFile = async (upload: FileI, userId: string | ObjectId | UserI| null): Promise<FileI | null> => {
+export const uploadFile = async (upload: FileI, userId: string | ObjectId | UserI | null): Promise<FileI | null> => {
   if (!upload.data) throw "no data found, cannot upload file";
   const oldName = upload.name;
   const extension = getExtension(oldName);
