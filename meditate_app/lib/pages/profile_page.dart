@@ -96,8 +96,9 @@ class _ProfilePageState extends State<ProfilePage>
             height: 5,
           ),
           Text(
-            tier(),
-            style: TextStyle(color: tierColor(), fontSize: 17),
+            tierReadable(saveController.streakTier()),
+            style: TextStyle(
+                color: tierColor(saveController.streakTier()), fontSize: 17),
             textAlign: TextAlign.center,
           ),
           SizedBox(

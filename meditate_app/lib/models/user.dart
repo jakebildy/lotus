@@ -16,7 +16,7 @@ class User {
   final int totalEggs;
   final int hatchProgressEggOne;
   final DateTime lastMeditated;
-  final List<double> meditationTimes;
+  final List<dynamic> meditationTimes;
   final DateTime meditationTimesAsOf;
 
   static User deletedUser = User(
@@ -47,6 +47,15 @@ class User {
   });
 
   static User fromJson(Map<String, dynamic> map) {
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+
+    int numDays =
+        DateTime.parse(map["lastMeditated"] ?? "2011-10-05T14:48:00.000Z")
+            .difference(date)
+            .inDays
+            .abs();
+
     return User(
       id: map["_id"],
       email: map["email"] ?? "",
@@ -54,7 +63,10 @@ class User {
       username: (map["username"] ?? "user22").replaceAll(" ", "").toLowerCase(),
       createdAt: DateTime.parse(map["createdAt"] ?? "2011-10-05T14:48:00.000Z"),
       avatar: map["avatar"] ?? SHREK,
-      streak: map["streak"] ?? 0,
+      streak: numDays > 1
+          ? 0
+          : map["streak"] ??
+              0, // TODO - verify against number of streak freezes + time last logged in
       totalMinutes: map["totalMinutes"] ?? 0,
       eggs: map["eggs"] ?? 0,
       totalEggs: map["totalEggs"] ?? 0,

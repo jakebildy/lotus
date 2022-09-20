@@ -127,7 +127,7 @@ class _StatsPageState extends State<StatsPage> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
-                                color: tierColor()),
+                                color: tierColor(saveController.streakTier())),
                           ),
                           SizedBox(
                             height: 5,

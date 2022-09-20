@@ -2,28 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/turtles.dart';
 
-String tier() {
-  SaveController saveController = Get.find();
-
-  return saveController.streakTier() == Tier.ORANGE
+String tierReadable(Tier tier) {
+  return tier == Tier.ORANGE
       ? "Hatchling (Level 1)"
-      : saveController.streakTier() == Tier.YELLOW
+      : tier == Tier.YELLOW
           ? "Champion (Level 2)"
-          : saveController.streakTier() == Tier.BLUE
+          : tier == Tier.BLUE
               ? "Expert (Level 3)"
               : "Turtlemaster (Level 4)";
 }
 
-Color tierColor() {
-  SaveController saveController = Get.find();
-
-  return saveController.streakTier() == Tier.ORANGE
+Color tierColor(Tier tier) {
+  return tier == Tier.ORANGE
       ? Colors.orange
-      : saveController.streakTier() == Tier.YELLOW
+      : tier == Tier.YELLOW
           ? Colors.yellow
-          : saveController.streakTier() == Tier.BLUE
+          : tier == Tier.BLUE
               ? Colors.lightBlueAccent
               : Colors.redAccent;
 }
@@ -84,4 +81,56 @@ String formatMonth(DateTime date) {
   } else {
     return months[date.month]! + " " + date.year.toString();
   }
+}
+
+double userStreakAverage(User user) {
+  DateTime now = new DateTime.now();
+  DateTime date = new DateTime(now.year, now.month, now.day);
+  int daysShifted = user.meditationTimesAsOf.difference(date).inDays.abs();
+  List<double> lastSevenDays = [
+    daysShifted >= 1 ? 0.0 : user.meditationTimes[0 - daysShifted].toDouble(),
+    daysShifted >= 2 ? 0.0 : user.meditationTimes[1 - daysShifted].toDouble(),
+    daysShifted >= 3 ? 0.0 : user.meditationTimes[2 - daysShifted].toDouble(),
+    daysShifted >= 4 ? 0.0 : user.meditationTimes[3 - daysShifted].toDouble(),
+    daysShifted >= 5 ? 0.0 : user.meditationTimes[4 - daysShifted].toDouble(),
+    daysShifted >= 6 ? 0.0 : user.meditationTimes[5 - daysShifted].toDouble(),
+    daysShifted >= 7 ? 0.0 : user.meditationTimes[6 - daysShifted].toDouble(),
+  ];
+
+  double sum = 0;
+  for (double i in lastSevenDays) {
+    sum += i;
+  }
+  return sum / 7;
+}
+
+String userStreakIconURL(User user) {
+  bool hasDoneStreakToday = true;
+  DateTime now = new DateTime.now();
+  DateTime date = new DateTime(now.year, now.month, now.day);
+  int numDays = user.lastMeditated.difference(date).inDays.abs();
+
+  if (numDays >= 1) {
+    hasDoneStreakToday = false;
+  }
+
+  return hasDoneStreakToday
+      ? userStreakAverage(user) < 20
+          ? "assets/streak_icon.png"
+          : userStreakAverage(user) < 40
+              ? "assets/streak_icon_yellow.png"
+              : userStreakAverage(user) < 60
+                  ? "assets/streak_icon_blue.png"
+                  : "assets/streak_icon_rainbow.png"
+      : "assets/streak_icon_grey.png";
+}
+
+Tier userStreakTier(User user) {
+  return userStreakAverage(user) < 20
+      ? Tier.ORANGE
+      : userStreakAverage(user) < 40
+          ? Tier.YELLOW
+          : userStreakAverage(user) < 60
+              ? Tier.BLUE
+              : Tier.RAINBOW;
 }

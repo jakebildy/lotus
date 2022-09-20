@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/components/streak_chart.dart';
+import 'package:meditate_app/components/user_streak_chart.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/login_controller.dart';
@@ -13,6 +14,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
 import '../../models/user.dart';
@@ -101,8 +103,9 @@ class _UserProfilePageState extends State<UserProfilePage>
               height: 5,
             ),
             Text(
-              tier(),
-              style: TextStyle(color: tierColor(), fontSize: 17),
+              tierReadable(userStreakTier(widget.user)),
+              style: TextStyle(
+                  color: tierColor(userStreakTier(widget.user)), fontSize: 17),
               textAlign: TextAlign.center,
             ),
             SizedBox(
@@ -185,7 +188,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                             child: Container(
                                 height: 30,
                                 child: Image.asset(
-                                    saveController.streakIconURL())),
+                                    userStreakIconURL(widget.user))),
                           ),
                           SizedBox(
                             width: 10,
@@ -268,7 +271,8 @@ class _UserProfilePageState extends State<UserProfilePage>
                       SizedBox(
                         height: 20,
                       ),
-                      StreakChart(
+                      UserStreakChart(
+                        user: widget.user,
                         height: 180,
                       ),
                     ],

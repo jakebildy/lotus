@@ -6,6 +6,7 @@ import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/user_profile/user_profile_page.dart';
+import 'package:meditate_app/util/util.dart';
 
 class FollowerWidget extends StatelessWidget {
   final User user;
@@ -52,10 +53,24 @@ class FollowerWidget extends StatelessWidget {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),
-                            Text(
-                              "${user.streak}🔥 • ${user.totalMinutes} min total",
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 14),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${user.streak}",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 14),
+                                ),
+                                Container(
+                                    height: 13,
+                                    child:
+                                        Image.asset(userStreakIconURL(user))),
+                                Text(
+                                  " • ${user.totalMinutes} min total",
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 14),
+                                ),
+                              ],
                             ),
                           ],
                         ),

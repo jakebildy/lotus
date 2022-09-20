@@ -94,8 +94,8 @@ class SaveController extends GetxController {
         .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
 
     if (getValue("last_meditated") != "") {
-      await Api.user.updateUserAttribute(
-          "lastMeditated", DateTime.parse(getValue("last_meditated")));
+      await Api.user
+          .updateUserAttribute("lastMeditated", getValue("last_meditated"));
     }
 
     List<double> meditationTimes = [];
@@ -112,7 +112,8 @@ class SaveController extends GetxController {
       today = today.subtract(Duration(days: 1));
     }
     await Api.user.updateUserAttribute("meditationTimes", meditationTimes);
-    await Api.user.updateUserAttribute("meditationTimesAsOf", date);
+    await Api.user
+        .updateUserAttribute("meditationTimesAsOf", date.toIso8601String());
   }
 
   void loadData() {
