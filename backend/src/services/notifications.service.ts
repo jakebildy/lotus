@@ -20,7 +20,7 @@ import serviceAccount = require("../firebase/firebase.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount as ServiceAccount),
-    databaseURL: "https://fits-336802-default-rtdb.firebaseio.com"
+    databaseURL: "https://shellevate-41398-default-rtdb.firebaseio.com"
 });
 
 export function sendPushNotification(devices: any, title: any, body: any, data: any, sound: any, type: any) {
