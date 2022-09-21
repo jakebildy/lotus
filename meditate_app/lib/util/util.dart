@@ -15,9 +15,19 @@ String tierReadable(Tier tier) {
               : "Turtlemaster (Level 4)";
 }
 
+String tierReadablePlural(Tier tier) {
+  return tier == Tier.ORANGE
+      ? "Hatchlings (Level 1)"
+      : tier == Tier.YELLOW
+          ? "Champions (Level 2)"
+          : tier == Tier.BLUE
+              ? "Experts (Level 3)"
+              : "Turtlemasters (Level 4)";
+}
+
 Color tierColor(Tier tier) {
   return tier == Tier.ORANGE
-      ? Colors.orange
+      ? Colors.green
       : tier == Tier.YELLOW
           ? Colors.yellow
           : tier == Tier.BLUE

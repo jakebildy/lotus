@@ -144,7 +144,7 @@ class _StatsPageState extends State<StatsPage> {
                           ),
                           Text(
                             "Hatchling: 0-20 Minutes/Day",
-                            style: TextStyle(color: Colors.orange),
+                            style: TextStyle(color: Colors.green),
                           ),
                           SizedBox(
                             height: 10,

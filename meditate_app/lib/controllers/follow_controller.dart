@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/models/follow.dart';
@@ -7,6 +8,7 @@ import 'package:meditate_app/models/user.dart';
 
 class FollowController extends GetxController {
   RxList<User> stylistsFollowing = new RxList();
+  RxList<User> stylistsNotFollowing = new RxList();
   RxList<String> sellersFollowingIDs = new RxList();
   RxList<String> stylistsFollowingIDs = new RxList();
   //Note: for now, brands are unable to follow people,
@@ -38,11 +40,24 @@ class FollowController extends GetxController {
     return _followers;
   }
 
+  Future<List<Follow>> getStylistNotFollowing(User stylist) async {
+    List<Follow> _followers = new List.empty();
+    try {
+      _followers = await Api.follow.getStylistNotFollowing(stylist);
+    } catch (e) {
+      print(e);
+    }
+    return _followers;
+  }
+
   Future<void> fetchFollows() async {
     try {
       print("Fetching follows...");
       List<Follow> _followers = await Api.follow.getFollowers();
       List<Follow> _following = await Api.follow.getFollowing();
+      AuthController auth = Get.find();
+      List<Follow> _notFollowing =
+          await Api.follow.getStylistNotFollowing(auth.user.value);
       following.value = _followers;
       followers.value = [];
       sellersFollowingIDs.value = [];
@@ -59,6 +74,12 @@ class FollowController extends GetxController {
       for (Follow follow in _following) {
         stylistsFollowing.add(follow.stylist!);
         stylistsFollowingIDs.add(follow.stylist!.id!);
+      }
+
+      for (Follow follow in _notFollowing) {
+        if (!stylistsFollowingIDs.contains(follow.stylist!.id)) {
+          stylistsNotFollowing.add(follow.stylist!);
+        }
       }
     } catch (error, trace) {
       print(error);

@@ -14,6 +14,7 @@ import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/pages/shellevate.dart';
 import 'package:meditate_app/services/push_notification_service.dart';
 import 'package:meditate_app/pages/signup/signup.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -107,7 +108,7 @@ class AuthController extends GetxController {
       // isAuthenticated.value = true;
       // _authenticateLitsocket();
 
-      Get.offAll(AppPages());
+      // Get.offAll(Shellevate());
     } catch (e, stackTrace) {
       // print(stackTrace);
       print(e);
@@ -118,9 +119,11 @@ class AuthController extends GetxController {
   }
 
   Future<void> waitThenSetLoadingFalse() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 4));
     isLoading.value = false;
     update();
+    Get.offAll(AppPages(),
+        transition: Transition.fadeIn, duration: Duration(seconds: 2));
   }
 
   void refreshUser() async {

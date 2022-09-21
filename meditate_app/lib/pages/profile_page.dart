@@ -227,6 +227,37 @@ class _ProfilePageState extends State<ProfilePage>
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
+                height: 250,
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  border: Border.all(
+                    color: Colors.white24,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Minutes meditated this week",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    StreakChart(
+                      height: 180,
+                    ),
+                  ],
+                )),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
                   border: Border.all(
@@ -379,7 +410,6 @@ class _ProfilePageState extends State<ProfilePage>
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-                height: 250,
                 decoration: BoxDecoration(
                   color: Colors.black12,
                   border: Border.all(
@@ -388,23 +418,30 @@ class _ProfilePageState extends State<ProfilePage>
                   ),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Minutes meditated this week",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    StreakChart(
-                      height: 180,
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "People you may know",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ...(followController.stylistsNotFollowing.map((user) =>
+                          FollowerWidget(
+                              user: user,
+                              color: Color.fromARGB(255, 42, 42, 42)))),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
                 )),
           ),
           SizedBox(

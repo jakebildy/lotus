@@ -9,6 +9,8 @@ import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/pages/loading_page.dart';
+import 'package:meditate_app/pages/shellevate.dart';
 import 'package:meditate_app/services/push_notification_service.dart';
 
 Future<void> main() async {
@@ -48,12 +50,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthController auth = Get.find();
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Meditate',
       darkTheme: ThemeData.dark(),
       theme: ThemeData.dark(),
-      home: const AppPages(),
+      home: Shellevate(),
     );
   }
 }

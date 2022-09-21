@@ -20,6 +20,12 @@ export async function getFollowing(user: UserOrId): Promise<FollowI[] | null> {
   return following;
 }
 
+export async function getNotFollowing(user: UserOrId): Promise<FollowI[] | null> {
+  const following = await Follow.find({ user: { $ne: user } }).populate(POPULATE).exec();
+  return following;
+}
+
+
 // Returns a list of users who are following a stylist
 export async function getFollowers(stylist: UserOrId): Promise<FollowI[] | null> {
   const followers = await Follow.find({ stylist }).populate(POPULATE).exec();

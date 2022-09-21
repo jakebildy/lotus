@@ -141,22 +141,7 @@ export function AdminStatsPage() {
         // setAllData((all as [{ _id: string, mau: number }]).sort((a, b) => a._id.localeCompare(b._id)));
 
 
-        const outfits = await Api.outfits.getAll();
-        let tagFreq: any = {};
 
-        for (const outfit in outfits) {
-          if (outfits[outfit].tags !== "") {
-            const tags = outfits[outfit].tags.split(",");
-            for (const tag in tags) {
-              if (!tagFreq[tags[tag]]) {
-                tagFreq[tags[tag]] = 0;
-              }
-              tagFreq[tags[tag]] += 1;
-              //   tagFreq.push({ tag: tags[tag], freq: 1 });
-            }
-          }
-        }
-        setTagFrequencyData(tagFreq);
 
         //Login
         let freq = await Api.analytics.getFreq("login");
