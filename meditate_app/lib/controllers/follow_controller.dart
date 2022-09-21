@@ -62,6 +62,7 @@ class FollowController extends GetxController {
       followers.value = [];
       sellersFollowingIDs.value = [];
       stylistsFollowing.value = [];
+      stylistsNotFollowing.value = [];
       stylistsFollowingIDs.value = [];
       for (Follow follow in _followers) {
         print("Follow:");
@@ -78,7 +79,9 @@ class FollowController extends GetxController {
 
       for (User follow in _notFollowing) {
         if (!stylistsFollowingIDs.contains(follow.id)) {
-          stylistsNotFollowing.add(follow);
+          if (auth.user.value.id != follow.id) {
+            stylistsNotFollowing.add(follow);
+          }
         }
       }
     } catch (error, trace) {
