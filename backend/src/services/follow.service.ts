@@ -20,8 +20,8 @@ export async function getFollowing(user: UserOrId): Promise<FollowI[] | null> {
   return following;
 }
 
-export async function getNotFollowing(user: UserOrId): Promise<FollowI[] | null> {
-  const following = await Follow.find({ user: { $ne: user } }).populate(POPULATE).exec();
+export async function getNotFollowing(user: UserOrId): Promise<UserI[] | null> {
+  const following = await User.find({}).exec();
   return following;
 }
 

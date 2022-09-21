@@ -40,8 +40,8 @@ class FollowController extends GetxController {
     return _followers;
   }
 
-  Future<List<Follow>> getStylistNotFollowing(User stylist) async {
-    List<Follow> _followers = new List.empty();
+  Future<List<User>> getStylistNotFollowing(User stylist) async {
+    List<User> _followers = new List.empty();
     try {
       _followers = await Api.follow.getStylistNotFollowing(stylist);
     } catch (e) {
@@ -56,7 +56,7 @@ class FollowController extends GetxController {
       List<Follow> _followers = await Api.follow.getFollowers();
       List<Follow> _following = await Api.follow.getFollowing();
       AuthController auth = Get.find();
-      List<Follow> _notFollowing =
+      List<User> _notFollowing =
           await Api.follow.getStylistNotFollowing(auth.user.value);
       following.value = _followers;
       followers.value = [];
@@ -76,9 +76,9 @@ class FollowController extends GetxController {
         stylistsFollowingIDs.add(follow.stylist!.id!);
       }
 
-      for (Follow follow in _notFollowing) {
-        if (!stylistsFollowingIDs.contains(follow.stylist!.id)) {
-          stylistsNotFollowing.add(follow.stylist!);
+      for (User follow in _notFollowing) {
+        if (!stylistsFollowingIDs.contains(follow.id)) {
+          stylistsNotFollowing.add(follow);
         }
       }
     } catch (error, trace) {
