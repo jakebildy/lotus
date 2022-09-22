@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -21,13 +22,18 @@ class EggCard extends StatelessWidget {
       onTap: () {
         HapticFeedback.mediumImpact();
         shakeKey.currentState?.shake();
+        AudioPlayer egg = new AudioPlayer();
+        egg.setVolume(10.0);
+        egg.play(AssetSource('sounds/egg_crack.wav'));
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             key: UniqueKey(),
             backgroundColor: Colors.greenAccent,
-            content: Text(index == 0
-                ? "Meditate ${(3 - save.hatchProgressEggOne.value).toString()} more day${(3 - save.hatchProgressEggOne.value) > 1 ? "s" : ""} to hatch this egg!"
-                : "Meditate 3 days to hatch this egg!")));
+            content: Text(
+                index == 0
+                    ? "Meditate ${(3 - save.hatchProgressEggOne.value).toString()} more day${(3 - save.hatchProgressEggOne.value) > 1 ? "s" : ""} to hatch this egg!"
+                    : "Meditate 3 days to hatch this egg!",
+                style: TextStyle(fontWeight: FontWeight.bold))));
       },
       child: Card(
         child: Padding(

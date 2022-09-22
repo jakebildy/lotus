@@ -76,49 +76,53 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                 physics: NeverScrollableScrollPhysics(),
                 //mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 38),
-                        child: Container(
-                            height: 360,
-                            child: Image.asset("assets/turtle_timer.png")),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Container(
-                          height: 400,
-                          width: 240,
-                          child: DurationPicker(
-                            duration: _duration,
-                            baseUnit: BaseUnit.minute,
-                            onChange: (val) {
-                              if (_duration != val) {
-                                HapticFeedback.lightImpact();
-                              }
-                              setState(() => _duration = val);
-                            },
-                            snapToMins: 5.0,
+                  //The Turtle Timer 🐢
+                  Hero(
+                    tag: "TURTLE_TIMER",
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 38),
+                          child: Container(
+                              height: 360,
+                              child: Image.asset("assets/turtle_timer.png")),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Container(
+                            height: 400,
+                            width: 240,
+                            child: DurationPicker(
+                              duration: _duration,
+                              baseUnit: BaseUnit.minute,
+                              onChange: (val) {
+                                if (_duration != val) {
+                                  HapticFeedback.lightImpact();
+                                }
+                                setState(() => _duration = val);
+                              },
+                              snapToMins: 5.0,
+                            ),
                           ),
                         ),
-                      ),
-                      IgnorePointer(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(3, 10, 0, 0),
-                          child: Opacity(
-                            opacity: 0.15,
-                            child: Container(
-                                height: 190,
-                                width: 190,
-                                child: Image.asset(
-                                  "assets/turtle_lines.png",
-                                  fit: BoxFit.fill,
-                                )),
+                        IgnorePointer(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(3, 10, 0, 0),
+                            child: Opacity(
+                              opacity: 0.15,
+                              child: Container(
+                                  height: 190,
+                                  width: 190,
+                                  child: Image.asset(
+                                    "assets/turtle_lines.png",
+                                    fit: BoxFit.fill,
+                                  )),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   GestureDetector(
                     onTap: (() {

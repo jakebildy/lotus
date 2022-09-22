@@ -135,6 +135,13 @@ class _DialPainter extends CustomPainter {
         centerPoint.dy - textDurationValuePainter.height / 2);
     textDurationValuePainter.paint(canvas, middleForValueText);
 
+// baseUnitMultiplier >= 1
+//                     ? Colors.red
+//                     : baseUnitHand >= 40
+//                         ? Colors.blue
+//                         : baseUnitHand >= 20
+//                             ? Colors.yellow
+//                             :
     var textMinPainter = TextPainter(
         textAlign: TextAlign.center,
         text: TextSpan(

@@ -17,12 +17,12 @@ String tierReadable(Tier tier) {
 
 String tierReadablePlural(Tier tier) {
   return tier == Tier.ORANGE
-      ? "Hatchlings (Level 1)"
+      ? "Hatchlings\n(Level 1)"
       : tier == Tier.YELLOW
-          ? "Champions (Level 2)"
+          ? "Champions\n(Level 2)"
           : tier == Tier.BLUE
-              ? "Experts (Level 3)"
-              : "Turtlemasters (Level 4)";
+              ? "Experts\n(Level 3)"
+              : "Turtlemasters\n(Level 4)";
 }
 
 Color tierColor(Tier tier) {

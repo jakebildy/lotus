@@ -25,9 +25,11 @@ class TurtleCard extends StatelessWidget {
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               key: UniqueKey(),
-              backgroundColor: Colors.greenAccent,
+              backgroundColor: tierColor(TURTLES[id].tier),
               content: Text(
-                  "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}")));
+                "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )));
         }
       },
       child: Card(

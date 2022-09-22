@@ -204,74 +204,90 @@ class _CountdownPageState extends State<CountdownPage>
                                       MediaQuery.of(context).size.height < 680
                                           ? 400
                                           : 360),
-                                  child: CircularCountDownTimer(
-                                    // Countdown duration in Seconds.
-                                    duration: widget.time.inSeconds,
-                                    initialDuration: 0,
-                                    controller: _controller,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
-                                    height:
-                                        MediaQuery.of(context).size.height / 2,
-                                    ringColor: Colors.black12,
-                                    ringGradient: null,
-                                    fillColor: Colors.white,
-                                    fillGradient: null,
-                                    backgroundColor: Colors.black38,
-                                    backgroundGradient: null,
-                                    strokeWidth: 10.0,
-                                    strokeCap: StrokeCap.round,
-                                    textStyle: TextStyle(
-                                      fontSize:
-                                          widget.time > const Duration(hours: 1)
+                                  child: Hero(
+                                    tag: "TURTLE_TIMER",
+                                    child: DefaultTextStyle(
+                                      style: TextStyle(
+                                        fontSize: widget.time >
+                                                const Duration(hours: 1)
+                                            ? 30
+                                            : 50.0,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      child: CircularCountDownTimer(
+                                        // Countdown duration in Seconds.
+                                        duration: widget.time.inSeconds,
+                                        initialDuration: 0,
+                                        controller: _controller,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2,
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                2,
+                                        ringColor: Colors.black12,
+                                        ringGradient: null,
+                                        fillColor: Colors.white,
+                                        fillGradient: null,
+                                        backgroundColor: Colors.black38,
+                                        backgroundGradient: null,
+                                        strokeWidth: 10.0,
+                                        strokeCap: StrokeCap.round,
+                                        textStyle: TextStyle(
+                                          fontSize: widget.time >
+                                                  const Duration(hours: 1)
                                               ? 30
                                               : 50.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
 
-                                    // Format for the Countdown Text.
-                                    textFormat:
-                                        widget.time > const Duration(hours: 1)
+                                        // Format for the Countdown Text.
+                                        textFormat: widget.time >
+                                                const Duration(hours: 1)
                                             ? CountdownTextFormat.HH_MM_SS
                                             : CountdownTextFormat.MM_SS,
-                                    isReverse: true,
-                                    isReverseAnimation: true,
-                                    isTimerTextShown: true,
+                                        isReverse: true,
+                                        isReverseAnimation: true,
+                                        isTimerTextShown: true,
 
-                                    // Handles the timer start.
-                                    autoStart: true,
+                                        // Handles the timer start.
+                                        autoStart: true,
 
-                                    // This Callback will execute when the Countdown Starts.
-                                    onStart: () {
-                                      // Here, do whatever you want
-                                      debugPrint('Countdown Started');
-                                      isEnded = false;
-                                    },
+                                        // This Callback will execute when the Countdown Starts.
+                                        onStart: () {
+                                          // Here, do whatever you want
+                                          debugPrint('Countdown Started');
+                                          isEnded = false;
+                                        },
 
-                                    // This Callback will execute when the Countdown Ends.
-                                    onComplete: () {
-                                      // Here, do whatever you want
-                                      isEnded = true;
-                                      debugPrint('Countdown Ended');
-                                      player.dispose();
-                                      bell.dispose();
+                                        // This Callback will execute when the Countdown Ends.
+                                        onComplete: () {
+                                          // Here, do whatever you want
+                                          isEnded = true;
+                                          debugPrint('Countdown Ended');
+                                          player.dispose();
+                                          bell.dispose();
 
-                                      AudioPlayer endingBell = AudioPlayer();
-                                      endingBell.setVolume(10.0);
-                                      endingBell.play(AssetSource(
-                                          'sounds/tibetan_chime.wav'));
-                                      startTimer();
-                                      setState(() {
-                                        meditationComplete = true;
-                                      });
-                                    },
+                                          AudioPlayer endingBell =
+                                              AudioPlayer();
+                                          endingBell.setVolume(10.0);
+                                          endingBell.play(AssetSource(
+                                              'sounds/tibetan_chime.wav'));
+                                          startTimer();
+                                          setState(() {
+                                            meditationComplete = true;
+                                          });
+                                        },
 
-                                    // This Callback will execute when the Countdown Changes.
-                                    onChange: (String timeStamp) {
-                                      // Here, do whatever you want
-                                      // debugPrint('Countdown Changed $timeStamp');
-                                    },
+                                        // This Callback will execute when the Countdown Changes.
+                                        onChange: (String timeStamp) {
+                                          // Here, do whatever you want
+                                          // debugPrint('Countdown Changed $timeStamp');
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
                           meditationComplete
