@@ -74,15 +74,29 @@ int getTurtleToHatch() {
             element.tier == Tier.BLUE)
         .toList();
   }
+  int result = 0;
 
+  //Randomly choose a turtle from the available options
   Turtle selectedTurtle =
       possibleTurtles[Random().nextInt(possibleTurtles.length)];
 
   for (int i = 0; i < TURTLES.length; i++) {
     if (TURTLES[i] == selectedTurtle) {
-      return i;
+      result = i;
     }
   }
 
-  return 0;
+  if (saveController.unlockedTurtles[result] > 0) {
+    //Randomly choose a turtle from the available options
+    Turtle selectedTurtle =
+        possibleTurtles[Random().nextInt(possibleTurtles.length)];
+
+    for (int i = 0; i < TURTLES.length; i++) {
+      if (TURTLES[i] == selectedTurtle) {
+        result = i;
+      }
+    }
+  }
+
+  return result;
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -15,8 +16,9 @@ class TurtleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return Bounce(
+      duration: Duration(milliseconds: 110),
+      onPressed: () {
         if (unlocked) {
           HapticFeedback.lightImpact();
           Get.to(TurtleDetailsPage(id: id), transition: Transition.downToUp);
