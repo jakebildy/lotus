@@ -48,7 +48,6 @@ class _CountdownPageState extends State<CountdownPage>
     bell = new AudioPlayer();
     bell.setVolume(10.0);
     bell.play(AssetSource('sounds/tibetan_chime.wav'));
-
     if (saveController.ambienceOn.value) {
       playAmbience();
     }

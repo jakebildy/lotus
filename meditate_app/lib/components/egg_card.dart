@@ -25,6 +25,7 @@ class EggCard extends StatelessWidget {
         AudioPlayer egg = new AudioPlayer();
         egg.setVolume(10.0);
         egg.play(AssetSource('sounds/egg_crack.wav'));
+        egg.dispose();
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             key: UniqueKey(),
