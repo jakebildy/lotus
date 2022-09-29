@@ -14,7 +14,9 @@ import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
+import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/search/search.dart';
+import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/util/util.dart';
 
@@ -143,86 +145,95 @@ class _ProfilePageState extends State<ProfilePage>
           SizedBox(
             height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    height: 70,
-                    width: MediaQuery.of(context).size.width / 2 - 20,
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      border: Border.all(
-                        color: Colors.white24,
-                        width: 2,
+          GestureDetector(
+            onTap: () {
+              Get.to(StatsPage());
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      height: 70,
+                      width: MediaQuery.of(context).size.width / 2 - 20,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        border: Border.all(
+                          color: Colors.white24,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 5, 5.0),
-                          child: Container(
-                              height: 30,
-                              child:
-                                  Image.asset(saveController.streakIconURL())),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 5, 5.0),
+                            child: Container(
+                                height: 30,
+                                child: Hero(
+                                  tag: "STREAK_STATS_ICON",
+                                  child: Image.asset(
+                                      saveController.streakIconURL()),
+                                )),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                saveController.streak.value.toString(),
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "Day streak",
+                                style: TextStyle(
+                                    fontSize: 12, color: Colors.white70),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      height: 70,
+                      width: MediaQuery.of(context).size.width / 2 - 20,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        border: Border.all(
+                          color: Colors.white24,
+                          width: 2,
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              saveController.streak.value.toString(),
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "Day streak",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.white70),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                    height: 70,
-                    width: MediaQuery.of(context).size.width / 2 - 20,
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      border: Border.all(
-                        color: Colors.white24,
-                        width: 2,
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          saveController.totalMinutes.value.toString(),
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          "Total Minutes",
-                          style: TextStyle(fontSize: 12, color: Colors.white70),
-                        ),
-                      ],
-                    )),
-              ),
-            ],
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            saveController.totalMinutes.value.toString(),
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Total Minutes",
+                            style:
+                                TextStyle(fontSize: 12, color: Colors.white70),
+                          ),
+                        ],
+                      )),
+                ),
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -446,6 +457,18 @@ class _ProfilePageState extends State<ProfilePage>
           ),
           SizedBox(
             height: 10,
+          ),
+          GestureDetector(
+              onTap: () {
+                Get.to(MeditationGuide(time: null));
+              },
+              child: Center(
+                  child: Text(
+                "How to Meditate",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ))),
+          SizedBox(
+            height: 30,
           ),
           GestureDetector(
               onTap: () {

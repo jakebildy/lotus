@@ -58,11 +58,12 @@ class _StatsPageState extends State<StatsPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                  height: 270,
+                  height: 70,
+                  width: MediaQuery.of(context).size.width / 2 - 20,
                   decoration: BoxDecoration(
-                    color: isDarkMode ? Colors.black12 : Colors.white,
+                    color: Colors.black12,
                     border: Border.all(
-                      color: isDarkMode ? Colors.white24 : Colors.black26,
+                      color: Colors.white24,
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(20),
@@ -73,16 +74,15 @@ class _StatsPageState extends State<StatsPage> {
                         height: 10,
                       ),
                       Text(
-                        "This Week",
+                        saveController.streakAverage().toStringAsFixed(1) +
+                            " min",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        height: 20,
+                      Text(
+                        "Weekly Average",
+                        style: TextStyle(fontSize: 12, color: Colors.white70),
                       ),
-                      StreakChart(
-                        height: 200,
-                      )
                     ],
                   )),
             ),
@@ -105,8 +105,11 @@ class _StatsPageState extends State<StatsPage> {
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
                           width: 60,
-                          child: Image.asset(
-                              saveController.streakIconURLBBright())),
+                          child: Hero(
+                            tag: "STREAK_STATS_ICON",
+                            child: Image.asset(
+                                saveController.streakIconURLBBright()),
+                          )),
                     ),
                     SizedBox(
                       width: 10,
@@ -167,7 +170,38 @@ class _StatsPageState extends State<StatsPage> {
                   ],
                 ),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  height: 270,
+                  decoration: BoxDecoration(
+                    color: isDarkMode ? Colors.black12 : Colors.white,
+                    border: Border.all(
+                      color: isDarkMode ? Colors.white24 : Colors.black26,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "This Week",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      StreakChart(
+                        height: 200,
+                      )
+                    ],
+                  )),
+            ),
           ],
         ),
       ),

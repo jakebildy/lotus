@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
+import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -176,9 +177,20 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                           .updateDefaultMeditationTime(
                                               _duration.inMinutes);
                                     }
-                                    Get.to(CountdownPage(time: _duration),
-                                        transition: Transition.circularReveal,
-                                        duration: Duration(seconds: 1));
+
+                                    if (saveController
+                                            .getValue("GUIDE_SHOWN") ==
+                                        "TRUE") {
+                                      Get.to(CountdownPage(time: _duration),
+                                          transition: Transition.circularReveal,
+                                          duration: Duration(seconds: 1));
+                                    } else {
+                                      Get.to(MeditationGuide(time: _duration),
+                                          transition: Transition.circularReveal,
+                                          duration: Duration(seconds: 1));
+                                      saveController.saveValue(
+                                          "GUIDE_SHOWN", "TRUE");
+                                    }
                                   }),
                                   child: Container(
                                     decoration: BoxDecoration(

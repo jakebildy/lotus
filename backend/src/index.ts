@@ -11,6 +11,7 @@ import cookieParser from "cookie-parser";
 import * as mongoConnection from "./connections/mongo.connection";
 import path from 'path';
 import { RequestI } from "./types/request";
+import { sendStreakReminder } from "./services/streakreminder.service";
 
 
 const BUILD_DIRECTORY = "../build/";
@@ -72,4 +73,5 @@ app.listen(PORT, () => {
 // StripeService.run();
 
 //WARNING: DO NOT LEAVE THIS ENABLED 
-//sendSaleSundayNotification();
+sendStreakReminder();
+console.log("HELLOOOO")

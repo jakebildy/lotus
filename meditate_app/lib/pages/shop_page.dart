@@ -116,7 +116,7 @@ class _ShopPageState extends State<ShopPage> {
                             height: 10,
                           ),
                           Text(
-                            "${save.streakFreezes}/2 ACTIVE",
+                            "${save.streakFreezes} OUT OF 2 ACTIVE",
                             style: TextStyle(
                                 color: save.streakFreezes.value > 0
                                     ? Colors.greenAccent
