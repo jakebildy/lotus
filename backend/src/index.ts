@@ -73,5 +73,5 @@ app.listen(PORT, () => {
 // StripeService.run();
 
 //WARNING: DO NOT LEAVE THIS ENABLED 
-sendStreakReminder();
+// sendStreakReminder();
 console.log("HELLOOOO")

@@ -9,16 +9,16 @@ export async function sendStreakReminder() {
     for (const user of _users) {
         console.log(user.fullName);
         if (user.fullName !== "" && user.deviceToken !== undefined) {
-            console.log("\nSending notification to " + user.fullName + "\n");
-            if (user.fullName.replace(" ", "") != "Stefano") {
+            if (user.streak === undefined || user.streak === 0) {
+                console.log("\nSending notification to " + user.fullName + "\n");
                 // sendPushNotification(
                 //     [user.deviceToken],
-                //     `Hi ${user.fullName.split(" ")[0]}! Don't lose your ${user.streak} day streak!`,
-                //     `Keep meditating to build a habit 🔥`,
+                //     `Hi ${user.fullName.split(" ")[0]}! Try meditating for just 5 minutes!`,
+                //     `Start a new habit (and collect turtles too 🐢)`,
                 //     {}, true, null
                 // );
-                console.log(`Hi ${user.fullName.split(" ")[0]}! Don't lose your ${user.streak} day streak!`);
-                console.log(`Keep meditating to build a habit 🔥`);
+                console.log(`Hi ${user.fullName.split(" ")[0]}! Try meditating for just 5 minutes!`);
+                console.log(`Start a new habit (and collect turtles too 🐢)`);
             }
         }
     }
