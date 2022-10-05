@@ -154,30 +154,16 @@ class _MeditationGuideState extends State<MeditationGuide> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "If you haven't meditated before, try the following breath exercise:",
+                      "If you haven't meditated before, try repeating the following breath exercise while you meditate:",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                   ),
                   SizedBox(
-                    height: 40,
+                    height: 60,
                   ),
-                  AnimatedDefaultTextStyle(
-                      duration: Duration(seconds: 1),
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: title == "Breathe In"
-                              ? Colors.white
-                              : title == "Hold"
-                                  ? Colors.lightGreen
-                                  : Colors.white),
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.center,
-                      )),
                   SizedBox(
-                    height: 340,
+                    height: MediaQuery.of(context).size.height / 2,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -206,7 +192,24 @@ class _MeditationGuideState extends State<MeditationGuide> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 220),
+                child: AnimatedDefaultTextStyle(
+                    duration: Duration(seconds: 1),
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: title == "Breathe In"
+                            ? Colors.white
+                            : title == "Hold"
+                                ? Colors.lightGreen
+                                : Colors.white),
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(30.0, 40, 30, 0),
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 200 - size / 2),
                   child: AnimatedContainer(

@@ -33,10 +33,11 @@ class _NewGemsPageState extends State<NewGemsPage>
             Padding(
               padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
               child: Container(
-                  height: 200, child: Image.asset("assets/gems_chest.png")),
+                  height: MediaQuery.of(context).size.height / 4,
+                  child: Image.asset("assets/gems_chest.png")),
             ),
             SizedBox(
-              height: 50,
+              height: MediaQuery.of(context).size.height / 40,
             ),
             Container(
                 child: Padding(
@@ -54,8 +55,11 @@ class _NewGemsPageState extends State<NewGemsPage>
             Container(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("The longer you meditate, the more gems you'll earn",
-                  style: TextStyle(fontSize: 14)),
+              child: Text(
+                "The longer you meditate, the more gems you'll earn",
+                style: TextStyle(fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
             )),
             SizedBox(
               height: 50,

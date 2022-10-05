@@ -124,7 +124,7 @@ String userStreakIconURL(User user) {
     hasDoneStreakToday = false;
   }
 
-  return hasDoneStreakToday
+  return user.streak != 0
       ? userStreakAverage(user) < 20
           ? "assets/streak_icon.png"
           : userStreakAverage(user) < 40

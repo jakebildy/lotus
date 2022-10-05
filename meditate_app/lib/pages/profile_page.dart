@@ -18,6 +18,7 @@ import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -421,6 +422,88 @@ class _ProfilePageState extends State<ProfilePage>
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
+              height: 340,
+              decoration: BoxDecoration(
+                color: Colors.black12,
+                border: Border.all(
+                  color: Colors.white24,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.16,
+                        child: Hero(
+                          tag: "STREAK_STATS_ICON",
+                          child: Image.asset(
+                              saveController.streakIconURLBBright()),
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          (saveController.streakTier() == Tier.ORANGE
+                              ? "Level 1: Hatchling"
+                              : saveController.streakTier() == Tier.YELLOW
+                                  ? "Level 2: Champion"
+                                  : saveController.streakTier() == Tier.BLUE
+                                      ? "Level 3: Expert"
+                                      : "Level 4: Turtlemaster"),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: tierColor(saveController.streakTier())),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                            width: 200,
+                            child: Text(
+                                "Higher levels can find rarer turtles from Lotus Island.\n\nReach new levels by increasing your average meditation length for a week.\n")),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Hatchling: 0-20 Minutes/Day",
+                          style: TextStyle(color: Colors.green),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Champion: 20-40 Minutes/Day",
+                            style: TextStyle(color: Colors.yellow)),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Expert: 40-60 Minutes/Day",
+                            style: TextStyle(color: Colors.lightBlueAccent)),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Turtlemaster: 60+ Minutes/Day",
+                            style: TextStyle(color: Colors.redAccent)),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
                   border: Border.all(
@@ -444,8 +527,10 @@ class _ProfilePageState extends State<ProfilePage>
                       SizedBox(
                         height: 20,
                       ),
-                      ...(followController.stylistsNotFollowing.map((user) =>
-                          FollowerWidget(
+                      //Only showing people with active streaks to make the app feel more engaging/active
+                      ...(followController.stylistsNotFollowing
+                          .where((p0) => p0.streak > 0)
+                          .map((user) => FollowerWidget(
                               user: user,
                               color: Color.fromARGB(255, 42, 42, 42)))),
                       SizedBox(

@@ -34,7 +34,7 @@ class Signup extends StatelessWidget {
               ],
             )),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 45, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Center(
                 child: Stack(
                   children: [
@@ -55,12 +55,12 @@ class Signup extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       children: [
                         SizedBox(height: 20),
-                        Center(
-                            child: Container(
-                                height: 100,
-                                child: Hero(
-                                    tag: "Logo",
-                                    child: Image.asset("assets/logo.png")))),
+                        // Center(
+                        //     child: Container(
+                        //         height: 4,
+                        //         child: Hero(
+                        //             tag: "Logo",
+                        //             child: Image.asset("assets/logo.png")))),
                         Center(
                           child: Text(
                             "Sign Up",

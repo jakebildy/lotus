@@ -66,7 +66,7 @@ class _StreakCountPageState extends State<StreakCountPage>
               duration: const Duration(milliseconds: 800),
               opacity: opacity,
               child: Container(
-                  height: 300,
+                  height: MediaQuery.of(context).size.height / 3,
                   width: 409,
                   child: Image.asset("assets/fire_joypixel.gif")),
             ),

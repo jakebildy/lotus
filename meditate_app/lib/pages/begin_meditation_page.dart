@@ -78,51 +78,57 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                 //mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //The Turtle Timer 🐢
-                  Hero(
-                    tag: "TURTLE_TIMER",
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 38),
-                          child: Container(
-                              height: 360,
-                              child: Image.asset("assets/turtle_timer.png")),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Container(
-                            height: 400,
-                            width: 240,
-                            child: DurationPicker(
-                              duration: _duration,
-                              baseUnit: BaseUnit.minute,
-                              onChange: (val) {
-                                if (_duration != val) {
-                                  HapticFeedback.lightImpact();
-                                }
-                                setState(() => _duration = val);
-                              },
-                              snapToMins: 5.0,
-                            ),
-                          ),
-                        ),
-                        IgnorePointer(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(3, 10, 0, 0),
-                            child: Opacity(
-                              opacity: 0.15,
+                  Container(
+                    height: MediaQuery.of(context).size.height / 2.3 + 40,
+                    child: FittedBox(
+                      child: Hero(
+                        tag: "TURTLE_TIMER",
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 38),
                               child: Container(
-                                  height: 190,
-                                  width: 190,
-                                  child: Image.asset(
-                                    "assets/turtle_lines.png",
-                                    fit: BoxFit.fill,
-                                  )),
+                                  height: 360,
+                                  child:
+                                      Image.asset("assets/turtle_timer.png")),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Container(
+                                height: 400,
+                                width: 240,
+                                child: DurationPicker(
+                                  duration: _duration,
+                                  baseUnit: BaseUnit.minute,
+                                  onChange: (val) {
+                                    if (_duration != val) {
+                                      HapticFeedback.lightImpact();
+                                    }
+                                    setState(() => _duration = val);
+                                  },
+                                  snapToMins: 5.0,
+                                ),
+                              ),
+                            ),
+                            IgnorePointer(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(3, 10, 0, 0),
+                                child: Opacity(
+                                  opacity: 0.15,
+                                  child: Container(
+                                      height: 190,
+                                      width: 190,
+                                      child: Image.asset(
+                                        "assets/turtle_lines.png",
+                                        fit: BoxFit.fill,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                   GestureDetector(
@@ -152,9 +158,9 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                           size: 35,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 30.0),
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: _duration == NO_TIME ||
-                                  _duration < const Duration(minutes: 5)
+                                  _duration < const Duration(minutes: 1)
                               ? Container(
                                   height: 50,
                                   child: Padding(

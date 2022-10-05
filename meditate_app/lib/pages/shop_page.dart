@@ -68,14 +68,16 @@ class _ShopPageState extends State<ShopPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 15.0,
+                          horizontal: MediaQuery.of(context).size.width / 70),
                       child: Container(
                           width: 60,
                           child: Image.asset("assets/streak_freeze.png")),
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(

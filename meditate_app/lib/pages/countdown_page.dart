@@ -170,8 +170,8 @@ class _CountdownPageState extends State<CountdownPage>
                           ),
                           meditationComplete
                               ? Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(0, 120, 0, 560.0),
+                                  padding: EdgeInsets.fromLTRB(0, 120, 0,
+                                      MediaQuery.of(context).size.height * 0.7),
                                   child: Container(
                                       child: Column(
                                     children: [
@@ -200,9 +200,12 @@ class _CountdownPageState extends State<CountdownPage>
                                       0,
                                       0,
                                       0,
-                                      MediaQuery.of(context).size.height < 680
-                                          ? 400
-                                          : 360),
+                                      MediaQuery.of(context).size.height < 720
+                                          ? 340
+                                          : MediaQuery.of(context).size.height <
+                                                  680
+                                              ? 320
+                                              : 360),
                                   child: Hero(
                                     tag: "TURTLE_TIMER",
                                     child: DefaultTextStyle(
@@ -384,8 +387,12 @@ class _CountdownPageState extends State<CountdownPage>
                                           color:
                                               Color.fromARGB(255, 16, 77, 127),
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 100.0,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                    MediaQuery.of(context)
+                                                            .size
+                                                            .width -
+                                                        280,
                                                 vertical: 10),
                                             child: Text(
                                               "End Session",
