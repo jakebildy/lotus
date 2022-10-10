@@ -73,7 +73,8 @@ class _TurtlesPageState extends State<TurtlesPage> {
                     return Center(
                       child: Obx(
                         () => TurtleCard(
-                            unlocked: saveController.unlockedTurtles[index] > 0,
+                            unlocked: saveController.unlockedTurtles[index] >
+                                0, //FOR TESTING PURPOSES ONLY
                             id: index),
                       ),
                     );

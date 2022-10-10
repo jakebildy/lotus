@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -29,7 +30,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text("Turtle"),
+        title: Text("Tap the turtle"),
       ),
       body: Container(
         decoration: new BoxDecoration(
@@ -67,17 +68,23 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                   width: MediaQuery.of(context).size.width,
                   //color: Colors.white24,
                   height: 300,
-                  child: Hero(
-                      tag: "turtle-${widget.id}",
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset("assets/turtles/0.png"),
-                          widget.id > 0 && widget.id < TURTLES.length
-                              ? Image.asset("assets/turtles/${widget.id}.png")
-                              : Container(),
-                        ],
-                      )),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(TurtleGamePage(),
+                          transition: Transition.circularReveal);
+                    },
+                    child: Hero(
+                        tag: "turtle-${widget.id}",
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset("assets/turtles/0.png"),
+                            widget.id > 0 && widget.id < TURTLES.length
+                                ? Image.asset("assets/turtles/${widget.id}.png")
+                                : Container(),
+                          ],
+                        )),
+                  ),
                 ),
                 SizedBox(
                   height: 40,
