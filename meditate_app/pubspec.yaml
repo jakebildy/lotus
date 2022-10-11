@@ -125,8 +125,7 @@ flutter:
     - assets/ocean_background.jpeg
     - assets/turtle_selected.png
     - assets/turtle_unselected.png
-    - assets/turtles/0.png
-    - assets/turtles/locked.png
+    - assets/images/turtles/locked.png
     - assets/gems_chest.png
     - assets/sounds/water_sounds.wav
     - assets/streak_icon_yellow.png
@@ -137,28 +136,36 @@ flutter:
     - assets/egg_crack_2.png
     - assets/profile_selected.png
     - assets/profile_unselected.png
-    - assets/turtles/1.png
-    - assets/turtles/2.png
-    - assets/turtles/3.png
-    - assets/turtles/4.png
-    - assets/turtles/5.png
-    - assets/turtles/6.png
-    - assets/turtles/7.png
-    - assets/turtles/8.png
-    - assets/turtles/9.png
-    - assets/turtles/10.png
-    - assets/turtles/11.png
-    - assets/turtles/12.png
-    - assets/turtles/13.png
-    - assets/turtles/14.png
-    - assets/turtles/15.png
-    - assets/turtles/16.png
-    - assets/turtles/17.png
+    - assets/images/turtles/0.png
+    - assets/images/turtles/0.png
+    - assets/images/turtles/1.png
+    - assets/images/turtles/2.png
+    - assets/images/turtles/3.png
+    - assets/images/turtles/4.png
+    - assets/images/turtles/5.png
+    - assets/images/turtles/6.png
+    - assets/images/turtles/7.png
+    - assets/images/turtles/8.png
+    - assets/images/turtles/9.png
+    - assets/images/turtles/10.png
+    - assets/images/turtles/11.png
+    - assets/images/turtles/12.png
+    - assets/images/turtles/13.png
+    - assets/images/turtles/14.png
+    - assets/images/turtles/15.png
+    - assets/images/turtles/16.png
+    - assets/images/turtles/17.png
     - assets/logo.png
     - assets/sounds/egg_crack.wav
     - assets/bubble.png
     - assets/images/game_background.jpeg
     - assets/images/turtle_basic.png
+    - assets/images/game/sand.jpeg
+    - assets/images/game/water.png
+    - assets/images/game/lotus.png
+    - assets/images/game/bubble.png
+    - assets/images/game/lilypad.png
+    - assets/images/game/rock.png
 
 
 

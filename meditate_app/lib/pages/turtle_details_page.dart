@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
@@ -70,6 +71,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                   height: 300,
                   child: GestureDetector(
                     onTap: () {
+                      saveController.startGame(widget.id);
+                      HapticFeedback.lightImpact();
                       Get.to(TurtleGamePage(),
                           transition: Transition.circularReveal);
                     },
@@ -78,9 +81,10 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            Image.asset("assets/turtles/0.png"),
-                            widget.id > 0 && widget.id < TURTLES.length
-                                ? Image.asset("assets/turtles/${widget.id}.png")
+                            Image.asset("assets/images/turtles/0.png"),
+                            widget.id >= 0 && widget.id < TURTLES.length
+                                ? Image.asset(
+                                    "assets/images/turtles/${widget.id}.png")
                                 : Container(),
                           ],
                         )),

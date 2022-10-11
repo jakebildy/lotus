@@ -40,16 +40,16 @@ class TurtleCard extends StatelessWidget {
                   tag: "turtle-${id}",
                   child: Stack(
                     children: [
-                      Image.asset("assets/turtles/0.png"),
+                      Image.asset("assets/images/turtles/0.png"),
                       id > 0 && id < TURTLES.length
-                          ? Image.asset("assets/turtles/${id}.png")
+                          ? Image.asset("assets/images/turtles/${id}.png")
                           : Container(),
                     ],
                   ))
               : Stack(
                   alignment: Alignment.center,
                   children: [
-                    Image.asset("assets/turtles/locked.png"),
+                    Image.asset("assets/images/turtles/locked.png"),
                     Text(
                       "?",
                       style: TextStyle(

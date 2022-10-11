@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/api/index.dart' as Api;
+import 'package:ocarina/ocarina.dart';
 
 class SaveController extends GetxController {
   final storage = GetStorage();
@@ -328,5 +329,24 @@ class SaveController extends GetxController {
 
   Future<void> clearCookies() async {
     storage.remove(COOKIES_KEY);
+  }
+
+  RxInt selectedTurtle = 0.obs;
+  // final player = OcarinaPlayer(
+  //   asset: 'assets/sounds/water_sounds.wav',
+  //   loop: true,
+  //   volume: 0.8,
+  // );
+
+  //TODO: move to another controller
+  void startGame(int turtleID) {
+    selectedTurtle.value = turtleID;
+
+    // player.play();
+    update();
+  }
+
+  void stopGame() {
+    // player.stop();
   }
 }
