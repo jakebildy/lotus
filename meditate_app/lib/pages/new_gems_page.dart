@@ -6,6 +6,7 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:animated_counter/animated_counter.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NewGemsPage extends StatefulWidget {
   final int gemsAmount;
@@ -31,11 +32,21 @@ class _NewGemsPageState extends State<NewGemsPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
-              child: Container(
-                  height: MediaQuery.of(context).size.height / 4,
-                  child: Image.asset("assets/gems_chest.png")),
-            ),
+                padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                child: Stack(
+                  children: [
+                    Container(
+                        height: MediaQuery.of(context).size.height / 4,
+                        child: Image.asset("assets/gems_chest.png")),
+                    Shimmer.fromColors(
+                      baseColor: Colors.white12,
+                      highlightColor: Colors.white70,
+                      child: Container(
+                          height: MediaQuery.of(context).size.height / 4,
+                          child: Image.asset("assets/gems_overlay.png")),
+                    ),
+                  ],
+                )),
             SizedBox(
               height: MediaQuery.of(context).size.height / 40,
             ),

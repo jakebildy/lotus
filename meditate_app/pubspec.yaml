@@ -53,7 +53,8 @@ dependencies:
   intl: ^0.17.0
   flutter_spinkit: ^5.1.0
   flutter_bounce: ^1.1.0
-  adjust_sdk: ^4.32.0
+  appsflyer_sdk: ^6.8.2
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -157,6 +158,7 @@ flutter:
     - assets/logo.png
     - assets/sounds/egg_crack.wav
     - assets/bubble.png
+    - assets/gems_overlay.png
 
 
 

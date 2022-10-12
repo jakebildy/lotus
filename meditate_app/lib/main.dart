@@ -11,6 +11,7 @@ import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/loading_page.dart';
 import 'package:meditate_app/pages/shellevate.dart';
+import 'package:meditate_app/services/appsflyer_service.dart';
 import 'package:meditate_app/services/push_notification_service.dart';
 
 Future<void> main() async {
@@ -22,6 +23,7 @@ Future<void> main() async {
   }
   Get.put(SaveController());
   Get.put(PushNotificationService());
+  Get.put(AppsflyerService());
   Get.put(AuthController());
   runApp(const MyApp());
   SystemChannels.lifecycle.setMessageHandler((msg) {
