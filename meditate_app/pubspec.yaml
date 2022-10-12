@@ -136,6 +136,7 @@ flutter:
     - assets/egg_crack_2.png
     - assets/profile_selected.png
     - assets/profile_unselected.png
+    - assets/images/turtles/template.png
     - assets/images/turtles/0.png
     - assets/images/turtles/0.png
     - assets/images/turtles/1.png
@@ -166,6 +167,7 @@ flutter:
     - assets/images/game/bubble.png
     - assets/images/game/lilypad.png
     - assets/images/game/rock.png
+    - assets/images/game/fish.png
 
 
 

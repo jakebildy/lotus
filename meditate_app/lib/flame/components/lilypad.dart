@@ -1,6 +1,8 @@
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Lilypad extends SpriteComponent with HasGameRef, Tappable {
   static const speed = 0.25;
@@ -27,10 +29,11 @@ class Lilypad extends SpriteComponent with HasGameRef, Tappable {
     anchor = Anchor.center;
   }
 
-  // @override
-  // bool onTapUp(TapUpInfo info) {
-  //   removeFromParent();
-  //   info.handled = true;
-  //   return true;
-  // }
+  @override
+  bool onTapUp(TapUpInfo info) {
+    removeFromParent();
+    HapticFeedback.mediumImpact();
+    info.handled = true;
+    return true;
+  }
 }

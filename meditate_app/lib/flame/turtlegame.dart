@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/flame/components/bubble.dart';
+import 'package:meditate_app/flame/components/fish.dart';
 import 'package:meditate_app/flame/components/lilypad.dart';
 import 'package:meditate_app/flame/components/lotus.dart';
 import 'package:meditate_app/flame/components/rock.dart';
@@ -35,6 +36,12 @@ class TurtleGame extends FlameGame with HasTappables {
   @override
   Future<void> onLoad() async {
     add(_turtleWorld);
+
+    for (int i = 0; i < 100; i++) {
+      add(Fish(Vector2(math.Random().nextInt(2000).toDouble(),
+          math.Random().nextInt(20000).toDouble())));
+    }
+
     add(player);
     add(playerBase);
 
@@ -68,6 +75,7 @@ class TurtleGame extends FlameGame with HasTappables {
       //add(Square(touchPoint));
       player.angle = math.atan2(touchPoint.x - player.position.x,
           -1 * (touchPoint.y - player.position.y));
+
       player.add(
         MoveByEffect(
             Vector2(touchPoint.x - player.position.x,
