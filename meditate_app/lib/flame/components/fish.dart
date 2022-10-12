@@ -27,7 +27,7 @@ class Fish extends SpriteComponent with HasGameRef, Tappable {
     super.update(dt);
     directionResetCounter += 1;
 
-    if (directionResetCounter >= 200) {
+    if (directionResetCounter >= 200 + Random().nextInt(50)) {
       xOffset = Random().nextDouble() * 2 - 1;
       yOffset = Random().nextDouble() * 2 - 1;
       directionResetCounter = 0;
