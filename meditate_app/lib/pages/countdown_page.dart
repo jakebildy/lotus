@@ -12,6 +12,7 @@ import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:ocarina/ocarina.dart';
+import 'package:wakelock/wakelock.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -27,6 +28,7 @@ class CountdownPage extends StatefulWidget {
 class _CountdownPageState extends State<CountdownPage>
     with TickerProviderStateMixin {
   final CountDownController _controller = CountDownController();
+
   bool isPaused = false;
   bool isEnded = false;
 
@@ -52,6 +54,8 @@ class _CountdownPageState extends State<CountdownPage>
       playAmbience();
     }
 
+    print("⚡️ ENABLING WAKELOCK");
+    Wakelock.enable();
     super.initState();
   }
 
@@ -73,6 +77,8 @@ class _CountdownPageState extends State<CountdownPage>
     player.dispose();
     _timer.cancel();
     bell.dispose();
+    print("⚡️ DISABLING WAKELOCK");
+    Wakelock.disable();
     super.dispose();
   }
 
