@@ -21,7 +21,6 @@ class EggCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        HapticFeedback.mediumImpact();
         shakeKey.currentState?.shake();
         AudioPlayer egg = new AudioPlayer();
         egg.setVolume(10.0);
