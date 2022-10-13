@@ -26,6 +26,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAdvertisingAttributionReportEndpoint</key>
+	<string>https://appsflyer-skadnetwork.com/</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Shellevate needs access to your photo library so you can upload a profile picture.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
