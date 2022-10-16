@@ -1,4 +1,10 @@
 PODS:
+  - appsflyer_sdk (6.8.0):
+    - AppsFlyerFramework (= 6.8.0)
+    - Flutter
+  - AppsFlyerFramework (6.8.0):
+    - AppsFlyerFramework/Main (= 6.8.0)
+  - AppsFlyerFramework/Main (6.8.0)
   - audioplayers_darwin (0.0.1):
     - Flutter
   - Firebase/CoreOnly (9.5.0):
@@ -81,8 +87,11 @@ PODS:
     - Flutter
   - PromisesObjC (2.1.1)
   - TOCropViewController (2.6.1)
+  - wakelock (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
+  - appsflyer_sdk (from `.symlinks/plugins/appsflyer_sdk/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -93,9 +102,11 @@ DEPENDENCIES:
   - ocarina (from `.symlinks/plugins/ocarina/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
   trunk:
+    - AppsFlyerFramework
     - Firebase
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -109,6 +120,8 @@ SPEC REPOS:
     - TOCropViewController
 
 EXTERNAL SOURCES:
+  appsflyer_sdk:
+    :path: ".symlinks/plugins/appsflyer_sdk/ios"
   audioplayers_darwin:
     :path: ".symlinks/plugins/audioplayers_darwin/ios"
   firebase_core:
@@ -129,8 +142,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  wakelock:
+    :path: ".symlinks/plugins/wakelock/ios"
 
 SPEC CHECKSUMS:
+  appsflyer_sdk: 6d03341418c1acf261fdfde2eb27fdeaf04fa2c2
+  AppsFlyerFramework: a8de532f81b1d3c1dfc451f0ecded91ebb6a0e47
   audioplayers_darwin: 387322cb364026a1782298c982693b1b6aa9fa1b
   Firebase: 800f16f07af493d98d017446a315c27af0552f41
   firebase_core: 31872a49ffe0bf6f834e7044c7334e433536735a
@@ -152,6 +169,7 @@ SPEC CHECKSUMS:
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
+  wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: e583e1f139f19f52e26d9d908979c5f37beddd7f
 

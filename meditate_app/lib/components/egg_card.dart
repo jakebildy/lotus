@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/pages/new_gems_page.dart';
 
 class EggCard extends StatelessWidget {
   final int index;
@@ -20,7 +21,6 @@ class EggCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        HapticFeedback.mediumImpact();
         shakeKey.currentState?.shake();
         AudioPlayer egg = new AudioPlayer();
         egg.setVolume(10.0);

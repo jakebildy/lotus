@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/palette.dart';
@@ -6,13 +8,14 @@ import 'package:flutter/services.dart';
 
 class Lilypad extends SpriteComponent with HasGameRef, Tappable {
   static const speed = 0.25;
-  static const squareSize = 70.0;
 
   static Paint white = BasicPalette.white.paint();
   static Paint red = BasicPalette.red.paint();
   static Paint blue = BasicPalette.blue.paint();
 
-  Lilypad(Vector2 position) : super(position: position);
+  final double lilypadSize;
+
+  Lilypad(Vector2 position, this.lilypadSize) : super(position: position);
 
   @override
   void update(double dt) {
@@ -25,15 +28,22 @@ class Lilypad extends SpriteComponent with HasGameRef, Tappable {
   Future<void> onLoad() async {
     super.onLoad();
     sprite = await gameRef.loadSprite('game/lilypad.png');
-    size.setValues(squareSize, squareSize);
+    size.setValues(lilypadSize, lilypadSize);
     anchor = Anchor.center;
   }
 
   @override
   bool onTapUp(TapUpInfo info) {
-    removeFromParent();
+    size.setValues(0, 0);
     HapticFeedback.mediumImpact();
     info.handled = true;
+
+    popBack();
     return true;
+  }
+
+  Future<void> popBack() async {
+    await Future.delayed(Duration(seconds: Random().nextInt(2) + 1));
+    size.setValues(lilypadSize, lilypadSize);
   }
 }

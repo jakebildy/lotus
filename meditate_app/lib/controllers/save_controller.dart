@@ -83,7 +83,27 @@ class SaveController extends GetxController {
   }
 
   SaveController() {
+    // fixAnnoyingDataProblem();
     loadData();
+  }
+
+  //TODO: if last_meditated in the database is ahead, update the values
+  void fixAnnoyingDataProblem() {
+    // saveValue("streak", "29");
+    // saveValue("gems", "200");
+    // saveValue("total_minutes", "650");
+    // saveValue("total_eggs", "4");
+    // saveValue("eggs", "4");
+    // DateTime now = new DateTime.now();
+    // DateTime today = DateTime(now.year, now.month, now.day);
+    // saveValue("last_meditated", today.toIso8601String());
+    // saveValue('meditation-${today.day}-${today.month}-${today.year}', '20');
+    // saveValue('meditation-${today.day - 1}-${today.month}-${today.year}', '40');
+    // saveValue('meditation-${today.day - 2}-${today.month}-${today.year}', '23');
+    // saveValue('meditation-${today.day - 3}-${today.month}-${today.year}', '13');
+    // saveValue('meditation-${today.day - 4}-${today.month}-${today.year}', '22');
+    // saveValue('meditation-${today.day - 5}-${today.month}-${today.year}', '22');
+    // saveValue('meditation-${today.day - 6}-${today.month}-${today.year}', '22');
   }
 
   Future<void> uploadLocalData() async {

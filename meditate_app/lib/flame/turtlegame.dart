@@ -53,8 +53,10 @@ class TurtleGame extends FlameGame with HasTappables {
     }
 
     for (int i = 0; i < 100; i++) {
-      add(Lilypad(Vector2(math.Random().nextInt(2000).toDouble(),
-          math.Random().nextInt(20000).toDouble())));
+      add(Lilypad(
+          Vector2(math.Random().nextInt(2000).toDouble(),
+              math.Random().nextInt(20000).toDouble()),
+          (70 + math.Random().nextInt(30)).toDouble()));
     }
 
     camera.followComponent(cameraPoint);
