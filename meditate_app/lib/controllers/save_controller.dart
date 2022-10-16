@@ -86,7 +86,7 @@ class SaveController extends GetxController {
     loadData();
   }
 
-  //TODO: if last_meditated in the database is ahead, update thie values
+  //TODO: if last_meditated in the database is ahead, update the values
   void fixAnnoyingDataProblem() {
     // saveValue("streak", "29");
     // saveValue("gems", "200");
