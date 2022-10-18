@@ -5,6 +5,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flame/parallax.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ import 'package:meditate_app/flame/components/bubble.dart';
 import 'package:meditate_app/flame/components/fish.dart';
 import 'package:meditate_app/flame/components/lilypad.dart';
 import 'package:meditate_app/flame/components/lotus.dart';
+import 'package:meditate_app/flame/components/other_turtle.dart';
 import 'package:meditate_app/flame/components/rock.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
 
@@ -35,11 +37,17 @@ class TurtleGame extends FlameGame with HasTappables {
 
   @override
   Future<void> onLoad() async {
+    // FlameAudio.loopLongAudio('water_sounds.wav', volume: 0.5);
     add(_turtleWorld);
 
     for (int i = 0; i < 100; i++) {
-      add(Fish(Vector2(math.Random().nextInt(2000).toDouble(),
-          math.Random().nextInt(20000).toDouble())));
+      add(Fish(Vector2(math.Random().nextInt(10000).toDouble() - 5000,
+          math.Random().nextInt(10000).toDouble() - 5000)));
+    }
+
+    for (int i = 0; i < 10; i++) {
+      add(OtherTurtle(Vector2(math.Random().nextInt(10000).toDouble() - 5000,
+          math.Random().nextInt(10000).toDouble() - 5000)));
     }
 
     add(player);
@@ -47,15 +55,17 @@ class TurtleGame extends FlameGame with HasTappables {
 
     add(cameraPoint);
 
-    for (int i = 0; i < 100; i++) {
-      add(Rock(Vector2(math.Random().nextInt(2000).toDouble(),
-          math.Random().nextInt(20000).toDouble())));
-    }
+    // for (int i = 0; i < 100; i++) {
+    //   add(Rock(
+    //       Vector2(math.Random().nextInt(2000).toDouble(),
+    //           math.Random().nextInt(20000).toDouble()),
+    //       (70 + math.Random().nextInt(60)).toDouble()));
+    // }
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 400; i++) {
       add(Lilypad(
-          Vector2(math.Random().nextInt(2000).toDouble(),
-              math.Random().nextInt(20000).toDouble()),
+          Vector2(math.Random().nextInt(10000).toDouble() - 5000,
+              math.Random().nextInt(10000).toDouble() - 5000),
           (70 + math.Random().nextInt(30)).toDouble()));
     }
 
@@ -69,12 +79,23 @@ class TurtleGame extends FlameGame with HasTappables {
     super.onDetach();
   }
 
+  bool canMove = true;
+
+  debounceCanMove() async {
+    canMove = false;
+    await Future.delayed(Duration(milliseconds: 620));
+    canMove = true;
+  }
+
   @override
   void onTapUp(int id, TapUpInfo info) {
     super.onTapUp(id, info);
-    if (!info.handled) {
+
+    if (!info.handled && canMove) {
+      debounceCanMove();
+      FlameAudio.play('splash.wav');
       final touchPoint = info.eventPosition.game;
-      //add(Square(touchPoint));
+
       player.angle = math.atan2(touchPoint.x - player.position.x,
           -1 * (touchPoint.y - player.position.y));
 

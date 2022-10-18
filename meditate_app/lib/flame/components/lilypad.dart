@@ -27,14 +27,25 @@ class Lilypad extends SpriteComponent with HasGameRef, Tappable {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    sprite = await gameRef.loadSprite('game/lilypad.png');
+    int variant = Random().nextInt(5);
+    if (variant == 0) {
+      sprite = await gameRef.loadSprite('game/lilypad.png');
+    } else if (variant == 1) {
+      sprite = await gameRef.loadSprite('game/lilypad2.png');
+    } else if (variant == 2) {
+      sprite = await gameRef.loadSprite('game/lilypad3.png');
+    } else if (variant == 3) {
+      sprite = await gameRef.loadSprite('game/lilypad4.png');
+    } else {
+      sprite = await gameRef.loadSprite('game/lilypad5.png');
+    }
     size.setValues(lilypadSize, lilypadSize);
     anchor = Anchor.center;
   }
 
   @override
   bool onTapUp(TapUpInfo info) {
-    size.setValues(0, 0);
+    //  size.setValues(0, 0);
     HapticFeedback.mediumImpact();
     info.handled = true;
 
@@ -43,7 +54,7 @@ class Lilypad extends SpriteComponent with HasGameRef, Tappable {
   }
 
   Future<void> popBack() async {
-    await Future.delayed(Duration(seconds: Random().nextInt(2) + 1));
-    size.setValues(lilypadSize, lilypadSize);
+    //  await Future.delayed(Duration(seconds: Random().nextInt(2) + 1));
+    //size.setValues(lilypadSize, lilypadSize);
   }
 }

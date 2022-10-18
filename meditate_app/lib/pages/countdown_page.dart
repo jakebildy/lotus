@@ -49,7 +49,7 @@ class _CountdownPageState extends State<CountdownPage>
 
     bell = new AudioPlayer();
     bell.setVolume(10.0);
-    bell.play(AssetSource('sounds/tibetan_chime.wav'));
+    bell.play(AssetSource('audio/tibetan_chime.wav'));
     if (saveController.ambienceOn.value) {
       playAmbience();
     }
@@ -60,7 +60,7 @@ class _CountdownPageState extends State<CountdownPage>
   }
 
   final player = OcarinaPlayer(
-    asset: 'assets/sounds/water_sounds.wav',
+    asset: 'assets/audio/water_sounds.wav',
     loop: true,
     volume: 0.8,
   );
@@ -282,7 +282,7 @@ class _CountdownPageState extends State<CountdownPage>
                                               AudioPlayer();
                                           endingBell.setVolume(10.0);
                                           endingBell.play(AssetSource(
-                                              'sounds/tibetan_chime.wav'));
+                                              'audio/tibetan_chime.wav'));
                                           startTimer();
                                           setState(() {
                                             meditationComplete = true;

@@ -9,15 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math' as math;
 
-class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
+import 'package:meditate_app/util/turtles.dart';
+
+class OtherTurtle extends SpriteComponent with HasGameRef, Tappable {
   static const speed = 0.25;
-  static const squareSize = 70.0;
+  static const squareSize = 200.0;
 
   static Paint white = BasicPalette.white.paint();
   static Paint red = BasicPalette.red.paint();
   static Paint blue = BasicPalette.blue.paint();
 
-  Fish(Vector2 position) : super(position: position);
+  OtherTurtle(Vector2 position) : super(position: position);
 
   int directionResetCounter = 0;
   double xOffset = Random().nextDouble() * 2 - 1;
@@ -50,18 +52,21 @@ class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    final sprites = [
-      Sprite.load("game/fish.png"),
-      Sprite.load("game/fish2.png")
-    ];
-    animation = SpriteAnimation.spriteList(
-      await Future.wait(sprites),
-      stepTime: 0.4,
-    );
 
-    //sprite = await gameRef.loadSprite('game/fish.png');
-
+    sprite = await gameRef.loadSprite('turtles/template.png');
     size.setValues(squareSize, squareSize);
+
+    int turtleType = Random().nextInt(TURTLES.length);
+    Sprite overlay = await gameRef.loadSprite('turtles/${turtleType}.png');
+    add(SpriteComponent(sprite: overlay, size: Vector2(200, 200)));
+
     anchor = Anchor.center;
+  }
+
+  @override
+  bool onTapUp(TapUpInfo info) {
+    HapticFeedback.mediumImpact();
+    info.handled = true;
+    return true;
   }
 }

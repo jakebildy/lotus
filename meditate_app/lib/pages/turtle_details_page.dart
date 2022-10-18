@@ -214,16 +214,25 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(StatsPage());
-                            },
-                            child: Text(
-                              "View my Tier",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                          OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                side:
+                                    BorderSide(width: 1.0, color: Colors.teal),
+                                shape: StadiumBorder(),
+                              ),
+                              onPressed: () {
+                                saveController.startGame(widget.id);
+                                HapticFeedback.lightImpact();
+                                Get.to(TurtleGamePage(),
+                                    transition: Transition.circularReveal);
+                              },
+                              child: Text(
+                                "Go to Sea",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.tealAccent),
+                                textAlign: TextAlign.center,
+                              )),
                           SizedBox(
                             height: MediaQuery.of(context).size.height - 400,
                           )

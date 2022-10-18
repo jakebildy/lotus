@@ -57,6 +57,7 @@ dependencies:
   appsflyer_sdk: ^6.8.2
   shimmer: ^2.0.0
   wakelock: ^0.6.2
+  flame_audio: ^1.2.0
   data_connection_checker:
     git:
       url: https://github.com/chornthorn/data_connection_checker.git
@@ -113,7 +114,7 @@ flutter:
     - assets/streak_icon.png
     - assets/gem_icon.png
     - assets/enlightenment_cheatsheet.jpeg
-    - assets/sounds/tibetan_chime.wav
+    - assets/audio/tibetan_chime.wav
     - assets/lotus.png
     - assets/bonsai_circle.png
     - assets/water_vibes.webp
@@ -134,7 +135,7 @@ flutter:
     - assets/turtle_unselected.png
     - assets/images/turtles/locked.png
     - assets/gems_chest.png
-    - assets/sounds/water_sounds.wav
+    - assets/audio/water_sounds.wav
     - assets/streak_icon_yellow.png
     - assets/streak_icon_rainbow.png
     - assets/streak_icon_blue.png
@@ -164,7 +165,7 @@ flutter:
     - assets/images/turtles/16.png
     - assets/images/turtles/17.png
     - assets/logo.png
-    - assets/sounds/egg_crack.wav
+    - assets/audio/egg_crack.wav
     - assets/bubble.png
     - assets/images/game_background.jpeg
     - assets/images/turtle_basic.png
@@ -173,11 +174,17 @@ flutter:
     - assets/images/game/lotus.png
     - assets/images/game/bubble.png
     - assets/images/game/lilypad.png
+    - assets/images/game/lilypad2.png
+    - assets/images/game/lilypad3.png
+    - assets/images/game/lilypad4.png
+    - assets/images/game/lilypad5.png
     - assets/images/game/rock.png
     - assets/images/game/fish.png
+    - assets/images/game/fish2.png
     - assets/gems_overlay.png
     - assets/offline.png
-
+    - assets/lure.png
+    - assets/audio/splash.wav
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -16,7 +16,7 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   final int STREAK_FREEZE_PRICE = 80;
-
+  final int LURE_PRICE = 90;
   @override
   Widget build(BuildContext context) {
     var brightness = SchedulerBinding.instance.window.platformBrightness;
@@ -133,6 +133,114 @@ class _ShopPageState extends State<ShopPage> {
               ),
             ),
           ),
+
+          //Lure
+          // GestureDetector(
+          //   onTap: () {
+          //     if (save.gems.value >= STREAK_FREEZE_PRICE) {
+          //       if (save.streakFreezes < 2) {
+          //         print("Purchasing Streak Freeze!");
+          //         HapticFeedback.lightImpact();
+          //         save.updateGems(save.gems.value - STREAK_FREEZE_PRICE);
+          //         save.updateStreakFreezes(save.streakFreezes.value + 1);
+          //       } else {
+          //         ScaffoldMessenger.of(context).clearSnackBars();
+          //         Scaffold.of(context).showSnackBar(SnackBar(
+          //           backgroundColor: Colors.greenAccent,
+          //           key: UniqueKey(),
+          //           content: Text(
+          //               "You can only equip two Streak Freezes at a time!"),
+          //         ));
+          //       }
+          //     } else {
+          //       ScaffoldMessenger.of(context).clearSnackBars();
+          //       Scaffold.of(context).showSnackBar(SnackBar(
+          //         backgroundColor: Colors.greenAccent,
+          //         key: UniqueKey(),
+          //         content: Text("Earn more gems to purchase this!"),
+          //       ));
+          //     }
+          //   },
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: Container(
+          //       height: 150,
+          //       decoration: BoxDecoration(
+          //         color: isDarkMode ? Colors.black12 : Colors.white,
+          //         border: Border.all(
+          //           color: isDarkMode ? Colors.white24 : Colors.black26,
+          //           width: 2,
+          //         ),
+          //         borderRadius: BorderRadius.circular(20),
+          //       ),
+          //       child: Row(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Padding(
+          //             padding: EdgeInsets.symmetric(
+          //                 vertical: 15.0,
+          //                 horizontal: MediaQuery.of(context).size.width / 70),
+          //             child: Container(
+          //                 width: 60, child: Image.asset("assets/lure.png")),
+          //           ),
+          //           // SizedBox(
+          //           //   width: 10,
+          //           // ),
+          //           Padding(
+          //             padding: const EdgeInsets.all(15.0),
+          //             child: Column(
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               children: [
+          //                 Text(
+          //                   "Lure",
+          //                   style: TextStyle(
+          //                       fontWeight: FontWeight.bold, fontSize: 16),
+          //                 ),
+          //                 SizedBox(
+          //                   height: 5,
+          //                 ),
+          //                 Container(
+          //                     width: 200,
+          //                     child: Text(
+          //                         "Double your chance of finding an egg for 24 hours.")),
+          //                 SizedBox(
+          //                   height: 10,
+          //                 ),
+          //                 Row(
+          //                   children: [
+          //                     Container(
+          //                         height: 20,
+          //                         child: Image.asset("assets/gem_icon.png")),
+          //                     SizedBox(
+          //                       width: 5,
+          //                     ),
+          //                     Text(
+          //                       "${LURE_PRICE}",
+          //                       style: TextStyle(
+          //                           color: Colors.greenAccent,
+          //                           fontWeight: FontWeight.bold),
+          //                     ),
+          //                   ],
+          //                 ),
+          //                 SizedBox(
+          //                   height: 10,
+          //                 ),
+          //                 Text(
+          //                   "${save.streakFreezes} ACTIVE",
+          //                   style: TextStyle(
+          //                       color: save.streakFreezes.value > 0
+          //                           ? Colors.greenAccent
+          //                           : Colors.grey,
+          //                       fontWeight: FontWeight.bold),
+          //                 ),
+          //               ],
+          //             ),
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
