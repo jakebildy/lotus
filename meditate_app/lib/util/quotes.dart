@@ -29,6 +29,9 @@ List<String> quotes = [
   "“The happiness of your life depends upon the quality of your thoughts.” \n- Marcus Aurelius",
   "“It is not death that a man should fear, but he should fear never beginning to live.” \n- Marcus Aurelius",
   "“Our life is what our thoughts make it.” \n- Marcus Aurelius",
+  "“The best revenge is not to be like your enemy.” \n- Marcus Aurelius",
+  "“Your mind will take the shape of what you frequently hold in thought...” \n- Marcus Aurelius",
+  "“Very little is needed to make a happy life; it is all within yourself in your way of thinking.” \n- Marcus Aurelius",
 ];
 
 String randomQuote() {

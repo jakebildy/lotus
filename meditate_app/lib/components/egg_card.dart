@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
+import 'package:meditate_app/services/appsflyer_service.dart';
 
 class EggCard extends StatelessWidget {
   final int index;
@@ -35,6 +36,11 @@ class EggCard extends StatelessWidget {
                     ? "Meditate ${(3 - save.hatchProgressEggOne.value).toString()} more day${(3 - save.hatchProgressEggOne.value) > 1 ? "s" : ""} to hatch this egg!"
                     : "Meditate 3 days to hatch this egg!",
                 style: TextStyle(fontWeight: FontWeight.bold))));
+
+        //Log the event to AppsFlyer
+        AppsflyerService appsflyer = Get.find();
+        appsflyer.logEvent("EGG_TAPPED",
+            {"more_days": (3 - save.hatchProgressEggOne.value).toString()});
       },
       child: Card(
         child: Padding(

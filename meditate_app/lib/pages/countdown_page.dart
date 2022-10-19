@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/services/appsflyer_service.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:ocarina/ocarina.dart';
@@ -565,6 +566,14 @@ class _CountdownPageState extends State<CountdownPage>
                                             saveController.saveValue(
                                                 "last_meditated",
                                                 date.toIso8601String());
+
+                                            //Log the event to AppsFlyer
+                                            AppsflyerService appsflyer =
+                                                Get.find();
+                                            appsflyer.logEvent(
+                                                "MEDITATION_COMPLETE", {
+                                              "time": timeInMinutes.toString()
+                                            });
 
                                             _timer.cancel();
                                             Get.offAll(StreakCountPage(

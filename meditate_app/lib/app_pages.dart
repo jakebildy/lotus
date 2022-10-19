@@ -34,9 +34,9 @@ class _AppPagesState extends State<AppPages> {
     bool isDarkMode = true;
 
     return Obx(
-      () => authController.isLoading.value
-          ? LoadingPage()
-          : authController.user.value == DummyUser &&
+      () => Stack(
+        children: [
+          authController.user.value == DummyUser &&
                   network.offline.value == false
               ? Signup()
               : Scaffold(
@@ -249,6 +249,14 @@ class _AppPagesState extends State<AppPages> {
                             label: "Profile"),
                       ]),
                 ),
+          authController.isLoading.value ||
+                  authController.isLoadingPageNotDone.value
+              ? LoadingPage()
+              : Container(
+                  height: 0,
+                )
+        ],
+      ),
     );
   }
 }

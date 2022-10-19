@@ -5,6 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
+import 'package:meditate_app/components/meditation_heatmap.dart';
 import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
@@ -19,6 +20,7 @@ import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/services/appsflyer_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
@@ -301,6 +303,37 @@ class _ProfilePageState extends State<ProfilePage>
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        border: Border.all(
+                          color: Colors.white24,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "My Meditation Calendar",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          MeditationHeatmap(
+                            height: 240,
+                          ),
+                        ],
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
                       decoration: BoxDecoration(
                         color: Colors.black12,
                         border: Border.all(
@@ -395,6 +428,10 @@ class _ProfilePageState extends State<ProfilePage>
                           ),
                           GestureDetector(
                             onTap: () {
+                              //Log the event to AppsFlyer
+                              AppsflyerService appsflyer = Get.find();
+                              appsflyer.logEvent("ADD_FRIENDS_TAPPED", {});
+
                               Get.to(Search());
                             },
                             child: Container(

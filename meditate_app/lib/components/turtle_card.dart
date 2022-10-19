@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
+import 'package:meditate_app/services/appsflyer_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
@@ -20,11 +21,17 @@ class TurtleCard extends StatelessWidget {
       duration: Duration(milliseconds: 110),
       onPressed: () {
         if (unlocked) {
+          //Log the event to AppsFlyer
+          AppsflyerService appsflyer = Get.find();
+          appsflyer.logEvent("TURTLE_TAPPED", {});
           HapticFeedback.lightImpact();
           Get.to(TurtleDetailsPage(id: id), transition: Transition.downToUp);
         } else {
           HapticFeedback.lightImpact();
           ScaffoldMessenger.of(context).clearSnackBars();
+          //Log the event to AppsFlyer
+          AppsflyerService appsflyer = Get.find();
+          appsflyer.logEvent("LOCKED_TURTLE_TAPPED", {});
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               key: UniqueKey(),
               backgroundColor: tierColor(TURTLES[id].tier),

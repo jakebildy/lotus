@@ -28,6 +28,8 @@ class SaveController extends GetxController {
   RxInt defaultMeditationTime = 5.obs;
   RxBool ambienceOn = true.obs;
 
+  RxMap<DateTime, int> meditationHistory = new RxMap();
+
   void updateAmbience() {
     ambienceOn.value = !ambienceOn.value;
     saveValue("ambience_on", ambienceOn.value.toString());
@@ -131,6 +133,7 @@ class SaveController extends GetxController {
       }
       today = today.subtract(Duration(days: 1));
     }
+
     await Api.user.updateUserAttribute("meditationTimes", meditationTimes);
     await Api.user
         .updateUserAttribute("meditationTimesAsOf", date.toIso8601String());
@@ -194,6 +197,18 @@ class SaveController extends GetxController {
     }
 
     streak.value = loadStreak();
+
+    //Get the entire meditation history
+    DateTime rn = DateTime.now();
+    today = DateTime.now();
+    while (rn.difference(today).abs().inDays <= 365) {
+      DateTime simpleDate = new DateTime(today.year, today.month, today.day);
+      meditationHistory[simpleDate] = (double.tryParse(getValue(
+                  'meditation-${today.day}-${today.month}-${today.year}')) ??
+              0.0)
+          .round();
+      today = today.subtract(Duration(days: 1));
+    }
 
     update();
     print("Streak is set to ${streak.value}");

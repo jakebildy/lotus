@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/services/appsflyer_service.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
@@ -30,11 +31,21 @@ class _ShopPageState extends State<ShopPage> {
             onTap: () {
               if (save.gems.value >= STREAK_FREEZE_PRICE) {
                 if (save.streakFreezes < 2) {
+                  //Log the event to AppsFlyer
+                  AppsflyerService appsflyer = Get.find();
+                  appsflyer
+                      .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
+
                   print("Purchasing Streak Freeze!");
                   HapticFeedback.lightImpact();
                   save.updateGems(save.gems.value - STREAK_FREEZE_PRICE);
                   save.updateStreakFreezes(save.streakFreezes.value + 1);
                 } else {
+                  //Log the event to AppsFlyer
+                  AppsflyerService appsflyer = Get.find();
+                  appsflyer.logEvent(
+                      "STREAK_FREEZE_TAPPED", {"purchased": "false, >2"});
+
                   ScaffoldMessenger.of(context).clearSnackBars();
                   Scaffold.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.greenAccent,
@@ -44,6 +55,11 @@ class _ShopPageState extends State<ShopPage> {
                   ));
                 }
               } else {
+                //Log the event to AppsFlyer
+                AppsflyerService appsflyer = Get.find();
+                appsflyer
+                    .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "false"});
+
                 ScaffoldMessenger.of(context).clearSnackBars();
                 Scaffold.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.greenAccent,

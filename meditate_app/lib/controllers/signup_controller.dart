@@ -8,6 +8,8 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/version.dart';
 
 class SignupController extends GetxController {
   final TextEditingController email = TextEditingController();
@@ -33,6 +35,11 @@ class SignupController extends GetxController {
       print(user.id);
       AuthController authController = Get.find();
       authController.setUser(user);
+
+      //Log the event to AppsFlyer
+      AppsflyerService appsflyer = Get.find();
+      appsflyer.logEvent("SIGNUP", {"version": APP_VERSION});
+
       Get.offAll(AppPages());
     } catch (error, trace) {
       print("error signing up");
