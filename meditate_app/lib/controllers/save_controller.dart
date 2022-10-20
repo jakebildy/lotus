@@ -28,7 +28,7 @@ class SaveController extends GetxController {
   RxInt defaultMeditationTime = 5.obs;
   RxBool ambienceOn = true.obs;
 
-  RxMap<DateTime, int> meditationHistory = new RxMap();
+  RxMap<DateTime, int> meditationHistory = RxMap();
 
   void updateAmbience() {
     ambienceOn.value = !ambienceOn.value;
@@ -311,6 +311,20 @@ class SaveController extends GetxController {
 
     lastSevenDays[0] += amountNew;
 
+    DateTime simpleDate = new DateTime(today.year, today.month, today.day);
+    if (meditationHistory[simpleDate] != null) {
+      int oldValue = meditationHistory.remove(simpleDate) ?? 0;
+      meditationHistory.addAll({simpleDate: oldValue + amountNew});
+      print("updating meditation history!");
+      print(amountNew);
+      print(meditationHistory);
+    } else {
+      meditationHistory.addAll({simpleDate: amountNew});
+      print("updating meditation history 2");
+      print(amountNew);
+      print(meditationHistory);
+    }
+    meditationHistory.refresh();
     update();
   }
 

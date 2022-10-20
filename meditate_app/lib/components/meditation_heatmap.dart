@@ -8,10 +8,15 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/util/crescent_time.dart';
 import 'package:meditate_app/util/util.dart';
 
-class MeditationHeatmap extends StatelessWidget {
+class MeditationHeatmap extends StatefulWidget {
   final double height;
   MeditationHeatmap({Key? key, required this.height}) : super(key: key);
 
+  @override
+  State<MeditationHeatmap> createState() => _MeditationHeatmapState();
+}
+
+class _MeditationHeatmapState extends State<MeditationHeatmap> {
   @override
   Widget build(BuildContext context) {
     SaveController saveController = Get.find();
@@ -21,7 +26,7 @@ class MeditationHeatmap extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(10),
           width: double.infinity,
-          height: height,
+          height: widget.height,
           child: HeatMap(
             scrollable: true,
             defaultColor: Colors.white12,
@@ -37,6 +42,8 @@ class MeditationHeatmap extends StatelessWidget {
               60: Colors.purpleAccent,
             },
             onClick: (value) {
+              print(saveController.meditationHistory);
+              setState(() {});
               if (saveController.meditationHistory[value] != null) {
                 ScaffoldMessenger.of(context).clearSnackBars();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(

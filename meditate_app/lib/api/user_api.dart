@@ -69,9 +69,9 @@ class UserApi {
     final String body = jsonEncode(map);
     final response = await http.post(Api.https(url, "/api/user/update"),
         body: body, headers: Api.headers);
-    print("updateUserAttribute!!");
+    // print("updateUserAttribute!!");
     if (response.statusCode == 200) {
-      print(json.decode(response.body));
+      //   print(json.decode(response.body));
       return User.fromJson(json.decode(response.body));
     } else {
       throw (response.body);
