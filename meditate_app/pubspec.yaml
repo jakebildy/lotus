@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.7+14
+version: 2.0.8+15
 
 environment:
   sdk: ">=2.17.5 <3.0.0"
@@ -59,6 +59,7 @@ dependencies:
   wakelock: ^0.6.2
   flame_audio: ^1.2.0
   cool_alert: ^1.1.0
+  flutter_heatmap_calendar: ^1.0.5
   data_connection_checker:
     git:
       url: https://github.com/chornthorn/data_connection_checker.git

@@ -63,7 +63,7 @@ class AuthController extends GetxController {
   final Rx<String> displayName = "".obs;
 
   final Rx<bool> isLoading = false.obs;
-
+  final Rx<bool> isLoadingPageNotDone = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -122,8 +122,8 @@ class AuthController extends GetxController {
     await Future.delayed(Duration(seconds: 4));
     isLoading.value = false;
     update();
-    Get.offAll(AppPages(),
-        transition: Transition.fadeIn, duration: Duration(seconds: 2));
+    // Get.offAll(AppPages(),
+    //     transition: Transition.fadeIn, duration: Duration(seconds: 2));
   }
 
   void refreshUser() async {

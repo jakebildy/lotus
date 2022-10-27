@@ -102,7 +102,7 @@ class StylistsSearchResults extends StatelessWidget {
       () => searchController.queryValue.value == ''
           ? Container(
               height: 176,
-              child: Center(child: Text("Search for friends.")),
+              child: Center(child: Text("Search for friends!")),
             )
           : Container(
               child: Column(

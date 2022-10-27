@@ -14,6 +14,6 @@ class Shellevate extends StatelessWidget {
   Widget build(BuildContext context) {
     AuthController auth = Get.find();
 
-    return LoadingPage();
+    return AppPages();
   }
 }
