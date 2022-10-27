@@ -36,7 +36,7 @@ class _ShopPageState extends State<ShopPage> {
                   save.updateStreakFreezes(save.streakFreezes.value + 1);
                 } else {
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.greenAccent,
                     key: UniqueKey(),
                     content: Text(
@@ -45,7 +45,7 @@ class _ShopPageState extends State<ShopPage> {
                 }
               } else {
                 ScaffoldMessenger.of(context).clearSnackBars();
-                Scaffold.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.greenAccent,
                   key: UniqueKey(),
                   content: Text("Earn more gems to purchase this!"),

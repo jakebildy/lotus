@@ -17,6 +17,7 @@ import 'package:meditate_app/flame/components/lotus.dart';
 import 'package:meditate_app/flame/components/other_turtle.dart';
 import 'package:meditate_app/flame/components/rock.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 class TurtleGame extends FlameGame with HasTappables {
   late Sprite background;
@@ -46,8 +47,10 @@ class TurtleGame extends FlameGame with HasTappables {
     }
 
     for (int i = 0; i < 10; i++) {
-      add(OtherTurtle(Vector2(math.Random().nextInt(10000).toDouble() - 5000,
-          math.Random().nextInt(10000).toDouble() - 5000)));
+      add(OtherTurtle(
+        Vector2(math.Random().nextInt(10000).toDouble() - 5000,
+            math.Random().nextInt(10000).toDouble() - 5000),
+      ));
     }
 
     add(player);
@@ -163,6 +166,10 @@ class Player extends SpriteComponent with HasGameRef, Tappable {
         sprite = await gameRef.loadSprite('turtles/template.png');
       } else {
         sprite = await gameRef.loadSprite('turtles/${save.selectedTurtle}.png');
+        paint = Paint()
+          ..colorFilter = ColorFilter.mode(
+              TURTLE_COLORS[save.turtleColor.value].withOpacity(0.4),
+              BlendMode.srcATop);
       }
     } else {
       sprite = await gameRef.loadSprite('turtle_basic.png');
@@ -212,7 +219,21 @@ class CameraPoint extends SpriteComponent with HasGameRef, Tappable {
   // }
 }
 
-class TurtleGamePage extends StatelessWidget {
+class TurtleGamePage extends StatefulWidget {
+  const TurtleGamePage({super.key});
+
+  @override
+  State<TurtleGamePage> createState() => _TurtleGamePageState();
+}
+
+class _TurtleGamePageState extends State<TurtleGamePage> {
+  @override
+  void initState() {
+    SaveController saveController = Get.find();
+    //todo: pass the context so we can do alerts
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     //TODO: add UI overlay on top via Stack

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:meditate_app/components/egg_card.dart';
 import 'package:meditate_app/components/turtle_card.dart';
+import 'package:meditate_app/components/turtle_category.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
@@ -66,17 +67,16 @@ class _TurtlesPageState extends State<TurtlesPage> {
           body: TabBarView(
             children: [
               GridView.count(
-                  crossAxisCount: 3,
+                  crossAxisCount: 1,
+                  childAspectRatio: 4,
                   crossAxisSpacing: 4.0,
                   mainAxisSpacing: 8.0,
                   children: List.generate(TURTLES.length, (index) {
                     return Center(
-                      child: Obx(
-                        () => TurtleCard(
-                            unlocked: saveController.unlockedTurtles[index] >
-                                0, //FOR TESTING PURPOSES ONLY
-                            id: index),
-                      ),
+                      child: TurtleCategory(
+                          unlocked: saveController.unlockedTurtles[index] >
+                              0, //FOR TESTING PURPOSES ONLY --> TODO: readd Obx
+                          id: index),
                     );
                   })),
               saveController.eggs == 0

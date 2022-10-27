@@ -14,7 +14,9 @@ import 'package:meditate_app/util/turtles.dart';
 
 class TurtleDetailsPage extends StatefulWidget {
   final int id;
-  const TurtleDetailsPage({Key? key, required this.id}) : super(key: key);
+  final int color;
+  const TurtleDetailsPage({Key? key, required this.id, required this.color})
+      : super(key: key);
 
   @override
   State<TurtleDetailsPage> createState() => _TurtleDetailsPageState();
@@ -71,7 +73,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                   height: 300,
                   child: GestureDetector(
                     onTap: () {
-                      saveController.startGame(widget.id);
+                      saveController.startGame(widget.id, widget.color);
                       HapticFeedback.lightImpact();
                       Get.to(TurtleGamePage(),
                           transition: Transition.circularReveal);
@@ -83,8 +85,13 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                           children: [
                             Image.asset("assets/images/turtles/0.png"),
                             widget.id >= 0 && widget.id < TURTLES.length
-                                ? Image.asset(
-                                    "assets/images/turtles/${widget.id}.png")
+                                ? ColorFiltered(
+                                    colorFilter: ColorFilter.mode(
+                                        TURTLE_COLORS[widget.color]
+                                            .withOpacity(0.4),
+                                        BlendMode.srcATop),
+                                    child: Image.asset(
+                                        "assets/images/turtles/${widget.id}.png"))
                                 : Container(),
                           ],
                         )),
@@ -105,7 +112,9 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              TURTLES[widget.id].name,
+                              TURTLE_COLORS_NAME[widget.color] +
+                                  " " +
+                                  TURTLES[widget.id].name,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
@@ -221,7 +230,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                 shape: StadiumBorder(),
                               ),
                               onPressed: () {
-                                saveController.startGame(widget.id);
+                                saveController.startGame(
+                                    widget.id, widget.color);
                                 HapticFeedback.lightImpact();
                                 Get.to(TurtleGamePage(),
                                     transition: Transition.circularReveal);

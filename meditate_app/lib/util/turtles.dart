@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 
@@ -15,6 +16,43 @@ class Turtle {
   const Turtle({required this.name, required this.rarity, required this.tier})
       : super();
 }
+
+const List<Color> TURTLE_COLORS = [
+  Colors.brown,
+  Colors.red,
+  Colors.deepOrange,
+  Colors.orange,
+  Colors.yellow,
+  Colors.lime,
+  Colors.green,
+  Colors.teal,
+  Colors.cyan,
+  Colors.blue,
+  Colors.indigo,
+  Colors.deepPurple,
+  Colors.purple,
+  Colors.pink,
+  Colors.black,
+  Colors.grey,
+];
+const List<String> TURTLE_COLORS_NAME = [
+  "Brown",
+  "Red",
+  "Sunset",
+  "Orange",
+  "Yellow",
+  "Lime",
+  "Green",
+  "Teal",
+  "Cyan",
+  "Blue",
+  "Indigo",
+  "Royal",
+  "Purple",
+  "Pink",
+  "Black",
+  "Gray",
+];
 
 const List<Turtle> TURTLES = [
   Turtle(name: "Brownshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),

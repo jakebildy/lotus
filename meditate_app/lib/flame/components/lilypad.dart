@@ -6,7 +6,7 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Lilypad extends SpriteComponent with HasGameRef, Tappable {
+class Lilypad extends SpriteComponent with HasGameRef {
   static const speed = 0.25;
 
   static Paint white = BasicPalette.white.paint();
@@ -43,15 +43,15 @@ class Lilypad extends SpriteComponent with HasGameRef, Tappable {
     anchor = Anchor.center;
   }
 
-  @override
-  bool onTapUp(TapUpInfo info) {
-    //  size.setValues(0, 0);
-    HapticFeedback.mediumImpact();
-    info.handled = true;
+  // @override
+  // bool onTapUp(TapUpInfo info) {
+  //   //  size.setValues(0, 0);
+  //   HapticFeedback.mediumImpact();
+  //   info.handled = true;
 
-    popBack();
-    return true;
-  }
+  //   popBack();
+  //   return true;
+  // }
 
   Future<void> popBack() async {
     //  await Future.delayed(Duration(seconds: Random().nextInt(2) + 1));

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
@@ -14,10 +15,6 @@ import 'package:meditate_app/util/turtles.dart';
 class OtherTurtle extends SpriteComponent with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 200.0;
-
-  static Paint white = BasicPalette.white.paint();
-  static Paint red = BasicPalette.red.paint();
-  static Paint blue = BasicPalette.blue.paint();
 
   OtherTurtle(Vector2 position) : super(position: position);
 
@@ -57,8 +54,16 @@ class OtherTurtle extends SpriteComponent with HasGameRef, Tappable {
     size.setValues(squareSize, squareSize);
 
     int turtleType = Random().nextInt(TURTLES.length);
-    Sprite overlay = await gameRef.loadSprite('turtles/${turtleType}.png');
-    add(SpriteComponent(sprite: overlay, size: Vector2(200, 200)));
+    int turtleColor = Random().nextInt(TURTLE_COLORS.length);
+    Sprite overlay = await gameRef.loadSprite(
+      'turtles/${turtleType}.png',
+    );
+    Paint newPaint = Paint()
+      ..colorFilter = ColorFilter.mode(
+          TURTLE_COLORS[turtleColor].withOpacity(0.4), BlendMode.srcATop);
+
+    add(SpriteComponent(
+        sprite: overlay, size: Vector2(200, 200), paint: newPaint));
 
     anchor = Anchor.center;
   }
@@ -66,6 +71,11 @@ class OtherTurtle extends SpriteComponent with HasGameRef, Tappable {
   @override
   bool onTapUp(TapUpInfo info) {
     HapticFeedback.mediumImpact();
+    // CoolAlert.show(
+    //   context: context,
+    //   type: CoolAlertType.warning,
+    //   text: 'Breed your turtle with this one?',
+    // );
     info.handled = true;
     return true;
   }

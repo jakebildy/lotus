@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
@@ -352,6 +353,7 @@ class SaveController extends GetxController {
   }
 
   RxInt selectedTurtle = 0.obs;
+  RxInt turtleColor = 0.obs;
   // final player = OcarinaPlayer(
   //   asset: 'assets/sounds/water_sounds.wav',
   //   loop: true,
@@ -359,9 +361,9 @@ class SaveController extends GetxController {
   // );
 
   //TODO: move to another controller
-  void startGame(int turtleID) {
+  void startGame(int turtleID, int turtleColorNew) {
     selectedTurtle.value = turtleID;
-
+    turtleColor.value = turtleColorNew;
     // player.play();
     update();
   }
