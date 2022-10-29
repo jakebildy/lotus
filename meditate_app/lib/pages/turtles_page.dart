@@ -44,7 +44,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                          "${saveController.unlockedTurtles.where((p0) => p0 > 0).toList().length}/${TURTLES.length}",
+                          "${saveController.unlockedTurtles.where((p0) => p0 > 0).toList().length}/${TURTLES.length * TURTLE_COLORS.length}",
                           style: TextStyle(fontSize: 12)),
                     ],
                   ),

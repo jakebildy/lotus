@@ -60,7 +60,7 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Image.asset("assets/images/turtles/0.png"),
+                      Image.asset("assets/images/turtles/swim/swim1.png"),
                       Image.asset(
                           "assets/images/turtles/${widget.turtleToHatch}.png"),
                     ],

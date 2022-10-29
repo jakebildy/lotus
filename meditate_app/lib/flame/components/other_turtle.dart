@@ -8,11 +8,14 @@ import 'package:flame/palette.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/pages/new_egg_page.dart';
 import 'dart:math' as math;
 
 import 'package:meditate_app/util/turtles.dart';
 
-class OtherTurtle extends SpriteComponent with HasGameRef, Tappable {
+class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 200.0;
 
@@ -46,15 +49,24 @@ class OtherTurtle extends SpriteComponent with HasGameRef, Tappable {
     // angle %= 2 * math.pi;
   }
 
+  late int turtleColor;
+  late int turtleType;
   @override
   Future<void> onLoad() async {
     super.onLoad();
 
-    sprite = await gameRef.loadSprite('turtles/template.png');
+    final sprites = [
+      Sprite.load("turtles/swim/swim1.png"),
+      Sprite.load("turtles/swim/swim2.png")
+    ];
+    animation = SpriteAnimation.spriteList(
+      await Future.wait(sprites),
+      stepTime: 0.4 + Random().nextDouble() / 10,
+    );
     size.setValues(squareSize, squareSize);
 
-    int turtleType = Random().nextInt(TURTLES.length);
-    int turtleColor = Random().nextInt(TURTLE_COLORS.length);
+    turtleType = Random().nextInt(TURTLES.length);
+    turtleColor = Random().nextInt(TURTLE_COLORS.length);
     Sprite overlay = await gameRef.loadSprite(
       'turtles/${turtleType}.png',
     );
@@ -71,12 +83,53 @@ class OtherTurtle extends SpriteComponent with HasGameRef, Tappable {
   @override
   bool onTapUp(TapUpInfo info) {
     HapticFeedback.mediumImpact();
-    // CoolAlert.show(
-    //   context: context,
-    //   type: CoolAlertType.warning,
-    //   text: 'Breed your turtle with this one?',
-    // );
+    SaveController saveController = Get.find();
+    if (saveController.localContext != null) {
+      _showMyDialog(turtleColor, turtleType);
+    }
     info.handled = true;
     return true;
   }
+}
+
+Future<void> _showMyDialog(int turtleColor, int turtleType) async {
+  SaveController saveController = Get.find();
+  return showDialog<void>(
+    context: saveController.localContext!,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        //  title: const Text('AlertDialog Title'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(
+                  'Breed your ${TURTLE_COLORS_NAME[saveController.turtleColor.value]} ${TURTLES[saveController.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for the cost of 50 gems?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text(
+              'Cancel',
+              style: TextStyle(color: Colors.grey),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text(
+              'Confirm',
+              style: TextStyle(color: Colors.tealAccent),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Get.to(NewEggPage());
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

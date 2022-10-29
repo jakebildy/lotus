@@ -73,7 +73,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                   height: 300,
                   child: GestureDetector(
                     onTap: () {
-                      saveController.startGame(widget.id, widget.color);
+                      saveController.startGame(
+                          widget.id, widget.color, context);
                       HapticFeedback.lightImpact();
                       Get.to(TurtleGamePage(),
                           transition: Transition.circularReveal);
@@ -83,7 +84,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            Image.asset("assets/images/turtles/0.png"),
+                            Image.asset("assets/images/turtles/swim/swim1.png"),
                             widget.id >= 0 && widget.id < TURTLES.length
                                 ? ColorFiltered(
                                     colorFilter: ColorFilter.mode(
@@ -231,13 +232,13 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                               ),
                               onPressed: () {
                                 saveController.startGame(
-                                    widget.id, widget.color);
+                                    widget.id, widget.color, context);
                                 HapticFeedback.lightImpact();
                                 Get.to(TurtleGamePage(),
                                     transition: Transition.circularReveal);
                               },
                               child: Text(
-                                "Go to Sea",
+                                "Go to Shallows",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.tealAccent),

@@ -44,9 +44,14 @@ class TurtleCategory extends StatelessWidget {
                   tag: "turtle-${id}",
                   child: Stack(
                     children: [
-                      Image.asset("assets/images/turtles/0.png"),
-                      id > 0 && id < TURTLES.length
-                          ? Image.asset("assets/images/turtles/${id}.png")
+                      Image.asset("assets/images/turtles/swim/swim1.png"),
+                      id >= 0 && id < TURTLES.length
+                          ? ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  TURTLE_COLORS[2].withOpacity(0.4),
+                                  BlendMode.srcATop),
+                              child: Image.asset(
+                                  "assets/images/turtles/${id}.png"))
                           : Container(),
                     ],
                   ))

@@ -147,7 +147,8 @@ flutter:
     - assets/profile_selected.png
     - assets/profile_unselected.png
     - assets/images/turtles/template.png
-    - assets/images/turtles/0.png
+    - assets/images/turtles/swim/swim1.png
+    - assets/images/turtles/swim/swim2.png
     - assets/images/turtles/0.png
     - assets/images/turtles/1.png
     - assets/images/turtles/2.png

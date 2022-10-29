@@ -55,15 +55,15 @@ const List<String> TURTLE_COLORS_NAME = [
 ];
 
 const List<Turtle> TURTLES = [
-  Turtle(name: "Brownshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Greenshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  Turtle(name: "Swamp Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  Turtle(name: "Rockshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(name: "Hexagon Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
   Turtle(name: "Smoothback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(name: "Obsidian Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
-  Turtle(name: "Floragreen Turtle", rarity: Rarity.RARE, tier: Tier.RAINBOW),
+  Turtle(name: "Flora Turtle", rarity: Rarity.RARE, tier: Tier.RAINBOW),
   Turtle(name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.YELLOW),
-  Turtle(name: "Lavender Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  Turtle(name: "Swirl Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(name: "Sun Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
   Turtle(name: "Red Giant Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
   Turtle(name: "White Dwarf Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),

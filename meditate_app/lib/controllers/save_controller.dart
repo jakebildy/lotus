@@ -383,6 +383,7 @@ class SaveController extends GetxController {
 
   RxInt selectedTurtle = 0.obs;
   RxInt turtleColor = 0.obs;
+  BuildContext? localContext;
   // final player = OcarinaPlayer(
   //   asset: 'assets/sounds/water_sounds.wav',
   //   loop: true,
@@ -390,10 +391,10 @@ class SaveController extends GetxController {
   // );
 
   //TODO: move to another controller
-  void startGame(int turtleID, int turtleColorNew) {
+  void startGame(int turtleID, int turtleColorNew, BuildContext context) {
     selectedTurtle.value = turtleID;
     turtleColor.value = turtleColorNew;
-    // player.play();
+    localContext = context;
     update();
   }
 

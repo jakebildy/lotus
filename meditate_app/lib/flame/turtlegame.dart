@@ -22,7 +22,7 @@ import 'package:meditate_app/util/turtles.dart';
 class TurtleGame extends FlameGame with HasTappables {
   late Sprite background;
   TurtleWorld _turtleWorld = TurtleWorld();
-  Player playerBase = Player(
+  PlayerBase playerBase = PlayerBase(
       Vector2(
         400,
         400,
@@ -46,15 +46,15 @@ class TurtleGame extends FlameGame with HasTappables {
           math.Random().nextInt(10000).toDouble() - 5000)));
     }
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 25; i++) {
       add(OtherTurtle(
         Vector2(math.Random().nextInt(10000).toDouble() - 5000,
             math.Random().nextInt(10000).toDouble() - 5000),
       ));
     }
 
-    add(player);
     add(playerBase);
+    add(player);
 
     add(cameraPoint);
 
@@ -161,19 +161,59 @@ class Player extends SpriteComponent with HasGameRef, Tappable {
   Future<void> onLoad() async {
     super.onLoad();
     SaveController save = Get.find();
-    if (isBase) {
-      if (save.selectedTurtle == 0) {
-        sprite = await gameRef.loadSprite('turtles/template.png');
-      } else {
-        sprite = await gameRef.loadSprite('turtles/${save.selectedTurtle}.png');
-        paint = Paint()
-          ..colorFilter = ColorFilter.mode(
-              TURTLE_COLORS[save.turtleColor.value].withOpacity(0.4),
-              BlendMode.srcATop);
-      }
+    if (!isBase) {
+      sprite = await gameRef.loadSprite('turtles/${save.selectedTurtle}.png');
+      paint = Paint()
+        ..colorFilter = ColorFilter.mode(
+            TURTLE_COLORS[save.turtleColor.value].withOpacity(0.4),
+            BlendMode.srcATop);
     } else {
       sprite = await gameRef.loadSprite('turtle_basic.png');
     }
+    size.setValues(squareSize, squareSize);
+    anchor = Anchor.center;
+  }
+
+  // @override
+  // bool onTapUp(TapUpInfo info) {
+  //   removeFromParent();
+  //   info.handled = true;
+  //   return true;
+  // }
+}
+
+class PlayerBase extends SpriteAnimationComponent with HasGameRef, Tappable {
+  static const speed = 0.25;
+  static const squareSize = 200.0;
+
+  static Paint white = BasicPalette.white.paint();
+  static Paint red = BasicPalette.red.paint();
+  static Paint blue = BasicPalette.blue.paint();
+
+  bool isBase = false;
+
+  PlayerBase(Vector2 position, this.isBase) : super(position: position);
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    // angle += speed * dt;
+    // angle %= 2 * math.pi;
+  }
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    SaveController save = Get.find();
+
+    final sprites = [
+      Sprite.load("turtles/swim/swim1.png"),
+      Sprite.load("turtles/swim/swim2.png")
+    ];
+    animation = SpriteAnimation.spriteList(
+      await Future.wait(sprites),
+      stepTime: 0.4,
+    );
     size.setValues(squareSize, squareSize);
     anchor = Anchor.center;
   }
