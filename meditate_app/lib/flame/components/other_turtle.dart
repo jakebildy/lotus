@@ -14,6 +14,7 @@ import 'package:meditate_app/pages/new_egg_page.dart';
 import 'dart:math' as math;
 
 import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/util/util.dart';
 
 class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
@@ -94,42 +95,74 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
 
 Future<void> _showMyDialog(int turtleColor, int turtleType) async {
   SaveController saveController = Get.find();
-  return showDialog<void>(
-    context: saveController.localContext!,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        //  title: const Text('AlertDialog Title'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(
-                  'Breed your ${TURTLE_COLORS_NAME[saveController.turtleColor.value]} ${TURTLES[saveController.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for the cost of 50 gems?'),
+
+  if (TURTLES[turtleType].tier.index > saveController.streakTier().index) {
+    return showDialog<void>(
+        context: saveController.localContext!,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            //  title: const Text('AlertDialog Title'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text(
+                      'You need to be a ${tierReadable(TURTLES[turtleType].tier)} to breed with this turtle!'),
+                  Text('\nIncrease your level by meditating more.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text(
+                  'Okay',
+                  style: TextStyle(color: Colors.tealAccent),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
             ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text(
-              'Cancel',
-              style: TextStyle(color: Colors.grey),
+          );
+        });
+  } else {
+    return showDialog<void>(
+      context: saveController.localContext!,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          //  title: const Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                    'Breed your ${TURTLE_COLORS_NAME[saveController.turtleColor.value]} ${TURTLES[saveController.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for the cost of 50 gems?'),
+              ],
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
           ),
-          TextButton(
-            child: const Text(
-              'Confirm',
-              style: TextStyle(color: Colors.tealAccent),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.grey),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-              Get.to(NewEggPage());
-            },
-          ),
-        ],
-      );
-    },
-  );
+            TextButton(
+              child: const Text(
+                'Confirm',
+                style: TextStyle(color: Colors.tealAccent),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Get.to(NewEggPage());
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

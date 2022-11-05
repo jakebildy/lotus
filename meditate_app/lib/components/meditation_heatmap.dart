@@ -33,13 +33,13 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
             colorMode: ColorMode.color,
             datasets: saveController.meditationHistory.value,
             colorsets: const {
-              5: Color.fromARGB(255, 173, 105, 2),
-              10: Color.fromARGB(255, 219, 131, 0),
-              15: Colors.orange,
-              20: Color.fromARGB(255, 255, 187, 0),
-              30: Colors.yellow,
-              40: Colors.blue,
-              60: Colors.purpleAccent,
+              // 5: Color.fromARGB(255, 173, 105, 2),
+              // 10: Color.fromARGB(255, 219, 131, 0),
+              5: Colors.orange,
+              // 10: Color.fromARGB(255, 255, 187, 0),
+              10: Colors.yellow,
+              20: Colors.blue,
+              40: Colors.pinkAccent,
             },
             onClick: (value) {
               print(saveController.meditationHistory);

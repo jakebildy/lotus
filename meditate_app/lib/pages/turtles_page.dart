@@ -72,7 +72,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                     shrinkWrap: true,
                     physics: ClampingScrollPhysics(),
                     children: List.generate(TURTLES.length, (index) {
-                      return saveController.unlockedTurtles[index] > 0
+                      return saveController.unlockedTurtles[index] == 0
                           ? Container()
                           : Padding(
                               padding:

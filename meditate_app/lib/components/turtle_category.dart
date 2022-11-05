@@ -72,29 +72,37 @@ class TurtleCategory extends StatelessWidget {
                     )
                   ],
                 ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text((TURTLES[id].name.split(" ")[0]),
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-                Text("${unlocked ? '1' : '0'} of ${TURTLE_COLORS.length}",
-                    style: TextStyle(fontSize: 14))
-              ],
-            ),
-          ),
           SizedBox(
-            width: 60,
+            width: 10,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text((TURTLES[id].name.split(" ")[0]),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                  Text("${unlocked ? '1' : '0'} of ${TURTLE_COLORS.length}",
+                      style: TextStyle(fontSize: 14))
+                ],
+              ),
+            ),
           ),
           Text(
               "${((unlocked ? 1 : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(1)}%",
               style: TextStyle(
                   fontSize: 17,
                   color: unlocked ? Colors.tealAccent : Colors.grey)),
-          Icon(Icons.arrow_forward_ios)
+          SizedBox(
+            width: 10,
+          ),
+          Icon(Icons.arrow_forward_ios),
+          SizedBox(
+            width: 10,
+          ),
         ],
       )),
     );

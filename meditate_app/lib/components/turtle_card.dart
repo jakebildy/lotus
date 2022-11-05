@@ -75,24 +75,29 @@ class TurtleCard extends StatelessWidget {
                     )
                   ],
                 ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text((TURTLE_COLORS_NAME[color] + " " + TURTLES[id].name),
-                    style:
-                        TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-                Text("0 found",
-                    style: TextStyle(fontSize: 14, color: Colors.grey))
-              ],
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text((TURTLE_COLORS_NAME[color] + " " + TURTLES[id].name),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
+                  Text("0 found",
+                      style: TextStyle(fontSize: 14, color: Colors.grey))
+                ],
+              ),
             ),
           ),
+          Icon(Icons.arrow_forward_ios),
           SizedBox(
-            width: 60,
-          ),
-          Icon(Icons.arrow_forward_ios)
+            width: 10,
+          )
         ],
       )),
     );
