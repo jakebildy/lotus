@@ -8,6 +8,7 @@ import 'package:meditate_app/pages/turtle_category_page.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TurtleCategory extends StatelessWidget {
   final int id;
@@ -48,11 +49,14 @@ class TurtleCategory extends StatelessWidget {
                       id >= 0 && id < TURTLES.length
                           ? ColorFiltered(
                               colorFilter: ColorFilter.mode(
-                                  TURTLE_COLORS[2].withOpacity(0.4),
+                                  TURTLE_COLORS[0].withOpacity(0.5),
                                   BlendMode.srcATop),
                               child: Image.asset(
                                   "assets/images/turtles/${id}.png"))
                           : Container(),
+                      id != 10
+                          ? Container()
+                          : Image.asset("assets/images/turtles/10_overlay.png"),
                     ],
                   ))
               : Stack(
@@ -85,7 +89,11 @@ class TurtleCategory extends StatelessWidget {
           SizedBox(
             width: 60,
           ),
-          Text("14%", style: TextStyle(fontSize: 14, color: Colors.tealAccent)),
+          Text(
+              "${((unlocked ? 1 : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(1)}%",
+              style: TextStyle(
+                  fontSize: 17,
+                  color: unlocked ? Colors.tealAccent : Colors.grey)),
           Icon(Icons.arrow_forward_ios)
         ],
       )),

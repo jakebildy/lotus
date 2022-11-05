@@ -11,6 +11,7 @@ import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TurtleDetailsPage extends StatefulWidget {
   final int id;
@@ -89,11 +90,15 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                 ? ColorFiltered(
                                     colorFilter: ColorFilter.mode(
                                         TURTLE_COLORS[widget.color]
-                                            .withOpacity(0.4),
+                                            .withOpacity(0.5),
                                         BlendMode.srcATop),
                                     child: Image.asset(
                                         "assets/images/turtles/${widget.id}.png"))
                                 : Container(),
+                            widget.id != 10
+                                ? Container()
+                                : Image.asset(
+                                    "assets/images/turtles/10_overlay.png"),
                           ],
                         )),
                   ),

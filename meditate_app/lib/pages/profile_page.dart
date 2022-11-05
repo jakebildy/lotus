@@ -556,24 +556,24 @@ class _ProfilePageState extends State<ProfilePage>
                                 height: 20,
                               ),
                               Text(
-                                "Hatchling: 0-20 Minutes/Day",
+                                "Hatchling: 0-10 Minutes/Day",
                                 style: TextStyle(color: Colors.green),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text("Champion: 20-40 Minutes/Day",
+                              Text("Champion: 10-20 Minutes/Day",
                                   style: TextStyle(color: Colors.yellow)),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text("Expert: 40-60 Minutes/Day",
+                              Text("Expert: 20-40 Minutes/Day",
                                   style:
                                       TextStyle(color: Colors.lightBlueAccent)),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text("Turtlemaster: 60+ Minutes/Day",
+                              Text("Turtlemaster: 40+ Minutes/Day",
                                   style: TextStyle(color: Colors.redAccent)),
                             ],
                           ),

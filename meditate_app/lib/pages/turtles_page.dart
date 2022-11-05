@@ -66,19 +66,49 @@ class _TurtlesPageState extends State<TurtlesPage> {
           ),
           body: TabBarView(
             children: [
-              GridView.count(
-                  crossAxisCount: 1,
-                  childAspectRatio: 4,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 8.0,
-                  children: List.generate(TURTLES.length, (index) {
-                    return Center(
-                      child: TurtleCategory(
-                          unlocked: saveController.unlockedTurtles[index] >
-                              0, //FOR TESTING PURPOSES ONLY --> TODO: readd Obx
-                          id: index),
-                    );
-                  })),
+              ListView(children: [
+                //Unlocked Turtles
+                ListView(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    children: List.generate(TURTLES.length, (index) {
+                      return saveController.unlockedTurtles[index] > 0
+                          ? Container()
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Container(
+                                height: 100,
+                                child: Center(
+                                  child:
+                                      TurtleCategory(unlocked: true, id: index),
+                                ),
+                              ),
+                            );
+                    })),
+
+                Divider(),
+
+                //Locked Turtles
+                ListView(
+                    shrinkWrap: true,
+                    physics: ClampingScrollPhysics(),
+                    children: List.generate(TURTLES.length, (index) {
+                      return saveController.unlockedTurtles[index] > 0
+                          ? Container()
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Container(
+                                height: 100,
+                                child: Center(
+                                  child: TurtleCategory(
+                                      unlocked: false, id: index),
+                                ),
+                              ),
+                            );
+                    })),
+              ]),
               saveController.eggs == 0
                   ? Center(
                       child: Padding(

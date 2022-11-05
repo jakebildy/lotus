@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:meditate_app/components/turtle_card.dart';
-import 'package:meditate_app/components/turtle_card_new.dart';
+import 'package:meditate_app/components/turtle_card.dart';
 import 'package:meditate_app/components/turtle_category.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -13,7 +13,9 @@ class TurtleCategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(TURTLES[id].name + "s"),
+      ),
       body: GridView.count(
           crossAxisCount: 1,
           childAspectRatio: 4,
@@ -21,7 +23,7 @@ class TurtleCategoryPage extends StatelessWidget {
           mainAxisSpacing: 8.0,
           children: List.generate(TURTLE_COLORS.length, (index) {
             return Center(
-              child: TurtleCardNew(
+              child: TurtleCard(
                   unlocked:
                       true, //FOR TESTING PURPOSES ONLY --> TODO: readd Obx
                   color: index,

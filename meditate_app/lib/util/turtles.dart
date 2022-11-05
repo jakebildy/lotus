@@ -32,8 +32,10 @@ const List<Color> TURTLE_COLORS = [
   Colors.deepPurple,
   Colors.purple,
   Colors.pink,
+  Color.fromARGB(255, 237, 121, 139),
   Colors.black,
   Colors.grey,
+  Colors.white,
 ];
 const List<String> TURTLE_COLORS_NAME = [
   "Brown",
@@ -50,8 +52,10 @@ const List<String> TURTLE_COLORS_NAME = [
   "Royal",
   "Purple",
   "Pink",
+  "Coral",
   "Black",
   "Gray",
+  "White",
 ];
 
 const List<Turtle> TURTLES = [
@@ -64,9 +68,9 @@ const List<Turtle> TURTLES = [
   Turtle(name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.YELLOW),
   Turtle(name: "Swirl Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Sun Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
-  Turtle(name: "Red Giant Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
-  Turtle(name: "White Dwarf Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
+  Turtle(name: "Sun Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
+  Turtle(name: "Crystal Turtle", rarity: Rarity.LEGENDARY, tier: Tier.RAINBOW),
+  Turtle(name: "Balance Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
   Turtle(name: "Poseidon Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(name: "Watermelon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),

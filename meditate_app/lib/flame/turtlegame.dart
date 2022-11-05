@@ -41,15 +41,15 @@ class TurtleGame extends FlameGame with HasTappables {
     // FlameAudio.loopLongAudio('water_sounds.wav', volume: 0.5);
     add(_turtleWorld);
 
-    for (int i = 0; i < 100; i++) {
-      add(Fish(Vector2(math.Random().nextInt(10000).toDouble() - 5000,
-          math.Random().nextInt(10000).toDouble() - 5000)));
+    for (int i = 0; i < 400; i++) {
+      add(Fish(Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+          math.Random().nextInt(20000).toDouble() - 10000)));
     }
 
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 100; i++) {
       add(OtherTurtle(
-        Vector2(math.Random().nextInt(10000).toDouble() - 5000,
-            math.Random().nextInt(10000).toDouble() - 5000),
+        Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+            math.Random().nextInt(20000).toDouble() - 10000),
       ));
     }
 
@@ -65,10 +65,10 @@ class TurtleGame extends FlameGame with HasTappables {
     //       (70 + math.Random().nextInt(60)).toDouble()));
     // }
 
-    for (int i = 0; i < 400; i++) {
+    for (int i = 0; i < 1600; i++) {
       add(Lilypad(
-          Vector2(math.Random().nextInt(10000).toDouble() - 5000,
-              math.Random().nextInt(10000).toDouble() - 5000),
+          Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+              math.Random().nextInt(20000).toDouble() - 10000),
           (70 + math.Random().nextInt(30)).toDouble()));
     }
 
@@ -99,32 +99,47 @@ class TurtleGame extends FlameGame with HasTappables {
       FlameAudio.play('splash.wav');
       final touchPoint = info.eventPosition.game;
 
-      player.angle = math.atan2(touchPoint.x - player.position.x,
-          -1 * (touchPoint.y - player.position.y));
+      double borderX = touchPoint.x > 10000
+          ? 10000
+          : touchPoint.x < -10000
+              ? -10000
+              : touchPoint.x;
+      double borderY = touchPoint.y > 10000
+          ? 10000
+          : touchPoint.y < -10000
+              ? -10000
+              : touchPoint.y;
+
+      player.angle = math.atan2(
+          borderX - player.position.x, -1 * (borderY - player.position.y));
 
       player.add(
         MoveByEffect(
-            Vector2(touchPoint.x - player.position.x,
-                touchPoint.y - player.position.y),
+            Vector2(borderX - player.position.x, borderY - player.position.y),
             EffectController(duration: 0.6)),
       );
-      playerBase.angle = math.atan2(touchPoint.x - player.position.x,
-          -1 * (touchPoint.y - player.position.y));
+      playerBase.angle = math.atan2(
+          borderX - player.position.x, -1 * (borderY - player.position.y));
       playerBase.add(
         MoveByEffect(
-            Vector2(touchPoint.x - player.position.x,
-                touchPoint.y - player.position.y),
+            Vector2(borderX - player.position.x, borderY - player.position.y),
             EffectController(duration: 0.6)),
       );
-      parallaxMove(touchPoint.x, touchPoint.y);
+      swimAnimation(playerBase);
+      parallaxMove(borderX, borderY);
 
       cameraPoint.add(
         MoveByEffect(
-            Vector2(touchPoint.x - player.position.x,
-                touchPoint.y - player.position.y),
+            Vector2(borderX - player.position.x, borderY - player.position.y),
             EffectController(duration: 0.75)),
       );
     }
+  }
+
+  Future<void> swimAnimation(SpriteGroupComponent playerBase) async {
+    playerBase.current = PlayerState.swimming;
+    await Future.delayed(Duration(milliseconds: 500));
+    playerBase.current = PlayerState.idle;
   }
 
   Future<void> parallaxMove(double x, double y) async {
@@ -182,7 +197,13 @@ class Player extends SpriteComponent with HasGameRef, Tappable {
   // }
 }
 
-class PlayerBase extends SpriteAnimationComponent with HasGameRef, Tappable {
+enum PlayerState {
+  idle,
+  swimming,
+}
+
+class PlayerBase extends SpriteGroupComponent<PlayerState>
+    with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 200.0;
 
@@ -206,14 +227,15 @@ class PlayerBase extends SpriteAnimationComponent with HasGameRef, Tappable {
     super.onLoad();
     SaveController save = Get.find();
 
-    final sprites = [
-      Sprite.load("turtles/swim/swim1.png"),
-      Sprite.load("turtles/swim/swim2.png")
-    ];
-    animation = SpriteAnimation.spriteList(
-      await Future.wait(sprites),
-      stepTime: 0.4,
-    );
+    final idleSprite = await gameRef.loadSprite("turtles/swim/swim1.png");
+    final swimSprite = await gameRef.loadSprite("turtles/swim/swim2.png");
+
+    sprites = {
+      PlayerState.idle: idleSprite,
+      PlayerState.swimming: swimSprite,
+    };
+
+    current = PlayerState.idle;
     size.setValues(squareSize, squareSize);
     anchor = Anchor.center;
   }
