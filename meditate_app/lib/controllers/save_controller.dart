@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
@@ -25,6 +27,7 @@ class SaveController extends GetxController {
   RxInt streakFreezes = 0.obs;
 
   RxList unlockedTurtles = RxList();
+  RxList unlockedTurtleColors = RxList<List<int>>();
 
   //Saved Settings
   RxInt defaultMeditationTime = 5.obs;
@@ -55,32 +58,32 @@ class SaveController extends GetxController {
 
   String streakIconURL() {
     return hasDoneStreakToday.value
-        ? streakAverage() < 20
+        ? streakAverage() < 10
             ? "assets/streak_icon.png"
-            : streakAverage() < 40
+            : streakAverage() < 20
                 ? "assets/streak_icon_yellow.png"
-                : streakAverage() < 60
+                : streakAverage() < 40
                     ? "assets/streak_icon_blue.png"
                     : "assets/streak_icon_rainbow.png"
         : "assets/streak_icon_grey.png";
   }
 
   String streakIconURLBBright() {
-    return streakAverage() < 20
+    return streakAverage() < 10
         ? "assets/streak_icon.png"
-        : streakAverage() < 40
+        : streakAverage() < 20
             ? "assets/streak_icon_yellow.png"
-            : streakAverage() < 60
+            : streakAverage() < 40
                 ? "assets/streak_icon_blue.png"
                 : "assets/streak_icon_rainbow.png";
   }
 
   Tier streakTier() {
-    return streakAverage() < 20
+    return streakAverage() < 10
         ? Tier.ORANGE
-        : streakAverage() < 40
+        : streakAverage() < 20
             ? Tier.YELLOW
-            : streakAverage() < 60
+            : streakAverage() < 40
                 ? Tier.BLUE
                 : Tier.RAINBOW;
   }
@@ -184,8 +187,24 @@ class SaveController extends GetxController {
     for (int i = 0; i < TURTLES.length; i++) {
       if (getValue('turtle-${i}') != "") {
         unlockedTurtles.add(int.parse(getValue('turtle-${i}')));
+        if (getValue('turtle-${i}-color') != "") {
+          unlockedTurtleColors.add(
+              getValue('turtle-${i}-color').split(',').map(int.parse).toList());
+        } else {
+          unlockedTurtleColors.add(List<int>.generate(
+              int.parse(getValue('turtle-${i}')),
+              (i) => Random().nextInt(TURTLE_COLORS.length)));
+
+          saveValue(
+              "turtle-${i}-color",
+              unlockedTurtleColors[i]
+                  .toString()
+                  .replaceAll("[", "")
+                  .replaceAll("]", ""));
+        }
       } else {
         unlockedTurtles.add(0);
+        unlockedTurtleColors.add([0]);
       }
     }
 
@@ -357,6 +376,10 @@ class SaveController extends GetxController {
   void addUnlockedTurtle(int i, int addAmount) {
     saveValue("turtle-${i}", (unlockedTurtles[i] + addAmount).toString());
     unlockedTurtles[i] += addAmount;
+
+    //TODO: add different colors
+    // saveValue("turtle-${i}-color", (unlockedTurtlesColor[i] + addAmount).toString());
+    // unlockedTurtles[i] += addAmount;
     update();
   }
 

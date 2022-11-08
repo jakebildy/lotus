@@ -14,8 +14,13 @@ class TurtleCard extends StatelessWidget {
   final int id;
   final bool unlocked;
   final int color;
+  final int quantity;
   const TurtleCard(
-      {Key? key, required this.unlocked, required this.id, required this.color})
+      {Key? key,
+      required this.unlocked,
+      required this.id,
+      required this.color,
+      required this.quantity})
       : super(key: key);
 
   @override
@@ -88,8 +93,11 @@ class TurtleCard extends StatelessWidget {
                   Text((TURTLE_COLORS_NAME[color] + " " + TURTLES[id].name),
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-                  Text("0 found",
-                      style: TextStyle(fontSize: 14, color: Colors.grey))
+                  Text("${quantity} found",
+                      style: TextStyle(
+                          fontSize: 14,
+                          color:
+                              quantity > 0 ? Colors.tealAccent : Colors.grey))
                 ],
               ),
             ),

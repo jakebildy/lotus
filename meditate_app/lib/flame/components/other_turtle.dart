@@ -78,7 +78,15 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
     add(SpriteComponent(
         sprite: overlay, size: Vector2(200, 200), paint: newPaint));
 
-    anchor = Anchor.center;
+    //crystal turtle overlay
+    if (turtleType == 10) {
+      Sprite overlay2 = await gameRef.loadSprite(
+        'turtles/10_overlay.png',
+      );
+
+      add(SpriteComponent(sprite: overlay2, size: Vector2(200, 200)));
+      anchor = Anchor.center;
+    }
   }
 
   @override

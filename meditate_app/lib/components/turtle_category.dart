@@ -13,7 +13,14 @@ import 'package:shimmer/shimmer.dart';
 class TurtleCategory extends StatelessWidget {
   final int id;
   final bool unlocked;
-  const TurtleCategory({Key? key, required this.unlocked, required this.id})
+  final int uniqueQuantity;
+  final int displayColor;
+  const TurtleCategory(
+      {Key? key,
+      required this.unlocked,
+      required this.id,
+      required this.uniqueQuantity,
+      required this.displayColor})
       : super(key: key);
 
   @override
@@ -49,7 +56,7 @@ class TurtleCategory extends StatelessWidget {
                       id >= 0 && id < TURTLES.length
                           ? ColorFiltered(
                               colorFilter: ColorFilter.mode(
-                                  TURTLE_COLORS[0].withOpacity(0.5),
+                                  TURTLE_COLORS[displayColor].withOpacity(0.5),
                                   BlendMode.srcATop),
                               child: Image.asset(
                                   "assets/images/turtles/${id}.png"))
@@ -82,17 +89,18 @@ class TurtleCategory extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text((TURTLES[id].name.split(" ")[0]),
+                  Text((TURTLES[id].name.split(" ")[0] + " Turtles"),
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-                  Text("${unlocked ? '1' : '0'} of ${TURTLE_COLORS.length}",
+                  Text(
+                      "${unlocked ? uniqueQuantity : '0'} of ${TURTLE_COLORS.length}",
                       style: TextStyle(fontSize: 14))
                 ],
               ),
             ),
           ),
           Text(
-              "${((unlocked ? 1 : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(1)}%",
+              "${((unlocked ? uniqueQuantity : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(1)}%",
               style: TextStyle(
                   fontSize: 17,
                   color: unlocked ? Colors.tealAccent : Colors.grey)),

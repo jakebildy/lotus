@@ -80,8 +80,20 @@ class _TurtlesPageState extends State<TurtlesPage> {
                               child: Container(
                                 height: 100,
                                 child: Center(
-                                  child:
-                                      TurtleCategory(unlocked: true, id: index),
+                                  child: TurtleCategory(
+                                      unlocked: true,
+                                      id: index,
+                                      displayColor: saveController
+                                              .unlockedTurtleColors[index]
+                                              .contains(0)
+                                          ? 0
+                                          : saveController
+                                              .unlockedTurtleColors[index][0],
+                                      uniqueQuantity: saveController
+                                          .unlockedTurtleColors[index]
+                                          .toSet()
+                                          .toList()
+                                          .length),
                                 ),
                               ),
                             );
@@ -103,7 +115,11 @@ class _TurtlesPageState extends State<TurtlesPage> {
                                 height: 100,
                                 child: Center(
                                   child: TurtleCategory(
-                                      unlocked: false, id: index),
+                                    unlocked: false,
+                                    id: index,
+                                    uniqueQuantity: 0,
+                                    displayColor: 0,
+                                  ),
                                 ),
                               ),
                             );
