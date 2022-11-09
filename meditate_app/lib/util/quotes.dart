@@ -13,6 +13,7 @@ List<String> quotes = [
   "“Muddy water is best cleared by leaving it alone.” \n- Alan Watts",
   "“This is the real secret of life -- to be completely engaged with what you are doing in the here and now.” \n- Alan Watts",
   "“The meaning of life is just to be alive. It is so plain and so obvious and so simple.” \n- Alan Watts",
+  "“No amount of anxiety makes any difference to anything that is going to happen.” \n- Alan Watts",
   "“When you are content to be simply yourself and don't compare or compete, everyone will respect you.” \n- Lao Tzu",
   "“Time is a created thing. To say 'I don't have time,' is like saying, 'I don't want to.” \n- Lao Tzu",
   "“Care about what other people think and you will always be their prisoner.” \n- Lao Tzu",

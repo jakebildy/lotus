@@ -85,8 +85,8 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
       );
 
       add(SpriteComponent(sprite: overlay2, size: Vector2(200, 200)));
-      anchor = Anchor.center;
     }
+    anchor = Anchor.center;
   }
 
   @override
