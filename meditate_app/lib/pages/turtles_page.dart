@@ -88,9 +88,12 @@ class _TurtlesPageState extends State<TurtlesPage> {
                                               .contains(0)
                                           ? 0
                                           : saveController
-                                              .unlockedTurtleColors[index][0],
+                                              .unlockedTurtleColors[index]
+                                              .where((element) => element != -1)
+                                              .toList()[0],
                                       uniqueQuantity: saveController
                                           .unlockedTurtleColors[index]
+                                          .where((element) => element != -1)
                                           .toSet()
                                           .toList()
                                           .length),

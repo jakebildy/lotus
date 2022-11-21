@@ -17,6 +17,7 @@ class SaveController extends GetxController {
 
   RxInt eggs = 0.obs;
   RxInt totalEggs = 0.obs;
+  RxList eggType = new RxList(); //"3-3,2-5,etc"
 
   RxInt hatchProgressEggOne = 0.obs;
 
@@ -180,6 +181,19 @@ class SaveController extends GetxController {
     if (getValue('egg_progress_one') != "") {
       hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
     }
+    if (getValue('egg_types') != "") {
+      List<String> eggTypesValue = getValue('egg_types').split(",");
+      for (int i = 0; i < eggTypesValue.length; i++) {
+        eggType.add(eggTypesValue[i]);
+      }
+    } else {
+      if (getValue('eggs') != "") {
+        for (int i = 0; i < int.parse(getValue('eggs')); i++) {
+          eggType.add("0-0");
+        }
+      }
+    }
+
     if (getValue('streak_freezes') != "") {
       streakFreezes.value = int.parse(getValue('streak_freezes'));
     }
@@ -190,6 +204,7 @@ class SaveController extends GetxController {
         if (getValue('turtle-${i}-color') != "") {
           unlockedTurtleColors.add(
               getValue('turtle-${i}-color').split(',').map(int.parse).toList());
+          unlockedTurtleColors[i].add(-1);
         } else {
           unlockedTurtleColors.add(List<int>.generate(
               int.parse(getValue('turtle-${i}')),
@@ -204,7 +219,7 @@ class SaveController extends GetxController {
         }
       } else {
         unlockedTurtles.add(0);
-        unlockedTurtleColors.add([0]);
+        unlockedTurtleColors.add([-1]);
       }
     }
 
@@ -373,13 +388,23 @@ class SaveController extends GetxController {
     update();
   }
 
-  void addUnlockedTurtle(int i, int addAmount) {
+  void addUnlockedTurtle(int i, int addAmount, int turtleColorToHatch) {
+    print("turtle color to hatch: " + turtleColorToHatch.toString());
+    print(addAmount);
     saveValue("turtle-${i}", (unlockedTurtles[i] + addAmount).toString());
     unlockedTurtles[i] += addAmount;
 
-    //TODO: add different colors
-    // saveValue("turtle-${i}-color", (unlockedTurtlesColor[i] + addAmount).toString());
-    // unlockedTurtles[i] += addAmount;
+    if (getValue("turtle-${i}-color") != "") {
+      saveValue("turtle-${i}-color",
+          getValue('turtle-${i}-color') + "," + turtleColorToHatch.toString());
+      print("!!!");
+    } else {
+      saveValue("turtle-${i}-color", turtleColorToHatch.toString());
+      print(":000");
+    }
+    unlockedTurtleColors[i].add(turtleColorToHatch);
+    print("UNLOCKED TURTLE COLORS:");
+    print(unlockedTurtleColors);
     update();
   }
 

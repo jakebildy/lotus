@@ -421,6 +421,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                 Get.find();
 
                                             int turtleToHatch = -1;
+                                            int turtleColorToHatch = -1;
 
                                             int timeInMinutes =
                                                 widget.time.inMinutes;
@@ -495,7 +496,7 @@ class _CountdownPageState extends State<CountdownPage>
                                             print(
                                                 "Handling hatching turtles...");
 
-                                            if (!alreadyMeditatedToday) {
+                                            if (alreadyMeditatedToday) {
                                               //Updating the egg progress if haven't already meditated today
                                               print(
                                                   "First time meditating today");
@@ -514,9 +515,14 @@ class _CountdownPageState extends State<CountdownPage>
                                                   print("HATCHING A TURTLE!");
                                                   turtleToHatch =
                                                       getTurtleToHatch();
+                                                  turtleColorToHatch = Random()
+                                                      .nextInt(
+                                                          TURTLE_COLORS.length);
                                                   saveController
                                                       .addUnlockedTurtle(
-                                                          turtleToHatch, 1);
+                                                          turtleToHatch,
+                                                          1,
+                                                          turtleColorToHatch);
                                                   saveController
                                                       .updateHatchProgress(0);
                                                 } else {
@@ -582,6 +588,8 @@ class _CountdownPageState extends State<CountdownPage>
                                                   alreadyMeditatedToday,
                                               foundEgg: foundEgg,
                                               turtleToHatch: turtleToHatch,
+                                              turtleColorToHatch:
+                                                  turtleColorToHatch,
                                             ));
                                           },
                                           child: Container(

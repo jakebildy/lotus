@@ -12,12 +12,14 @@ class TurtleHatchPage extends StatefulWidget {
   final int gemsAmount;
   final bool foundEgg;
   final int turtleToHatch;
+  final int turtleColorToHatch;
 
   const TurtleHatchPage(
       {Key? key,
       required this.gemsAmount,
       required this.foundEgg,
-      required this.turtleToHatch})
+      required this.turtleToHatch,
+      required this.turtleColorToHatch})
       : super(key: key);
 
   @override
@@ -61,8 +63,19 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                     alignment: Alignment.center,
                     children: [
                       Image.asset("assets/images/turtles/swim/swim1.png"),
-                      Image.asset(
-                          "assets/images/turtles/${widget.turtleToHatch}.png"),
+                      widget.turtleToHatch >= 0 &&
+                              widget.turtleToHatch < TURTLES.length
+                          ? ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  TURTLE_COLORS[widget.turtleColorToHatch]
+                                      .withOpacity(0.5),
+                                  BlendMode.srcATop),
+                              child: Image.asset(
+                                  "assets/images/turtles/${widget.turtleToHatch}.png"))
+                          : Container(),
+                      widget.turtleToHatch != 10
+                          ? Container()
+                          : Image.asset("assets/images/turtles/10_overlay.png"),
                     ],
                   )),
             ),
@@ -75,7 +88,8 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
             Container(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("You found a ${TURTLES[widget.turtleToHatch].name}.",
+              child: Text(
+                  "You found a ${TURTLE_COLORS_NAME[widget.turtleColorToHatch]} ${TURTLES[widget.turtleToHatch].name}.",
                   style: TextStyle(fontSize: 14)),
             )),
             SizedBox(

@@ -14,6 +14,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/pages/user_profile/user_following_widget.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
@@ -281,6 +282,9 @@ class _UserProfilePageState extends State<UserProfilePage>
             SizedBox(
               height: 10,
             ),
+            // UserFollowingWidget(
+            //   user: widget.user,
+            // )
           ],
         ),
       ),

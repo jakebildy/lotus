@@ -161,7 +161,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: _duration == NO_TIME ||
-                                  _duration < const Duration(minutes: 5)
+                                  _duration < const Duration(minutes: 1)
                               ? Container(
                                   height: 50,
                                   child: Padding(

@@ -13,13 +13,15 @@ class StreakCountPage extends StatefulWidget {
   final bool foundEgg;
   final bool alreadyMeditatedToday;
   final int turtleToHatch;
+  final int turtleColorToHatch;
 
   const StreakCountPage(
       {Key? key,
       required this.gemsAmount,
       required this.foundEgg,
       required this.alreadyMeditatedToday,
-      required this.turtleToHatch})
+      required this.turtleToHatch,
+      required this.turtleColorToHatch})
       : super(key: key);
 
   @override
@@ -98,6 +100,7 @@ class _StreakCountPageState extends State<StreakCountPage>
                     gemsAmount: widget.gemsAmount,
                     foundEgg: widget.foundEgg,
                     turtleToHatch: widget.turtleToHatch,
+                    turtleColorToHatch: widget.turtleColorToHatch,
                   ));
                 } else {
                   Get.offAll(NewGemsPage(
