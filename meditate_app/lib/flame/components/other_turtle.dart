@@ -143,8 +143,10 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(
-                    'Breed your ${TURTLE_COLORS_NAME[saveController.turtleColor.value]} ${TURTLES[saveController.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for the cost of 50 gems?'),
+                saveController.gems.value < 50
+                    ? Text("You need at least 50 gems to breed this turtle!")
+                    : Text(
+                        'Breed your ${TURTLE_COLORS_NAME[saveController.turtleColor.value]} ${TURTLES[saveController.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 gems?'),
               ],
             ),
           ),
@@ -158,16 +160,45 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              child: const Text(
-                'Confirm',
-                style: TextStyle(color: Colors.tealAccent),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Get.to(NewEggPage());
-              },
-            ),
+            saveController.gems.value < 50
+                ? Container()
+                : TextButton(
+                    child: const Text(
+                      'Confirm',
+                      style: TextStyle(color: Colors.tealAccent),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      saveController.updateGems(saveController.gems.value - 50);
+
+                      if (saveController.getValue("eggs") == "") {
+                        saveController.updateEggs(1);
+                      } else {
+                        saveController.updateEggs(
+                            int.parse(saveController.getValue("eggs")) + 1);
+                      }
+
+                      if (saveController.getValue("total_eggs") == "") {
+                        saveController.updateTotalEggs(1);
+                      } else {
+                        saveController.updateTotalEggs(
+                            int.parse(saveController.getValue("total_eggs")) +
+                                1);
+                      }
+
+                      bool babyType = Random().nextBool();
+                      int futureColor = !babyType
+                          ? saveController.turtleColor.value
+                          : turtleColor;
+                      int futureType = babyType
+                          ? saveController.selectedTurtle.value
+                          : turtleType;
+
+                      saveController.addFutureTurtle(futureColor, futureType);
+
+                      Get.to(NewEggPage());
+                    },
+                  ),
           ],
         );
       },

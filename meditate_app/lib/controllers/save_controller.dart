@@ -188,9 +188,9 @@ class SaveController extends GetxController {
       }
     } else {
       if (getValue('eggs') != "") {
-        for (int i = 0; i < int.parse(getValue('eggs')); i++) {
-          eggType.add("0-0");
-        }
+        // for (int i = 0; i < int.parse(getValue('eggs')); i++) {
+        //   eggType.add("0-0");
+        // }
       }
     }
 
@@ -222,6 +222,10 @@ class SaveController extends GetxController {
         unlockedTurtleColors.add([-1]);
       }
     }
+
+    //Add the default brown swamp turtle
+    unlockedTurtles[0] += 1;
+    unlockedTurtleColors[0].add(0);
 
     if (getValue('ambience_on') != "") {
       ambienceOn.value = getValue('ambience_on').toLowerCase() == 'true';
@@ -448,5 +452,34 @@ class SaveController extends GetxController {
 
   void stopGame() {
     // player.stop();
+  }
+
+  void addFutureTurtle(int futureColor, int futureType) {
+    eggType.add("${futureType}-${futureColor}");
+    saveValue("egg_types",
+        eggType.toString().replaceAll("[", "").replaceAll("]", ""));
+    update();
+  }
+
+  void popFutureTurtle() {
+    eggType.removeAt(0);
+    saveValue("egg_types",
+        eggType.toString().replaceAll("[", "").replaceAll("]", ""));
+    update();
+  }
+
+  void hatchTurtle(int i, int turtleColorToHatch) {
+    if (eggType.length > 0) {
+      String eggTypeNew = eggType[0];
+      int eggTypeNewInt = int.parse(eggTypeNew.split("-")[0]);
+      int eggColorNewInt = int.parse(eggTypeNew.split("-")[1]);
+      print("hatching turtle");
+      print(eggTypeNewInt);
+      print(eggColorNewInt);
+      addUnlockedTurtle(eggTypeNewInt, 1, eggColorNewInt);
+      popFutureTurtle();
+    } else {
+      addUnlockedTurtle(i, 1, turtleColorToHatch);
+    }
   }
 }

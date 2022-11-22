@@ -518,11 +518,26 @@ class _CountdownPageState extends State<CountdownPage>
                                                   turtleColorToHatch = Random()
                                                       .nextInt(
                                                           TURTLE_COLORS.length);
-                                                  saveController
-                                                      .addUnlockedTurtle(
-                                                          turtleToHatch,
-                                                          1,
-                                                          turtleColorToHatch);
+
+                                                  //if future turtles exist, this will be the one that displays on the
+                                                  //hatching turtle page
+                                                  if (saveController
+                                                          .eggType.length >
+                                                      0) {
+                                                    String eggTypeNew =
+                                                        saveController
+                                                            .eggType[0];
+                                                    turtleToHatch = int.parse(
+                                                        eggTypeNew
+                                                            .split("-")[0]);
+                                                    turtleColorToHatch =
+                                                        int.parse(eggTypeNew
+                                                            .split("-")[1]);
+                                                  }
+
+                                                  saveController.hatchTurtle(
+                                                      turtleToHatch,
+                                                      turtleColorToHatch);
                                                   saveController
                                                       .updateHatchProgress(0);
                                                 } else {
@@ -542,6 +557,12 @@ class _CountdownPageState extends State<CountdownPage>
                                             bool foundEgg =
                                                 receiveEgg(timeInMinutes);
                                             if (foundEgg) {
+                                              int tHatch = getTurtleToHatch();
+                                              int tColor = Random().nextInt(
+                                                  TURTLE_COLORS.length);
+                                              saveController.addFutureTurtle(
+                                                  tColor, tHatch);
+
                                               if (saveController
                                                       .getValue("eggs") ==
                                                   "") {
@@ -582,6 +603,7 @@ class _CountdownPageState extends State<CountdownPage>
                                             });
 
                                             _timer.cancel();
+
                                             Get.offAll(StreakCountPage(
                                               gemsAmount: gemsToGive,
                                               alreadyMeditatedToday:

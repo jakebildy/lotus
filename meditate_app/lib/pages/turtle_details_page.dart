@@ -10,6 +10,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/services/appsflyer_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -233,21 +234,29 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                               style: OutlinedButton.styleFrom(
                                 side:
                                     BorderSide(width: 1.0, color: Colors.teal),
+                                backgroundColor: Colors.tealAccent,
                                 shape: StadiumBorder(),
                               ),
                               onPressed: () {
+                                //Log the event to AppsFlyer
+                                AppsflyerService appsflyer = Get.find();
+                                appsflyer.logEvent("GAME_STARTED", {});
                                 saveController.startGame(
                                     widget.id, widget.color, context);
                                 HapticFeedback.lightImpact();
                                 Get.to(TurtleGamePage(),
                                     transition: Transition.circularReveal);
                               },
-                              child: Text(
-                                "Go to Shallows",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.tealAccent),
-                                textAlign: TextAlign.center,
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Text(
+                                  "Go to Shallows",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                ),
                               )),
                           SizedBox(
                             height: MediaQuery.of(context).size.height - 400,

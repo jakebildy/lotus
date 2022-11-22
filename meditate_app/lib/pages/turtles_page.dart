@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -24,8 +26,17 @@ class _TurtlesPageState extends State<TurtlesPage> {
   Widget build(BuildContext context) {
     SaveController saveController = Get.find();
 
-    return Obx(
-      () => DefaultTabController(
+    return Obx(() {
+      int totalTurtles = 0;
+      for (int i = 0; i < saveController.unlockedTurtleColors.length; i++) {
+        totalTurtles += int.parse(saveController.unlockedTurtleColors[i]
+            .where((element) => element != -1)
+            .toSet()
+            .toList()
+            .length
+            .toString());
+      }
+      return DefaultTabController(
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -44,7 +55,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                         style: TextStyle(fontSize: 18),
                       ),
                       Text(
-                          "${saveController.unlockedTurtles.where((p0) => p0 > 0).toList().length}/${TURTLES.length * TURTLE_COLORS.length}",
+                          "${totalTurtles}/${TURTLES.length * TURTLE_COLORS.length}",
                           style: TextStyle(fontSize: 12)),
                     ],
                   ),
@@ -153,7 +164,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
             ],
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
