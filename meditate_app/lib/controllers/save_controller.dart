@@ -92,6 +92,9 @@ class SaveController extends GetxController {
   SaveController() {
     // fixAnnoyingDataProblem();
     loadData();
+    //Add the default brown swamp turtle
+    unlockedTurtles[0] += 1;
+    unlockedTurtleColors[0].add(0);
   }
 
   //TODO: if last_meditated in the database is ahead, update the values
@@ -222,10 +225,6 @@ class SaveController extends GetxController {
         unlockedTurtleColors.add([-1]);
       }
     }
-
-    //Add the default brown swamp turtle
-    unlockedTurtles[0] += 1;
-    unlockedTurtleColors[0].add(0);
 
     if (getValue('ambience_on') != "") {
       ambienceOn.value = getValue('ambience_on').toLowerCase() == 'true';
