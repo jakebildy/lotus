@@ -496,7 +496,7 @@ class _CountdownPageState extends State<CountdownPage>
                                             print(
                                                 "Handling hatching turtles...");
 
-                                            if (alreadyMeditatedToday) {
+                                            if (!alreadyMeditatedToday) {
                                               //Updating the egg progress if haven't already meditated today
                                               print(
                                                   "First time meditating today");
