@@ -18,5 +18,5 @@ bool receiveEgg(int timeMeditated) {
 
   print("Chance of egg:");
   print(chanceOfEgg);
-  return false;
+  return Random().nextDouble() <= chanceOfEgg;
 }

@@ -569,8 +569,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                 saveController.updateEggs(1);
                                               } else {
                                                 saveController.updateEggs(
-                                                    int.parse(saveController
-                                                            .getValue("eggs")) +
+                                                    saveController.eggs.value +
                                                         1);
                                               }
 

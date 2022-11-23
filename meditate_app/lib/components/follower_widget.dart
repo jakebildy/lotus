@@ -6,6 +6,7 @@ import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/user_profile/user_profile_page.dart';
+import 'package:meditate_app/services/appsflyer_service.dart';
 import 'package:meditate_app/util/util.dart';
 
 class FollowerWidget extends StatelessWidget {
@@ -112,6 +113,9 @@ class FollowerWidget extends StatelessWidget {
                                       ),
                                       onPressed: () {
                                         follow.followStylist(user);
+                                        //Log the event to AppsFlyer
+                                        AppsflyerService appsflyer = Get.find();
+                                        appsflyer.logEvent("FOLLOW", {});
                                       },
                                       child: Text("Follow",
                                           style: TextStyle(

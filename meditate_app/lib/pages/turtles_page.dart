@@ -28,7 +28,10 @@ class _TurtlesPageState extends State<TurtlesPage> {
 
     return Obx(() {
       int totalTurtles = 0;
-      for (int i = 0; i < saveController.unlockedTurtleColors.length; i++) {
+      for (int i = 0; i < saveController.unlockedTurtles.length; i++) {
+        if (i == 0) {
+          totalTurtles = 0;
+        }
         totalTurtles += int.parse(saveController.unlockedTurtleColors[i]
             .where((element) => element != -1)
             .toSet()
