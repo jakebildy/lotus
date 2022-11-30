@@ -50,7 +50,7 @@ class UserStreakChart extends StatelessWidget {
                       gradientColorStops: [0.05, 0.15, 0.35, 1],
                       colors: [
                         // Color.fromARGB(0, 255, 153, 0),
-                        Colors.orange,
+                        Colors.green,
                         Colors.yellow,
                         Colors.blue,
                         Colors.purpleAccent
