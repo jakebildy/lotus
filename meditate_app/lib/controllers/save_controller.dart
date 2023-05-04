@@ -11,29 +11,47 @@ import 'package:ocarina/ocarina.dart';
 class SaveController extends GetxController {
   final storage = GetStorage();
 
+  //The User's Current Streak
   RxInt streak = 0.obs;
+
+  //The User's Total Meditation Minutes
   RxInt totalMinutes = 0.obs;
+
+  //The User's Total Gems
   RxInt gems = 0.obs;
 
+  //The number of eggs the user currently has
   RxInt eggs = 0.obs;
+
+  //The total number of eggs the user has ever collected
   RxInt totalEggs = 0.obs;
+
+  //The type of egg the user is currently hatching (?)
   RxList eggType = new RxList(); //"3-3,2-5,etc"
 
+  //The progress of the current egg hatching (goes from 0 to 3 (?))
   RxInt hatchProgressEggOne = 0.obs;
 
+  //Boolean: Has the user meditaed today?
   RxBool hasDoneStreakToday = false.obs;
 
+  //An array of the amount of time the user has meditated in the last 7 days
   RxList lastSevenDays = new RxList();
 
+  //The number of streak freezes the user has
   RxInt streakFreezes = 0.obs;
 
+  //The list of unlocked turtles
   RxList unlockedTurtles = RxList();
+
+  //The list of unlocked turtle colors
   RxList unlockedTurtleColors = RxList<List<int>>();
 
   //Saved Settings
   RxInt defaultMeditationTime = 5.obs;
   RxBool ambienceOn = true.obs;
 
+  //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
 
   void updateAmbience() {
@@ -58,6 +76,8 @@ class SaveController extends GetxController {
   }
 
   String streakIconURL() {
+    print("has done streak today");
+    print(hasDoneStreakToday.value);
     return hasDoneStreakToday.value
         ? streakAverage() < 10
             ? "assets/streak_icon.png"
@@ -97,25 +117,6 @@ class SaveController extends GetxController {
     unlockedTurtleColors[0].add(0);
   }
 
-  //TODO: if last_meditated in the database is ahead, update the values
-  void fixAnnoyingDataProblem() {
-    // saveValue("streak", "29");
-    // saveValue("gems", "200");
-    // saveValue("total_minutes", "650");
-    // saveValue("total_eggs", "4");
-    // saveValue("eggs", "4");
-    // DateTime now = new DateTime.now();
-    // DateTime today = DateTime(now.year, now.month, now.day);
-    // saveValue("last_meditated", today.toIso8601String());
-    // saveValue('meditation-${today.day}-${today.month}-${today.year}', '20');
-    // saveValue('meditation-${today.day - 1}-${today.month}-${today.year}', '40');
-    // saveValue('meditation-${today.day - 2}-${today.month}-${today.year}', '23');
-    // saveValue('meditation-${today.day - 3}-${today.month}-${today.year}', '13');
-    // saveValue('meditation-${today.day - 4}-${today.month}-${today.year}', '22');
-    // saveValue('meditation-${today.day - 5}-${today.month}-${today.year}', '22');
-    // saveValue('meditation-${today.day - 6}-${today.month}-${today.year}', '22');
-  }
-
   Future<void> uploadLocalData() async {
     await Api.user.updateUserAttribute("streak", streak.value);
     await Api.user.updateUserAttribute("totalMinutes", totalMinutes.value);
@@ -148,6 +149,8 @@ class SaveController extends GetxController {
         .updateUserAttribute("meditationTimesAsOf", date.toIso8601String());
   }
 
+  // TODO: Resolve Memory Leak
+  // TODO: never overwrite data with null
   void loadData() {
     print("Loading Data!");
     if (getValue('total_minutes') != "") {
@@ -270,6 +273,7 @@ class SaveController extends GetxController {
     print("Loading streak!");
     DateTime now = new DateTime.now();
     DateTime date = new DateTime(now.year, now.month, now.day);
+    //TODO: check last_meditated to see whats going on
     if (getValue("last_meditated") == "") {
       print("last_meditated hasn't been set yet.");
       return 0;

@@ -206,11 +206,11 @@ class _AppPagesState extends State<AppPages> {
                         BottomNavigationBarItem(
                             icon: _page == 0
                                 ? Container(
-                                    height: 30,
+                                    height: 40,
                                     child: Image.asset(
                                         "assets/meditate_selected.png"))
                                 : Container(
-                                    height: 30,
+                                    height: 40,
                                     child: Image.asset(
                                         "assets/meditate_unselected.png")),
                             label: "Home"),

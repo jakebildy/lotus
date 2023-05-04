@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -22,6 +23,18 @@ class NewGemsPage extends StatefulWidget {
 
 class _NewGemsPageState extends State<NewGemsPage>
     with TickerProviderStateMixin {
+  late AudioPlayer gemNoise;
+
+  //init state
+  @override
+  void initState() {
+    super.initState();
+    //  play the noise "new_gems.mp3"
+    gemNoise = AudioPlayer();
+    gemNoise.setVolume(10.0);
+    gemNoise.play(AssetSource('audio/new_gems.mp3'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
