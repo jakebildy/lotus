@@ -8,6 +8,8 @@ import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
 import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/util/DEBUG_MODE.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 class EggCard extends StatelessWidget {
   final int index;
@@ -55,14 +57,32 @@ class EggCard extends StatelessWidget {
                   shakeOffset: 10,
                   shakeDuration: Duration(milliseconds: 500),
                   // 6. Add the child widget that will be animated
-                  child: Image.asset(
-                    save.hatchProgressEggOne.value == 1 && index == 0
-                        ? "assets/egg_crack_1.png"
-                        : save.hatchProgressEggOne.value == 2 && index == 0
-                            ? "assets/egg_crack_2.png"
-                            : "assets/egg.png",
-                    height: 60,
-                  )),
+                  child: Stack(children: [
+                    Image.asset(
+                      save.hatchProgressEggOne.value == 1 && index == 0
+                          ? "assets/egg_crack_1.png"
+                          : save.hatchProgressEggOne.value == 2 && index == 0
+                              ? "assets/egg_crack_2.png"
+                              : "assets/egg.png",
+                      height: 60,
+                    ),
+                    ColorFiltered(
+                        colorFilter: ColorFilter.mode(
+                            TURTLE_COLORS[int.parse(
+                                    save.eggType[index].split("-")[1])]
+                                .withOpacity(0.8),
+                            BlendMode.srcATop),
+                        child: Image.asset(
+                          "assets/egg_spots.png",
+                          height: 60,
+                        )),
+                    DEBUG_MODE == true
+                        ? Text(
+                            save.eggType[index],
+                            style: const TextStyle(color: Colors.black),
+                          )
+                        : const Text("")
+                  ])),
               SizedBox(
                 height: 10,
               ),

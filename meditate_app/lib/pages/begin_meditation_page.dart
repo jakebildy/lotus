@@ -15,6 +15,7 @@ import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
 import '../components/duration_picker.dart';
+import '../util/DEBUG_MODE.dart';
 
 class BeginMeditationPage extends StatefulWidget {
   const BeginMeditationPage({Key? key}) : super(key: key);
@@ -161,13 +162,16 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: _duration == NO_TIME ||
-                                  _duration < const Duration(minutes: 5)
+                                  _duration <
+                                      (DEBUG_MODE == true
+                                          ? const Duration(minutes: 1)
+                                          : const Duration(minutes: 5))
                               ? Container(
                                   height: 50,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 30.0),
-                                    child: const Text(
+                                  child: const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 30.0),
+                                    child: Text(
                                       "Meditate for at least five minutes to build a habit!",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,

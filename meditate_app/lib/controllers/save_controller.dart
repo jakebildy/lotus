@@ -112,9 +112,9 @@ class SaveController extends GetxController {
   SaveController() {
     // fixAnnoyingDataProblem();
     loadData();
-    //Add the default brown swamp turtle
-    unlockedTurtles[0] += 1;
-    unlockedTurtleColors[0].add(0);
+    //Add the default brown swamp turtle: note, currently disabled
+    // unlockedTurtles[0] += 1;
+    // unlockedTurtleColors[0].add(0);
   }
 
   Future<void> uploadLocalData() async {

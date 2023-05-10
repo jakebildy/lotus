@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/util/DEBUG_MODE.dart';
 
 bool receiveEgg(int timeMeditated) {
   print("Calculating the Eggquation 🥚:");
@@ -13,8 +14,13 @@ bool receiveEgg(int timeMeditated) {
       ? 1.0
       : ((timeMeditated / 30) > 1
           ? 1
-          : (timeMeditated / 30) /
-              (save.totalEggs.value > 4 ? 4 : save.totalEggs.value));
+          : (timeMeditated / 10) >= 1
+              ? 0.25
+              : 0.2);
+
+  if (DEBUG_MODE) {
+    chanceOfEgg = 1;
+  }
 
   print("Chance of egg:");
   print(chanceOfEgg);

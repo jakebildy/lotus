@@ -143,6 +143,7 @@ flutter:
     - assets/egg.png
     - assets/egg_crack_1.png
     - assets/egg_crack_2.png
+    - assets/egg_spots.png
     - assets/profile_selected.png
     - assets/profile_unselected.png
     - assets/images/turtles/template.png

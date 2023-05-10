@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/util/DEBUG_MODE.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:ocarina/ocarina.dart';
@@ -447,11 +448,16 @@ class _CountdownPageState extends State<CountdownPage>
                                                   saveController
                                                       .getValue("streak");
 
+                                              String lastMeditated =
+                                                  saveController.getValue(
+                                                      "last_meditated");
+
                                               int gemsToGive = 0;
                                               bool alreadyMeditatedToday =
                                                   false;
 
-                                              if (streakValue == "") {
+                                              if (streakValue == "" ||
+                                                  lastMeditated == "") {
                                                 print("Streak value is empty.");
                                                 saveController.updateStreak(1);
                                               } else {
@@ -513,7 +519,8 @@ class _CountdownPageState extends State<CountdownPage>
                                               print(
                                                   "Handling hatching turtles...");
 
-                                              if (!alreadyMeditatedToday) {
+                                              if (!alreadyMeditatedToday ||
+                                                  DEBUG_MODE) {
                                                 //Updating the egg progress if haven't already meditated today
                                                 print(
                                                     "First time meditating today");

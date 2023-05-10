@@ -89,11 +89,7 @@ int getTurtleToHatch() {
         .toList();
   } else if (checkRarity == 7 || checkRarity == 8) {
     possibleTurtles = possibleTurtles
-        .where((element) => element.rarity == Rarity.RARE)
-        .toList();
-  } else {
-    possibleTurtles = possibleTurtles
-        .where((element) => element.rarity == Rarity.LEGENDARY)
+        .where((element) => element.rarity != Rarity.LEGENDARY)
         .toList();
   }
 
@@ -119,6 +115,8 @@ int getTurtleToHatch() {
   int result = 0;
 
   //Randomly choose a turtle from the available options
+
+  //TODO: this is likely broken
   Turtle selectedTurtle =
       possibleTurtles[Random().nextInt(possibleTurtles.length)];
 
@@ -128,17 +126,19 @@ int getTurtleToHatch() {
     }
   }
 
-  if (saveController.unlockedTurtles[result] > 0) {
-    //Randomly choose a turtle from the available options
-    Turtle selectedTurtle =
-        possibleTurtles[Random().nextInt(possibleTurtles.length)];
+  //I think this code is breaking things and is also useless
 
-    for (int i = 0; i < TURTLES.length; i++) {
-      if (TURTLES[i] == selectedTurtle) {
-        result = i;
-      }
-    }
-  }
+  // if (saveController.unlockedTurtles[result] > 0) {
+  //   //Randomly choose a turtle from the available options
+  //   Turtle selectedTurtle =
+  //       possibleTurtles[Random().nextInt(possibleTurtles.length)];
+
+  //   for (int i = 0; i < TURTLES.length; i++) {
+  //     if (TURTLES[i] == selectedTurtle) {
+  //       result = i;
+  //     }
+  //   }
+  // }
 
   return result;
 }
