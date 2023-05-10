@@ -13,7 +13,7 @@ bool receiveEgg(int timeMeditated) {
   double chanceOfEgg = save.totalEggs.value == 0
       ? 1.0
       : ((timeMeditated / 30) > 1
-          ? 1
+          ? 0.9
           : (timeMeditated / 10) >= 1
               ? 0.25
               : 0.2);

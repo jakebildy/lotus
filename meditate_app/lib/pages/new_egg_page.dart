@@ -9,6 +9,7 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:animated_counter/animated_counter.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 class NewEggPage extends StatefulWidget {
   const NewEggPage({Key? key}) : super(key: key);
@@ -50,6 +51,7 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    SaveController save = Get.find();
     return Scaffold(
         // backgroundColor: Colors.white,
         body: Container(
@@ -71,7 +73,21 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                           HapticFeedback.mediumImpact();
                           shakeKey.currentState?.shake();
                         },
-                        child: Image.asset("assets/egg.png")))),
+                        child: Stack(
+                          children: [
+                            Image.asset("assets/egg.png"),
+                            ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                    TURTLE_COLORS[int.parse(
+                                            save.eggType.last.split("-")[1])]
+                                        .withOpacity(0.8),
+                                    BlendMode.srcATop),
+                                child: Image.asset(
+                                  "assets/egg_spots.png",
+                                  // height: 60,
+                                )),
+                          ],
+                        )))),
             SizedBox(
               height: 50,
             ),
