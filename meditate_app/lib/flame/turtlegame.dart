@@ -269,7 +269,7 @@ class CameraPoint extends SpriteComponent with HasGameRef, Tappable {
   Future<void> onLoad() async {
     super.onLoad();
     sprite = await gameRef.loadSprite('turtle_basic.png');
-    // size.setValues(squareSize, squareSize);
+    size.setValues(0, 0);
     anchor = Anchor.center;
   }
 
