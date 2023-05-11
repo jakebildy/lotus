@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/flame/components/bubble.dart';
+import 'package:meditate_app/flame/components/butterfly.dart';
 import 'package:meditate_app/flame/components/fish.dart';
 import 'package:meditate_app/flame/components/lilypad.dart';
 import 'package:meditate_app/flame/components/lotus.dart';
@@ -57,6 +58,13 @@ class TurtleGame extends FlameGame with HasTappables {
     add(player);
 
     add(cameraPoint);
+
+    //Above the player
+
+    for (int i = 0; i < 400; i++) {
+      add(Butterfly(Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+          math.Random().nextInt(20000).toDouble() - 10000)));
+    }
 
     // for (int i = 0; i < 100; i++) {
     //   add(Rock(

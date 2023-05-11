@@ -185,6 +185,9 @@ flutter:
     - assets/images/game/rock.png
     - assets/images/game/fish.png
     - assets/images/game/fish2.png
+    - assets/images/game/insects/butterfly_1.png
+    - assets/images/game/insects/butterfly_2.png
+    - assets/images/game/insects/butterfly_3.png
     - assets/gems_overlay.png
     - assets/offline.png
     - assets/lure.png
