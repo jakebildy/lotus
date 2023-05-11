@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
+import 'package:meditate_app/util/DEBUG_MODE.dart';
 import 'dart:math' as math;
 
 import 'package:meditate_app/util/turtles.dart';
@@ -142,7 +143,8 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                saveController.gems.value < 1
+                ((saveController.gems.value < 1 && DEBUG_MODE) ||
+                        saveController.gems.value < 50)
                     ? Text("You need at least 50 gems to breed this turtle!")
                     : Text(
                         'Breed your ${TURTLE_COLORS_NAME[saveController.turtleColor.value]} ${TURTLES[saveController.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 gems?'),
@@ -159,7 +161,8 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                 Navigator.of(context).pop();
               },
             ),
-            saveController.gems.value < 1
+            (saveController.gems.value < 1 && DEBUG_MODE) ||
+                    saveController.gems.value < 50
                 ? Container()
                 : TextButton(
                     child: const Text(
