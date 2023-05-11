@@ -67,15 +67,15 @@ class _ProfilePageState extends State<ProfilePage>
                 children: [
                   Container(
                       height: 240, child: Image.asset("assets/offline.png")),
-                  Text(
+                  const Text(
                     "Your profile is unavailable right now",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     "You seem to be offline. Check your connection or try again later!",
                     textAlign: TextAlign.center,
                   )
@@ -121,20 +121,21 @@ class _ProfilePageState extends State<ProfilePage>
                     Text(
                       auth.user.value.fullName,
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(
                       "(@" + auth.user.value.username + ")",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: Colors.white70),
+                      style:
+                          const TextStyle(fontSize: 16, color: Colors.white70),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
@@ -144,15 +145,15 @@ class _ProfilePageState extends State<ProfilePage>
                       fontSize: 17),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
                   "Joined ${formatMonth(auth.user.value.createdAt)}",
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -162,23 +163,24 @@ class _ProfilePageState extends State<ProfilePage>
                       padding: const EdgeInsets.all(0.0),
                       child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(width: 1.0, color: Colors.white24),
-                            shape: StadiumBorder(),
+                            side: const BorderSide(
+                                width: 1.0, color: Colors.white24),
+                            shape: const StadiumBorder(),
                           ),
                           onPressed: () {
-                            Get.to(EditProfile());
+                            Get.to(const EditProfile());
                           },
-                          child: Text("Edit Profile",
+                          child: const Text("Edit Profile",
                               style: TextStyle(color: Colors.grey))),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(StatsPage());
+                    Get.to(const StatsPage());
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -210,21 +212,21 @@ class _ProfilePageState extends State<ProfilePage>
                                             saveController.streakIconURL()),
                                       )),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Column(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
                                       saveController.streak.value.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text(
+                                    const Text(
                                       "Day streak",
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.white70),
@@ -249,16 +251,16 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                             child: Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
                                   saveController.totalMinutes.value.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
+                                const Text(
                                   "Total Minutes",
                                   style: TextStyle(
                                       fontSize: 12, color: Colors.white70),
@@ -283,18 +285,18 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Text(
+                          const Text(
                             "Minutes meditated this week",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          StreakChart(
+                          const StreakChart(
                             height: 180,
                           ),
                         ],
@@ -314,15 +316,15 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Text(
+                          const Text(
                             "My Meditation Calendar",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           MeditationHeatmap(
@@ -346,36 +348,36 @@ class _ProfilePageState extends State<ProfilePage>
                                     color:
                                         tierColor(saveController.streakTier())),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Container(
-                                  child: Text(
+                                  child: const Text(
                                 "Higher levels can find rarer turtles.\n\nReach new levels by increasing your average meditation length for a week.\n",
                                 textAlign: TextAlign.center,
                               )),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
-                              Text(
+                              const Text(
                                 "Hatchling: 0-10 Minutes/Day",
                                 style: TextStyle(color: Colors.green),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text("Champion: 10-20 Minutes/Day",
+                              const Text("Champion: 10-20 Minutes/Day",
                                   style: TextStyle(color: Colors.yellow)),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text("Expert: 20-40 Minutes/Day",
+                              const Text("Expert: 20-40 Minutes/Day",
                                   style:
                                       TextStyle(color: Colors.lightBlueAccent)),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text("Turtlemaster: 40+ Minutes/Day",
+                              const Text("Turtlemaster: 40+ Minutes/Day",
                                   style: TextStyle(color: Colors.redAccent)),
                             ],
                           ),
@@ -395,7 +397,7 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TabBar(
@@ -406,10 +408,10 @@ class _ProfilePageState extends State<ProfilePage>
                                 });
                               },
                               tabs: [
-                                Tab(
+                                const Tab(
                                   text: "Following",
                                 ),
-                                Tab(
+                                const Tab(
                                   text: "Followers",
                                 )
                               ]),
@@ -422,15 +424,15 @@ class _ProfilePageState extends State<ProfilePage>
                                     : followController.followers.length * 64),
                             child: TabBarView(
                                 controller: tabController,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 children: [
                                   followController.stylistsFollowing.length == 0
                                       ? Column(
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
-                                            Text(
+                                            const Text(
                                               "You don't have any friends yet - add some!",
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -439,22 +441,22 @@ class _ProfilePageState extends State<ProfilePage>
                                           ],
                                         )
                                       : Column(children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ...(followController.stylistsFollowing
                                               .map((user) => FollowerWidget(
                                                   user: user,
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 42, 42, 42))))
                                         ]),
                                   followController.followers.length == 0
                                       ? Column(
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
-                                            Text(
+                                            const Text(
                                               "You don't have any followers yet!",
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -463,18 +465,18 @@ class _ProfilePageState extends State<ProfilePage>
                                           ],
                                         )
                                       : Column(children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ...(followController.followers.map(
                                               (user) => FollowerWidget(
                                                   user: user,
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 42, 42, 42))))
                                         ]),
                                 ]),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           GestureDetector(
@@ -483,7 +485,7 @@ class _ProfilePageState extends State<ProfilePage>
                               AppsflyerService appsflyer = Get.find();
                               appsflyer.logEvent("ADD_FRIENDS_TAPPED", {});
 
-                              Get.to(Search());
+                              Get.to(const Search());
                             },
                             child: Container(
                               child: Row(
@@ -520,16 +522,16 @@ class _ProfilePageState extends State<ProfilePage>
                                                           0, 0, 5, 5.0),
                                                   child: Container(
                                                       height: 17,
-                                                      child: Icon(
+                                                      child: const Icon(
                                                         Icons.person_add,
                                                         color:
                                                             Colors.tealAccent,
                                                         size: 20,
                                                       ))),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
-                                              Text(
+                                              const Text(
                                                 "ADD FRIENDS",
                                                 style: TextStyle(
                                                     fontSize: 13,
@@ -563,15 +565,15 @@ class _ProfilePageState extends State<ProfilePage>
                         padding: const EdgeInsets.all(4.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Text(
+                            const Text(
                               "People you may know",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             //Only showing people with active streaks to make the app feel more engaging/active
@@ -579,27 +581,28 @@ class _ProfilePageState extends State<ProfilePage>
                                 .where((p0) => p0.streak > 0)
                                 .map((user) => FollowerWidget(
                                     user: user,
-                                    color: Color.fromARGB(255, 42, 42, 42)))),
-                            SizedBox(
+                                    color: const Color.fromARGB(
+                                        255, 42, 42, 42)))),
+                            const SizedBox(
                               height: 10,
                             ),
                           ],
                         ),
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                     onTap: () {
-                      Get.to(MeditationGuide(time: null));
+                      Get.to(const MeditationGuide(time: null));
                     },
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "How to Meditate",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ))),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 GestureDetector(
@@ -607,7 +610,7 @@ class _ProfilePageState extends State<ProfilePage>
                       AuthController authController = Get.find();
                       authController.logoutRequest();
                     },
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "Sign Out",
                       style: TextStyle(fontWeight: FontWeight.bold),

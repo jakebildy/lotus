@@ -35,11 +35,11 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text("Tap the turtle"),
+        title: const Text("Tap the turtle"),
       ),
       body: Container(
-        decoration: new BoxDecoration(
-            gradient: new LinearGradient(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
@@ -66,7 +66,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
             )),
             ListView(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Container(
@@ -78,7 +78,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                       saveController.startGame(
                           widget.id, widget.color, context);
                       HapticFeedback.lightImpact();
-                      Get.to(TurtleGamePage(),
+                      Get.to(const TurtleGamePage(),
                           transition: Transition.circularReveal);
                     },
                     child: Hero(
@@ -104,7 +104,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                         )),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Padding(
@@ -113,7 +113,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                       color: Colors.grey[850],
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
@@ -123,11 +123,11 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                   " " +
                                   TURTLES[widget.id].name,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          Divider(),
+                          const Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -154,7 +154,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                                 : Colors.yellow,
                                       ),
                                     ),
-                                    Text(
+                                    const Text(
                                       "Rarity",
                                       style: TextStyle(fontSize: 12),
                                     ),
@@ -172,10 +172,10 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                   children: [
                                     Text(
                                       "${saveController.unlockedTurtles[widget.id]}",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     ),
-                                    Text(
+                                    const Text(
                                       "Number Found",
                                       style: TextStyle(fontSize: 12),
                                     ),
@@ -201,10 +201,10 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                                       Tier.BLUE
                                                   ? "Expert"
                                                   : "Turtlemaster",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     ),
-                                    Text(
+                                    const Text(
                                       "Level",
                                       style: TextStyle(fontSize: 12),
                                     ),
@@ -217,7 +217,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Padding(
@@ -227,15 +227,15 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           OutlinedButton(
                               style: OutlinedButton.styleFrom(
-                                side:
-                                    BorderSide(width: 1.0, color: Colors.teal),
+                                side: const BorderSide(
+                                    width: 1.0, color: Colors.teal),
                                 backgroundColor: Colors.tealAccent,
-                                shape: StadiumBorder(),
+                                shape: const StadiumBorder(),
                               ),
                               onPressed: () {
                                 //Log the event to AppsFlyer
@@ -244,11 +244,11 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                 saveController.startGame(
                                     widget.id, widget.color, context);
                                 HapticFeedback.lightImpact();
-                                Get.to(TurtleGamePage(),
+                                Get.to(const TurtleGamePage(),
                                     transition: Transition.circularReveal);
                               },
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
                                 child: Text(
                                   "Go to Shallows",
                                   style: TextStyle(

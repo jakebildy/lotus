@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/services/appsflyer_service.dart';
 
 class ShopPage extends StatefulWidget {
@@ -50,7 +47,7 @@ class _ShopPageState extends State<ShopPage> {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.greenAccent,
                     key: UniqueKey(),
-                    content: Text(
+                    content: const Text(
                         "You can only equip two Streak Freezes at a time!"),
                   ));
                 }
@@ -64,7 +61,7 @@ class _ShopPageState extends State<ShopPage> {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.greenAccent,
                   key: UniqueKey(),
-                  content: Text("Earn more gems to purchase this!"),
+                  content: const Text("Earn more gems to purchase this!"),
                 ));
               }
             },
@@ -99,38 +96,38 @@ class _ShopPageState extends State<ShopPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Streak Freeze",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
-                          Container(
+                          const SizedBox(
                               width: 200,
                               child: Text(
                                   "Save your streak if you miss a day of meditation.")),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             children: [
-                              Container(
+                              SizedBox(
                                   height: 20,
                                   child: Image.asset("assets/gem_icon.png")),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               Text(
                                 "${STREAK_FREEZE_PRICE}",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.greenAccent,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(

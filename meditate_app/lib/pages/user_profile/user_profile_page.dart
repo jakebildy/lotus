@@ -88,19 +88,20 @@ class _UserProfilePageState extends State<UserProfilePage>
                 Text(
                   widget.user.fullName,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
                   "(@" + widget.user.username + ")",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.white70),
+                  style: const TextStyle(fontSize: 16, color: Colors.white70),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
@@ -109,15 +110,15 @@ class _UserProfilePageState extends State<UserProfilePage>
                   color: tierColor(userStreakTier(widget.user)), fontSize: 17),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
               "Joined ${formatMonth(widget.user.createdAt)}",
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -136,7 +137,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                                         .contains(widget.user.id)
                                     ? Colors.white24
                                     : Colors.teal),
-                        shape: StadiumBorder(),
+                        shape: const StadiumBorder(),
                       ),
                       onPressed: () {
                         if (auth.user.value.id != widget.user.id) {
@@ -162,7 +163,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -191,20 +192,20 @@ class _UserProfilePageState extends State<UserProfilePage>
                                 child: Image.asset(
                                     userStreakIconURL(widget.user))),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 widget.user.streak.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              Text(
+                              const Text(
                                 "Day streak",
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.white70),
@@ -229,15 +230,15 @@ class _UserProfilePageState extends State<UserProfilePage>
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
                             widget.user.totalMinutes.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                          Text(
+                          const Text(
                             "Total Minutes",
                             style:
                                 TextStyle(fontSize: 12, color: Colors.white70),
@@ -261,15 +262,15 @@ class _UserProfilePageState extends State<UserProfilePage>
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
+                      const Text(
                         "Minutes they meditated this week",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       UserStreakChart(
@@ -279,7 +280,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                     ],
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             // UserFollowingWidget(

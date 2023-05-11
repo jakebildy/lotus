@@ -119,7 +119,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> waitThenSetLoadingFalse() async {
-    await Future.delayed(Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 4));
     isLoading.value = false;
     update();
     // Get.offAll(AppPages(),
@@ -147,7 +147,7 @@ class AuthController extends GetxController {
     user.value = DummyUser;
     // isAuthenticated.value = false;
     saveController.clearCookies();
-    Get.offAll(Signup());
+    Get.offAll(const Signup());
 
     update();
   }
@@ -158,15 +158,15 @@ class AuthController extends GetxController {
 
       File? croppedFile = await (new ImageCropper()).cropImage(
           sourcePath: image.path,
-          aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-          androidUiSettings: AndroidUiSettings(
+          aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+          androidUiSettings: const AndroidUiSettings(
               toolbarTitle: 'Crop Profile Photo',
               toolbarColor: Colors.black,
               toolbarWidgetColor: Colors.white,
               initAspectRatio: CropAspectRatioPreset.square,
               hideBottomControls: true,
               lockAspectRatio: true),
-          iosUiSettings: IOSUiSettings(
+          iosUiSettings: const IOSUiSettings(
             title: 'Crop Profile Photo',
             aspectRatioLockEnabled: true,
             aspectRatioPickerButtonHidden: true,
@@ -272,7 +272,7 @@ class AuthController extends GetxController {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Change Display Name'),
+            title: const Text('Change Display Name'),
             content: TextField(
               onChanged: (value) {
                 // setState(() {
@@ -280,14 +280,15 @@ class AuthController extends GetxController {
                 // });
               },
               controller: _textFieldController,
-              decoration: InputDecoration(hintText: "Enter new name"),
+              decoration: const InputDecoration(hintText: "Enter new name"),
             ),
             actions: <Widget>[
               TextButton(
                 style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.red)),
-                child: Text('CANCEL', style: TextStyle(color: Colors.white)),
+                child:
+                    const Text('CANCEL', style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -296,7 +297,7 @@ class AuthController extends GetxController {
                 style: ButtonStyle(
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.green)),
-                child: Text('OK', style: TextStyle(color: Colors.white)),
+                child: const Text('OK', style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   if (_textFieldController.text != "") {
                     Api.user.changeName(_textFieldController.text);

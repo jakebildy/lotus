@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
@@ -30,7 +28,6 @@ class _AppPagesState extends State<AppPages> {
     SaveController saveController = Get.find();
     AuthController authController = Get.find();
     NetworkStatusController network = Get.find();
-    var brightness = SchedulerBinding.instance!.window.platformBrightness;
     bool isDarkMode = true;
 
     return Obx(
@@ -38,15 +35,14 @@ class _AppPagesState extends State<AppPages> {
         children: [
           authController.user.value == DummyUser &&
                   network.offline.value == false
-              ? Signup()
+              ? const Signup()
               : Scaffold(
                   appBar: PreferredSize(
                     preferredSize:
                         Size.fromHeight(network.offline.value ? 66 : 56),
                     child: AppBar(
                         elevation: 1,
-                        backgroundColor:
-                            isDarkMode ? Colors.grey[850] : Colors.white,
+                        backgroundColor: Colors.grey[850],
                         centerTitle: true,
                         title: Column(
                           children: [
@@ -55,7 +51,7 @@ class _AppPagesState extends State<AppPages> {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: [
+                                      children: const [
                                         Icon(
                                           Icons.cloud_off_outlined,
                                           size: 12,
@@ -80,7 +76,7 @@ class _AppPagesState extends State<AppPages> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(StatsPage());
+                                      Get.to(const StatsPage());
                                     },
                                     child: Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -251,7 +247,7 @@ class _AppPagesState extends State<AppPages> {
                 ),
           authController.isLoading.value ||
                   authController.isLoadingPageNotDone.value
-              ? LoadingPage()
+              ? const LoadingPage()
               : Container(
                   height: 0,
                 )

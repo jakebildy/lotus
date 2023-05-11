@@ -27,16 +27,16 @@ class _StatsPageState extends State<StatsPage> {
         appBar: AppBar(
           backgroundColor: Colors.grey[850],
           elevation: 0,
-          title: Text("My Stats"),
+          title: const Text("My Stats"),
         ),
         body: ListView(
           children: [
             Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
-                Text(
+                const Text(
                   "You've meditated for a total of",
                   style: TextStyle(
                       fontSize: 13,
@@ -45,14 +45,14 @@ class _StatsPageState extends State<StatsPage> {
                 ),
                 Text(
                   "${saveController.totalMinutes} min",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
@@ -70,16 +70,16 @@ class _StatsPageState extends State<StatsPage> {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         saveController.streakAverage().toStringAsFixed(1) +
                             " min",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
-                      Text(
+                      const Text(
                         "Weekly Average",
                         style: TextStyle(fontSize: 12, color: Colors.white70),
                       ),
@@ -99,7 +99,7 @@ class _StatsPageState extends State<StatsPage> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(
-                    children: [
+                    children: const [
                       SizedBox(
                         height: 10,
                       ),

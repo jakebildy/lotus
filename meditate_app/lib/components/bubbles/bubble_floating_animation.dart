@@ -58,7 +58,7 @@ class BubbleFloatingAnimation {
         ),
       );
 
-    duration = Duration(
+    duration = const Duration(
           milliseconds: 30000,
         ) +
         Duration(

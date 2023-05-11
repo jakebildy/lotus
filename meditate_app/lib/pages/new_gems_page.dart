@@ -63,44 +63,44 @@ class _NewGemsPageState extends State<NewGemsPage>
             SizedBox(
               height: MediaQuery.of(context).size.height / 40,
             ),
-            Container(
-                child: Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("+" + widget.gemsAmount.toString(),
-                  style: TextStyle(fontSize: 120, color: Colors.greenAccent)),
-            )),
-            Container(
-                child: Padding(
+                  style: const TextStyle(
+                      fontSize: 120, color: Colors.greenAccent)),
+            ),
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                   "You earned " + widget.gemsAmount.toString() + " gems!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            )),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold)),
+            ),
             Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 "The longer you meditate, the more gems you'll earn",
                 style: TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
               ),
             )),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             GestureDetector(
               onTap: () {
                 if (widget.foundEgg) {
-                  Get.offAll(NewEggPage());
+                  Get.offAll(const NewEggPage());
                 } else {
-                  Get.offAll(AppPages());
+                  Get.offAll(const AppPages());
                 }
               },
               child: Container(
-                  color: Color.fromARGB(255, 16, 77, 127),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 100),
+                  color: const Color.fromARGB(255, 16, 77, 127),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
                     child: Text(
                       "Continue",
                       style: TextStyle(

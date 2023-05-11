@@ -38,7 +38,7 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
   }
 
   Future<void> increaseCount() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     setState(() {
       opacity = 1;
     });
@@ -79,20 +79,18 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                     ],
                   )),
             ),
-            Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text("Your egg hatched!",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            )),
-            Container(
-                child: Padding(
+            ),
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                   "You found a ${TURTLE_COLORS_NAME[widget.turtleColorToHatch]} ${TURTLES[widget.turtleToHatch].name}.",
-                  style: TextStyle(fontSize: 14)),
-            )),
-            SizedBox(
+                  style: const TextStyle(fontSize: 14)),
+            ),
+            const SizedBox(
               height: 50,
             ),
             GestureDetector(
@@ -103,10 +101,10 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                 ));
               },
               child: Container(
-                  color: Color.fromARGB(255, 16, 77, 127),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 100),
+                  color: const Color.fromARGB(255, 16, 77, 127),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
                     child: Text(
                       "Continue",
                       style: TextStyle(

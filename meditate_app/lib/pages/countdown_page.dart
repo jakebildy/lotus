@@ -92,7 +92,7 @@ class _CountdownPageState extends State<CountdownPage>
   int _start = 0;
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -113,7 +113,7 @@ class _CountdownPageState extends State<CountdownPage>
         Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               // image: DecorationImage(
               //   fit: BoxFit.cover,
               //   image: AssetImage("assets/water_vibes.webp"),
@@ -128,14 +128,14 @@ class _CountdownPageState extends State<CountdownPage>
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color(0xff87CEEB),
-                Color(0xff87CEEB),
-                Color.fromARGB(255, 25, 178, 238),
-                Color.fromARGB(255, 183, 163, 211),
-                Color.fromARGB(255, 247, 190, 221),
-                Color.fromARGB(255, 247, 244, 186),
-                Color(0xff87CEEB),
-                Color.fromARGB(255, 25, 178, 238),
+                const Color(0xff87CEEB),
+                const Color(0xff87CEEB),
+                const Color.fromARGB(255, 25, 178, 238),
+                const Color.fromARGB(255, 183, 163, 211),
+                const Color.fromARGB(255, 247, 190, 221),
+                const Color.fromARGB(255, 247, 244, 186),
+                const Color(0xff87CEEB),
+                const Color.fromARGB(255, 25, 178, 238),
               ],
             )),
             child: Stack(
@@ -147,8 +147,8 @@ class _CountdownPageState extends State<CountdownPage>
                 WaveWidget(
                   config: CustomConfig(
                     colors: [
-                      Color(0x338006994),
-                      Color(0x3300BBF9),
+                      const Color(0x338006994),
+                      const Color(0x3300BBF9),
                     ],
                     durations: [
                       10000,
@@ -160,12 +160,12 @@ class _CountdownPageState extends State<CountdownPage>
                     ],
                   ),
                   backgroundColor: Colors.transparent,
-                  size: Size(double.infinity, double.infinity),
+                  size: const Size(double.infinity, double.infinity),
                   waveAmplitude: 0,
                 ),
 
                 ListView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   //mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Center(
@@ -186,19 +186,19 @@ class _CountdownPageState extends State<CountdownPage>
                                   child: Container(
                                       child: Column(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Meditation Complete!",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 23,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       Text(
                                         "${addExtraTime ? widget.time.inMinutes + _start ~/ 60 : widget.time.inMinutes} minute${(addExtraTime ? widget.time.inMinutes + _start ~/ 60 : widget.time.inMinutes) > 1 ? "s" : ""}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 23,
                                             fontWeight: FontWeight.w400),
@@ -319,7 +319,7 @@ class _CountdownPageState extends State<CountdownPage>
                                       });
                                     },
                                     child: addExtraTime
-                                        ? Text(
+                                        ? const Text(
                                             "Added",
                                             style: TextStyle(
                                               fontSize: 18,
@@ -327,7 +327,7 @@ class _CountdownPageState extends State<CountdownPage>
                                           )
                                         : Text(
                                             "Add ${_start ~/ 60}:${_start % 60 < 10 ? "0" + (_start % 60).toString() : _start % 60}",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 18,
                                             ),
                                           ),
@@ -395,8 +395,8 @@ class _CountdownPageState extends State<CountdownPage>
                                         Navigator.of(context).pop();
                                       },
                                       child: Container(
-                                          color:
-                                              Color.fromARGB(255, 16, 77, 127),
+                                          color: const Color.fromARGB(
+                                              255, 16, 77, 127),
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal:
@@ -405,7 +405,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                             .width -
                                                         280,
                                                 vertical: 10),
-                                            child: Text(
+                                            child: const Text(
                                               "End Session",
                                               style: TextStyle(
                                                   color: Colors.white,
@@ -440,8 +440,8 @@ class _CountdownPageState extends State<CountdownPage>
                                                   "Time in Minutes to add: ${timeInMinutes}");
 
                                               //Save the streak day
-                                              DateTime now = new DateTime.now();
-                                              DateTime date = new DateTime(
+                                              DateTime now = DateTime.now();
+                                              DateTime date = DateTime(
                                                   now.year, now.month, now.day);
 
                                               String streakValue =
@@ -547,8 +547,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                     //if future turtles exist, this will be the one that displays on the
                                                     //hatching turtle page
                                                     if (saveController
-                                                            .eggType.length >
-                                                        0) {
+                                                        .eggType.isNotEmpty) {
                                                       String eggTypeNew =
                                                           saveController
                                                               .eggType[0];
@@ -643,7 +642,7 @@ class _CountdownPageState extends State<CountdownPage>
                                             }
                                           },
                                           child: Container(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 16, 77, 127),
                                               child: Padding(
                                                 padding:
@@ -654,7 +653,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                   loading
                                                       ? "Loading..."
                                                       : "Continue",
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: Colors.white,
                                                       fontWeight:
                                                           FontWeight.bold,

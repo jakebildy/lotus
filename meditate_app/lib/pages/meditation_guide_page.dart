@@ -28,7 +28,7 @@ class _MeditationGuideState extends State<MeditationGuide> {
   String count = "0";
 
   Future<void> boxBreathing() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     while (isOnPage) {
       if (isOnPage) {
         HapticFeedback.lightImpact();
@@ -39,36 +39,36 @@ class _MeditationGuideState extends State<MeditationGuide> {
           count = "1";
         });
       }
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "2";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "3";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "4";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         title = "Hold";
         count = "1";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "2";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "3";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "4";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       if (isOnPage) {
         HapticFeedback.lightImpact();
         setState(() {
@@ -78,36 +78,36 @@ class _MeditationGuideState extends State<MeditationGuide> {
           count = "1";
         });
       }
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "2";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "3";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "4";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "1";
         title = "Hold";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "2";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "3";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
         count = "4";
       });
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 1));
     }
   }
 
@@ -122,15 +122,15 @@ class _MeditationGuideState extends State<MeditationGuide> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          decoration: new BoxDecoration(
-              gradient: new LinearGradient(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 33, 135, 175),
-              Color.fromARGB(255, 65, 113, 142),
-              Color.fromARGB(255, 21, 115, 155),
-              Color.fromARGB(255, 1, 126, 137),
+              const Color.fromARGB(255, 33, 135, 175),
+              const Color.fromARGB(255, 65, 113, 142),
+              const Color.fromARGB(255, 21, 115, 155),
+              const Color.fromARGB(255, 1, 126, 137),
             ],
           )),
           child: Stack(
@@ -151,15 +151,15 @@ class _MeditationGuideState extends State<MeditationGuide> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       "If you haven't meditated before, try repeating the following breath exercise while you meditate:",
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 60,
                   ),
                   SizedBox(
@@ -172,13 +172,13 @@ class _MeditationGuideState extends State<MeditationGuide> {
                       } else {
                         Get.off(CountdownPage(time: widget.time!),
                             transition: Transition.circularReveal,
-                            duration: Duration(seconds: 1));
+                            duration: const Duration(seconds: 1));
                       }
                     },
                     child: Container(
-                        color: Color.fromARGB(255, 16, 77, 127),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
+                        color: const Color.fromARGB(255, 16, 77, 127),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 100),
                           child: Text(
                             "Continue",
@@ -194,7 +194,7 @@ class _MeditationGuideState extends State<MeditationGuide> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 220),
                 child: AnimatedDefaultTextStyle(
-                    duration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 1),
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -220,19 +220,20 @@ class _MeditationGuideState extends State<MeditationGuide> {
                       alignment: Alignment.center,
                       children: [
                         AnimatedOpacity(
-                            duration: Duration(seconds: 5),
+                            duration: const Duration(seconds: 5),
                             opacity: opacity,
                             child: Image.asset("assets/bubble.png")),
                         AnimatedDefaultTextStyle(
-                            duration: Duration(seconds: 1),
+                            duration: const Duration(seconds: 1),
                             style: TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
                                 color: title == "Breathe In"
-                                    ? Color.fromARGB(255, 16, 77, 127)
+                                    ? const Color.fromARGB(255, 16, 77, 127)
                                     : title == "Hold"
-                                        ? Color.fromARGB(255, 42, 72, 7)
-                                        : Color.fromARGB(255, 16, 77, 127)),
+                                        ? const Color.fromARGB(255, 42, 72, 7)
+                                        : const Color.fromARGB(
+                                            255, 16, 77, 127)),
                             child: Text(
                               count,
                             ))

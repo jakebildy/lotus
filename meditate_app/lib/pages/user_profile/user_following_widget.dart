@@ -42,7 +42,7 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
           ),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               TabBar(
@@ -53,10 +53,10 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                     });
                   },
                   tabs: [
-                    Tab(
+                    const Tab(
                       text: "Following",
                     ),
-                    Tab(
+                    const Tab(
                       text: "Followers",
                     )
                   ]),
@@ -67,15 +67,15 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                         : followController.followers.length * 64),
                 child: TabBarView(
                     controller: tabController,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       followController.stylistsFollowing.length == 0
                           ? Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
-                                Text(
+                                const Text(
                                   "You don't have any friends yet - add some!",
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.grey),
@@ -83,21 +83,22 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                               ],
                             )
                           : Column(children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               ...(followController.stylistsFollowing.map(
                                   (user) => FollowerWidget(
                                       user: user,
-                                      color: Color.fromARGB(255, 42, 42, 42))))
+                                      color: const Color.fromARGB(
+                                          255, 42, 42, 42))))
                             ]),
                       followController.followers.length == 0
                           ? Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 20,
                                 ),
-                                Text(
+                                const Text(
                                   "You don't have any followers yet!",
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.grey),
@@ -105,17 +106,18 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                               ],
                             )
                           : Column(children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               ...(followController.followers.map((user) =>
                                   FollowerWidget(
                                       user: user,
-                                      color: Color.fromARGB(255, 42, 42, 42))))
+                                      color: const Color.fromARGB(
+                                          255, 42, 42, 42))))
                             ]),
                     ]),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               GestureDetector(
@@ -150,15 +152,15 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                                           0, 0, 5, 5.0),
                                       child: Container(
                                           height: 17,
-                                          child: Icon(
+                                          child: const Icon(
                                             Icons.person_add,
                                             color: Colors.tealAccent,
                                             size: 20,
                                           ))),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
-                                  Text(
+                                  const Text(
                                     "ADD FRIENDS",
                                     style: TextStyle(
                                         fontSize: 13,

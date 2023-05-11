@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/util/quotes.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -29,18 +26,18 @@ class _LoadingPageState extends State<LoadingPage> {
     AuthController auth = Get.find();
     auth.isLoadingPageNotDone.value = true;
     auth.update();
-    await Future.delayed(Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 200));
     setState(() {
       opacity = 1;
     });
-    await Future.delayed(Duration(milliseconds: 3200));
+    await Future.delayed(const Duration(milliseconds: 3200));
     while (auth.isLoading.value) {
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(const Duration(milliseconds: 200));
     }
     setState(() {
       backgroundOpacity = 0;
     });
-    await Future.delayed(Duration(milliseconds: 600));
+    await Future.delayed(const Duration(milliseconds: 600));
     auth.isLoadingPageNotDone.value = false;
     auth.update();
   }
@@ -54,8 +51,8 @@ class _LoadingPageState extends State<LoadingPage> {
         opacity: backgroundOpacity,
         duration: const Duration(milliseconds: 600),
         child: Container(
-            decoration: new BoxDecoration(
-                gradient: new LinearGradient(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
@@ -92,7 +89,7 @@ class _LoadingPageState extends State<LoadingPage> {
                       child: Text(
                         quote,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),

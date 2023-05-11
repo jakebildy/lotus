@@ -46,7 +46,7 @@ class _StreakCountPageState extends State<StreakCountPage>
   }
 
   Future<void> increaseCount() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     setState(() {
       if (!widget.alreadyMeditatedToday) {
         streak += 1;
@@ -72,25 +72,23 @@ class _StreakCountPageState extends State<StreakCountPage>
                   width: 409,
                   child: Image.asset("assets/fire_joypixel.gif")),
             ),
-            Container(
-                child: Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(streak.toString(),
-                  style: TextStyle(fontSize: 120, color: Colors.orange)),
-            )),
-            Container(
-                child: Padding(
+                  style: const TextStyle(fontSize: 120, color: Colors.orange)),
+            ),
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(streak.toString() + " day streak!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            )),
-            Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold)),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text("Meditate every day to build your streak",
                   style: TextStyle(fontSize: 14)),
-            )),
-            SizedBox(
+            ),
+            const SizedBox(
               height: 50,
             ),
             GestureDetector(
@@ -110,10 +108,10 @@ class _StreakCountPageState extends State<StreakCountPage>
                 }
               },
               child: Container(
-                  color: Color.fromARGB(255, 16, 77, 127),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 100),
+                  color: const Color.fromARGB(255, 16, 77, 127),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
                     child: Text(
                       "Continue",
                       style: TextStyle(
