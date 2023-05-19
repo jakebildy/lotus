@@ -157,6 +157,16 @@ class SaveController extends GetxController {
       totalMinutes.value = int.parse(getValue('total_minutes'));
     }
 
+    //This eliminates the issue with vast number of eggTypes:
+    if (eggType.length > eggs.value && eggType.length > 30) {
+      //remove all eggTypes up to the number of eggs
+      for (int i = 0; i < eggType.length - eggs.value; i++) {
+        eggType.removeAt(0);
+      }
+      saveValue("egg_types",
+          eggType.toString().replaceAll("[", "").replaceAll("]", ""));
+    }
+
     lastSevenDays = RxList.empty();
     unlockedTurtles = RxList.empty();
 
@@ -262,6 +272,10 @@ class SaveController extends GetxController {
   }
 
   String getValue(String key) {
+    if (key == "egg_types") {
+      print("GETTING VALUE: " + key);
+      print("IS : " + (storage.read(key) ?? ""));
+    }
     return storage.read(key) ?? "";
   }
 
@@ -458,6 +472,8 @@ class SaveController extends GetxController {
   }
 
   void addFutureTurtle(int futureColor, int futureType) {
+    print('add future turtle called');
+
     eggType.add("${futureType}-${futureColor}");
     saveValue("egg_types",
         eggType.toString().replaceAll("[", "").replaceAll("]", ""));

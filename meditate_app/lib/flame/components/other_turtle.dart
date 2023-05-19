@@ -143,8 +143,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                ((saveController.gems.value < 1 && DEBUG_MODE) ||
-                        saveController.gems.value < 50)
+                (!DEBUG_MODE && saveController.gems.value < 50)
                     ? Text("You need at least 50 gems to breed this turtle!")
                     : Text(
                         'Breed your ${TURTLE_COLORS_NAME[saveController.turtleColor.value]} ${TURTLES[saveController.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 gems?'),
@@ -161,8 +160,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                 Navigator.of(context).pop();
               },
             ),
-            (saveController.gems.value < 1 && DEBUG_MODE) ||
-                    saveController.gems.value < 50
+            (!DEBUG_MODE && saveController.gems.value < 50)
                 ? Container()
                 : TextButton(
                     child: const Text(
@@ -171,8 +169,10 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      saveController.updateGems(saveController.gems.value - 50);
-
+                      if (!DEBUG_MODE) {
+                        saveController
+                            .updateGems(saveController.gems.value - 50);
+                      }
                       if (saveController.getValue("eggs") == "") {
                         saveController.updateEggs(1);
                       } else {
