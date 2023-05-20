@@ -157,16 +157,6 @@ class SaveController extends GetxController {
       totalMinutes.value = int.parse(getValue('total_minutes'));
     }
 
-    //This eliminates the issue with vast number of eggTypes:
-    if (eggType.length > eggs.value && eggType.length > 30) {
-      //remove all eggTypes up to the number of eggs
-      for (int i = 0; i < eggType.length - eggs.value; i++) {
-        eggType.removeAt(0);
-      }
-      saveValue("egg_types",
-          eggType.toString().replaceAll("[", "").replaceAll("]", ""));
-    }
-
     lastSevenDays = RxList.empty();
     unlockedTurtles = RxList.empty();
 
@@ -198,8 +188,13 @@ class SaveController extends GetxController {
       hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
     }
     if (getValue('egg_types') != "") {
-      List<String> eggTypesValue = getValue('egg_types').split(",");
+      print("ORIGINAL EGG TYPE:");
+
+      List<String> eggTypesValue =
+          getValue('egg_types').replaceAll(" ", "").split(",");
+      eggType = RxList.empty();
       for (int i = 0; i < eggTypesValue.length; i++) {
+        print(eggTypesValue[i]);
         eggType.add(eggTypesValue[i]);
       }
     } else {
@@ -262,6 +257,22 @@ class SaveController extends GetxController {
       today = today.subtract(Duration(days: 1));
     }
 
+    print("CLEARING EGG ISSUE?");
+    print(eggType.length);
+    print(eggs.value);
+    print("The thing that would be saved:");
+    print(eggType.toString().replaceAll("[", "").replaceAll("]", ""));
+    //This eliminates the issue with vast number of eggTypes:
+    if (eggType.length > eggs.value && eggType.length > 30) {
+      print("CLEARING EGG ISSUE 🥚");
+      //remove all eggTypes up to the number of eggs
+      for (int i = 0; i < (eggType.length - eggs.value); i++) {
+        print(eggType);
+        eggType.removeLast();
+      }
+      saveValue("egg_types",
+          eggType.toString().replaceAll("[", "").replaceAll("]", ""));
+    }
     update();
     print("Streak is set to ${streak.value}");
   }
@@ -475,6 +486,7 @@ class SaveController extends GetxController {
     print('add future turtle called');
 
     eggType.add("${futureType}-${futureColor}");
+
     saveValue("egg_types",
         eggType.toString().replaceAll("[", "").replaceAll("]", ""));
     update();

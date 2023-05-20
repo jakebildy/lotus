@@ -52,7 +52,7 @@ class FollowController extends GetxController {
 
   Future<void> fetchFollows() async {
     try {
-      print("Fetching follows...");
+      // print("Fetching follows...");
       List<Follow> _followers = await Api.follow.getFollowers();
       List<Follow> _following = await Api.follow.getFollowing();
       AuthController auth = Get.find();
@@ -65,8 +65,8 @@ class FollowController extends GetxController {
       stylistsNotFollowing.value = [];
       stylistsFollowingIDs.value = [];
       for (Follow follow in _followers) {
-        print("Follow:");
-        print(follow);
+        // print("Follow:");
+        // print(follow);
         if (follow.type == "Stylist") {
           followers.add(follow.user);
         }
