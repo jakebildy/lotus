@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/pages/turtle_category_page.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -67,19 +68,7 @@ class TurtleCard extends StatelessWidget {
                           : Image.asset("assets/images/turtles/10_overlay.png"),
                     ],
                   ))
-              : Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Image.asset("assets/images/turtles/locked.png"),
-                    Text(
-                      "?",
-                      style: TextStyle(
-                          color: Colors.grey[850],
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
+              : LockedTurtle(id: id),
           SizedBox(
             width: 10,
           ),
