@@ -21,8 +21,8 @@ class TurtleCategoryPage extends StatelessWidget {
         title: Text(TURTLES[id].name + "s"),
       ),
       body: GridView.count(
-          crossAxisCount: 1,
-          childAspectRatio: 4,
+          crossAxisCount: 3,
+          childAspectRatio: 1,
           crossAxisSpacing: 4.0,
           mainAxisSpacing: 8.0,
           children: List.generate(TURTLE_COLORS.length, (index) {

@@ -29,20 +29,20 @@ class TurtleCategory extends StatelessWidget {
     return Bounce(
       duration: Duration(milliseconds: 110),
       onPressed: () {
-        if (unlocked) {
-          HapticFeedback.lightImpact();
-          Get.to(TurtleCategoryPage(id: id), transition: Transition.downToUp);
-        } else {
-          HapticFeedback.lightImpact();
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              key: UniqueKey(),
-              backgroundColor: tierColor(TURTLES[id].tier),
-              content: Text(
-                "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )));
-        }
+        // if (unlocked) {
+        HapticFeedback.lightImpact();
+        Get.to(TurtleCategoryPage(id: id), transition: Transition.downToUp);
+        // } else {
+        //   HapticFeedback.lightImpact();
+        //   ScaffoldMessenger.of(context).clearSnackBars();
+        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //       key: UniqueKey(),
+        //       backgroundColor: tierColor(TURTLES[id].tier),
+        //       content: Text(
+        //         "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
+        //         style: TextStyle(fontWeight: FontWeight.bold),
+        //       )));
+        // }
       },
       child: Card(
           color: unlocked ? null : Colors.white10,

@@ -46,57 +46,60 @@ class TurtleCard extends StatelessWidget {
         }
       },
       child: Card(
+          color: unlocked ? null : Colors.white10,
           child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          unlocked
-              ? Hero(
-                  tag: "turtle-${id}",
-                  child: Stack(
-                    children: [
-                      Image.asset("assets/images/turtles/swim/swim1.png"),
-                      id >= 0 && id < TURTLES.length
-                          ? ColorFiltered(
-                              colorFilter: ColorFilter.mode(
-                                  TURTLE_COLORS[color].withOpacity(0.5),
-                                  BlendMode.srcATop),
-                              child: Image.asset(
-                                  "assets/images/turtles/${id}.png"))
-                          : Container(),
-                      id != 10
-                          ? Container()
-                          : Image.asset("assets/images/turtles/10_overlay.png"),
-                    ],
-                  ))
-              : LockedTurtle(id: id, colorId: color),
-          SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text((TURTLE_COLORS_NAME[color] + " " + TURTLES[id].name),
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w600)),
-                  Text("${quantity} found",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color:
-                              quantity > 0 ? Colors.tealAccent : Colors.grey))
-                ],
-              ),
-            ),
-          ),
-          Icon(Icons.arrow_forward_ios),
-          SizedBox(
-            width: 10,
-          )
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              unlocked
+                  ? Hero(
+                      tag: "turtle-${id}",
+                      child: Stack(
+                        children: [
+                          Image.asset("assets/images/turtles/swim/swim1.png"),
+                          id >= 0 && id < TURTLES.length
+                              ? ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                      TURTLE_COLORS[color].withOpacity(0.5),
+                                      BlendMode.srcATop),
+                                  child: Image.asset(
+                                      "assets/images/turtles/${id}.png"))
+                              : Container(),
+                          id != 10
+                              ? Container()
+                              : Image.asset(
+                                  "assets/images/turtles/10_overlay.png"),
+                        ],
+                      ))
+                  : LockedTurtle(id: id, colorId: color),
+              // SizedBox(
+              //   width: 10,
+              // ),
+              // Expanded(
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text((TURTLE_COLORS_NAME[color] + " " + TURTLES[id].name),
+              //             style: TextStyle(
+              //                 fontSize: 15, fontWeight: FontWeight.w600)),
+              //         Text("${quantity} found",
+              //             style: TextStyle(
+              //                 fontSize: 14,
+              //                 color: quantity > 0
+              //                     ? Colors.tealAccent
+              //                     : Colors.grey))
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              // Icon(Icons.arrow_forward_ios),
+              // SizedBox(
+              //   width: 10,
+              // )
+            ],
+          )),
     );
   }
 }
