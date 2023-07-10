@@ -5,7 +5,8 @@ import 'package:meditate_app/util/turtles.dart';
 
 class LockedTurtle extends StatelessWidget {
   final int id;
-  const LockedTurtle({super.key, required this.id});
+  final int colorId;
+  const LockedTurtle({super.key, required this.id, required this.colorId});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,10 @@ class LockedTurtle extends StatelessWidget {
           id >= 0 && id < TURTLES.length
               ? ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                      TURTLE_COLORS[id % TURTLE_COLORS.length].withOpacity(0.5),
+                      TURTLE_COLORS[colorId == -1
+                              ? id % TURTLE_COLORS.length
+                              : colorId]
+                          .withOpacity(0.5),
                       BlendMode.srcATop),
                   child: Image.asset("assets/images/turtles/${id}.png"))
               : Container(),

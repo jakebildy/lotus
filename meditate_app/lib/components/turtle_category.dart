@@ -70,7 +70,10 @@ class TurtleCategory extends StatelessWidget {
                                   "assets/images/turtles/10_overlay.png"),
                         ],
                       ))
-                  : LockedTurtle(id: id),
+                  : LockedTurtle(
+                      id: id,
+                      colorId: -1,
+                    ),
               SizedBox(
                 width: 10,
               ),
