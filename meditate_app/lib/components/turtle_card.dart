@@ -70,7 +70,22 @@ class TurtleCard extends StatelessWidget {
                                   "assets/images/turtles/10_overlay.png"),
                         ],
                       ))
-                  : LockedTurtle(id: id, colorId: color),
+                  : Opacity(
+                      opacity: 0.2,
+                      child: Stack(
+                        children: [
+                          Image.asset("assets/images/turtles/swim/swim1.png"),
+                          id >= 0 && id < TURTLES.length
+                              ? Image.asset("assets/images/turtles/locked.png")
+                              : Container(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.lock),
+                          ),
+                        ],
+                      ),
+                    )
+
               // SizedBox(
               //   width: 10,
               // ),

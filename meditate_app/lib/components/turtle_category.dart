@@ -29,20 +29,20 @@ class TurtleCategory extends StatelessWidget {
     return Bounce(
       duration: Duration(milliseconds: 110),
       onPressed: () {
-        // if (unlocked) {
-        HapticFeedback.lightImpact();
-        Get.to(TurtleCategoryPage(id: id), transition: Transition.downToUp);
-        // } else {
-        //   HapticFeedback.lightImpact();
-        //   ScaffoldMessenger.of(context).clearSnackBars();
-        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //       key: UniqueKey(),
-        //       backgroundColor: tierColor(TURTLES[id].tier),
-        //       content: Text(
-        //         "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
-        //         style: TextStyle(fontWeight: FontWeight.bold),
-        //       )));
-        // }
+        if (unlocked) {
+          HapticFeedback.lightImpact();
+          Get.to(TurtleCategoryPage(id: id), transition: Transition.downToUp);
+        } else {
+          HapticFeedback.lightImpact();
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              key: UniqueKey(),
+              backgroundColor: tierColor(TURTLES[id].tier),
+              content: Text(
+                "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )));
+        }
       },
       child: Card(
           color: unlocked ? null : Colors.white10,
@@ -87,9 +87,15 @@ class TurtleCategory extends StatelessWidget {
                       Text((TURTLES[id].name.split(" ")[0] + " Turtles"),
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
+                      Text("${tierReadable(TURTLES[id].tier)}",
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: tierColor(TURTLES[id].tier))),
+                      SizedBox(height: 20),
                       Text(
                           "${unlocked ? uniqueQuantity : '0'} of ${TURTLE_COLORS.length}",
-                          style: TextStyle(fontSize: 14))
+                          style: TextStyle(fontSize: 12))
                     ],
                   ),
                 ),
