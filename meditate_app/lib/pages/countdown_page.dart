@@ -44,6 +44,9 @@ class _CountdownPageState extends State<CountdownPage>
   //Whether the Continue button is loading after being pressed
   bool loading = false;
 
+  // The exact DateTime the meditation started
+  late DateTime startTime;
+
   @override
   void initState() {
     _playPauseController = AnimationController(
@@ -61,6 +64,9 @@ class _CountdownPageState extends State<CountdownPage>
 
     print("⚡️ ENABLING WAKELOCK");
     Wakelock.enable();
+
+    startTime = DateTime.now();
+
     super.initState();
   }
 
@@ -101,6 +107,14 @@ class _CountdownPageState extends State<CountdownPage>
         });
       },
     );
+  }
+
+  //This function should execute when the app is reopened, and updates the timer accordingly. If the meditation is over, it will update the state and add the extra time.
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      //restart the timer to the amount of seconds that have passed
+      print("RESUMED!");
+    }
   }
 
   @override

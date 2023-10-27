@@ -42,6 +42,10 @@ Future<void> main() async {
           save.loadData();
           FollowController follow = Get.find();
           follow.fetchFollows();
+
+          print("!!!!! RESUMEDDDD !!!!!");
+          // Check if Timer is running
+          // If so, update State accordingly
         }
         break;
     }
@@ -61,7 +65,7 @@ class MyApp extends StatelessWidget {
       title: 'Meditate',
       darkTheme: ThemeData.dark(),
       theme: ThemeData.dark(),
-      home: Shellevate(),
+      home: const Shellevate(),
     );
   }
 }

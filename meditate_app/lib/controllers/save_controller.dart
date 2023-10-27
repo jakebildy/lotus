@@ -149,35 +149,38 @@ class SaveController extends GetxController {
         .updateUserAttribute("meditationTimesAsOf", date.toIso8601String());
   }
 
-  // TODO: Resolve Memory Leak
-  // TODO: never overwrite data with null
   void loadData() {
+    // Print loading message
     print("Loading Data!");
+
+    // Load total meditation minutes if available
     if (getValue('total_minutes') != "") {
       totalMinutes.value = int.parse(getValue('total_minutes'));
     }
 
+    // Initialize lists for the last seven days of meditation and unlocked turtles
     lastSevenDays = RxList.empty();
     unlockedTurtles = RxList.empty();
 
+    // Load meditation data for the last seven days
     DateTime today = DateTime.now();
     for (int i = 0; i < 7; i++) {
-      if (getValue('meditation-${today.day}-${today.month}-${today.year}') !=
-          "") {
-        lastSevenDays.add(double.parse(
-            getValue('meditation-${today.day}-${today.month}-${today.year}')));
+      String meditationKey =
+          'meditation-${today.day}-${today.month}-${today.year}';
+      if (getValue(meditationKey) != "") {
+        lastSevenDays.add(double.parse(getValue(meditationKey)));
         print("VALUE");
-        print(getValue('meditation-${today.day}-${today.month}-${today.year}'));
+        print(getValue(meditationKey));
       } else {
         lastSevenDays.add(0.0);
       }
       today = today.subtract(Duration(days: 1));
     }
 
+    // Load gems, eggs, and other related data
     if (getValue('gems') != "") {
       gems.value = int.parse(getValue('gems'));
     }
-
     if (getValue('eggs') != "") {
       eggs.value = int.parse(getValue('eggs'));
     }
@@ -187,36 +190,36 @@ class SaveController extends GetxController {
     if (getValue('egg_progress_one') != "") {
       hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
     }
+
+    // Load egg types or set default values if not available
     if (getValue('egg_types') != "") {
       print("ORIGINAL EGG TYPE:");
 
       List<String> eggTypesValue =
           getValue('egg_types').replaceAll(" ", "").split(",");
       eggType = RxList.empty();
-      for (int i = 0; i < eggTypesValue.length; i++) {
-        print(eggTypesValue[i]);
-        eggType.add(eggTypesValue[i]);
-      }
-    } else {
-      if (getValue('eggs') != "") {
-        // for (int i = 0; i < int.parse(getValue('eggs')); i++) {
-        //   eggType.add("0-0");
-        // }
+      for (String type in eggTypesValue) {
+        print(type);
+        eggType.add(type);
       }
     }
 
+    // Load streak freeze value
     if (getValue('streak_freezes') != "") {
       streakFreezes.value = int.parse(getValue('streak_freezes'));
     }
 
+    // Load unlocked turtle data
     for (int i = 0; i < TURTLES.length; i++) {
       if (getValue('turtle-${i}') != "") {
         unlockedTurtles.add(int.parse(getValue('turtle-${i}')));
+
         if (getValue('turtle-${i}-color') != "") {
           unlockedTurtleColors.add(
               getValue('turtle-${i}-color').split(',').map(int.parse).toList());
           unlockedTurtleColors[i].add(-1);
         } else {
+          // Generate random turtle colors if not available
           unlockedTurtleColors.add(List<int>.generate(
               int.parse(getValue('turtle-${i}')),
               (i) => Random().nextInt(TURTLE_COLORS.length)));
@@ -234,22 +237,25 @@ class SaveController extends GetxController {
       }
     }
 
+    // Load ambience setting
     if (getValue('ambience_on') != "") {
       ambienceOn.value = getValue('ambience_on').toLowerCase() == 'true';
     }
 
+    // Load default meditation time
     if (getValue('default_meditation_time') != "") {
       defaultMeditationTime.value =
           int.parse(getValue('default_meditation_time'));
     }
 
+    // Load current streak value
     streak.value = loadStreak();
 
-    //Get the entire meditation history
+    // Load the entire meditation history for the past year
     DateTime rn = DateTime.now();
     today = DateTime.now();
     while (rn.difference(today).abs().inDays <= 365) {
-      DateTime simpleDate = new DateTime(today.year, today.month, today.day);
+      DateTime simpleDate = DateTime(today.year, today.month, today.day);
       meditationHistory[simpleDate] = (double.tryParse(getValue(
                   'meditation-${today.day}-${today.month}-${today.year}')) ??
               0.0)
@@ -257,23 +263,24 @@ class SaveController extends GetxController {
       today = today.subtract(Duration(days: 1));
     }
 
+    // Handle potential issue with a vast number of egg types
     print("CLEARING EGG ISSUE?");
     print(eggType.length);
     print(eggs.value);
     print("The thing that would be saved:");
     print(eggType.toString().replaceAll("[", "").replaceAll("]", ""));
-    //This eliminates the issue with vast number of eggTypes:
     if (eggType.length > eggs.value && eggType.length > 30) {
       print("CLEARING EGG ISSUE 🥚");
-      //remove all eggTypes up to the number of eggs
       for (int i = 0; i < (eggType.length - eggs.value); i++) {
-        print(eggType);
         eggType.removeLast();
       }
       saveValue("egg_types",
           eggType.toString().replaceAll("[", "").replaceAll("]", ""));
     }
+
+    // Notify observers of the changes
     update();
+
     print("Streak is set to ${streak.value}");
   }
 
@@ -476,10 +483,6 @@ class SaveController extends GetxController {
     turtleColor.value = turtleColorNew;
     localContext = context;
     update();
-  }
-
-  void stopGame() {
-    // player.stop();
   }
 
   void addFutureTurtle(int futureColor, int futureType) {
