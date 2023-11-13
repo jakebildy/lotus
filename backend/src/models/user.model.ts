@@ -22,16 +22,10 @@ export interface UserI {
   meditationTimes?: Array<number>,
   meditationTimesAsOf?: Date,
 
-  // streetAddress?: string;
-  // apt?: string;
-  // city?: string;
-  // state?: string;
-  // zipcode?: string;
-
-  // clothingGender?: string;
-
-  // // Stylists
-  // cashoutPending?: boolean;
+  meditationHistory?: { [key: string]: number };
+  unlockedTurtles?: Array<any>; // Replace 'any' with a more specific type if applicable
+  unlockedTurtleColors?: Array<Array<number>>;
+  eggs?: number;
 }
 
 const UserSchema = new mongoose.Schema<UserI>(
@@ -54,17 +48,12 @@ const UserSchema = new mongoose.Schema<UserI>(
     lastMeditated: { type: Date, required: false },
     meditationTimes: { type: Array, required: false },
     meditationTimesAsOf: { type: Date, required: false },
-
-    // streetAddress: { type: String, required: false },
-    // apt: { type: String, required: false },
-    // city: { type: String, required: false },
-    // state: { type: String, required: false },
-    // zipcode: { type: String, required: false },
-
-    // clothingGender: { type: String, required: false },
-
-    // // Stylist
-    // cashoutPending: { type: Boolean, default: false },
+    
+    meditationHistory: { type: Map, of: Number },
+    unlockedTurtles: { type: Array, required: false },
+    unlockedTurtleColors: { type: [[Number]], required: false },
+    eggs: { type: Number, required: false },
+    
   },
   {
     versionKey: false,
