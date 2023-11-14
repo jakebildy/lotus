@@ -83,13 +83,6 @@ class TurtleGame extends FlameGame with HasTappables {
     camera.followComponent(cameraPoint);
   }
 
-  @override
-  void onDetach() {
-    SaveController saveController = Get.find();
-    saveController.stopGame();
-    super.onDetach();
-  }
-
   bool canMove = true;
 
   debounceCanMove() async {
