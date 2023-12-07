@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/api/index.dart' as Api;
 import 'package:ocarina/ocarina.dart';
+
+import '../models/user.dart';
 
 class SaveController extends GetxController {
   final storage = GetStorage();
@@ -60,6 +63,15 @@ class SaveController extends GetxController {
     update();
   }
 
+  void updateFetchedData(User user) {
+    meditationHistory.value = user.meditationHistory;
+    gems.value = user.gems;
+    unlockedTurtles.value = user.unlockedTurtles;
+    unlockedTurtleColors.value = user.unlockedTurtleColors;
+    meditationHistory.refresh();
+    update();
+  }
+
   void updateDefaultMeditationTime(int newVal) {
     defaultMeditationTime.value = newVal;
     saveValue(
@@ -76,8 +88,8 @@ class SaveController extends GetxController {
   }
 
   String streakIconURL() {
-    print("has done streak today");
-    print(hasDoneStreakToday.value);
+    logInfo(
+        "Has the user meditated today? " + hasDoneStreakToday.value.toString());
     return hasDoneStreakToday.value
         ? streakAverage() < 10
             ? "assets/streak_icon.png"
@@ -172,24 +184,28 @@ class SaveController extends GetxController {
         .updateUserAttribute("unlockedTurtleColors", unlockedTurtleColors);
 
     // Upload the entire meditation history for the past year
-    Map<String, int> meditationHistory = {};
-    today = DateTime.now(); // reset today to current date
-    DateTime aYearAgo = today.subtract(Duration(days: 365));
-    while (today.isAfter(aYearAgo)) {
-      String historyKey =
-          'meditation-${today.day}-${today.month}-${today.year}';
-      String historyValue = getValue(historyKey);
-      if (historyValue != "") {
-        meditationHistory[historyKey] = double.parse(historyValue).round();
+    if (lastMeditated != "") {
+      Map<String, int> meditationHistory = {};
+      today = DateTime.now(); // reset today to current date
+      DateTime aYearAgo = today.subtract(Duration(days: 365));
+      while (today.isAfter(aYearAgo)) {
+        String historyKey =
+            'meditation-${today.day}-${today.month}-${today.year}';
+        String historyValue = getValue(historyKey);
+        if (historyValue != "") {
+          meditationHistory[historyKey] = double.parse(historyValue).round();
+        }
+        today = today.subtract(Duration(days: 1));
       }
-      today = today.subtract(Duration(days: 1));
+
+      await Api.user
+          .updateUserAttribute("meditationHistory", meditationHistory);
     }
-    await Api.user.updateUserAttribute("meditationHistory", meditationHistory);
   }
 
   void loadData() {
     // Print loading message
-    print("Loading Data!");
+    logInfo("Loading Data!");
 
     // Load total meditation minutes if available
     if (getValue('total_minutes') != "") {
@@ -207,12 +223,10 @@ class SaveController extends GetxController {
           'meditation-${today.day}-${today.month}-${today.year}';
       if (getValue(meditationKey) != "") {
         lastSevenDays.add(double.parse(getValue(meditationKey)));
-        print("VALUE");
-        print(getValue(meditationKey));
       } else {
         lastSevenDays.add(0.0);
       }
-      today = today.subtract(Duration(days: 1));
+      today = today.subtract(const Duration(days: 1));
     }
 
     // Load gems, eggs, and other related data
@@ -229,17 +243,15 @@ class SaveController extends GetxController {
       hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
     }
 
-    // Load egg types or set default values if not available
+    // Load egg types
     if (getValue('egg_types') != "") {
-      print("ORIGINAL EGG TYPE:");
-
       List<String> eggTypesValue =
           getValue('egg_types').replaceAll(" ", "").split(",");
       eggType = RxList.empty();
       for (String type in eggTypesValue) {
-        print(type);
         eggType.add(type);
       }
+      logInfo("Egg types: " + eggType.toString());
     }
 
     // Load streak freeze value
@@ -290,25 +302,27 @@ class SaveController extends GetxController {
     streak.value = loadStreak();
 
     // Load the entire meditation history for the past year
-    DateTime rn = DateTime.now();
-    today = DateTime.now();
-    while (rn.difference(today).abs().inDays <= 365) {
-      DateTime simpleDate = DateTime(today.year, today.month, today.day);
-      meditationHistory[simpleDate] = (double.tryParse(getValue(
-                  'meditation-${today.day}-${today.month}-${today.year}')) ??
-              0.0)
-          .round();
-      today = today.subtract(Duration(days: 1));
+    // If gems does not exist, neither does meditation history yet
+    if (getValue('gems') == "") {
+      DateTime rn = DateTime.now();
+      today = DateTime.now();
+      while (rn.difference(today).abs().inDays <= 365) {
+        DateTime simpleDate = DateTime(today.year, today.month, today.day);
+        meditationHistory[simpleDate] = (double.tryParse(getValue(
+                    'meditation-${today.day}-${today.month}-${today.year}')) ??
+                0.0)
+            .round();
+        today = today.subtract(Duration(days: 1));
+      }
     }
 
     // Handle potential issue with a vast number of egg types
-    print("CLEARING EGG ISSUE?");
-    print(eggType.length);
-    print(eggs.value);
-    print("The thing that would be saved:");
-    print(eggType.toString().replaceAll("[", "").replaceAll("]", ""));
+
     if (eggType.length > eggs.value && eggType.length > 30) {
-      print("CLEARING EGG ISSUE 🥚");
+      logWarning("CLEARING EGG ISSUE 🥚, eggType is " +
+          eggType.length.toString() +
+          " and eggs is " +
+          eggs.value.toString());
       for (int i = 0; i < (eggType.length - eggs.value); i++) {
         eggType.removeLast();
       }
@@ -319,7 +333,7 @@ class SaveController extends GetxController {
     // Notify observers of the changes
     update();
 
-    print("Streak is set to ${streak.value}");
+    logInfo("Streak is set to ${streak.value}");
   }
 
   Future<void> saveValue(String key, String value) async {
@@ -328,10 +342,6 @@ class SaveController extends GetxController {
   }
 
   String getValue(String key) {
-    if (key == "egg_types") {
-      print("GETTING VALUE: " + key);
-      print("IS : " + (storage.read(key) ?? ""));
-    }
     return storage.read(key) ?? "";
   }
 
@@ -340,12 +350,11 @@ class SaveController extends GetxController {
   }
 
   int loadStreak() {
-    print("Loading streak!");
     DateTime now = new DateTime.now();
     DateTime date = new DateTime(now.year, now.month, now.day);
     //TODO: check last_meditated to see whats going on
     if (getValue("last_meditated") == "") {
-      print("last_meditated hasn't been set yet.");
+      logInfo("last_meditated hasn't been set yet.");
       return 0;
     } else {
       int numDays = DateTime.parse(getValue("last_meditated"))
@@ -362,12 +371,12 @@ class SaveController extends GetxController {
           hasDoneStreakToday.value = true;
           update();
         }
-        print("NumDays < 1");
+        logInfo("NumDays < 1");
         if (getValue("streak") == "") {
-          print("Streak hasn't been saved yet!!");
+          logInfo("Streak hasn't been saved yet!!");
           return 0;
         } else {
-          print("Parsing streak...");
+          logInfo("Parsing streak...");
           return int.parse(getValue("streak"));
         }
       } else {
@@ -377,16 +386,15 @@ class SaveController extends GetxController {
         if (streakFreezes.value > 0) {
           //idk how this edge case could happen but maybe it could
           if (getValue("streak") == "") {
-            print("Streak hasn't been saved yet!!");
-
+            logInfo("Streak hasn't been saved yet!!");
             return 0;
           } else {
-            DateTime now = new DateTime.now();
+            DateTime now = DateTime.now();
             DateTime today = DateTime(now.year, now.month, now.day);
             DateTime yesterday = today.subtract(const Duration(days: 1));
             saveValue("last_meditated", yesterday.toIso8601String());
             updateStreakFreezes(streakFreezes.value - 1);
-            print("Parsing streak...");
+            logInfo("Streak freeze has been used. Returning streak.");
             return int.parse(getValue("streak"));
           }
         } else {
@@ -428,14 +436,12 @@ class SaveController extends GetxController {
     if (meditationHistory[simpleDate] != null) {
       int oldValue = meditationHistory.remove(simpleDate) ?? 0;
       meditationHistory.addAll({simpleDate: oldValue + amountNew});
-      print("updating meditation history!");
-      print(amountNew);
-      print(meditationHistory);
+      logInfo(
+          "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
     } else {
       meditationHistory.addAll({simpleDate: amountNew});
-      print("updating meditation history 2");
-      print(amountNew);
-      print(meditationHistory);
+      logInfo(
+          "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
     }
     meditationHistory.refresh();
     update();
@@ -466,22 +472,21 @@ class SaveController extends GetxController {
   }
 
   void addUnlockedTurtle(int i, int addAmount, int turtleColorToHatch) {
-    print("turtle color to hatch: " + turtleColorToHatch.toString());
-    print(addAmount);
+    logInfo("Color of turtle to hatch: " + turtleColorToHatch.toString());
+    logInfo("Number of turtles to add: " + addAmount.toString());
     saveValue("turtle-${i}", (unlockedTurtles[i] + addAmount).toString());
     unlockedTurtles[i] += addAmount;
 
     if (getValue("turtle-${i}-color") != "") {
       saveValue("turtle-${i}-color",
           getValue('turtle-${i}-color') + "," + turtleColorToHatch.toString());
-      print("!!!");
+      logInfo("getValue for turtle-i-color returned an existing value.");
     } else {
       saveValue("turtle-${i}-color", turtleColorToHatch.toString());
-      print(":000");
+      logInfo("getValue for turtle-i-color was empty.");
     }
     unlockedTurtleColors[i].add(turtleColorToHatch);
-    print("UNLOCKED TURTLE COLORS:");
-    print(unlockedTurtleColors);
+    logInfo("UNLOCKED TURTLE COLORS: " + unlockedTurtleColors.toString());
     update();
   }
 
@@ -494,7 +499,7 @@ class SaveController extends GetxController {
   String COOKIES_KEY = "cookies";
 
   Future<void> saveCookies(String cookies) async {
-    print("saving cookies: $cookies -> $COOKIES_KEY");
+    logInfo("Saving cookies: $cookies -> $COOKIES_KEY");
     storage.write(COOKIES_KEY, cookies);
   }
 
@@ -524,9 +529,10 @@ class SaveController extends GetxController {
   }
 
   void addFutureTurtle(int futureColor, int futureType) {
-    print('add future turtle called');
+    logInfo(
+        'Add future turtle called, adding $futureType-$futureColor to egg_types');
 
-    eggType.add("${futureType}-${futureColor}");
+    eggType.add("$futureType-$futureColor");
 
     saveValue("egg_types",
         eggType.toString().replaceAll("[", "").replaceAll("]", ""));
@@ -541,13 +547,11 @@ class SaveController extends GetxController {
   }
 
   void hatchTurtle(int i, int turtleColorToHatch) {
-    if (eggType.length > 0) {
+    if (eggType.isNotEmpty) {
       String eggTypeNew = eggType[0];
       int eggTypeNewInt = int.parse(eggTypeNew.split("-")[0]);
       int eggColorNewInt = int.parse(eggTypeNew.split("-")[1]);
-      print("hatching turtle");
-      print(eggTypeNewInt);
-      print(eggColorNewInt);
+      logInfo("Hatching turtle $eggTypeNewInt-$eggColorNewInt (type-color)");
       addUnlockedTurtle(eggTypeNewInt, 1, eggColorNewInt);
       popFutureTurtle();
     } else {

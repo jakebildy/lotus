@@ -17,6 +17,7 @@ import 'package:meditate_app/api/index.dart' as Api;
 import 'package:meditate_app/pages/shellevate.dart';
 import 'package:meditate_app/services/push_notification_service.dart';
 import 'package:meditate_app/pages/signup/signup.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 User DummyUser = User(
@@ -27,6 +28,7 @@ User DummyUser = User(
   createdAt: DateTime.now(),
   lastMeditated: DateTime.now(),
   meditationTimesAsOf: DateTime.now(),
+  meditationHistory: {},
 );
 
 class AuthController extends GetxController {
@@ -70,11 +72,12 @@ class AuthController extends GetxController {
     loginFromCookiesRequest();
 
     user.listen((User user) {
-      print("🔥AUTH: User value has been set ${user.username}");
+      logSuccess("🔥AUTH: User value has been set ${user.username}");
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
       SaveController saveController = Get.find();
+      saveController.updateFetchedData(user);
       saveController.uploadLocalData();
     });
   }
@@ -84,10 +87,9 @@ class AuthController extends GetxController {
     try {
       await saveController.saveCookies(Api.cookies);
       String cookies = saveController.getCookies();
-      print("COOKIES: " + cookies);
     } catch (error, trace) {
-      print(error);
-      print(trace);
+      logError("Failed to set user " + error.toString());
+      logError(trace.toString());
     }
     update();
   }
@@ -99,20 +101,11 @@ class AuthController extends GetxController {
       isLoading.value = true;
       update();
       String cookies = saveController.getCookies();
-      print("COOKIES");
-      print(cookies);
       Api.setCookies(cookies);
       user.value = await Api.user.me();
-      print("user name");
-      print(user.value.fullName);
-      // isAuthenticated.value = true;
-      // _authenticateLitsocket();
-
-      // Get.offAll(Shellevate());
     } catch (e, stackTrace) {
-      // print(stackTrace);
-      print(e);
-      print(stackTrace);
+      logError(e.toString());
+      logError(stackTrace.toString());
     }
     waitThenSetLoadingFalse();
     update();
@@ -130,7 +123,7 @@ class AuthController extends GetxController {
     try {
       user.value = await Api.user.me();
     } catch (e) {
-      print(e);
+      logError(e.toString());
     }
     update();
   }
@@ -139,10 +132,10 @@ class AuthController extends GetxController {
     isLoading.value = false;
     try {
       String message = await Api.auth.logout();
-      print(message);
+      logSuccess(message);
     } catch (error, trace) {
-      print(error);
-      print(trace);
+      logError(error.toString());
+      logError(trace.toString());
     }
     user.value = DummyUser;
     // isAuthenticated.value = false;
@@ -154,9 +147,9 @@ class AuthController extends GetxController {
 
   Future<Null> _cropImage(image) async {
     try {
-      print("croppedFile 1");
+      logInfo("Cropping image...");
 
-      File? croppedFile = await (new ImageCropper()).cropImage(
+      File? croppedFile = await (ImageCropper()).cropImage(
           sourcePath: image.path,
           aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
           androidUiSettings: const AndroidUiSettings(
@@ -171,62 +164,56 @@ class AuthController extends GetxController {
             aspectRatioLockEnabled: true,
             aspectRatioPickerButtonHidden: true,
           ));
-      print("croppedFile != null");
-      print(croppedFile != null);
       if (croppedFile != null) {
-        print("cropped file is about to be uploaded");
+        logInfo("Cropped file is about to be uploaded");
         croppedFile.readAsBytes().then((bytes) {
           String base64 = base64Encode(bytes);
           String fileName = croppedFile.path.split("/").last;
 
           PicturesApi().setProfilePicture(fileName, base64).then((newUser) {
-            // AppState().me().then((value) => setState(() {}));
-            print("set profile picture successfully");
+            logSuccess("Set profile picture successfully");
             user.value = newUser;
-
             update();
-            // print(croppedFile.lengthSync());
-            // print(AppState().user.profilePicture);
           }).catchError((error) {
-            print("failed to set profile pic");
-            print(error);
+            logError("Failed to set profile pic!");
+            logError(error);
           });
         });
       }
     } catch (error) {
-      print(error);
+      logError("Failed to crop image!");
+      logError(error.toString());
     }
   }
 
   Future<void> changeProfilePic() async {
-    print("change profile pic!");
+    logInfo("Changing profile pic!");
     // check permission
     try {
       bool _hasPermission = await Permission.photos.request().isGranted;
       // && await Permission.camera.request().isGranted;
       if (_hasPermission) {
-        print("we ha permissions!");
+        logInfo("We have permissions!");
         ImagePicker()
             .pickImage(
                 source: ImageSource.gallery, maxHeight: 500, maxWidth: 500)
             .then((image) {
           //Todo consider increasing image quality
           try {
-            print("trying to crop");
             _cropImage(image);
           } catch (error) {
-            print("failed to crop image: " + error.toString());
+            logError("Failed to crop image: " + error.toString());
           }
         }).catchError((error) {
-          print("ERROR Gettinng Image: ");
-          print(error.toString());
+          logError("ERROR Getting Image: ");
+          logError(error.toString());
         });
       } else {
-        print("no permission to change photo");
+        logError("No permission to change photo");
       }
     } catch (error, trace) {
-      print(error);
-      print(trace);
+      logError(error.toString());
+      logError(trace.toString());
     }
     // ImagePicker().getIma   ge(source: null)
   }

@@ -10,7 +10,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -239,7 +239,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                               ),
                               onPressed: () {
                                 //Log the event to AppsFlyer
-                                AppsflyerService appsflyer = Get.find();
+                                HeapService appsflyer = Get.find();
                                 appsflyer.logEvent("GAME_STARTED", {});
                                 saveController.startGame(
                                     widget.id, widget.color, context);

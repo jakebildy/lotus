@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:meditate_app/api/index.dart' as Api;
 import 'package:meditate_app/controllers/auth_controller.dart';
+import 'package:meditate_app/util/logger.dart';
 
 class PushNotificationService extends GetxService {
   late FirebaseMessaging firebaseMessaging;
@@ -21,7 +22,7 @@ class PushNotificationService extends GetxService {
       FirebaseMessaging.onBackgroundMessage(_messageHandler);
       firebaseMessaging = FirebaseMessaging.instance;
       String? _token = await firebaseMessaging.getToken();
-      print("🔥💢📞 FireBase Messaging Device Token: $_token");
+      logInfo("🔥💢📞 FireBase Messaging Device Token: $_token");
       token = _token;
 
       // Get any messages which caused the application to open from
@@ -32,35 +33,36 @@ class PushNotificationService extends GetxService {
       // If the message also contains a data property with a "type" of "chat",
       // navigate to a chat screen
       if (initialMessage != null) {
-        print("Message opened app from closed");
-        print(initialMessage.data);
+        logInfo("Message opened app from closed");
+        logInfo(initialMessage.data.toString());
       }
 
       //Listens for when the app is in the background, and the notification is pressed
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        print("Message opened app");
-        print(message.data);
+        logInfo("Message opened app");
+        logInfo(message.data.toString());
       });
     } catch (error, trace) {
-      print("error initializing firebase messaging.");
-      print(error);
-      print(trace);
+      logError("error initializing firebase messaging.");
+      logError(error.toString());
+      logError(trace.toString());
     }
   }
 
   void updateDeviceToken() async {
     try {
-      if (token == null)
-        return print("💢💢💢 Cannot update a NULL device token!");
+      if (token == null) {
+        return logError("💢💢💢 Cannot update a NULL device token!");
+      }
       await Api.user.updateDeviceToken(token!);
     } catch (error, trace) {
-      print("error updating firebase device token.");
-      print(error);
-      print(trace);
+      logError("error updating firebase device token.");
+      logError(error.toString());
+      logError(trace.toString());
     }
   }
 
   Future<void> _messageHandler(RemoteMessage message) async {
-    print('background message ${message.notification!.body}');
+    logInfo('background message ${message.notification!.body}');
   }
 }

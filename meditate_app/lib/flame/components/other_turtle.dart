@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
 import 'package:meditate_app/util/DEBUG_MODE.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'dart:math' as math;
 
 import 'package:meditate_app/util/turtles.dart';
@@ -195,12 +196,13 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                       int futureType = babyType
                           ? saveController.selectedTurtle.value
                           : turtleType;
-                      print("NEW TURTLES");
-                      print(TURTLE_COLORS_NAME[futureColor]);
-                      print(TURTLES[futureType].name);
+                      logInfo("NEW TURTLE 🐢: " +
+                          TURTLE_COLORS_NAME[futureColor] +
+                          " " +
+                          TURTLES[futureType].name);
                       saveController.addFutureTurtle(futureColor, futureType);
 
-                      Get.to(NewEggPage());
+                      Get.to(const NewEggPage());
                     },
                   ),
           ],

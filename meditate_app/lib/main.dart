@@ -12,38 +12,39 @@ import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/loading_page.dart';
 import 'package:meditate_app/pages/shellevate.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/services/push_notification_service.dart';
+import 'package:meditate_app/util/logger.dart';
 
 Future<void> main() async {
   try {
     await GetStorage.init();
   } catch (error) {
-    print("uh oh! stinky");
-    print(error);
+    logError("Get Storage is not working:");
+    logError(error.toString());
   }
   Get.put(SaveController());
   Get.put(NetworkStatusController());
   Get.put(PushNotificationService());
-  Get.put(AppsflyerService());
+  Get.put(HeapService());
   Get.put(AuthController());
   runApp(const MyApp());
   SystemChannels.lifecycle.setMessageHandler((msg) {
     switch (msg) {
       case 'AppLifecycleState.paused':
         {
-          print(msg);
+          logInfo(msg.toString());
         }
         break;
       case 'AppLifecycleState.resumed':
         {
-          print(msg);
+          logInfo(msg.toString());
           SaveController save = Get.find();
           save.loadData();
           FollowController follow = Get.find();
           follow.fetchFollows();
 
-          print("!!!!! RESUMEDDDD !!!!!");
+          logInfo("Resuming App.");
           // Check if Timer is running
           // If so, update State accordingly
         }
@@ -58,8 +59,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthController auth = Get.find();
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Meditate',

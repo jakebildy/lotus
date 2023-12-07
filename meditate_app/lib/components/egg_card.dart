@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/DEBUG_MODE.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -40,7 +40,7 @@ class EggCard extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold))));
 
         //Log the event to AppsFlyer
-        AppsflyerService appsflyer = Get.find();
+        HeapService appsflyer = Get.find();
         appsflyer.logEvent("EGG_TAPPED",
             {"more_days": (3 - save.hatchProgressEggOne.value).toString()});
       },

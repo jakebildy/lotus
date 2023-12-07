@@ -9,7 +9,7 @@ import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -184,8 +184,8 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                     HapticFeedback.heavyImpact();
 
                                     //Log the event to AppsFlyer
-                                    AppsflyerService appsflyer = Get.find();
-                                    appsflyer.logEvent("MEDITATION_TAPPED", {
+                                    HeapService heap = Get.find();
+                                    heap.logEvent("MEDITATION_TAPPED", {
                                       "time": _duration.inMinutes.toString()
                                     });
 

@@ -22,9 +22,7 @@ class EditProfileController extends GetxController {
   }
 
   Future<void> changeProfilePhoto() async {
-    print("whos joe");
     AuthController authController = Get.find();
     await authController.changeProfilePic();
-    print("joe mama");
   }
 }

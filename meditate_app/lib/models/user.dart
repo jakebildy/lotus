@@ -62,8 +62,9 @@ class User {
       Map<String, dynamic>? jsonMap) {
     Map<DateTime, int> meditationHistory = {};
     jsonMap?.forEach((key, value) {
-      DateFormat format = DateFormat('meditation-dd-MM-yyyy');
-      DateTime date = format.parse(key, true).toLocal();
+      DateFormat format = DateFormat('dd-MM-yyyy');
+      DateTime date =
+          format.parse(key.replaceAll("meditation-", ""), true).toLocal();
       int duration = value is int ? value : int.tryParse(value.toString()) ?? 0;
       meditationHistory[date] = duration;
     });

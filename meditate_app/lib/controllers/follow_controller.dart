@@ -5,6 +5,7 @@ import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/api/index.dart' as Api;
 import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/util/logger.dart';
 
 class FollowController extends GetxController {
   RxList<User> stylistsFollowing = new RxList();
@@ -25,7 +26,7 @@ class FollowController extends GetxController {
     try {
       _followers = await Api.follow.getStylistFollowers(stylist);
     } catch (e) {
-      print(e);
+      logError("Failed to get users followers: " + e.toString());
     }
     return _followers;
   }
@@ -35,7 +36,7 @@ class FollowController extends GetxController {
     try {
       _followers = await Api.follow.getStylistFollowing(stylist);
     } catch (e) {
-      print(e);
+      logError("Failed to get users following: " + e.toString());
     }
     return _followers;
   }
@@ -45,14 +46,13 @@ class FollowController extends GetxController {
     try {
       _followers = await Api.follow.getStylistNotFollowing(stylist);
     } catch (e) {
-      print(e);
+      logError("Failed to get users not following: " + e.toString());
     }
     return _followers;
   }
 
   Future<void> fetchFollows() async {
     try {
-      // print("Fetching follows...");
       List<Follow> _followers = await Api.follow.getFollowers();
       List<Follow> _following = await Api.follow.getFollowing();
       AuthController auth = Get.find();
@@ -65,8 +65,6 @@ class FollowController extends GetxController {
       stylistsNotFollowing.value = [];
       stylistsFollowingIDs.value = [];
       for (Follow follow in _followers) {
-        // print("Follow:");
-        // print(follow);
         if (follow.type == "Stylist") {
           followers.add(follow.user);
         }
@@ -85,8 +83,8 @@ class FollowController extends GetxController {
         }
       }
     } catch (error, trace) {
-      print(error);
-      print(trace);
+      logError(error.toString());
+      logError(trace.toString());
     }
     update();
   }
@@ -96,19 +94,19 @@ class FollowController extends GetxController {
       stylistsFollowing.remove(stylist);
       stylistsFollowingIDs.remove(stylist.id);
       try {
-        await Api.follow.unfollowStylist(stylist);
+        await Api.follow.unfollowUser(stylist);
       } catch (error, trace) {
-        print(error);
-        print(trace);
+        logError("Failed to unfollow user: " + error.toString());
+        logError(trace.toString());
       }
     } else {
       stylistsFollowing.add(stylist);
       stylistsFollowingIDs.add(stylist.id!);
       try {
-        await Api.follow.followStylist(stylist);
+        await Api.follow.followUser(stylist);
       } catch (error, trace) {
-        print(error);
-        print(trace);
+        logError("Failed to follow user " + error.toString());
+        logError(trace.toString());
       }
     }
 

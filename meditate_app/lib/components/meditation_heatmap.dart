@@ -1,11 +1,9 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/util/crescent_time.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/util.dart';
 
 class MeditationHeatmap extends StatefulWidget {
@@ -42,14 +40,15 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
               40: Colors.pinkAccent,
             },
             onClick: (value) {
-              print(saveController.meditationHistory);
+              logInfo("Meditation history: " +
+                  saveController.meditationHistory.toString());
               setState(() {});
               if (saveController.meditationHistory[value] != null) {
                 ScaffoldMessenger.of(context).clearSnackBars();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(
                       "You meditated ${saveController.meditationHistory[value]} minutes ${(formatDay(value) == "Today" ? "today" : "on " + formatDay(value)) + " " + Moon.emoji(value)}"),
-                  duration: Duration(seconds: 2),
+                  duration: const Duration(seconds: 2),
                 ));
               }
             },

@@ -354,28 +354,8 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
         _getBaseUnitToSecondaryUnitFactor(widget.baseUnit);
   }
 
-  // TODO: Fix snap to mins
   Duration _getTimeForTheta(double theta) {
     return _angleToDuration(_turningAngle);
-    // var fractionalRotation = (0.25 - (theta / _kTwoPi));
-    // fractionalRotation = fractionalRotation < 0
-    //    ? 1 - fractionalRotation.abs()
-    //    : fractionalRotation;
-    // var mins = (fractionalRotation * 60).round();
-    // debugPrint('Mins0: ${widget.snapToMins }');
-    // if (widget.snapToMins != null) {
-    //   debugPrint('Mins1: $mins');
-    //  mins = ((mins / widget.snapToMins!).round() * widget.snapToMins!).round();
-    //   debugPrint('Mins2: $mins');
-    // }
-    // if (mins == 60) {
-    //  // _snappedHours = _hours + 1;
-    //  // mins = 0;
-    //  return new Duration(hours: 1, minutes: mins);
-    // } else {
-    //  // _snappedHours = _hours;
-    //  return new Duration(hours: _hours, minutes: mins);
-    // }
   }
 
   Duration _notifyOnChangedIfNeeded() {

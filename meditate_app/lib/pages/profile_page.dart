@@ -20,7 +20,7 @@ import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
@@ -482,7 +482,7 @@ class _ProfilePageState extends State<ProfilePage>
                           GestureDetector(
                             onTap: () {
                               //Log the event to AppsFlyer
-                              AppsflyerService appsflyer = Get.find();
+                              HeapService appsflyer = Get.find();
                               appsflyer.logEvent("ADD_FRIENDS_TAPPED", {});
 
                               Get.to(const Search());

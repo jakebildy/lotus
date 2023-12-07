@@ -9,9 +9,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/DEBUG_MODE.dart';
 import 'package:meditate_app/util/eggquation.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:ocarina/ocarina.dart';
 import 'package:wakelock/wakelock.dart';
@@ -62,7 +63,7 @@ class _CountdownPageState extends State<CountdownPage>
       playAmbience();
     }
 
-    print("⚡️ ENABLING WAKELOCK");
+    logInfo("⚡️ ENABLING WAKELOCK");
     Wakelock.enable();
 
     startTime = DateTime.now();
@@ -88,7 +89,7 @@ class _CountdownPageState extends State<CountdownPage>
     player.dispose();
     _timer.cancel();
     bell.dispose();
-    print("⚡️ DISABLING WAKELOCK");
+    logInfo("⚡️ DISABLING WAKELOCK");
     Wakelock.disable();
     super.dispose();
   }
@@ -113,7 +114,8 @@ class _CountdownPageState extends State<CountdownPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       //restart the timer to the amount of seconds that have passed
-      print("RESUMED!");
+      logInfo(
+          "RESUMED! This might be where we should restart the timer to the amount of seconds that have passed. Nothing is happening in this function at the moment.");
     }
   }
 
@@ -285,7 +287,7 @@ class _CountdownPageState extends State<CountdownPage>
                                         // This Callback will execute when the Countdown Starts.
                                         onStart: () {
                                           // Here, do whatever you want
-                                          debugPrint('Countdown Started');
+                                          logInfo('Countdown Started');
                                           isEnded = false;
                                         },
 
@@ -293,7 +295,7 @@ class _CountdownPageState extends State<CountdownPage>
                                         onComplete: () {
                                           // Here, do whatever you want
                                           isEnded = true;
-                                          debugPrint('Countdown Ended');
+                                          logInfo('Countdown Ended');
                                           player.dispose();
                                           bell.dispose();
 
@@ -311,7 +313,7 @@ class _CountdownPageState extends State<CountdownPage>
                                         // This Callback will execute when the Countdown Changes.
                                         onChange: (String timeStamp) {
                                           // Here, do whatever you want
-                                          // debugPrint('Countdown Changed $timeStamp');
+                                          // logInfo('Countdown Changed $timeStamp');
                                         },
                                       ),
                                     ),
@@ -358,20 +360,20 @@ class _CountdownPageState extends State<CountdownPage>
                                     iconSize: 50,
                                     onPressed: () {
                                       if (isEnded) {
-                                        print("Restarting countdown...");
+                                        logInfo("Restarting countdown...");
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.forward();
                                         _controller.restart(
                                             duration: widget.time.inSeconds);
                                       } else if (isPaused) {
-                                        print("Resuming countdown...");
+                                        logInfo("Resuming countdown...");
                                         _controller.resume();
                                         player.resume();
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.forward();
                                         isPaused = false;
                                       } else {
-                                        print("Pausing countdown...");
+                                        logInfo("Pausing countdown...");
                                         _controller.pause();
                                         player.pause();
                                         HapticFeedback.mediumImpact();
@@ -450,7 +452,7 @@ class _CountdownPageState extends State<CountdownPage>
                                               if (addExtraTime) {
                                                 timeInMinutes += _start ~/ 60;
                                               }
-                                              print(
+                                              logInfo(
                                                   "Time in Minutes to add: ${timeInMinutes}");
 
                                               //Save the streak day
@@ -472,7 +474,8 @@ class _CountdownPageState extends State<CountdownPage>
 
                                               if (streakValue == "" ||
                                                   lastMeditated == "") {
-                                                print("Streak value is empty.");
+                                                logInfo(
+                                                    "Streak value is empty.");
                                                 saveController.updateStreak(1);
                                               } else {
                                                 int numDays = DateTime.parse(
@@ -485,7 +488,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                   saveController.updateStreak(
                                                       int.parse(streakValue) +
                                                           1);
-                                                  print(
+                                                  logInfo(
                                                       "Streak value is updated to ${int.parse(streakValue) + 1}.");
                                                   saveController.updateGems(
                                                       saveController
@@ -500,10 +503,10 @@ class _CountdownPageState extends State<CountdownPage>
                                                               .gems.value +
                                                           5);
                                                   gemsToGive += 5;
-                                                  print(
+                                                  logInfo(
                                                       "Streak value is set to 1. NumDays was > 1.");
                                                 } else {
-                                                  print(
+                                                  logInfo(
                                                       "You already meditated today. Not updating streak!");
                                                   alreadyMeditatedToday = true;
                                                 }
@@ -530,17 +533,13 @@ class _CountdownPageState extends State<CountdownPage>
                                                       timeInMinutes);
                                               gemsToGive += timeInMinutes;
 
-                                              print(
-                                                  "Handling hatching turtles...");
-
                                               if (!alreadyMeditatedToday ||
                                                   DEBUG_MODE) {
                                                 //Updating the egg progress if haven't already meditated today
-                                                print(
+                                                logInfo(
                                                     "First time meditating today");
                                                 if (saveController.eggs.value >
                                                     0) {
-                                                  print("Eggs!");
                                                   if (saveController
                                                           .hatchProgressEggOne
                                                           .value >=
@@ -550,7 +549,8 @@ class _CountdownPageState extends State<CountdownPage>
                                                         saveController
                                                                 .eggs.value -
                                                             1);
-                                                    print("HATCHING A TURTLE!");
+                                                    logInfo(
+                                                        "HATCHING A TURTLE!");
                                                     turtleToHatch =
                                                         getTurtleToHatch();
                                                     turtleColorToHatch =
@@ -579,8 +579,8 @@ class _CountdownPageState extends State<CountdownPage>
                                                     saveController
                                                         .updateHatchProgress(0);
                                                   } else {
-                                                    print(
-                                                        "updating hatch process");
+                                                    logInfo(
+                                                        "Updating hatch process");
                                                     saveController
                                                         .updateHatchProgress(
                                                             saveController
@@ -626,14 +626,14 @@ class _CountdownPageState extends State<CountdownPage>
                                                 }
                                               }
 
-                                              print(
-                                                  "saving last_meditated to ${date.toIso8601String()}");
+                                              logInfo(
+                                                  "Saving last_meditated to ${date.toIso8601String()}");
                                               saveController.saveValue(
                                                   "last_meditated",
                                                   date.toIso8601String());
 
                                               //Log the event to AppsFlyer
-                                              AppsflyerService appsflyer =
+                                              HeapService appsflyer =
                                                   Get.find();
                                               appsflyer.logEvent(
                                                   "MEDITATION_COMPLETE", {

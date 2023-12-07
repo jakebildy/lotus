@@ -3,7 +3,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/util/logger.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
@@ -29,17 +30,17 @@ class _ShopPageState extends State<ShopPage> {
               if (save.gems.value >= STREAK_FREEZE_PRICE) {
                 if (save.streakFreezes < 2) {
                   //Log the event to AppsFlyer
-                  AppsflyerService appsflyer = Get.find();
+                  HeapService appsflyer = Get.find();
                   appsflyer
                       .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
 
-                  print("Purchasing Streak Freeze!");
+                  logSuccess("Purchasing Streak Freeze!");
                   HapticFeedback.lightImpact();
                   save.updateGems(save.gems.value - STREAK_FREEZE_PRICE);
                   save.updateStreakFreezes(save.streakFreezes.value + 1);
                 } else {
                   //Log the event to AppsFlyer
-                  AppsflyerService appsflyer = Get.find();
+                  HeapService appsflyer = Get.find();
                   appsflyer.logEvent(
                       "STREAK_FREEZE_TAPPED", {"purchased": "false, >2"});
 
@@ -53,7 +54,7 @@ class _ShopPageState extends State<ShopPage> {
                 }
               } else {
                 //Log the event to AppsFlyer
-                AppsflyerService appsflyer = Get.find();
+                HeapService appsflyer = Get.find();
                 appsflyer
                     .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "false"});
 
@@ -152,7 +153,7 @@ class _ShopPageState extends State<ShopPage> {
           //   onTap: () {
           //     if (save.gems.value >= STREAK_FREEZE_PRICE) {
           //       if (save.streakFreezes < 2) {
-          //         print("Purchasing Streak Freeze!");
+          //         logInfo("Purchasing Streak Freeze!");
           //         HapticFeedback.lightImpact();
           //         save.updateGems(save.gems.value - STREAK_FREEZE_PRICE);
           //         save.updateStreakFreezes(save.streakFreezes.value + 1);
