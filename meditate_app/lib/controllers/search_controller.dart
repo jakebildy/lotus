@@ -33,7 +33,7 @@ class SearchController extends GetxController {
     if (searchOnStoppedTyping != null) {
       searchOnStoppedTyping!.cancel(); // clear timer
     }
-    searchOnStoppedTyping = new Timer(duration, () => fetchResults(query));
+    searchOnStoppedTyping = Timer(duration, () => fetchResults(query));
   }
 
   Future<void> fetchResults(String query) async {
