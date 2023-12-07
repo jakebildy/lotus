@@ -11,6 +11,7 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as Api;
@@ -20,30 +21,11 @@ import 'package:meditate_app/pages/signup/signup.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-User DummyUser = User(
-  id: "-1",
-  email: "...",
-  fullName: "Loading User",
-  username: "null",
-  createdAt: DateTime.now(),
-  lastMeditated: DateTime.now(),
-  meditationTimesAsOf: DateTime.now(),
-  meditationHistory: {},
-);
-
 /// AuthController needs to be refactored.
 /// {@category Controllers}
 class AuthController extends GetxController {
   final SaveController saveController = Get.find();
   final PushNotificationService pushNotificationService = Get.find();
-
-  // If we are not logged in the user will be null
-  // The user may exist but the account is not logged in
-  // if the user has not verified phone number
-  // Use isAuthenticated to check if user is logged in
-  final Rx<User> user = DummyUser.obs;
-
-  bool get isAuthenticated => user.value.id != DummyUser.id;
 
   final TextEditingController loginUsername = TextEditingController(text: "");
   final TextEditingController loginPassword = TextEditingController(text: "");
@@ -69,49 +51,6 @@ class AuthController extends GetxController {
 
   final Rx<bool> isLoading = false.obs;
   final Rx<bool> isLoadingPageNotDone = false.obs;
-  @override
-  void onInit() {
-    super.onInit();
-    loginFromCookiesRequest();
-
-    user.listen((User user) {
-      logSuccess("🔥AUTH: User value has been set ${user.username}");
-      pushNotificationService.updateDeviceToken();
-      Get.put(FollowController());
-      Get.put(SearchController());
-      // SaveController saveController = Get.find();
-      // saveController.updateFetchedData(user);
-      // saveController.uploadLocalData();
-    });
-  }
-
-  Future<void> setUser(User newUser) async {
-    user.value = newUser;
-    try {
-      await saveController.saveCookies(Api.cookies);
-    } catch (error, trace) {
-      logError("Failed to set user " + error.toString());
-      logError(trace.toString());
-    }
-    update();
-  }
-
-  // On Success: set user, isAuthenticated to true and go to main page.
-  // On fail: user is not logged in - do nothing
-  void loginFromCookiesRequest() async {
-    try {
-      isLoading.value = true;
-      update();
-      String cookies = saveController.getCookies();
-      Api.setCookies(cookies);
-      user.value = await Api.user.me();
-    } catch (e, stackTrace) {
-      logError(e.toString());
-      logError(stackTrace.toString());
-    }
-    waitThenSetLoadingFalse();
-    update();
-  }
 
   Future<void> waitThenSetLoadingFalse() async {
     await Future.delayed(const Duration(seconds: 4));
@@ -121,33 +60,7 @@ class AuthController extends GetxController {
     //     transition: Transition.fadeIn, duration: Duration(seconds: 2));
   }
 
-  void refreshUser() async {
-    try {
-      user.value = await Api.user.me();
-    } catch (e) {
-      logError(e.toString());
-    }
-    update();
-  }
-
-  void logoutRequest() async {
-    isLoading.value = false;
-    try {
-      String message = await Api.auth.logout();
-      logSuccess(message);
-    } catch (error, trace) {
-      logError(error.toString());
-      logError(trace.toString());
-    }
-    user.value = DummyUser;
-    // isAuthenticated.value = false;
-    saveController.clearCookies();
-    Get.offAll(const Signup());
-
-    update();
-  }
-
-  Future<Null> _cropImage(image) async {
+  Future<void> _cropImage(image) async {
     try {
       logInfo("Cropping image...");
 
@@ -174,7 +87,9 @@ class AuthController extends GetxController {
 
           PicturesApi().setProfilePicture(fileName, base64).then((newUser) {
             logSuccess("Set profile picture successfully");
-            user.value = newUser;
+            UserController userController = Get.find();
+            userController.setUser(newUser);
+            //TODO: add setUser function
             update();
           }).catchError((error) {
             logError("Failed to set profile pic!");

@@ -2,8 +2,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
-import 'package:meditate_app/models/follow.dart';
-import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/logger.dart';
 
@@ -23,7 +22,7 @@ class FollowController extends GetxController {
   Future<List<Follow>> getStylistFollowers(User stylist) async {
     List<Follow> _followers = List.empty();
     try {
-      _followers = await Api.follow.getStylistFollowers(stylist);
+      _followers = await api.follow.getStylistFollowers(stylist);
     } catch (e) {
       logError("Failed to get users followers: " + e.toString());
     }
@@ -33,7 +32,7 @@ class FollowController extends GetxController {
   Future<List<Follow>> getStylistFollowing(User stylist) async {
     List<Follow> _followers = List.empty();
     try {
-      _followers = await Api.follow.getStylistFollowing(stylist);
+      _followers = await api.follow.getStylistFollowing(stylist);
     } catch (e) {
       logError("Failed to get users following: " + e.toString());
     }
@@ -43,7 +42,7 @@ class FollowController extends GetxController {
   Future<List<User>> getStylistNotFollowing(User stylist) async {
     List<User> _followers = List.empty();
     try {
-      _followers = await Api.follow.getStylistNotFollowing(stylist);
+      _followers = await api.follow.getStylistNotFollowing(stylist);
     } catch (e) {
       logError("Failed to get users not following: " + e.toString());
     }
@@ -52,11 +51,11 @@ class FollowController extends GetxController {
 
   Future<void> fetchFollows() async {
     try {
-      List<Follow> _followers = await Api.follow.getFollowers();
-      List<Follow> _following = await Api.follow.getFollowing();
+      List<Follow> _followers = await api.follow.getFollowers();
+      List<Follow> _following = await api.follow.getFollowing();
       AuthController auth = Get.find();
       List<User> _notFollowing =
-          await Api.follow.getStylistNotFollowing(auth.user.value);
+          await api.follow.getStylistNotFollowing(api.user.value);
       following.value = _followers;
       followers.value = [];
       usersFollowing.value = [];
@@ -92,7 +91,7 @@ class FollowController extends GetxController {
       usersFollowing.remove(stylist);
       usersFollowingIDs.remove(stylist.id);
       try {
-        await Api.follow.unfollowUser(stylist);
+        await api.follow.unfollowUser(stylist);
       } catch (error, trace) {
         logError("Failed to unfollow user: " + error.toString());
         logError(trace.toString());
@@ -101,7 +100,7 @@ class FollowController extends GetxController {
       usersFollowing.add(stylist);
       usersFollowingIDs.add(stylist.id!);
       try {
-        await Api.follow.followUser(stylist);
+        await api.follow.followUser(stylist);
       } catch (error, trace) {
         logError("Failed to follow user " + error.toString());
         logError(trace.toString());

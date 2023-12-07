@@ -7,6 +7,7 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
@@ -23,11 +24,15 @@ Future<void> main() async {
     logError("Get Storage is not working:");
     logError(error.toString());
   }
-  Get.put(SaveController());
+
+  Get.put(UserController());
+  Get.put(AuthController());
   Get.put(NetworkStatusController());
   Get.put(PushNotificationService());
   Get.put(HeapService());
-  Get.put(AuthController());
+
+  // Get.put(SaveController());
+
   runApp(const MyApp());
   SystemChannels.lifecycle.setMessageHandler((msg) {
     switch (msg) {

@@ -47,26 +47,23 @@ class _AppPagesState extends State<AppPages> {
                         title: Column(
                           children: [
                             network.offline.value
-                                ? Container(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: const [
-                                        Icon(
-                                          Icons.cloud_off_outlined,
-                                          size: 12,
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text(
-                                          "YOU ARE OFFLINE",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.cloud_off_outlined,
+                                        size: 12,
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(
+                                        "YOU ARE OFFLINE",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
                                   )
                                 : Container(),
                             Container(
@@ -82,7 +79,7 @@ class _AppPagesState extends State<AppPages> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           children: [
-                                            Container(
+                                            SizedBox(
                                                 height: 27,
                                                 child: Image.asset(
                                                     saveController
