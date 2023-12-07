@@ -40,6 +40,7 @@ class AuthController extends GetxController {
   // if the user has not verified phone number
   // Use isAuthenticated to check if user is logged in
   final Rx<User> user = DummyUser.obs;
+
   bool get isAuthenticated => user.value.id != DummyUser.id;
 
   final TextEditingController loginUsername = TextEditingController(text: "");
@@ -76,9 +77,9 @@ class AuthController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
-      SaveController saveController = Get.find();
-      saveController.updateFetchedData(user);
-      saveController.uploadLocalData();
+      // SaveController saveController = Get.find();
+      // saveController.updateFetchedData(user);
+      // saveController.uploadLocalData();
     });
   }
 
@@ -86,7 +87,6 @@ class AuthController extends GetxController {
     user.value = newUser;
     try {
       await saveController.saveCookies(Api.cookies);
-      String cookies = saveController.getCookies();
     } catch (error, trace) {
       logError("Failed to set user " + error.toString());
       logError(trace.toString());
