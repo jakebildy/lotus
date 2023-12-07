@@ -132,7 +132,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                             width: 1.0,
                             color: auth.user.value.id == widget.user.id
                                 ? Colors.white
-                                : followController.stylistsFollowing
+                                : followController.usersFollowing
                                         .map((element) => element.id)
                                         .contains(widget.user.id)
                                     ? Colors.white24
@@ -147,7 +147,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                       child: Text(
                           auth.user.value.id == widget.user.id
                               ? "You"
-                              : followController.stylistsFollowing
+                              : followController.usersFollowing
                                       .map((element) => element.id)
                                       .contains(widget.user.id)
                                   ? "Following"
@@ -155,7 +155,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                           style: TextStyle(
                               color: auth.user.value.id == widget.user.id
                                   ? Colors.white
-                                  : followController.stylistsFollowing
+                                  : followController.usersFollowing
                                           .map((element) => element.id)
                                           .contains(widget.user.id)
                                       ? Colors.grey

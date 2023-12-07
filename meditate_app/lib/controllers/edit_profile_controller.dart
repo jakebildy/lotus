@@ -5,6 +5,8 @@ import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/api/index.dart' as Api;
 import 'package:meditate_app/models/user.dart';
 
+/// EditProfileController handles updating user profiles
+/// {@category Controllers}
 class EditProfileController extends GetxController {
   final TextEditingController name = TextEditingController();
   final TextEditingController username = TextEditingController();

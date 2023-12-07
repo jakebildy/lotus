@@ -1,17 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:meditate_app/components/egg_card.dart';
-import 'package:meditate_app/components/turtle_card.dart';
 import 'package:meditate_app/components/turtle_category.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/pages/new_egg_page.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class TurtlesPage extends StatefulWidget {

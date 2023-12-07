@@ -63,13 +63,13 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
               Container(
                 height: 40.0 +
                     (selectedTab == 0
-                        ? followController.stylistsFollowing.length * 64
+                        ? followController.usersFollowing.length * 64
                         : followController.followers.length * 64),
                 child: TabBarView(
                     controller: tabController,
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
-                      followController.stylistsFollowing.length == 0
+                      followController.usersFollowing.length == 0
                           ? Column(
                               children: [
                                 const SizedBox(
@@ -86,8 +86,8 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                               const SizedBox(
                                 height: 10,
                               ),
-                              ...(followController.stylistsFollowing.map(
-                                  (user) => FollowerWidget(
+                              ...(followController.usersFollowing.map((user) =>
+                                  FollowerWidget(
                                       user: user,
                                       color: const Color.fromARGB(
                                           255, 42, 42, 42))))

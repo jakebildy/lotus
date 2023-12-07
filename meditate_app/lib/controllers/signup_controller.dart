@@ -1,5 +1,3 @@
-// Import package
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -12,6 +10,8 @@ import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/version.dart';
 
+/// SignupController handles user signups
+/// {@category Controllers}
 class SignupController extends GetxController {
   final TextEditingController email = TextEditingController();
   final TextEditingController fullName = TextEditingController();
@@ -24,7 +24,7 @@ class SignupController extends GetxController {
   // Signup
   void signup() async {
     try {
-      final String _email = "${email.text}";
+      final String _email = email.text;
       final User user = await Api.auth.signup(
         _email,
         password.text,

@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/models/user.dart';
-import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/util/logger.dart';
 
+/// LoginController handles user logins
+/// {@category Controllers}
 class LoginController extends GetxController {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
@@ -19,14 +21,14 @@ class LoginController extends GetxController {
   void login() async {
     try {
       final String _email = email.text;
-      final User user = await Api.auth.login(
+      final User user = await api.auth.login(
         _email,
         password.text,
       );
       logSuccess("Logged in " + user.fullName);
       AuthController authController = Get.find();
       authController.setUser(user);
-      Get.offAll(AppPages());
+      Get.offAll(const AppPages());
     } catch (error, trace) {
       logError("Error signing up " + error.toString());
       logError(trace.toString());

@@ -1,0 +1,14 @@
+dartdoc:
+  categories:
+    "Controllers":
+      name: Controllers
+    "Models":
+      name: Models
+  categoryOrder: ["Controllers", "Models"]
+  showUndocumentedCategories: true
+  ignore:
+    - ambiguous-doc-reference
+  errors:
+    - unresolved-doc-reference
+  warnings:
+    - tool-error

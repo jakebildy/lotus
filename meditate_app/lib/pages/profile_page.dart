@@ -418,15 +418,14 @@ class _ProfilePageState extends State<ProfilePage>
                           Container(
                             height: 40 +
                                 (selectedTab == 0
-                                    ? followController
-                                            .stylistsFollowing.length *
+                                    ? followController.usersFollowing.length *
                                         64
                                     : followController.followers.length * 64),
                             child: TabBarView(
                                 controller: tabController,
                                 physics: const NeverScrollableScrollPhysics(),
                                 children: [
-                                  followController.stylistsFollowing.length == 0
+                                  followController.usersFollowing.length == 0
                                       ? Column(
                                           children: [
                                             const SizedBox(
@@ -444,7 +443,7 @@ class _ProfilePageState extends State<ProfilePage>
                                           const SizedBox(
                                             height: 10,
                                           ),
-                                          ...(followController.stylistsFollowing
+                                          ...(followController.usersFollowing
                                               .map((user) => FollowerWidget(
                                                   user: user,
                                                   color: const Color.fromARGB(
@@ -577,7 +576,7 @@ class _ProfilePageState extends State<ProfilePage>
                               height: 20,
                             ),
                             //Only showing people with active streaks to make the app feel more engaging/active
-                            ...(followController.stylistsNotFollowing
+                            ...(followController.usersNotFollowing
                                 .where((p0) => p0.streak > 0)
                                 .map((user) => FollowerWidget(
                                     user: user,

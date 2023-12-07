@@ -18,7 +18,7 @@ class SearchApi {
 
   //Endpoints
 
-  Future<List<User>> searchStylists(String query) async {
+  Future<List<User>> searchUsers(String query) async {
     final response = await http.get(Api.https(url, "/api/user/search/${query}"),
         headers: Api.headers);
     if (response.statusCode == 200) {

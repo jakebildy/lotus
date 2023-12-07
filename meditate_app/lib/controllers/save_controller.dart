@@ -11,6 +11,8 @@ import 'package:ocarina/ocarina.dart';
 
 import '../models/user.dart';
 
+/// SaveController is going to be deprecated
+/// {@category Controllers}
 class SaveController extends GetxController {
   final storage = GetStorage();
 
@@ -514,11 +516,6 @@ class SaveController extends GetxController {
   RxInt selectedTurtle = 0.obs;
   RxInt turtleColor = 0.obs;
   BuildContext? localContext;
-  // final player = OcarinaPlayer(
-  //   asset: 'assets/sounds/water_sounds.wav',
-  //   loop: true,
-  //   volume: 0.8,
-  // );
 
   //TODO: move to another controller
   void startGame(int turtleID, int turtleColorNew, BuildContext context) {

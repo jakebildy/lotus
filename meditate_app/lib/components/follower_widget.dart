@@ -92,7 +92,7 @@ class FollowerWidget extends StatelessWidget {
                                     child: Text("You",
                                         style:
                                             TextStyle(color: Colors.white)))))
-                        : follow.stylistsFollowing
+                        : follow.usersFollowing
                                 .map((element) => element.id)
                                 .contains(user.id)
                             ? Align(

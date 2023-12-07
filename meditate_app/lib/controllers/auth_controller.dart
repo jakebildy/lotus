@@ -31,6 +31,8 @@ User DummyUser = User(
   meditationHistory: {},
 );
 
+/// AuthController needs to be refactored.
+/// {@category Controllers}
 class AuthController extends GetxController {
   final SaveController saveController = Get.find();
   final PushNotificationService pushNotificationService = Get.find();

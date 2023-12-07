@@ -9,13 +9,15 @@ import 'package:meditate_app/util/logger.dart';
 
 Timer? searchOnStoppedTyping;
 
+/// SearchController handles when the user wants to search for other users to add as friends
+/// {@category Controllers}
 class SearchController extends GetxController {
-  RxList<User> userResults = new RxList();
+  RxList<User> userResults = RxList();
   RxString queryValue = "".obs;
   final TextEditingController textEditingController = TextEditingController();
   RxBool searching = false.obs;
 
-  SearchController() {}
+  SearchController();
 
   void onSearchChanged(String value) {
     queryValue.value = value;
@@ -41,9 +43,9 @@ class SearchController extends GetxController {
     update();
     try {
       logInfo("Fetching search results...");
-      List<User> responseStylists = await Api.search.searchStylists(query);
+      List<User> responseUsers = await Api.search.searchUsers(query);
 
-      userResults.value = responseStylists;
+      userResults.value = responseUsers;
       update();
     } catch (error, trace) {
       logError(error.toString());
