@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/loading_page.dart';
@@ -26,15 +27,14 @@ class _AppPagesState extends State<AppPages> {
   @override
   Widget build(BuildContext context) {
     SaveController saveController = Get.find();
-    AuthController authController = Get.find();
+    UserController userController = Get.find();
     NetworkStatusController network = Get.find();
     bool isDarkMode = true;
 
     return Obx(
       () => Stack(
         children: [
-          authController.user.value == DummyUser &&
-                  network.offline.value == false
+          userController.user.value == noUser && network.offline.value == false
               ? const Signup()
               : Scaffold(
                   appBar: PreferredSize(
@@ -242,8 +242,8 @@ class _AppPagesState extends State<AppPages> {
                             label: "Profile"),
                       ]),
                 ),
-          authController.isLoading.value ||
-                  authController.isLoadingPageNotDone.value
+          userController.isLoading.value ||
+                  userController.isLoadingPageNotDone.value
               ? const LoadingPage()
               : Container(
                   height: 0,

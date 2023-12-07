@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
@@ -53,9 +54,9 @@ class FollowController extends GetxController {
     try {
       List<Follow> _followers = await api.follow.getFollowers();
       List<Follow> _following = await api.follow.getFollowing();
-      AuthController auth = Get.find();
+      UserController user = Get.find();
       List<User> _notFollowing =
-          await api.follow.getStylistNotFollowing(api.user.value);
+          await api.follow.getStylistNotFollowing(auth.user.value);
       following.value = _followers;
       followers.value = [];
       usersFollowing.value = [];

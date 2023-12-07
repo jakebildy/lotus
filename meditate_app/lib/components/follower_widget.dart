@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/user_profile/user_profile_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
@@ -17,7 +18,7 @@ class FollowerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FollowController follow = Get.find();
-    AuthController auth = Get.find();
+    UserController userController = Get.find();
     return Obx(
       () => GestureDetector(
         onTap: () {
@@ -75,7 +76,7 @@ class FollowerWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    auth.user.value.id == user.id
+                    userController.user.value.id == user.id
                         ? Align(
                             alignment: Alignment.centerRight,
                             child: Padding(

@@ -14,6 +14,7 @@ import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
@@ -46,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage>
   @override
   Widget build(BuildContext context) {
     SaveController saveController = Get.find();
-    AuthController auth = Get.find();
+    UserController userController = Get.find();
     FollowController followController;
     if (Get.isRegistered<FollowController>()) {
       followController = Get.find();
@@ -65,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage>
               padding: const EdgeInsets.all(20.0),
               child: ListView(
                 children: [
-                  Container(
+                  SizedBox(
                       height: 240, child: Image.asset("assets/offline.png")),
                   const Text(
                     "Your profile is unavailable right now",
@@ -97,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage>
                           padding: const EdgeInsets.all(2.0),
                           child: Container(
                               height: 80,
-                              child: auth.user.value.avatar == null
+                              child: userController.user.value.avatar == null
                                   ? Image.asset("assets/profile_selected.png")
                                   : Center(
                                       child: Hero(
@@ -107,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage>
                                                 const BorderRadius.all(
                                                     Radius.circular(60)),
                                             child: Image.network(
-                                              auth.user.value.avatar,
+                                              userController.user.value.avatar,
                                               fit: BoxFit.fill,
                                             )),
                                       ),
@@ -119,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      auth.user.value.fullName,
+                      userController.user.value.fullName,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 20),
@@ -128,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage>
                       width: 5,
                     ),
                     Text(
-                      "(@" + auth.user.value.username + ")",
+                      "(@" + userController.user.value.username + ")",
                       textAlign: TextAlign.center,
                       style:
                           const TextStyle(fontSize: 16, color: Colors.white70),
@@ -149,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage>
                   height: 5,
                 ),
                 Text(
-                  "Joined ${formatMonth(auth.user.value.createdAt)}",
+                  "Joined ${formatMonth(userController.user.value.createdAt)}",
                   style: const TextStyle(color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
@@ -606,8 +607,8 @@ class _ProfilePageState extends State<ProfilePage>
                 ),
                 GestureDetector(
                     onTap: () {
-                      AuthController authController = Get.find();
-                      authController.logoutRequest();
+                      UserController userController = Get.find();
+                      userController.logoutRequest();
                     },
                     child: const Center(
                         child: Text(

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/edit_profile_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/delete_account_popup.dart';
 
 class EditProfile extends StatelessWidget {
@@ -43,7 +44,7 @@ class ProfileInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     EditProfileController editProfileController =
         Get.put(EditProfileController());
-    AuthController authController = Get.find();
+    UserController userController = Get.find();
 
     return Obx(
       () => Container(
@@ -58,7 +59,7 @@ class ProfileInfo extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 50.0,
                     backgroundImage:
-                        NetworkImage(authController.user.value.avatar),
+                        NetworkImage(userController.user.value.avatar),
                     backgroundColor: Colors.transparent,
                   ),
                 )),

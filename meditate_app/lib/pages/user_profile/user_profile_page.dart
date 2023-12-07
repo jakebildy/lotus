@@ -1,21 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/components/follower_widget.dart';
-import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/components/user_streak_chart.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
-import 'package:meditate_app/controllers/login_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/controllers/signup_controller.dart';
-import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/pages/user_profile/user_following_widget.dart';
-import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/util.dart';
 
 import '../../models/user.dart';
@@ -43,7 +31,7 @@ class _UserProfilePageState extends State<UserProfilePage>
   @override
   Widget build(BuildContext context) {
     SaveController saveController = Get.find();
-    AuthController auth = Get.find();
+    UserController userController = Get.find();
     FollowController followController = Get.find();
 
     return Scaffold(
@@ -130,22 +118,23 @@ class _UserProfilePageState extends State<UserProfilePage>
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(
                             width: 1.0,
-                            color: auth.user.value.id == widget.user.id
-                                ? Colors.white
-                                : followController.usersFollowing
-                                        .map((element) => element.id)
-                                        .contains(widget.user.id)
-                                    ? Colors.white24
-                                    : Colors.teal),
+                            color:
+                                userController.user.value.id == widget.user.id
+                                    ? Colors.white
+                                    : followController.usersFollowing
+                                            .map((element) => element.id)
+                                            .contains(widget.user.id)
+                                        ? Colors.white24
+                                        : Colors.teal),
                         shape: const StadiumBorder(),
                       ),
                       onPressed: () {
-                        if (auth.user.value.id != widget.user.id) {
+                        if (userController.user.value.id != widget.user.id) {
                           followController.followStylist(widget.user);
                         }
                       },
                       child: Text(
-                          auth.user.value.id == widget.user.id
+                          userController.user.value.id == widget.user.id
                               ? "You"
                               : followController.usersFollowing
                                       .map((element) => element.id)
@@ -153,13 +142,14 @@ class _UserProfilePageState extends State<UserProfilePage>
                                   ? "Following"
                                   : "Follow",
                           style: TextStyle(
-                              color: auth.user.value.id == widget.user.id
-                                  ? Colors.white
-                                  : followController.usersFollowing
-                                          .map((element) => element.id)
-                                          .contains(widget.user.id)
-                                      ? Colors.grey
-                                      : Colors.tealAccent))),
+                              color:
+                                  userController.user.value.id == widget.user.id
+                                      ? Colors.white
+                                      : followController.usersFollowing
+                                              .map((element) => element.id)
+                                              .contains(widget.user.id)
+                                          ? Colors.grey
+                                          : Colors.tealAccent))),
                 ),
               ],
             ),
@@ -283,9 +273,6 @@ class _UserProfilePageState extends State<UserProfilePage>
             const SizedBox(
               height: 10,
             ),
-            // UserFollowingWidget(
-            //   user: widget.user,
-            // )
           ],
         ),
       ),
