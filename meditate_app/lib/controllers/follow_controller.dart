@@ -54,9 +54,9 @@ class FollowController extends GetxController {
     try {
       List<Follow> _followers = await api.follow.getFollowers();
       List<Follow> _following = await api.follow.getFollowing();
-      UserController user = Get.find();
+      UserController userController = Get.find();
       List<User> _notFollowing =
-          await api.follow.getStylistNotFollowing(auth.user.value);
+          await api.follow.getStylistNotFollowing(userController.user.value);
       following.value = _followers;
       followers.value = [];
       usersFollowing.value = [];
@@ -75,7 +75,7 @@ class FollowController extends GetxController {
 
       for (User follow in _notFollowing) {
         if (!usersFollowingIDs.contains(follow.id)) {
-          if (auth.user.value.id != follow.id) {
+          if (userController.user.value.id != follow.id) {
             usersNotFollowing.add(follow);
           }
         }

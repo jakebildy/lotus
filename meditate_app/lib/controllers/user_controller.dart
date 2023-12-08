@@ -73,8 +73,9 @@ class UserController extends GetxController {
     try {
       isLoading.value = true;
       update();
-      // TODO: String cookies = saveController.getCookies();
-      // api.setCookies(cookies);
+      SaveController saveController = Get.find();
+      String cookies = saveController.getCookies(); //TODO, move cookies here
+      api.setCookies(cookies);
       databaseUser.value = await api.user.me();
     } catch (e, stackTrace) {
       logError(e.toString());

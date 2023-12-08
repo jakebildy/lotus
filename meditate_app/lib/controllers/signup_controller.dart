@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as Api;
 import 'package:meditate_app/services/heap_service.dart';
@@ -32,8 +33,8 @@ class SignupController extends GetxController {
         username.text.toLowerCase().replaceAll(" ", "_"),
       );
       logSuccess("signing up user:" + user.email);
-      AuthController authController = Get.find();
-      authController.setUser(user);
+      UserController userController = Get.find();
+      userController.setUser(user);
 
       //Log the event to AppsFlyer
       HeapService appsflyer = Get.find();

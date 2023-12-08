@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/util/logger.dart';
@@ -26,8 +27,8 @@ class LoginController extends GetxController {
         password.text,
       );
       logSuccess("Logged in " + user.fullName);
-      AuthController authController = Get.find();
-      authController.setUser(user);
+      UserController userController = Get.find();
+      userController.setUser(user);
       Get.offAll(const AppPages());
     } catch (error, trace) {
       logError("Error signing up " + error.toString());

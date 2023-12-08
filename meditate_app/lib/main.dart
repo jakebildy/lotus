@@ -25,13 +25,14 @@ Future<void> main() async {
     logError(error.toString());
   }
 
+  Get.put(PushNotificationService());
+  Get.put(NetworkStatusController());
+
+  Get.put(SaveController()); //TODO: deprecate
+
   Get.put(UserController());
   Get.put(AuthController());
-  Get.put(NetworkStatusController());
-  Get.put(PushNotificationService());
   Get.put(HeapService());
-
-  // Get.put(SaveController());
 
   runApp(const MyApp());
   SystemChannels.lifecycle.setMessageHandler((msg) {
