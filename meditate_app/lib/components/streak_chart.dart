@@ -54,37 +54,54 @@ class StreakChart extends StatelessWidget {
                       spots: [
                         FlSpot(
                             1,
-                            (userController.user.value.meditationHistory[
-                                        DateTime(
+                            (userController.user.value.meditationHistory.map(
+                                        (key, value) =>
+                                            MapEntry(
+                                                DateTime(key.year, key.month,
+                                                    key.day),
+                                                value))[DateTime(
                                             DateTime.now().year,
                                             DateTime.now().month,
-                                            DateTime.now().day)] ??
+                                            DateTime.now().day)
+                                        .subtract(const Duration(days: 6))] ??
                                     0)
                                 .toDouble()),
                         FlSpot(
                             2,
-                            (userController
-                                        .user.value.meditationHistory[DateTime(
+                            (userController.user.value.meditationHistory.map(
+                                        (key, value) =>
+                                            MapEntry(
+                                                DateTime(key.year, key.month,
+                                                    key.day),
+                                                value))[DateTime(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
-                                        .subtract(const Duration(days: 1))] ??
+                                        .subtract(const Duration(days: 5))] ??
                                     0)
                                 .toDouble()),
                         FlSpot(
                             3,
-                            (userController
-                                        .user.value.meditationHistory[DateTime(
+                            (userController.user.value.meditationHistory.map(
+                                        (key, value) =>
+                                            MapEntry(
+                                                DateTime(key.year, key.month,
+                                                    key.day),
+                                                value))[DateTime(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
-                                        .subtract(const Duration(days: 2))] ??
+                                        .subtract(const Duration(days: 4))] ??
                                     0)
                                 .toDouble()),
                         FlSpot(
                             4,
-                            (userController
-                                        .user.value.meditationHistory[DateTime(
+                            (userController.user.value.meditationHistory.map(
+                                        (key, value) =>
+                                            MapEntry(
+                                                DateTime(key.year, key.month,
+                                                    key.day),
+                                                value))[DateTime(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
@@ -93,32 +110,42 @@ class StreakChart extends StatelessWidget {
                                 .toDouble()),
                         FlSpot(
                             5,
-                            (userController
-                                        .user.value.meditationHistory[DateTime(
+                            (userController.user.value.meditationHistory.map(
+                                        (key, value) =>
+                                            MapEntry(
+                                                DateTime(key.year, key.month,
+                                                    key.day),
+                                                value))[DateTime(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
-                                        .subtract(const Duration(days: 4))] ??
+                                        .subtract(const Duration(days: 2))] ??
                                     0)
                                 .toDouble()),
                         FlSpot(
                             6,
-                            (userController
-                                        .user.value.meditationHistory[DateTime(
+                            (userController.user.value.meditationHistory.map(
+                                        (key, value) =>
+                                            MapEntry(
+                                                DateTime(key.year, key.month,
+                                                    key.day),
+                                                value))[DateTime(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
-                                        .subtract(const Duration(days: 5))] ??
+                                        .subtract(const Duration(days: 1))] ??
                                     0)
                                 .toDouble()),
                         FlSpot(
                             7,
-                            (userController
-                                        .user.value.meditationHistory[DateTime(
-                                            DateTime.now().year,
-                                            DateTime.now().month,
-                                            DateTime.now().day)
-                                        .subtract(const Duration(days: 6))] ??
+                            (userController.user.value.meditationHistory.map(
+                                        (key, value) => MapEntry(
+                                            DateTime(
+                                                key.year, key.month, key.day),
+                                            value))[DateTime(
+                                        DateTime.now().year,
+                                        DateTime.now().month,
+                                        DateTime.now().day)] ??
                                     0)
                                 .toDouble()),
                       ])
