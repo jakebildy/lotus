@@ -92,22 +92,25 @@ class _AppPagesState extends State<AppPages> {
                                                   const EdgeInsets.fromLTRB(
                                                       0, 4.0, 0, 0),
                                               child: Text(
-                                                saveController.streak
+                                                userController.user.value.streak
                                                     .toString(),
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
-                                                    color: saveController.streak
-                                                                    .value ==
+                                                    color: userController
+                                                                    .user
+                                                                    .value
+                                                                    .streak ==
                                                                 0 ||
                                                             !saveController
                                                                 .hasDoneStreakToday
                                                                 .value
                                                         ? DateTime.now().hour >
                                                                     21 &&
-                                                                saveController
-                                                                        .streak
-                                                                        .value >
+                                                                userController
+                                                                        .user
+                                                                        .value
+                                                                        .streak >
                                                                     0
                                                             ? Colors.red
                                                             : Colors.grey
@@ -154,13 +157,13 @@ class _AppPagesState extends State<AppPages> {
                                                   const EdgeInsets.fromLTRB(
                                                       0, 4.0, 0, 0),
                                               child: Text(
-                                                saveController.gems.value
+                                                userController.user.value.gems
                                                     .toString(),
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
-                                                    color: saveController
-                                                                .gems.value ==
+                                                    color: userController.user
+                                                                .value.gems ==
                                                             0
                                                         ? Colors.grey
                                                         : isDarkMode

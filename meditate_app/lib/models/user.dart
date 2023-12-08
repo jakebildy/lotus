@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:intl/intl.dart';
+import 'package:meditate_app/util/logger.dart';
 
 const String defaultProfilePicture =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -68,6 +69,7 @@ class User {
       int duration = value is int ? value : int.tryParse(value.toString()) ?? 0;
       meditationHistory[date] = duration;
     });
+    logSuccess("MEDITATION HISTORY" + meditationHistory.toString());
     return meditationHistory;
   }
 

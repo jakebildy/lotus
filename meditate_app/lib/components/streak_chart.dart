@@ -4,6 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 
 class StreakChart extends StatelessWidget {
   final double height;
@@ -11,7 +12,7 @@ class StreakChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
+    UserController userController = Get.find();
 
     return Obx(
       () => ClipRRect(
@@ -51,13 +52,75 @@ class StreakChart extends StatelessWidget {
                         ],
                       ),
                       spots: [
-                        FlSpot(1, saveController.lastSevenDays[6]),
-                        FlSpot(2, saveController.lastSevenDays[5]),
-                        FlSpot(3, saveController.lastSevenDays[4]),
-                        FlSpot(4, saveController.lastSevenDays[3]),
-                        FlSpot(5, saveController.lastSevenDays[2]),
-                        FlSpot(6, saveController.lastSevenDays[1]),
-                        FlSpot(7, saveController.lastSevenDays[0]),
+                        FlSpot(
+                            1,
+                            (userController.user.value.meditationHistory[
+                                        DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day)] ??
+                                    0)
+                                .toDouble()),
+                        FlSpot(
+                            2,
+                            (userController
+                                        .user.value.meditationHistory[DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day)
+                                        .subtract(const Duration(days: 1))] ??
+                                    0)
+                                .toDouble()),
+                        FlSpot(
+                            3,
+                            (userController
+                                        .user.value.meditationHistory[DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day)
+                                        .subtract(const Duration(days: 2))] ??
+                                    0)
+                                .toDouble()),
+                        FlSpot(
+                            4,
+                            (userController
+                                        .user.value.meditationHistory[DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day)
+                                        .subtract(const Duration(days: 3))] ??
+                                    0)
+                                .toDouble()),
+                        FlSpot(
+                            5,
+                            (userController
+                                        .user.value.meditationHistory[DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day)
+                                        .subtract(const Duration(days: 4))] ??
+                                    0)
+                                .toDouble()),
+                        FlSpot(
+                            6,
+                            (userController
+                                        .user.value.meditationHistory[DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day)
+                                        .subtract(const Duration(days: 5))] ??
+                                    0)
+                                .toDouble()),
+                        FlSpot(
+                            7,
+                            (userController
+                                        .user.value.meditationHistory[DateTime(
+                                            DateTime.now().year,
+                                            DateTime.now().month,
+                                            DateTime.now().day)
+                                        .subtract(const Duration(days: 6))] ??
+                                    0)
+                                .toDouble()),
                       ])
                 ]),
           ),
