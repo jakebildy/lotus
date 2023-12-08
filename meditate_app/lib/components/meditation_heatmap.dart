@@ -44,14 +44,58 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
               40: Colors.pinkAccent,
             },
             onClick: (value) {
-              logInfo("Meditation history: " +
-                  userController.user.value.meditationHistory.toString());
               setState(() {});
-              if (userController.user.value.meditationHistory[value] != null) {
+              if (userController.user.value.meditationHistory.map(
+                      (key, value) => MapEntry(
+                          DateTime(key.year, key.month, key.day),
+                          value))[value] !=
+                  null) {
                 ScaffoldMessenger.of(context).clearSnackBars();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(
-                      "You meditated ${userController.user.value.meditationHistory[value]} minutes ${(formatDay(value) == "Today" ? "today" : "on " + formatDay(value)) + " " + Moon.emoji(value)}"),
+                  backgroundColor: Colors.black,
+                  content: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "You meditated ",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              "${userController.user.value.meditationHistory.map((key, value) => MapEntry(DateTime(key.year, key.month, key.day), value))[value]} minutes ",
+                          style: TextStyle(
+                            color: userController.user.value.meditationHistory
+                                        .map((key, value) => MapEntry(
+                                            DateTime(
+                                                key.year, key.month, key.day),
+                                            value))[value]! >=
+                                    40
+                                ? Colors.pink
+                                : userController.user.value.meditationHistory
+                                            .map((key, value) => MapEntry(
+                                                DateTime(key.year, key.month, key.day), value))[value]! >=
+                                        20
+                                    ? Colors.lightBlue
+                                    : userController.user.value.meditationHistory.map((key, value) => MapEntry(DateTime(key.year, key.month, key.day), value))[value]! >= 10
+                                        ? Colors.yellow
+                                        : Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              "${(formatDay(value) == "Today" ? "today" : "on " + formatDay(value)) + " " + Moon.emoji(value)}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   duration: const Duration(seconds: 2),
                 ));
               }

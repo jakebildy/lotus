@@ -379,7 +379,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 height: 10,
                               ),
                               const Text("Turtlemaster: 40+ Minutes/Day",
-                                  style: TextStyle(color: Colors.redAccent)),
+                                  style: TextStyle(color: Colors.pink)),
                             ],
                           ),
                         ],

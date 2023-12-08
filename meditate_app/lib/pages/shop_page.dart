@@ -13,6 +13,7 @@ class ShopPage extends StatefulWidget {
   State<ShopPage> createState() => _ShopPageState();
 }
 
+//TODO: replace with User Controller
 class _ShopPageState extends State<ShopPage> {
   final int STREAK_FREEZE_PRICE = 80;
   final int LURE_PRICE = 90;
@@ -71,9 +72,17 @@ class _ShopPageState extends State<ShopPage> {
               child: Container(
                 height: 150,
                 decoration: BoxDecoration(
-                  color: isDarkMode ? Colors.black12 : Colors.white,
+                  color: isDarkMode
+                      ? save.streakFreezes.value > 0
+                          ? Color.fromARGB(255, 46, 59, 52)
+                          : Colors.black12
+                      : Colors.white,
                   border: Border.all(
-                    color: isDarkMode ? Colors.white24 : Colors.black26,
+                    color: isDarkMode
+                        ? save.streakFreezes.value > 0
+                            ? Color.fromARGB(255, 80, 107, 92)
+                            : Colors.white24
+                        : Colors.black26,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(20),

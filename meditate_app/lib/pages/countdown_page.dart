@@ -437,6 +437,8 @@ class _CountdownPageState extends State<CountdownPage>
                                             0, 10, 0, 80.0),
                                         child: GestureDetector(
                                           onTap: () {
+                                            // TODO: replace with UserController
+
                                             if (loading != true) {
                                               setState(() {
                                                 loading = true;
