@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/logger.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
@@ -91,13 +92,33 @@ class _ShopPageState extends State<ShopPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 15.0,
-                          horizontal: MediaQuery.of(context).size.width / 70),
-                      child: Container(
-                          width: 60,
-                          child: Image.asset("assets/streak_freeze.png")),
-                    ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 15.0,
+                            horizontal: MediaQuery.of(context).size.width / 70),
+                        child: Container(
+                            width: 60,
+                            child: Stack(
+                              children: [
+                                Container(
+                                    height:
+                                        MediaQuery.of(context).size.height / 4,
+                                    child: Image.asset(
+                                        "assets/streak_freeze.png")),
+                                Opacity(
+                                  opacity: 0.8,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.white12,
+                                    highlightColor: Colors.white70,
+                                    child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                4,
+                                        child: Image.asset(
+                                            "assets/streak_freeze.png")),
+                                  ),
+                                ),
+                              ],
+                            ))),
                     // SizedBox(
                     //   width: 10,
                     // ),

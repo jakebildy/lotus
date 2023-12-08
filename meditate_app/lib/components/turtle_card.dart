@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/components/locked_turtle.dart';
-import 'package:meditate_app/pages/turtle_category_page.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
-import 'package:shimmer/shimmer.dart';
 
 class TurtleCard extends StatelessWidget {
   final int id;

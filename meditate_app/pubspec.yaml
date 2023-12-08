@@ -192,6 +192,7 @@ flutter:
     - assets/offline.png
     - assets/lure.png
     - assets/audio/splash.wav
+    - assets/sand_dollar.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
