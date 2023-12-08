@@ -19,6 +19,8 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
   Widget build(BuildContext context) {
     // SaveController saveController = Get.find();
     UserController userController = Get.find();
+    logSuccess("!!! Meditation History " +
+        userController.user.value.meditationHistory.toString());
     return Obx(
       () => ClipRRect(
         child: Container(
@@ -29,7 +31,9 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
             scrollable: true,
             defaultColor: Colors.white12,
             colorMode: ColorMode.color,
-            datasets: userController.user.value.meditationHistory,
+            datasets: userController.user.value.meditationHistory.map(
+                (key, value) =>
+                    MapEntry(DateTime(key.year, key.month, key.day), value)),
             colorsets: const {
               // 5: Color.fromARGB(255, 173, 105, 2),
               // 10: Color.fromARGB(255, 219, 131, 0),

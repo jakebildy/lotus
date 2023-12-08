@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:meditate_app/util/logger.dart';
 
@@ -25,7 +26,7 @@ class User {
 
   final List<dynamic> unlockedTurtles;
   final List<List<int>> unlockedTurtleColors;
-  Map<DateTime, int> meditationHistory;
+  RxMap<DateTime, int> meditationHistory;
 
   static User deletedUser = User(
     id: "-1",
@@ -44,6 +45,7 @@ class User {
     required this.username,
     required this.createdAt,
     required this.lastMeditated,
+    RxMap<DateTime, int>? meditationHistory,
     this.meditationTimes = const [],
     required this.meditationTimesAsOf,
     this.avatar = defaultProfilePicture,
@@ -55,8 +57,7 @@ class User {
     this.hatchProgressEggOne = 0,
     this.unlockedTurtles = const [],
     this.unlockedTurtleColors = const [],
-    this.meditationHistory = const {},
-  });
+  }) : meditationHistory = meditationHistory ?? <DateTime, int>{}.obs;
 
   // Method to parse the meditation history according to the key format used in loadData
   static Map<DateTime, int> _parseMeditationHistory(
@@ -64,12 +65,10 @@ class User {
     Map<DateTime, int> meditationHistory = {};
     jsonMap?.forEach((key, value) {
       DateFormat format = DateFormat('dd-MM-yyyy');
-      DateTime date =
-          format.parse(key.replaceAll("meditation-", ""), true).toLocal();
+      DateTime date = format.parse(key.replaceAll("meditation-", ""), true);
       int duration = value is int ? value : int.tryParse(value.toString()) ?? 0;
       meditationHistory[date] = duration;
     });
-    logSuccess("MEDITATION HISTORY" + meditationHistory.toString());
     return meditationHistory;
   }
 
@@ -110,7 +109,8 @@ class User {
               .toList() ??
           [],
       meditationHistory: _parseMeditationHistory(
-          map["meditationHistory"] as Map<String, dynamic>?),
+              map["meditationHistory"] as Map<String, dynamic>?)
+          .obs,
     );
   }
 

@@ -17,7 +17,7 @@ User noUser = User(
   createdAt: DateTime.now(),
   lastMeditated: DateTime.now(),
   meditationTimesAsOf: DateTime.now(),
-  meditationHistory: {},
+  meditationHistory: <DateTime, int>{}.obs,
 );
 
 /// UserController manages the current user. It handles syncing local storage
