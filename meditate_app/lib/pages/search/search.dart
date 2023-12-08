@@ -52,12 +52,6 @@ class SearchBox extends StatelessWidget {
         borderSide: BorderSide.none,
       ));
 
-  final TextStyle logoTextStyle = const TextStyle(
-      color: Colors.red,
-      fontSize: 27,
-      fontWeight: FontWeight.w400,
-      fontFamily: "Termina");
-
   @override
   Widget build(BuildContext context) {
     SearchController searchController = Get.find();

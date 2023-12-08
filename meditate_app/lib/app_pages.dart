@@ -148,7 +148,7 @@ class _AppPagesState extends State<AppPages> {
                                             Container(
                                                 height: 27,
                                                 child: Image.asset(
-                                                    "assets/gem_icon.png")),
+                                                    "assets/sand_dollar.png")),
                                             const SizedBox(
                                               width: 3,
                                             ),

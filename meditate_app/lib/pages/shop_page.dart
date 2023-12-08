@@ -27,14 +27,63 @@ class _ShopPageState extends State<ShopPage> {
     return Obx(
       () => ListView(
         children: [
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Earn  ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                  height: 20, child: Image.asset("assets/sand_dollar.png")),
+              const Text(
+                " sand dollars",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Text(
+                " by meditating. ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+
+          const Text(
+            "Spend them here! ",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              color: Colors.grey,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 20,
+          ),
           GestureDetector(
             onTap: () {
               if (save.gems.value >= STREAK_FREEZE_PRICE) {
                 if (save.streakFreezes < 2) {
                   //Log the event to AppsFlyer
-                  HeapService appsflyer = Get.find();
-                  appsflyer
-                      .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
+                  HeapService heap = Get.find();
+                  heap.logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
 
                   logSuccess("Purchasing Streak Freeze!");
                   HapticFeedback.lightImpact();
@@ -42,8 +91,8 @@ class _ShopPageState extends State<ShopPage> {
                   save.updateStreakFreezes(save.streakFreezes.value + 1);
                 } else {
                   //Log the event to AppsFlyer
-                  HeapService appsflyer = Get.find();
-                  appsflyer.logEvent(
+                  HeapService heap = Get.find();
+                  heap.logEvent(
                       "STREAK_FREEZE_TAPPED", {"purchased": "false, >2"});
 
                   ScaffoldMessenger.of(context).clearSnackBars();
@@ -64,7 +113,8 @@ class _ShopPageState extends State<ShopPage> {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.greenAccent,
                   key: UniqueKey(),
-                  content: const Text("Earn more gems to purchase this!"),
+                  content:
+                      const Text("Earn more sand dollars to purchase this!"),
                 ));
               }
             },
@@ -75,13 +125,13 @@ class _ShopPageState extends State<ShopPage> {
                 decoration: BoxDecoration(
                   color: isDarkMode
                       ? save.streakFreezes.value > 0
-                          ? Color.fromARGB(255, 46, 59, 52)
+                          ? Color.fromARGB(255, 46, 48, 59)
                           : Colors.black12
                       : Colors.white,
                   border: Border.all(
                     color: isDarkMode
                         ? save.streakFreezes.value > 0
-                            ? Color.fromARGB(255, 80, 107, 92)
+                            ? Color.fromARGB(255, 81, 80, 107)
                             : Colors.white24
                         : Colors.black26,
                     width: 2,
@@ -144,16 +194,22 @@ class _ShopPageState extends State<ShopPage> {
                           ),
                           Row(
                             children: [
+                              Text(
+                                "Buy for ",
+                                style: TextStyle(
+                                    color: Colors.lightBlueAccent,
+                                    fontWeight: FontWeight.bold),
+                              ),
                               SizedBox(
                                   height: 20,
-                                  child: Image.asset("assets/gem_icon.png")),
+                                  child: Image.asset("assets/sand_dollar.png")),
                               const SizedBox(
-                                width: 5,
+                                width: 2,
                               ),
                               Text(
                                 "${STREAK_FREEZE_PRICE}",
                                 style: const TextStyle(
-                                    color: Colors.greenAccent,
+                                    color: Colors.lightBlueAccent,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -165,7 +221,7 @@ class _ShopPageState extends State<ShopPage> {
                             "${save.streakFreezes} OUT OF 2 ACTIVE",
                             style: TextStyle(
                                 color: save.streakFreezes.value > 0
-                                    ? Colors.greenAccent
+                                    ? Colors.lightBlue
                                     : Colors.grey,
                                 fontWeight: FontWeight.bold),
                           ),
