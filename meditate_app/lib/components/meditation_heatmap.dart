@@ -56,7 +56,7 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
                   content: RichText(
                     text: TextSpan(
                       children: [
-                        TextSpan(
+                        const TextSpan(
                           text: "You meditated ",
                           style: TextStyle(
                             color: Colors.white,
@@ -88,7 +88,7 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
                         TextSpan(
                           text:
                               "${(formatDay(value) == "Today" ? "today" : "on " + formatDay(value)) + " " + Moon.emoji(value)}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
