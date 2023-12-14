@@ -69,7 +69,16 @@ class UserController extends GetxController {
     // update();
   }
 
-  Future<void> updateProperty(UserProperty property, dynamic value) async {}
+  Future<void> updateProperty(UserProperty property, dynamic value) async {
+    // If the user is online, update the database - otherwise, update the local storage
+    if (user == databaseUser) {
+      await api.user.updateUserAttribute(property.toString(), value);
+      databaseUser.value = await api.user.me();
+    } else {
+      User newUser = localStorageUser.value;
+      // TODO: update the specific property
+    }
+  }
 
   /// Triggered when user goes offline to online
   Future<void> syncData() async {}
@@ -85,7 +94,7 @@ class UserController extends GetxController {
       isLoading.value = true;
       update();
       SaveController saveController = Get.find();
-      String cookies = saveController.getCookies(); //TODO, move cookies here
+      String cookies = saveController.getCookies(); //TODO: move cookies here
       api.setCookies(cookies);
       databaseUser.value = await api.user.me();
     } catch (e, stackTrace) {

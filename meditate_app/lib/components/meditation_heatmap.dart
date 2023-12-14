@@ -17,7 +17,6 @@ class MeditationHeatmap extends StatefulWidget {
 class _MeditationHeatmapState extends State<MeditationHeatmap> {
   @override
   Widget build(BuildContext context) {
-    // SaveController saveController = Get.find();
     UserController userController = Get.find();
     logSuccess("!!! Meditation History " +
         userController.user.value.meditationHistory.toString());

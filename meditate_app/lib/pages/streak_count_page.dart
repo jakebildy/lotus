@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:animated_counter/animated_counter.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
 import 'package:meditate_app/pages/turtle_hatch_page.dart';
 
@@ -35,13 +36,13 @@ class _StreakCountPageState extends State<StreakCountPage>
   @override
   void initState() {
     super.initState();
-    //TODO: this logic needs to be in User Controller
-    SaveController saveController = Get.find();
+
+    UserController userController = Get.find();
     streak = widget.alreadyMeditatedToday
-        ? saveController.streak.value
-        : saveController.streak.value - 1 < 0
+        ? userController.user.value.streak
+        : userController.user.value.streak - 1 < 0
             ? 0
-            : saveController.streak.value - 1;
+            : userController.user.value.streak - 1;
 
     increaseCount();
   }
@@ -60,70 +61,67 @@ class _StreakCountPageState extends State<StreakCountPage>
   Widget build(BuildContext context) {
     return Scaffold(
         // backgroundColor: Colors.white,
-        body: Container(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 800),
-              opacity: opacity,
-              child: Container(
-                  height: MediaQuery.of(context).size.height / 3,
-                  width: 409,
-                  child: Image.asset("assets/fire_joypixel.gif")),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(streak.toString(),
-                  style: const TextStyle(fontSize: 120, color: Colors.orange)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(streak.toString() + " day streak!",
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold)),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Meditate every day to build your streak",
-                  style: TextStyle(fontSize: 14)),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            GestureDetector(
-              onTap: () {
-                if (widget.turtleToHatch >= 0) {
-                  Get.offAll(TurtleHatchPage(
-                    gemsAmount: widget.gemsAmount,
-                    foundEgg: widget.foundEgg,
-                    turtleToHatch: widget.turtleToHatch,
-                    turtleColorToHatch: widget.turtleColorToHatch,
-                  ));
-                } else {
-                  Get.offAll(NewGemsPage(
-                    gemsAmount: widget.gemsAmount,
-                    foundEgg: widget.foundEgg,
-                  ));
-                }
-              },
-              child: Container(
-                  color: const Color.fromARGB(255, 16, 77, 127),
-                  child: const Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
-                    child: Text(
-                      "Continue",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
-                  )),
-            )
-          ],
-        ),
+        body: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 800),
+            opacity: opacity,
+            child: SizedBox(
+                height: MediaQuery.of(context).size.height / 3,
+                width: 409,
+                child: Image.asset("assets/fire_joypixel.gif")),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(streak.toString(),
+                style: const TextStyle(fontSize: 120, color: Colors.orange)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(streak.toString() + " day streak!",
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Meditate every day to build your streak",
+                style: TextStyle(fontSize: 14)),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          GestureDetector(
+            onTap: () {
+              if (widget.turtleToHatch >= 0) {
+                Get.offAll(TurtleHatchPage(
+                  gemsAmount: widget.gemsAmount,
+                  foundEgg: widget.foundEgg,
+                  turtleToHatch: widget.turtleToHatch,
+                  turtleColorToHatch: widget.turtleColorToHatch,
+                ));
+              } else {
+                Get.offAll(NewGemsPage(
+                  gemsAmount: widget.gemsAmount,
+                  foundEgg: widget.foundEgg,
+                ));
+              }
+            },
+            child: Container(
+                color: const Color.fromARGB(255, 16, 77, 127),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
+                  child: Text(
+                    "Continue",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                )),
+          )
+        ],
       ),
     ));
   }

@@ -7,24 +7,15 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meditate_app/api/pictures_api.dart';
-import 'package:meditate_app/app_pages.dart';
-import 'package:meditate_app/controllers/follow_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/models/follow.dart';
-import 'package:meditate_app/models/user.dart';
-import 'package:meditate_app/api/index.dart' as Api;
-import 'package:meditate_app/pages/shellevate.dart';
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/services/push_notification_service.dart';
-import 'package:meditate_app/pages/signup/signup.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 /// AuthController needs to be refactored.
 /// {@category Controllers}
 class AuthController extends GetxController {
-  final SaveController saveController = Get.find();
   final PushNotificationService pushNotificationService = Get.find();
 
   final TextEditingController loginUsername = TextEditingController(text: "");
@@ -170,7 +161,7 @@ class AuthController extends GetxController {
   // }
 
   Future<void> _displayChangeNameDialog(BuildContext context) async {
-    TextEditingController _textFieldController = new TextEditingController();
+    TextEditingController _textFieldController = TextEditingController();
 
     return showDialog(
         context: context,
@@ -204,7 +195,7 @@ class AuthController extends GetxController {
                 child: const Text('OK', style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   if (_textFieldController.text != "") {
-                    Api.user.changeName(_textFieldController.text);
+                    api.user.changeName(_textFieldController.text);
                     displayName.value = _textFieldController.text;
                     Navigator.pop(context);
                   }

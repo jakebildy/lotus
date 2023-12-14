@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/DEBUG_MODE.dart';
@@ -19,6 +20,8 @@ import 'package:ocarina/ocarina.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+
+import '../models/user.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key, required this.time}) : super(key: key);
@@ -55,6 +58,7 @@ class _CountdownPageState extends State<CountdownPage>
         duration: const Duration(milliseconds: 300), vsync: this);
     _playPauseController.forward();
 
+    UserController userController = Get.find();
     SaveController saveController = Get.find();
 
     bell = new AudioPlayer();
@@ -121,6 +125,7 @@ class _CountdownPageState extends State<CountdownPage>
   }
 
   EggController eggController = Get.find();
+  UserController userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -581,18 +586,22 @@ class _CountdownPageState extends State<CountdownPage>
                                                     eggController.hatchTurtle(
                                                         turtleToHatch,
                                                         turtleColorToHatch);
-                                                    saveController
-                                                        .updateHatchProgress(
-                                                            0); //TODO: migrate
+                                                    userController.updateProperty(
+                                                        UserProperty
+                                                            .hatchProgressEggOne,
+                                                        0);
                                                   } else {
                                                     logInfo(
                                                         "Updating hatch process");
-                                                    saveController
-                                                        .updateHatchProgress(
-                                                            saveController
-                                                                    .hatchProgressEggOne
-                                                                    .value +
-                                                                1);
+
+                                                    userController.updateProperty(
+                                                        UserProperty
+                                                            .hatchProgressEggOne,
+                                                        userController
+                                                                .user
+                                                                .value
+                                                                .hatchProgressEggOne +
+                                                            1);
                                                   }
                                                 }
                                               }

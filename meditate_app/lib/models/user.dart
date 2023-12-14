@@ -125,12 +125,12 @@ class User {
       meditationTimes: map["meditationTimes"] ?? [],
       meditationTimesAsOf: DateTime.parse(
           map["meditationTimesAsOf"] ?? "2011-10-05T14:48:00.000Z"),
-      unlockedTurtles: map["unlockedTurtles"] as List<int>? ?? [],
+      unlockedTurtles: map["unlockedTurtles"] as List<dynamic>? ?? [],
       unlockedTurtleColors: (map["unlockedTurtleColors"] as List<dynamic>?)
               ?.map((e) => List<int>.from(e as List))
               .toList() ??
           [],
-      eggTypes: map["eggTypes"] as List<String>,
+      eggTypes: map["eggTypes"] as List<String>? ?? [],
       meditationHistory: _parseMeditationHistory(
               map["meditationHistory"] as Map<String, dynamic>?)
           .obs,

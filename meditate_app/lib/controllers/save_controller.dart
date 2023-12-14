@@ -11,7 +11,7 @@ import 'package:ocarina/ocarina.dart';
 
 import '../models/user.dart';
 
-/// SaveController is going to be deprecated.
+/// SaveController is going to be deprecated. It will only be used for the saved settings.
 /// {@category Controllers}
 class SaveController extends GetxController {
   final storage = GetStorage();
@@ -367,12 +367,6 @@ class SaveController extends GetxController {
   void updateTotalEggs(int newValue) {
     saveValue("total_eggs", newValue.toString());
     totalEggs.value = newValue;
-    update();
-  }
-
-  void updateHatchProgress(int newValue) {
-    saveValue("egg_progress_one", newValue.toString());
-    hatchProgressEggOne.value = newValue;
     update();
   }
 
