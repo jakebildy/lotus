@@ -38,7 +38,6 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
     UserController userController = Get.find();
     FollowController followController;
     if (Get.isRegistered<FollowController>()) {
@@ -233,7 +232,8 @@ class _ProfilePageState extends State<ProfilePage>
                                       height: 10,
                                     ),
                                     Text(
-                                      saveController.streak.value.toString(),
+                                      userController.user.value.streak
+                                          .toString(),
                                       style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
@@ -267,7 +267,8 @@ class _ProfilePageState extends State<ProfilePage>
                                   height: 10,
                                 ),
                                 Text(
-                                  saveController.totalMinutes.value.toString(),
+                                  userController.user.value.totalMinutes
+                                      .toString(),
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),

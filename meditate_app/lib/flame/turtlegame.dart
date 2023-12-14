@@ -89,7 +89,7 @@ class TurtleGame extends FlameGame with HasTappables {
 
   debounceCanMove() async {
     canMove = false;
-    await Future.delayed(Duration(milliseconds: 620));
+    await Future.delayed(const Duration(milliseconds: 620));
     canMove = true;
   }
 
@@ -141,7 +141,7 @@ class TurtleGame extends FlameGame with HasTappables {
 
   Future<void> swimAnimation(SpriteGroupComponent playerBase) async {
     playerBase.current = PlayerState.swimming;
-    await Future.delayed(Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 500));
     playerBase.current = PlayerState.idle;
   }
 
@@ -150,7 +150,7 @@ class TurtleGame extends FlameGame with HasTappables {
     _turtleWorld.parallax?.baseVelocity = Vector2(
         (x - player.position.x) / ratio, (y - player.position.y) / ratio);
 
-    await Future.delayed(Duration(milliseconds: 700));
+    await Future.delayed(const Duration(milliseconds: 700));
 
     _turtleWorld.parallax?.baseVelocity = Vector2(0, 0);
   }
@@ -296,7 +296,7 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
     return Stack(
       children: [
         GameWidget.controlled(gameFactory: TurtleGame.new),
-        Container(
+        SizedBox(
             height: 100,
             child: AppBar(
               backgroundColor: Colors.transparent,
@@ -306,7 +306,7 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                             height: 27, child: Image.asset("assets/egg.png")),
                         const SizedBox(
                           width: 3,
@@ -332,7 +332,7 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                             height: 27,
                             child: Image.asset("assets/gem_icon.png")),
                         const SizedBox(

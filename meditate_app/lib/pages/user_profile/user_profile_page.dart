@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/user_streak_chart.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/util.dart';
 
@@ -30,7 +29,6 @@ class _UserProfilePageState extends State<UserProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
     UserController userController = Get.find();
     FollowController followController = Get.find();
 
