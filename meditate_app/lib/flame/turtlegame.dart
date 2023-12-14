@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/components/bubble.dart';
 import 'package:meditate_app/flame/components/butterfly.dart';
 import 'package:meditate_app/flame/components/fish.dart';
@@ -217,17 +218,14 @@ class PlayerBase extends SpriteGroupComponent<PlayerState>
 
   PlayerBase(Vector2 position, this.isBase) : super(position: position);
 
-  @override
-  void update(double dt) {
-    super.update(dt);
-    // angle += speed * dt;
-    // angle %= 2 * math.pi;
-  }
+  // @override
+  // void update(double dt) {
+  //   super.update(dt);
+  // }
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    SaveController save = Get.find();
 
     final idleSprite = await gameRef.loadSprite("turtles/swim/swim1.png");
     final swimSprite = await gameRef.loadSprite("turtles/swim/swim2.png");
@@ -261,13 +259,6 @@ class CameraPoint extends SpriteComponent with HasGameRef, Tappable {
   CameraPoint(Vector2 position) : super(position: position);
 
   @override
-  void update(double dt) {
-    super.update(dt);
-    // angle += speed * dt;
-    // angle %= 2 * math.pi;
-  }
-
-  @override
   Future<void> onLoad() async {
     super.onLoad();
     sprite = await gameRef.loadSprite('turtle_basic.png');
@@ -293,7 +284,6 @@ class TurtleGamePage extends StatefulWidget {
 class _TurtleGamePageState extends State<TurtleGamePage> {
   @override
   void initState() {
-    SaveController saveController = Get.find();
     //todo: pass the context so we can do alerts
     super.initState();
   }
@@ -301,7 +291,7 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
   @override
   Widget build(BuildContext context) {
     //TODO: add UI overlay on top via Stack
-    SaveController saveController = Get.find();
+    UserController user = Get.find();
 
     return Stack(
       children: [
@@ -324,11 +314,11 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
                           child: Text(
-                            saveController.eggs.value.toString(),
+                            user.user.value.eggs.toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: saveController.eggs.value == 0
+                                color: user.user.value.eggs == 0
                                     ? Colors.grey
                                     : Colors.white),
                           ),
@@ -351,11 +341,11 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
                           child: Text(
-                            saveController.gems.value.toString(),
+                            user.user.value.gems.toString(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
-                                color: saveController.gems.value == 0
+                                color: user.user.value.gems == 0
                                     ? Colors.grey
                                     : Colors.white),
                           ),

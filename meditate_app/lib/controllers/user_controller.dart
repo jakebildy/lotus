@@ -130,8 +130,8 @@ class UserController extends GetxController {
   }
 
   int loadStreak() {
-    DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
     if (user.value.lastMeditated.isBefore(DateTime(2019))) {
       logInfo("last_meditated hasn't been set yet.");
       return 0;

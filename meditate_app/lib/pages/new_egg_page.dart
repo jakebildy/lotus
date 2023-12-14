@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/shake_widget.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class NewEggPage extends StatefulWidget {
@@ -48,7 +48,7 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    SaveController save = Get.find();
+    UserController user = Get.find();
     return Scaffold(
         // backgroundColor: Colors.white,
         body: Container(
@@ -75,8 +75,9 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                             Image.asset("assets/egg.png"),
                             ColorFiltered(
                                 colorFilter: ColorFilter.mode(
-                                    TURTLE_COLORS[int.parse(
-                                            save.eggType.last.split("-")[1])]
+                                    TURTLE_COLORS[int.parse(user
+                                            .user.value.eggTypes.last
+                                            .split("-")[1])]
                                         .withOpacity(0.8),
                                     BlendMode.srcATop),
                                 child: Image.asset(

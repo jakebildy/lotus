@@ -89,8 +89,6 @@ class _ShopPageState extends State<ShopPage> {
 
                   logSuccess("Purchasing Streak Freeze!");
                   HapticFeedback.lightImpact();
-                  // save.updateGems(user.user.value.gems - STREAK_FREEZE_PRICE);
-                  // save.updateStreakFreezes(save.streakFreezes.value + 1);
 
                   user.updateProperty(UserProperty.gems,
                       user.user.value.gems - STREAK_FREEZE_PRICE);
