@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/turtle_card.dart';
-import 'package:meditate_app/components/turtle_card.dart';
-import 'package:meditate_app/components/turtle_category.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class TurtleCategoryPage extends StatelessWidget {
@@ -14,7 +10,7 @@ class TurtleCategoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
+    UserController user = Get.find();
 
     return Scaffold(
       appBar: AppBar(
@@ -29,9 +25,9 @@ class TurtleCategoryPage extends StatelessWidget {
             return Center(
               child: TurtleCard(
                   unlocked:
-                      saveController.unlockedTurtleColors[id].contains(index),
+                      user.user.value.unlockedTurtleColors[id].contains(index),
                   // set quantity equal to the length of unlockedTurleColors[id] filtered to only the ones that contain the index
-                  quantity: saveController.unlockedTurtleColors[id]
+                  quantity: user.user.value.unlockedTurtleColors[id]
                       .where((element) => element == index)
                       .toList()
                       .length,

@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/streak_chart.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/util/turtles.dart';
-import 'package:meditate_app/util/util.dart';
 
 class StatsPage extends StatefulWidget {
   const StatsPage({Key? key}) : super(key: key);
