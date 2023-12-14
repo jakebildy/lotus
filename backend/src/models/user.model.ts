@@ -26,6 +26,8 @@ export interface UserI {
   unlockedTurtles?: Array<any>; // Replace 'any' with a more specific type if applicable
   unlockedTurtleColors?: Array<Array<number>>;
   eggs?: number;
+  streakFreezes?: number;
+  eggTypes?: Array<string>;
 }
 
 const UserSchema = new mongoose.Schema<UserI>(
@@ -53,7 +55,8 @@ const UserSchema = new mongoose.Schema<UserI>(
     unlockedTurtles: { type: Array, required: false },
     unlockedTurtleColors: { type: [[Number]], required: false },
     eggs: { type: Number, required: false },
-    
+    streakFreezes: { type: Number, required: false },
+    eggTypes: {type: Array, required: false},
   },
   {
     versionKey: false,
