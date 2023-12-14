@@ -6,6 +6,23 @@ import 'package:meditate_app/util/logger.dart';
 const String defaultProfilePicture =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
+enum UserProperty {
+  streak,
+  totalMinutes,
+  gems,
+  eggs,
+  totalEggs,
+  hatchProgressEggOne,
+  streakFreezes,
+  lastMeditated,
+  meditationTimes,
+  meditationTimesAsOf,
+  unlockedTurtles,
+  unlockedTurtleColors,
+  meditationHistory,
+  eggTypes,
+}
+
 class User {
   final String? id;
   final String avatar;
@@ -20,6 +37,7 @@ class User {
   final int eggs;
   final int totalEggs;
   final int hatchProgressEggOne;
+  final int streakFreezes;
   final DateTime lastMeditated;
   final List<dynamic> meditationTimes;
   final DateTime meditationTimesAsOf;
@@ -27,6 +45,7 @@ class User {
   final List<dynamic> unlockedTurtles;
   final List<List<int>> unlockedTurtleColors;
   RxMap<DateTime, int> meditationHistory;
+  final List<String> eggTypes;
 
   static User deletedUser = User(
     id: "-1",
@@ -55,8 +74,10 @@ class User {
     this.eggs = 0,
     this.totalEggs = 0,
     this.hatchProgressEggOne = 0,
+    this.streakFreezes = 0,
     this.unlockedTurtles = const [],
     this.unlockedTurtleColors = const [],
+    this.eggTypes = const [],
   }) : meditationHistory = meditationHistory ?? <DateTime, int>{}.obs;
 
   // Method to parse the meditation history according to the key format used in loadData
@@ -98,16 +119,18 @@ class User {
       eggs: map["eggs"] ?? 0,
       totalEggs: map["totalEggs"] ?? 0,
       hatchProgressEggOne: map["hatchProgressEggOne"] ?? 0,
+      streakFreezes: map["streakFreezes"] ?? 0,
       lastMeditated:
           DateTime.parse(map["lastMeditated"] ?? "2011-10-05T14:48:00.000Z"),
       meditationTimes: map["meditationTimes"] ?? [],
       meditationTimesAsOf: DateTime.parse(
           map["meditationTimesAsOf"] ?? "2011-10-05T14:48:00.000Z"),
-      unlockedTurtles: map["unlockedTurtles"] as List<dynamic>? ?? [],
+      unlockedTurtles: map["unlockedTurtles"] as List<int>? ?? [],
       unlockedTurtleColors: (map["unlockedTurtleColors"] as List<dynamic>?)
               ?.map((e) => List<int>.from(e as List))
               .toList() ??
           [],
+      eggTypes: map["eggTypes"] as List<String>,
       meditationHistory: _parseMeditationHistory(
               map["meditationHistory"] as Map<String, dynamic>?)
           .obs,

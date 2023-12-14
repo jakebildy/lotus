@@ -3,6 +3,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:shimmer/shimmer.dart';
@@ -22,7 +24,7 @@ class _ShopPageState extends State<ShopPage> {
   Widget build(BuildContext context) {
     var brightness = SchedulerBinding.instance.window.platformBrightness;
     bool isDarkMode = true;
-    SaveController save = Get.find();
+    UserController user = Get.find();
 
     return Obx(
       () => ListView(
@@ -79,16 +81,21 @@ class _ShopPageState extends State<ShopPage> {
           ),
           GestureDetector(
             onTap: () {
-              if (save.gems.value >= STREAK_FREEZE_PRICE) {
-                if (save.streakFreezes < 2) {
+              if (user.user.value.gems >= STREAK_FREEZE_PRICE) {
+                if (user.user.value.streakFreezes < 2) {
                   //Log the event to AppsFlyer
                   HeapService heap = Get.find();
                   heap.logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
 
                   logSuccess("Purchasing Streak Freeze!");
                   HapticFeedback.lightImpact();
-                  save.updateGems(save.gems.value - STREAK_FREEZE_PRICE);
-                  save.updateStreakFreezes(save.streakFreezes.value + 1);
+                  // save.updateGems(user.user.value.gems - STREAK_FREEZE_PRICE);
+                  // save.updateStreakFreezes(save.streakFreezes.value + 1);
+
+                  user.updateProperty(UserProperty.gems,
+                      user.user.value.gems - STREAK_FREEZE_PRICE);
+                  user.updateProperty(UserProperty.streakFreezes,
+                      user.user.value.streakFreezes + 1);
                 } else {
                   //Log the event to AppsFlyer
                   HeapService heap = Get.find();
@@ -124,13 +131,13 @@ class _ShopPageState extends State<ShopPage> {
                 height: 150,
                 decoration: BoxDecoration(
                   color: isDarkMode
-                      ? save.streakFreezes.value > 0
+                      ? user.user.value.streakFreezes > 0
                           ? Color.fromARGB(255, 46, 48, 59)
                           : Colors.black12
                       : Colors.white,
                   border: Border.all(
                     color: isDarkMode
-                        ? save.streakFreezes.value > 0
+                        ? user.user.value.streakFreezes > 0
                             ? Color.fromARGB(255, 81, 80, 107)
                             : Colors.white24
                         : Colors.black26,
@@ -159,7 +166,7 @@ class _ShopPageState extends State<ShopPage> {
                                   child: Shimmer.fromColors(
                                     baseColor: Colors.white12,
                                     highlightColor: Colors.white70,
-                                    child: Container(
+                                    child: SizedBox(
                                         height:
                                             MediaQuery.of(context).size.height /
                                                 4,
@@ -218,9 +225,9 @@ class _ShopPageState extends State<ShopPage> {
                             height: 10,
                           ),
                           Text(
-                            "${save.streakFreezes} OUT OF 2 ACTIVE",
+                            "${user.user.value.streakFreezes} OUT OF 2 ACTIVE",
                             style: TextStyle(
-                                color: save.streakFreezes.value > 0
+                                color: user.user.value.streakFreezes > 0
                                     ? Colors.lightBlue
                                     : Colors.grey,
                                 fontWeight: FontWeight.bold),

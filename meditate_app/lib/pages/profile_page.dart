@@ -132,9 +132,9 @@ class _ProfilePageState extends State<ProfilePage>
                   height: 5,
                 ),
                 Text(
-                  tierReadable(saveController.streakTier()),
+                  tierReadable(userController.streakTier()),
                   style: TextStyle(
-                      color: tierColor(saveController.streakTier()),
+                      color: tierColor(userController.streakTier()),
                       fontSize: 17),
                   textAlign: TextAlign.center,
                 ),
@@ -221,7 +221,7 @@ class _ProfilePageState extends State<ProfilePage>
                                       child: Hero(
                                         tag: "STREAK_STATS_ICON",
                                         child: Image.asset(
-                                            saveController.streakIconURL()),
+                                            userController.streakIconURL()),
                                       )),
                                 ),
                                 const SizedBox(
@@ -296,19 +296,19 @@ class _ProfilePageState extends State<ProfilePage>
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
-                        children: [
-                          const SizedBox(
+                        children: const [
+                          SizedBox(
                             height: 10,
                           ),
-                          const Text(
+                          Text(
                             "Minutes meditated this week",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 20,
                           ),
-                          const StreakChart(
+                          StreakChart(
                             height: 180,
                           ),
                         ],
@@ -346,11 +346,11 @@ class _ProfilePageState extends State<ProfilePage>
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                (saveController.streakTier() == Tier.ORANGE
+                                (userController.streakTier() == Tier.ORANGE
                                     ? "Level 1: Hatchling"
-                                    : saveController.streakTier() == Tier.YELLOW
+                                    : userController.streakTier() == Tier.YELLOW
                                         ? "Level 2: Champion"
-                                        : saveController.streakTier() ==
+                                        : userController.streakTier() ==
                                                 Tier.BLUE
                                             ? "Level 3: Expert"
                                             : "Level 4: Turtlemaster"),
@@ -358,7 +358,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,
                                     color:
-                                        tierColor(saveController.streakTier())),
+                                        tierColor(userController.streakTier())),
                               ),
                               const SizedBox(
                                 height: 5,
@@ -439,11 +439,11 @@ class _ProfilePageState extends State<ProfilePage>
                                 children: [
                                   followController.usersFollowing.length == 0
                                       ? Column(
-                                          children: [
-                                            const SizedBox(
+                                          children: const [
+                                            SizedBox(
                                               height: 20,
                                             ),
-                                            const Text(
+                                            Text(
                                               "You don't have any friends yet - add some!",
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -461,7 +461,7 @@ class _ProfilePageState extends State<ProfilePage>
                                                   color: const Color.fromARGB(
                                                       255, 42, 42, 42))))
                                         ]),
-                                  followController.followers.length == 0
+                                  followController.followers.isEmpty
                                       ? Column(
                                           children: [
                                             const SizedBox(

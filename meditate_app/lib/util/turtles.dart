@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 
 enum Rarity { COMMON, RARE, LEGENDARY }
 
@@ -94,17 +95,17 @@ int getTurtleToHatch() {
   }
 
   //Filter by tier
-  SaveController saveController = Get.find();
-  if (saveController.streakTier() == Tier.ORANGE) {
+  UserController userController = Get.find();
+  if (userController.streakTier() == Tier.ORANGE) {
     possibleTurtles = possibleTurtles
         .where((element) => element.tier == Tier.ORANGE)
         .toList();
-  } else if (saveController.streakTier() == Tier.YELLOW) {
+  } else if (userController.streakTier() == Tier.YELLOW) {
     possibleTurtles = possibleTurtles
         .where((element) =>
             element.tier == Tier.ORANGE || element.tier == Tier.YELLOW)
         .toList();
-  } else if (saveController.streakTier() == Tier.BLUE) {
+  } else if (userController.streakTier() == Tier.BLUE) {
     possibleTurtles = possibleTurtles
         .where((element) =>
             element.tier == Tier.ORANGE ||

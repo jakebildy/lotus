@@ -35,6 +35,7 @@ class _StreakCountPageState extends State<StreakCountPage>
   @override
   void initState() {
     super.initState();
+    //TODO: this logic needs to be in User Controller
     SaveController saveController = Get.find();
     streak = widget.alreadyMeditatedToday
         ? saveController.streak.value

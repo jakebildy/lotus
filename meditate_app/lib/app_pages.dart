@@ -26,7 +26,6 @@ class _AppPagesState extends State<AppPages> {
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
     UserController userController = Get.find();
     NetworkStatusController network = Get.find();
     bool isDarkMode = true;
@@ -82,7 +81,7 @@ class _AppPagesState extends State<AppPages> {
                                             SizedBox(
                                                 height: 27,
                                                 child: Image.asset(
-                                                    saveController
+                                                    userController
                                                         .streakIconURL())),
                                             const SizedBox(
                                               width: 3,
@@ -102,7 +101,7 @@ class _AppPagesState extends State<AppPages> {
                                                                     .value
                                                                     .streak ==
                                                                 0 ||
-                                                            !saveController
+                                                            !userController
                                                                 .hasDoneStreakToday
                                                                 .value
                                                         ? DateTime.now().hour >
@@ -125,16 +124,6 @@ class _AppPagesState extends State<AppPages> {
                                           ],
                                         )),
                                   ),
-
-                                  // Column(
-                                  //   children: [
-                                  //      Text("You've meditated for",
-                                  //     style: TextStyle( fontSize: 13,  color: isDarkMode ? Colors.white70 : Colors.grey),),
-                                  //     Text("${saveController.totalMinutes} min",
-                                  //     style: TextStyle( fontSize: 20,  color: isDarkMode ? Colors.white : Colors.black),),
-                                  //   ],
-                                  // ),
-
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {

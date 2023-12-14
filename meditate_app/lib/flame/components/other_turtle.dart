@@ -8,7 +8,10 @@ import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/egg_controller.dart';
+import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
 import 'package:meditate_app/util/DEBUG_MODE.dart';
 import 'package:meditate_app/util/logger.dart';
@@ -16,6 +19,8 @@ import 'dart:math' as math;
 
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
+
+import '../../models/user.dart';
 
 class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
@@ -93,8 +98,8 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   @override
   bool onTapUp(TapUpInfo info) {
     HapticFeedback.mediumImpact();
-    SaveController saveController = Get.find();
-    if (saveController.localContext != null) {
+    GameController game = Get.find();
+    if (game.localContext != null) {
       _showMyDialog(turtleColor, turtleType);
     }
     info.handled = true;
@@ -103,11 +108,13 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
 }
 
 Future<void> _showMyDialog(int turtleColor, int turtleType) async {
-  SaveController saveController = Get.find();
+  UserController userController = Get.find();
+  GameController game = Get.find();
+  EggController egg = Get.find();
 
-  if (TURTLES[turtleType].tier.index > saveController.streakTier().index) {
+  if (TURTLES[turtleType].tier.index > userController.streakTier().index) {
     return showDialog<void>(
-        context: saveController.localContext!,
+        context: game.localContext!,
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
@@ -136,7 +143,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
         });
   } else {
     return showDialog<void>(
-      context: saveController.localContext!,
+      context: game.localContext!,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
@@ -144,10 +151,10 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                (!DEBUG_MODE && saveController.gems.value < 50)
+                (!DEBUG_MODE && userController.user.value.gems < 50)
                     ? Text("You need at least 50 gems to breed this turtle!")
                     : Text(
-                        'Breed your ${TURTLE_COLORS_NAME[saveController.turtleColor.value]} ${TURTLES[saveController.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 gems?'),
+                        'Breed your ${TURTLE_COLORS_NAME[game.turtleColor.value]} ${TURTLES[game.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 gems?'),
               ],
             ),
           ),
@@ -161,7 +168,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                 Navigator.of(context).pop();
               },
             ),
-            (!DEBUG_MODE && saveController.gems.value < 50)
+            (!DEBUG_MODE && userController.user.value.gems < 50)
                 ? Container()
                 : TextButton(
                     child: const Text(
@@ -171,36 +178,26 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                     onPressed: () {
                       Navigator.of(context).pop();
                       if (!DEBUG_MODE) {
-                        saveController
-                            .updateGems(saveController.gems.value - 50);
-                      }
-                      if (saveController.getValue("eggs") == "") {
-                        saveController.updateEggs(1);
-                      } else {
-                        saveController.updateEggs(
-                            int.parse(saveController.getValue("eggs")) + 1);
+                        userController.updateProperty(UserProperty.gems,
+                            userController.user.value.gems - 50);
                       }
 
-                      if (saveController.getValue("total_eggs") == "") {
-                        saveController.updateTotalEggs(1);
-                      } else {
-                        saveController.updateTotalEggs(
-                            int.parse(saveController.getValue("total_eggs")) +
-                                1);
-                      }
+                      //TODO: move this logic into Egg Controller, also handle on countdown page.
+                      userController.updateProperty(UserProperty.eggs,
+                          userController.user.value.eggs + 1);
+                      userController.updateProperty(UserProperty.totalEggs,
+                          userController.user.value.totalEggs + 1);
 
                       bool babyType = Random().nextBool();
-                      int futureColor = !babyType
-                          ? saveController.turtleColor.value
-                          : turtleColor;
-                      int futureType = babyType
-                          ? saveController.selectedTurtle.value
-                          : turtleType;
+                      int futureColor =
+                          !babyType ? game.turtleColor.value : turtleColor;
+                      int futureType =
+                          babyType ? game.selectedTurtle.value : turtleType;
                       logInfo("NEW TURTLE 🐢: " +
                           TURTLE_COLORS_NAME[futureColor] +
                           " " +
                           TURTLES[futureType].name);
-                      saveController.addFutureTurtle(futureColor, futureType);
+                      egg.addFutureTurtle(futureColor, futureType);
 
                       Get.to(const NewEggPage());
                     },

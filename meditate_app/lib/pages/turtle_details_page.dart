@@ -6,7 +6,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/components/streak_chart.dart';
+import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
@@ -27,7 +29,8 @@ class TurtleDetailsPage extends StatefulWidget {
 class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
+    GameController gameController = Get.find();
+    UserController userController = Get.find();
     bool isDarkMode = true;
 
     return Scaffold(
@@ -75,7 +78,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                   height: 300,
                   child: GestureDetector(
                     onTap: () {
-                      saveController.startGame(
+                      gameController.startGame(
                           widget.id, widget.color, context);
                       HapticFeedback.lightImpact();
                       Get.to(const TurtleGamePage(),
@@ -171,7 +174,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      "${saveController.unlockedTurtles[widget.id]}",
+                                      "${userController.user.value.unlockedTurtles[widget.id]}",
                                       style: const TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     ),
@@ -241,7 +244,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                 //Log the event to AppsFlyer
                                 HeapService appsflyer = Get.find();
                                 appsflyer.logEvent("GAME_STARTED", {});
-                                saveController.startGame(
+                                gameController.startGame(
                                     widget.id, widget.color, context);
                                 HapticFeedback.lightImpact();
                                 Get.to(const TurtleGamePage(),

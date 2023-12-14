@@ -9,6 +9,7 @@ import 'package:flame_audio/flame_audio.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/flame/components/bubble.dart';
 import 'package:meditate_app/flame/components/butterfly.dart';
@@ -176,12 +177,12 @@ class Player extends SpriteComponent with HasGameRef, Tappable {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    SaveController save = Get.find();
+    GameController game = Get.find();
     if (!isBase) {
-      sprite = await gameRef.loadSprite('turtles/${save.selectedTurtle}.png');
+      sprite = await gameRef.loadSprite('turtles/${game.selectedTurtle}.png');
       paint = Paint()
         ..colorFilter = ColorFilter.mode(
-            TURTLE_COLORS[save.turtleColor.value].withOpacity(0.4),
+            TURTLE_COLORS[game.turtleColor.value].withOpacity(0.4),
             BlendMode.srcATop);
     } else {
       sprite = await gameRef.loadSprite('turtle_basic.png');

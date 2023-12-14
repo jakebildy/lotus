@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
@@ -42,10 +43,10 @@ class _CountdownPageState extends State<CountdownPage>
 
   late AudioPlayer bell;
 
-  //Whether the Continue button is loading after being pressed
+  /// Whether the Continue button is loading after being pressed
   bool loading = false;
 
-  // The exact DateTime the meditation started
+  /// The exact DateTime the meditation started
   late DateTime startTime;
 
   @override
@@ -82,7 +83,7 @@ class _CountdownPageState extends State<CountdownPage>
     await player.play();
   }
 
-  // Dispose the controller
+  /// Dispose the controller
   @override
   void dispose() {
     _playPauseController.dispose();
@@ -118,6 +119,8 @@ class _CountdownPageState extends State<CountdownPage>
           "RESUMED! This might be where we should restart the timer to the amount of seconds that have passed. Nothing is happening in this function at the moment.");
     }
   }
+
+  EggController eggController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -575,11 +578,12 @@ class _CountdownPageState extends State<CountdownPage>
                                                               .split("-")[1]);
                                                     }
 
-                                                    saveController.hatchTurtle(
+                                                    eggController.hatchTurtle(
                                                         turtleToHatch,
                                                         turtleColorToHatch);
                                                     saveController
-                                                        .updateHatchProgress(0);
+                                                        .updateHatchProgress(
+                                                            0); //TODO: migrate
                                                   } else {
                                                     logInfo(
                                                         "Updating hatch process");
@@ -600,7 +604,8 @@ class _CountdownPageState extends State<CountdownPage>
                                                 int tHatch = getTurtleToHatch();
                                                 int tColor = Random().nextInt(
                                                     TURTLE_COLORS.length);
-                                                saveController.addFutureTurtle(
+
+                                                eggController.addFutureTurtle(
                                                     tColor, tHatch);
 
                                                 if (saveController

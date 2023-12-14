@@ -8,6 +8,7 @@ import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/services/push_notification_service.dart';
 import 'package:meditate_app/pages/signup/signup.dart';
 import 'package:meditate_app/util/logger.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 User noUser = User(
   id: "-1",
@@ -35,6 +36,9 @@ class UserController extends GetxController {
   /// Returns if the user is logged in or not.
   bool get isAuthenticated => user.value.id != noUser.id;
 
+  /// Has the user done their streak today?
+  RxBool hasDoneStreakToday = false.obs;
+
   final Rx<String> displayName = "".obs;
 
   final RxBool isLoading = false.obs;
@@ -50,6 +54,7 @@ class UserController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
+      updateProperty(UserProperty.streak, loadStreak());
     });
   }
 
@@ -64,8 +69,14 @@ class UserController extends GetxController {
     // update();
   }
 
+  Future<void> updateProperty(UserProperty property, dynamic value) async {}
+
   /// Triggered when user goes offline to online
   Future<void> syncData() async {}
+
+  int totalMinutes() {
+    return 0;
+  }
 
   /// On Success: set user, isAuthenticated to true and go to main page.
   /// On fail: user is not logged in - do nothing
@@ -116,5 +127,101 @@ class UserController extends GetxController {
     Get.offAll(const Signup());
 
     update();
+  }
+
+  int loadStreak() {
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(now.year, now.month, now.day);
+    if (user.value.lastMeditated.isBefore(DateTime(2019))) {
+      logInfo("last_meditated hasn't been set yet.");
+      return 0;
+    } else {
+      int numDays = user.value.lastMeditated.difference(date).inDays.abs();
+
+      if (numDays >= 1) {
+        hasDoneStreakToday.value = false;
+      }
+
+      if (numDays <= 1) {
+        if (numDays < 1) {
+          hasDoneStreakToday.value = true;
+          update();
+        } else {
+          logInfo("Parsing streak...");
+        }
+        return user.value.streak;
+      } else {
+        //If you lose your streak
+
+        //Use a streak freeze if possible
+        if (user.value.streakFreezes > 0) {
+          DateTime now = DateTime.now();
+          DateTime today = DateTime(now.year, now.month, now.day);
+          DateTime yesterday = today.subtract(const Duration(days: 1));
+          updateProperty(
+              UserProperty.lastMeditated, yesterday.toIso8601String());
+          updateProperty(
+              UserProperty.streakFreezes, user.value.streakFreezes - 1);
+          logInfo("Streak freeze has been used. Returning streak.");
+          return user.value.streak;
+        } else {
+          return 0;
+        }
+      }
+    }
+  }
+
+  double streakAverage() {
+    // Get current date and time
+    DateTime now = DateTime.now();
+
+    // Filter and sort the last seven days
+    var lastSevenDays = user.value.meditationHistory.entries
+        .where(
+            (entry) => entry.key.isAfter(now.subtract(const Duration(days: 7))))
+        .toList();
+
+    // Sort in descending order
+    lastSevenDays.sort((a, b) => b.key.compareTo(a.key));
+
+    // Calculate the sum
+    double sum = lastSevenDays.fold(0, (prev, entry) => prev + entry.value);
+
+    // Calculate the average
+    return lastSevenDays.isNotEmpty ? sum / lastSevenDays.length : 0.0;
+  }
+
+  String streakIconURL() {
+    logInfo(
+        "Has the user meditated today? " + hasDoneStreakToday.value.toString());
+    return hasDoneStreakToday.value
+        ? streakAverage() < 10
+            ? "assets/streak_icon.png"
+            : streakAverage() < 20
+                ? "assets/streak_icon_yellow.png"
+                : streakAverage() < 40
+                    ? "assets/streak_icon_blue.png"
+                    : "assets/streak_icon_rainbow.png"
+        : "assets/streak_icon_grey.png";
+  }
+
+  String streakIconURLBBright() {
+    return streakAverage() < 10
+        ? "assets/streak_icon.png"
+        : streakAverage() < 20
+            ? "assets/streak_icon_yellow.png"
+            : streakAverage() < 40
+                ? "assets/streak_icon_blue.png"
+                : "assets/streak_icon_rainbow.png";
+  }
+
+  Tier streakTier() {
+    return streakAverage() < 10
+        ? Tier.ORANGE
+        : streakAverage() < 20
+            ? Tier.YELLOW
+            : streakAverage() < 40
+                ? Tier.BLUE
+                : Tier.RAINBOW;
   }
 }

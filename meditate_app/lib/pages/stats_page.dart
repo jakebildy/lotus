@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
@@ -19,7 +20,7 @@ class StatsPage extends StatefulWidget {
 class _StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
+    UserController userController = Get.find();
     bool isDarkMode = true;
 
     return Obx(
@@ -44,7 +45,7 @@ class _StatsPageState extends State<StatsPage> {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "${saveController.totalMinutes} min",
+                  "${userController.totalMinutes()} min",
                   style: const TextStyle(
                       fontSize: 20,
                       color: Colors.white,
@@ -74,7 +75,7 @@ class _StatsPageState extends State<StatsPage> {
                         height: 10,
                       ),
                       Text(
-                        saveController.streakAverage().toStringAsFixed(1) +
+                        userController.streakAverage().toStringAsFixed(1) +
                             " min",
                         style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.bold),
