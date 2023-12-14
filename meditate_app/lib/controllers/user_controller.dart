@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/cookie_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
@@ -93,8 +94,8 @@ class UserController extends GetxController {
     try {
       isLoading.value = true;
       update();
-      SaveController saveController = Get.find();
-      String cookies = saveController.getCookies(); //TODO: move cookies here
+      CookieController cookie = Get.find();
+      String cookies = cookie.getCookies();
       api.setCookies(cookies);
       databaseUser.value = await api.user.me();
     } catch (e, stackTrace) {
