@@ -500,17 +500,19 @@ class _CountdownPageState extends State<CountdownPage>
                                                           1);
                                                   logInfo(
                                                       "Streak value is updated to ${int.parse(streakValue) + 1}.");
-                                                  saveController.updateGems(
-                                                      saveController
-                                                              .gems.value +
+                                                  userController.updateProperty(
+                                                      UserProperty.gems,
+                                                      userController
+                                                              .user.value.gems +
                                                           5);
                                                   gemsToGive += 5;
                                                 } else if (numDays > 1) {
                                                   saveController
                                                       .updateStreak(1);
-                                                  saveController.updateGems(
-                                                      saveController
-                                                              .gems.value +
+                                                  userController.updateProperty(
+                                                      UserProperty.gems,
+                                                      userController
+                                                              .user.value.gems +
                                                           5);
                                                   gemsToGive += 5;
                                                   logInfo(
@@ -538,8 +540,11 @@ class _CountdownPageState extends State<CountdownPage>
                                                             timeInMinutes,
                                                         timeInMinutes);
                                               }
-                                              saveController.updateGems(
-                                                  saveController.gems.value +
+
+                                              userController.updateProperty(
+                                                  UserProperty.gems,
+                                                  userController
+                                                          .user.value.gems +
                                                       timeInMinutes);
                                               gemsToGive += timeInMinutes;
 

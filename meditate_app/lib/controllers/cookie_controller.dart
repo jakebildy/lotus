@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meditate_app/util/logger.dart';
 
-/// CookieController manages the logic for storing the user cookies.
+/// CookieController manages the logic for storing the user cookies. 🍪
 /// {@category Controllers}
 class CookieController extends GetxController {
   final storage = GetStorage();

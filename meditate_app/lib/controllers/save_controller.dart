@@ -352,12 +352,6 @@ class SaveController extends GetxController {
     update();
   }
 
-  void updateGems(int newValue) {
-    saveValue("gems", newValue.toString());
-    gems.value = newValue;
-    update();
-  }
-
   void updateEggs(int newValue) {
     saveValue("eggs", newValue.toString());
     eggs.value = newValue;
@@ -368,20 +362,5 @@ class SaveController extends GetxController {
     saveValue("total_eggs", newValue.toString());
     totalEggs.value = newValue;
     update();
-  }
-
-  String COOKIES_KEY = "cookies";
-
-  Future<void> saveCookies(String cookies) async {
-    logInfo("Saving cookies: $cookies -> $COOKIES_KEY");
-    storage.write(COOKIES_KEY, cookies);
-  }
-
-  String getCookies() {
-    return storage.read(COOKIES_KEY) ?? "";
-  }
-
-  Future<void> clearCookies() async {
-    storage.remove(COOKIES_KEY);
   }
 }
