@@ -463,7 +463,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                 timeInMinutes += _start ~/ 60;
                                               }
                                               logInfo(
-                                                  "Time in Minutes to add: ${timeInMinutes}");
+                                                  "Time in Minutes to add: $timeInMinutes");
 
                                               //Save the streak day
                                               DateTime now = DateTime.now();
@@ -486,7 +486,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                   lastMeditated == "") {
                                                 logInfo(
                                                     "Streak value is empty.");
-                                                saveController.updateStreak(1);
+                                                userController.updateStreak(1);
                                               } else {
                                                 int numDays = DateTime.parse(
                                                         saveController.getValue(
@@ -495,7 +495,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                     .inDays
                                                     .abs();
                                                 if (numDays == 1) {
-                                                  saveController.updateStreak(
+                                                  userController.updateStreak(
                                                       int.parse(streakValue) +
                                                           1);
                                                   logInfo(
@@ -507,7 +507,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                           5);
                                                   gemsToGive += 5;
                                                 } else if (numDays > 1) {
-                                                  saveController
+                                                  userController
                                                       .updateStreak(1);
                                                   userController.updateProperty(
                                                       UserProperty.gems,

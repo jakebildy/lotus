@@ -234,4 +234,10 @@ class UserController extends GetxController {
                 ? Tier.BLUE
                 : Tier.RAINBOW;
   }
+
+  void updateStreak(int newValue) {
+    hasDoneStreakToday.value = true;
+    updateProperty(UserProperty.streak, newValue);
+    update();
+  }
 }

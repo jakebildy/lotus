@@ -310,13 +310,6 @@ class SaveController extends GetxController {
     storage.remove(key);
   }
 
-  void updateStreak(int newValue) {
-    hasDoneStreakToday.value = true;
-    saveValue("streak", newValue.toString());
-    streak.value = newValue;
-    update();
-  }
-
   void updateTotalAmount(int newValue, int amountNew) {
     saveValue("total_minutes", newValue.toString());
     totalMinutes.value = newValue;
