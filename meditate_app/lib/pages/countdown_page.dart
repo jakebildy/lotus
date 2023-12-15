@@ -560,10 +560,15 @@ class _CountdownPageState extends State<CountdownPage>
                                                           .value >=
                                                       2) {
                                                     //Hatch a turtle!
-                                                    saveController.updateEggs(
-                                                        saveController
-                                                                .eggs.value -
-                                                            1);
+                                                    userController
+                                                        .updateProperty(
+                                                            UserProperty.eggs,
+                                                            userController
+                                                                    .user
+                                                                    .value
+                                                                    .eggs -
+                                                                1);
+
                                                     logInfo(
                                                         "HATCHING A TURTLE!");
                                                     turtleToHatch =
@@ -625,24 +630,27 @@ class _CountdownPageState extends State<CountdownPage>
                                                 if (saveController
                                                         .getValue("eggs") ==
                                                     "") {
-                                                  saveController.updateEggs(1);
+                                                  userController.updateProperty(
+                                                      UserProperty.eggs, 1);
                                                 } else {
-                                                  saveController.updateEggs(
-                                                      saveController
-                                                              .eggs.value +
+                                                  userController.updateProperty(
+                                                      UserProperty.eggs,
+                                                      userController
+                                                              .user.value.eggs +
                                                           1);
                                                 }
 
                                                 if (saveController.getValue(
                                                         "total_eggs") ==
                                                     "") {
-                                                  saveController
-                                                      .updateTotalEggs(1);
+                                                  userController.updateProperty(
+                                                      UserProperty.totalEggs,
+                                                      1);
                                                 } else {
-                                                  saveController.updateTotalEggs(
-                                                      int.parse(saveController
-                                                              .getValue(
-                                                                  "total_eggs")) +
+                                                  userController.updateProperty(
+                                                      UserProperty.totalEggs,
+                                                      userController.user.value
+                                                              .totalEggs +
                                                           1);
                                                 }
                                               }

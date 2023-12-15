@@ -65,19 +65,19 @@ class SaveController extends GetxController {
     update();
   }
 
+  void updateDefaultMeditationTime(int newVal) {
+    defaultMeditationTime.value = newVal;
+    saveValue(
+        "default_meditation_time", defaultMeditationTime.value.toString());
+    update();
+  }
+
   void updateFetchedData(User user) {
     meditationHistory.value = user.meditationHistory;
     gems.value = user.gems;
     unlockedTurtles.value = user.unlockedTurtles;
     unlockedTurtleColors.value = user.unlockedTurtleColors;
     meditationHistory.refresh();
-    update();
-  }
-
-  void updateDefaultMeditationTime(int newVal) {
-    defaultMeditationTime.value = newVal;
-    saveValue(
-        "default_meditation_time", defaultMeditationTime.value.toString());
     update();
   }
 
@@ -111,7 +111,7 @@ class SaveController extends GetxController {
       String key = 'meditation-${today.day}-${today.month}-${today.year}';
       String value = getValue(key);
       meditationTimes.add(value != "" ? double.parse(value) : 0.0);
-      today = today.subtract(Duration(days: 1));
+      today = today.subtract(const Duration(days: 1));
     }
     await Api.user.updateUserAttribute("meditationTimes", meditationTimes);
     await Api.user
@@ -342,18 +342,6 @@ class SaveController extends GetxController {
           "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
     }
     meditationHistory.refresh();
-    update();
-  }
-
-  void updateEggs(int newValue) {
-    saveValue("eggs", newValue.toString());
-    eggs.value = newValue;
-    update();
-  }
-
-  void updateTotalEggs(int newValue) {
-    saveValue("total_eggs", newValue.toString());
-    totalEggs.value = newValue;
     update();
   }
 }
