@@ -1,33 +1,29 @@
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'dart:math';
+
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/api/index.dart' as Api;
 
+import '../models/user.dart';
+
+/// SaveController is going to be deprecated. It will only be used for the saved settings.
+/// {@category Controllers}
 class SaveController extends GetxController {
   final storage = GetStorage();
 
-  RxInt streak = 0.obs;
-  RxInt totalMinutes = 0.obs;
-  RxInt gems = 0.obs;
-
-  RxInt eggs = 0.obs;
-  RxInt totalEggs = 0.obs;
-
-  RxInt hatchProgressEggOne = 0.obs;
-
-  RxBool hasDoneStreakToday = false.obs;
-
-  RxList lastSevenDays = new RxList();
-
-  RxInt streakFreezes = 0.obs;
-
+  //The list of unlocked turtles
   RxList unlockedTurtles = RxList();
+
+  //The list of unlocked turtle colors
+  RxList unlockedTurtleColors = RxList<List<int>>();
 
   //Saved Settings
   RxInt defaultMeditationTime = 5.obs;
   RxBool ambienceOn = true.obs;
 
+  //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
 
   void updateAmbience() {
@@ -43,175 +39,226 @@ class SaveController extends GetxController {
     update();
   }
 
-  double streakAverage() {
-    double sum = 0;
-    for (double i in lastSevenDays) {
-      sum += i;
-    }
-    return sum / 7;
+  void updateFetchedData(User user) {
+    meditationHistory.value = user.meditationHistory;
+    unlockedTurtles.value = user.unlockedTurtles;
+    unlockedTurtleColors.value = user.unlockedTurtleColors;
+    meditationHistory.refresh();
+    update();
   }
 
-  String streakIconURL() {
-    return hasDoneStreakToday.value
-        ? streakAverage() < 20
-            ? "assets/streak_icon.png"
-            : streakAverage() < 40
-                ? "assets/streak_icon_yellow.png"
-                : streakAverage() < 60
-                    ? "assets/streak_icon_blue.png"
-                    : "assets/streak_icon_rainbow.png"
-        : "assets/streak_icon_grey.png";
-  }
-
-  String streakIconURLBBright() {
-    return streakAverage() < 20
-        ? "assets/streak_icon.png"
-        : streakAverage() < 40
-            ? "assets/streak_icon_yellow.png"
-            : streakAverage() < 60
-                ? "assets/streak_icon_blue.png"
-                : "assets/streak_icon_rainbow.png";
-  }
-
-  Tier streakTier() {
-    return streakAverage() < 20
-        ? Tier.ORANGE
-        : streakAverage() < 40
-            ? Tier.YELLOW
-            : streakAverage() < 60
-                ? Tier.BLUE
-                : Tier.RAINBOW;
-  }
-
-  SaveController() {
-    // fixAnnoyingDataProblem();
-    loadData();
-  }
-
-  //TODO: if last_meditated in the database is ahead, update the values
-  void fixAnnoyingDataProblem() {
-    // saveValue("streak", "29");
-    // saveValue("gems", "200");
-    // saveValue("total_minutes", "650");
-    // saveValue("total_eggs", "4");
-    // saveValue("eggs", "4");
-    // DateTime now = new DateTime.now();
-    // DateTime today = DateTime(now.year, now.month, now.day);
-    // saveValue("last_meditated", today.toIso8601String());
-    // saveValue('meditation-${today.day}-${today.month}-${today.year}', '20');
-    // saveValue('meditation-${today.day - 1}-${today.month}-${today.year}', '40');
-    // saveValue('meditation-${today.day - 2}-${today.month}-${today.year}', '23');
-    // saveValue('meditation-${today.day - 3}-${today.month}-${today.year}', '13');
-    // saveValue('meditation-${today.day - 4}-${today.month}-${today.year}', '22');
-    // saveValue('meditation-${today.day - 5}-${today.month}-${today.year}', '22');
-    // saveValue('meditation-${today.day - 6}-${today.month}-${today.year}', '22');
-  }
+  // SaveController() {
+  //   loadData();
+  //   //Add the default brown swamp turtle: note, currently disabled
+  //   // unlockedTurtles[0] += 1;
+  //   // unlockedTurtleColors[0].add(0);
+  // }
 
   Future<void> uploadLocalData() async {
-    await Api.user.updateUserAttribute("streak", streak.value);
-    await Api.user.updateUserAttribute("totalMinutes", totalMinutes.value);
-    await Api.user.updateUserAttribute("gems", gems.value);
-    await Api.user.updateUserAttribute("totalEggs", totalEggs.value);
-    await Api.user
-        .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
+    // Upload simple attributes
+    // await Api.user.updateUserAttribute("streak", streak.value);
+    // await Api.user.updateUserAttribute("totalMinutes", totalMinutes.value);
+    // await Api.user.updateUserAttribute("gems", gems.value);
+    // await Api.user.updateUserAttribute("totalEggs", totalEggs.value);
+    // await Api.user
+    // .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
 
-    if (getValue("last_meditated") != "") {
-      await Api.user
-          .updateUserAttribute("lastMeditated", getValue("last_meditated"));
+    // Upload last meditated date
+    String lastMeditated = getValue("last_meditated");
+    if (lastMeditated != "") {
+      await Api.user.updateUserAttribute("lastMeditated", lastMeditated);
     }
 
+    // Upload meditation times for the past week
     List<double> meditationTimes = [];
     DateTime today = DateTime.now();
-    DateTime date = new DateTime(today.year, today.month, today.day);
+    DateTime date = DateTime(today.year, today.month, today.day);
     for (int i = 0; i < 7; i++) {
-      if (getValue('meditation-${today.day}-${today.month}-${today.year}') !=
-          "") {
-        meditationTimes.add(double.parse(
-            getValue('meditation-${today.day}-${today.month}-${today.year}')));
-      } else {
-        meditationTimes.add(0.0);
-      }
-      today = today.subtract(Duration(days: 1));
+      String key = 'meditation-${today.day}-${today.month}-${today.year}';
+      String value = getValue(key);
+      meditationTimes.add(value != "" ? double.parse(value) : 0.0);
+      today = today.subtract(const Duration(days: 1));
     }
-
     await Api.user.updateUserAttribute("meditationTimes", meditationTimes);
     await Api.user
         .updateUserAttribute("meditationTimesAsOf", date.toIso8601String());
+
+    // Upload unlocked turtles by their names
+    List<String> unlockedTurtlesNames = [];
+    for (Turtle turtle in TURTLES) {
+      String turtleKey = 'turtle-${turtle.name}';
+      String turtleValue = getValue(turtleKey);
+      if (turtleValue != "") {
+        unlockedTurtlesNames.add(turtle.name);
+      }
+    }
+    await Api.user.updateUserAttribute("unlockedTurtles", unlockedTurtlesNames);
+
+    // Upload unlocked turtle colors
+    List<List<int>> unlockedTurtleColors = [];
+    for (Turtle turtle in TURTLES) {
+      String turtleColorKey = 'turtle-${turtle.name}-color';
+      String turtleColorValue = getValue(turtleColorKey);
+      if (turtleColorValue != "") {
+        List<int> colors = turtleColorValue
+            .split(',')
+            .map((color) => int.parse(color.trim()))
+            .toList();
+        unlockedTurtleColors.add(colors);
+      }
+    }
+    await Api.user
+        .updateUserAttribute("unlockedTurtleColors", unlockedTurtleColors);
+
+    // Upload the entire meditation history for the past year
+    if (lastMeditated != "") {
+      Map<String, int> meditationHistory = {};
+      today = DateTime.now(); // reset today to current date
+      DateTime aYearAgo = today.subtract(const Duration(days: 365));
+      while (today.isAfter(aYearAgo)) {
+        String historyKey =
+            'meditation-${today.day}-${today.month}-${today.year}';
+        String historyValue = getValue(historyKey);
+        if (historyValue != "") {
+          meditationHistory[historyKey] = double.parse(historyValue).round();
+        }
+        today = today.subtract(Duration(days: 1));
+      }
+
+      await Api.user
+          .updateUserAttribute("meditationHistory", meditationHistory);
+    }
   }
 
   void loadData() {
-    print("Loading Data!");
-    if (getValue('total_minutes') != "") {
-      totalMinutes.value = int.parse(getValue('total_minutes'));
-    }
+    // Print loading message
+    logInfo("Loading Data!");
 
-    lastSevenDays = RxList.empty();
+    // Load total meditation minutes if available
+    // if (getValue('total_minutes') != "") {
+    //   totalMinutes.value = int.parse(getValue('total_minutes'));
+    // }
+
+    // Initialize lists for the last seven days of meditation and unlocked turtles
+    // lastSevenDays = RxList.empty();
     unlockedTurtles = RxList.empty();
 
+    // Load meditation data for the last seven days
     DateTime today = DateTime.now();
-    for (int i = 0; i < 7; i++) {
-      if (getValue('meditation-${today.day}-${today.month}-${today.year}') !=
-          "") {
-        lastSevenDays.add(double.parse(
-            getValue('meditation-${today.day}-${today.month}-${today.year}')));
-        print("VALUE");
-        print(getValue('meditation-${today.day}-${today.month}-${today.year}'));
-      } else {
-        lastSevenDays.add(0.0);
-      }
-      today = today.subtract(Duration(days: 1));
-    }
+    // for (int i = 0; i < 7; i++) {
+    //   String meditationKey =
+    //       'meditation-${today.day}-${today.month}-${today.year}';
+    //   if (getValue(meditationKey) != "") {
+    //     lastSevenDays.add(double.parse(getValue(meditationKey)));
+    //   } else {
+    //     lastSevenDays.add(0.0);
+    //   }
+    //   today = today.subtract(const Duration(days: 1));
+    // }
 
-    if (getValue('gems') != "") {
-      gems.value = int.parse(getValue('gems'));
-    }
+    // Load gems, eggs, and other related data
+    // if (getValue('gems') != "") {
+    //   gems.value = int.parse(getValue('gems'));
+    // }
+    // if (getValue('eggs') != "") {
+    //   eggs.value = int.parse(getValue('eggs'));
+    // }
+    // if (getValue('total_eggs') != "") {
+    //   totalEggs.value = int.parse(getValue('total_eggs'));
+    // }
+    // if (getValue('egg_progress_one') != "") {
+    //   hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
+    // }
 
-    if (getValue('eggs') != "") {
-      eggs.value = int.parse(getValue('eggs'));
-    }
-    if (getValue('total_eggs') != "") {
-      totalEggs.value = int.parse(getValue('total_eggs'));
-    }
-    if (getValue('egg_progress_one') != "") {
-      hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
-    }
-    if (getValue('streak_freezes') != "") {
-      streakFreezes.value = int.parse(getValue('streak_freezes'));
-    }
+    // Load egg types
+    // if (getValue('egg_types') != "") {
+    //   List<String> eggTypesValue =
+    //       getValue('egg_types').replaceAll(" ", "").split(",");
+    //   eggType = RxList.empty();
+    //   for (String type in eggTypesValue) {
+    //     eggType.add(type);
+    //   }
+    //   logInfo("Egg types: " + eggType.toString());
+    // }
 
+    // Load streak freeze value
+    // if (getValue('streak_freezes') != "") {
+    //   streakFreezes.value = int.parse(getValue('streak_freezes'));
+    // }
+
+    // Load unlocked turtle data
     for (int i = 0; i < TURTLES.length; i++) {
       if (getValue('turtle-${i}') != "") {
         unlockedTurtles.add(int.parse(getValue('turtle-${i}')));
+
+        if (getValue('turtle-${i}-color') != "") {
+          unlockedTurtleColors.add(
+              getValue('turtle-${i}-color').split(',').map(int.parse).toList());
+          unlockedTurtleColors[i].add(-1);
+        } else {
+          // Generate random turtle colors if not available
+          unlockedTurtleColors.add(List<int>.generate(
+              int.parse(getValue('turtle-${i}')),
+              (i) => Random().nextInt(TURTLE_COLORS.length)));
+
+          saveValue(
+              "turtle-${i}-color",
+              unlockedTurtleColors[i]
+                  .toString()
+                  .replaceAll("[", "")
+                  .replaceAll("]", ""));
+        }
       } else {
         unlockedTurtles.add(0);
+        unlockedTurtleColors.add([-1]);
       }
     }
 
+    // Load ambience setting
     if (getValue('ambience_on') != "") {
       ambienceOn.value = getValue('ambience_on').toLowerCase() == 'true';
     }
 
+    // Load default meditation time
     if (getValue('default_meditation_time') != "") {
       defaultMeditationTime.value =
           int.parse(getValue('default_meditation_time'));
     }
 
-    streak.value = loadStreak();
+    // Load current streak value
+    // streak.value = loadStreak(); moved to UserController
 
-    //Get the entire meditation history
-    DateTime rn = DateTime.now();
-    today = DateTime.now();
-    while (rn.difference(today).abs().inDays <= 365) {
-      DateTime simpleDate = new DateTime(today.year, today.month, today.day);
-      meditationHistory[simpleDate] = (double.tryParse(getValue(
-                  'meditation-${today.day}-${today.month}-${today.year}')) ??
-              0.0)
-          .round();
-      today = today.subtract(Duration(days: 1));
-    }
+    // Load the entire meditation history for the past year
+    // If gems does not exist, neither does meditation history yet
+    // if (getValue('gems') == "") {
+    //   DateTime rn = DateTime.now();
+    //   today = DateTime.now();
+    //   while (rn.difference(today).abs().inDays <= 365) {
+    //     DateTime simpleDate = DateTime(today.year, today.month, today.day);
+    //     meditationHistory[simpleDate] = (double.tryParse(getValue(
+    //                 'meditation-${today.day}-${today.month}-${today.year}')) ??
+    //             0.0)
+    //         .round();
+    //     today = today.subtract(const Duration(days: 1));
+    //   }
+    // }
 
+    // Handle potential issue with a vast number of egg types
+
+    // if (eggType.length > eggs.value && eggType.length > 30) {
+    //   logWarning("CLEARING EGG ISSUE 🥚, eggType is " +
+    //       eggType.length.toString() +
+    //       " and eggs is " +
+    //       eggs.value.toString());
+    //   for (int i = 0; i < (eggType.length - eggs.value); i++) {
+    //     eggType.removeLast();
+    //   }
+    //   saveValue("egg_types",
+    //       eggType.toString().replaceAll("[", "").replaceAll("]", ""));
+    // }
+
+    // Notify observers of the changes
     update();
-    print("Streak is set to ${streak.value}");
   }
 
   Future<void> saveValue(String key, String value) async {
@@ -225,157 +272,5 @@ class SaveController extends GetxController {
 
   Future<void> clearValue(String key) async {
     storage.remove(key);
-  }
-
-  int loadStreak() {
-    print("Loading streak!");
-    DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
-    if (getValue("last_meditated") == "") {
-      print("last_meditated hasn't been set yet.");
-      return 0;
-    } else {
-      int numDays = DateTime.parse(getValue("last_meditated"))
-          .difference(date)
-          .inDays
-          .abs();
-
-      if (numDays >= 1) {
-        hasDoneStreakToday.value = false;
-      }
-
-      if (numDays <= 1) {
-        if (numDays < 1) {
-          hasDoneStreakToday.value = true;
-          update();
-        }
-        print("NumDays < 1");
-        if (getValue("streak") == "") {
-          print("Streak hasn't been saved yet!!");
-          return 0;
-        } else {
-          print("Parsing streak...");
-          return int.parse(getValue("streak"));
-        }
-      } else {
-        //If you lose your streak
-
-        //Use a streak freeze if possible
-        if (streakFreezes.value > 0) {
-          //idk how this edge case could happen but maybe it could
-          if (getValue("streak") == "") {
-            print("Streak hasn't been saved yet!!");
-
-            return 0;
-          } else {
-            DateTime now = new DateTime.now();
-            DateTime today = DateTime(now.year, now.month, now.day);
-            DateTime yesterday = today.subtract(const Duration(days: 1));
-            saveValue("last_meditated", yesterday.toIso8601String());
-            updateStreakFreezes(streakFreezes.value - 1);
-            print("Parsing streak...");
-            return int.parse(getValue("streak"));
-          }
-        } else {
-          updateStreak(0);
-          return 0;
-        }
-      }
-    }
-  }
-
-  void updateStreak(int newValue) {
-    hasDoneStreakToday.value = true;
-    saveValue("streak", newValue.toString());
-    streak.value = newValue;
-    update();
-  }
-
-  void updateTotalAmount(int newValue, int amountNew) {
-    saveValue("total_minutes", newValue.toString());
-    totalMinutes.value = newValue;
-
-    DateTime today = DateTime.now();
-    if (getValue('meditation-${today.day}-${today.month}-${today.year}') ==
-        "") {
-      saveValue('meditation-${today.day}-${today.month}-${today.year}',
-          amountNew.toString());
-    } else {
-      saveValue(
-          'meditation-${today.day}-${today.month}-${today.year}',
-          (double.parse(getValue(
-                      'meditation-${today.day}-${today.month}-${today.year}')) +
-                  amountNew)
-              .toString());
-    }
-
-    lastSevenDays[0] += amountNew;
-
-    DateTime simpleDate = new DateTime(today.year, today.month, today.day);
-    if (meditationHistory[simpleDate] != null) {
-      int oldValue = meditationHistory.remove(simpleDate) ?? 0;
-      meditationHistory.addAll({simpleDate: oldValue + amountNew});
-      print("updating meditation history!");
-      print(amountNew);
-      print(meditationHistory);
-    } else {
-      meditationHistory.addAll({simpleDate: amountNew});
-      print("updating meditation history 2");
-      print(amountNew);
-      print(meditationHistory);
-    }
-    meditationHistory.refresh();
-    update();
-  }
-
-  void updateGems(int newValue) {
-    saveValue("gems", newValue.toString());
-    gems.value = newValue;
-    update();
-  }
-
-  void updateEggs(int newValue) {
-    saveValue("eggs", newValue.toString());
-    eggs.value = newValue;
-    update();
-  }
-
-  void updateTotalEggs(int newValue) {
-    saveValue("total_eggs", newValue.toString());
-    totalEggs.value = newValue;
-    update();
-  }
-
-  void updateHatchProgress(int newValue) {
-    saveValue("egg_progress_one", newValue.toString());
-    hatchProgressEggOne.value = newValue;
-    update();
-  }
-
-  void addUnlockedTurtle(int i, int addAmount) {
-    saveValue("turtle-${i}", (unlockedTurtles[i] + addAmount).toString());
-    unlockedTurtles[i] += addAmount;
-    update();
-  }
-
-  void updateStreakFreezes(int newValue) {
-    saveValue("streak_freezes", newValue.toString());
-    streakFreezes.value = newValue;
-    update();
-  }
-
-  String COOKIES_KEY = "cookies";
-
-  Future<void> saveCookies(String cookies) async {
-    print("saving cookies: $cookies -> $COOKIES_KEY");
-    storage.write(COOKIES_KEY, cookies);
-  }
-
-  String getCookies() {
-    return storage.read(COOKIES_KEY) ?? "";
-  }
-
-  Future<void> clearCookies() async {
-    storage.remove(COOKIES_KEY);
   }
 }

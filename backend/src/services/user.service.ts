@@ -76,6 +76,13 @@ export interface UserUpdate {
   meditationTimes?: Array<number>,
   meditationTimesAsOf?: Date,
 
+  meditationHistory?: { [key: string]: number };
+  unlockedTurtles?: Array<any>; // Replace 'any' with a more specific type if applicable
+  unlockedTurtleColors?: Array<Array<number>>;
+  eggs?: number;
+
+  streakFreezes?: number;
+  eggTypes?: Array<string>;
 }
 
 

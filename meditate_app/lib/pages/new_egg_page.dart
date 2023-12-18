@@ -2,13 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/shake_widget.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:animated_counter/animated_counter.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 class NewEggPage extends StatefulWidget {
   const NewEggPage({Key? key}) : super(key: key);
@@ -29,7 +27,7 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
   bool isOnPage = true;
 
   Future<void> shakeAfterASec() async {
-    await Future.delayed(Duration(milliseconds: 400));
+    await Future.delayed(const Duration(milliseconds: 400));
     shakeKey.currentState?.shake();
     HapticFeedback.lightImpact();
 
@@ -50,6 +48,7 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    UserController user = Get.find();
     return Scaffold(
         // backgroundColor: Colors.white,
         body: Container(
@@ -65,43 +64,56 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                     // 5. configure the animation parameters
                     shakeCount: 3,
                     shakeOffset: 10,
-                    shakeDuration: Duration(milliseconds: 500),
+                    shakeDuration: const Duration(milliseconds: 500),
                     child: GestureDetector(
                         onTap: () {
                           HapticFeedback.mediumImpact();
                           shakeKey.currentState?.shake();
                         },
-                        child: Image.asset("assets/egg.png")))),
-            SizedBox(
+                        child: Stack(
+                          children: [
+                            Image.asset("assets/egg.png"),
+                            ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                    TURTLE_COLORS[int.parse(user
+                                            .user.value.eggTypes.last
+                                            .split("-")[1])]
+                                        .withOpacity(0.8),
+                                    BlendMode.srcATop),
+                                child: Image.asset(
+                                  "assets/egg_spots.png",
+                                  // height: 60,
+                                )),
+                          ],
+                        )))),
+            const SizedBox(
               height: 50,
             ),
             Container(
               height: 50,
             ),
-            Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text("You found an egg!",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            )),
-            Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text("Hatch it by meditating multiple days in a row.",
                   style: TextStyle(fontSize: 14)),
-            )),
-            SizedBox(
+            ),
+            const SizedBox(
               height: 50,
             ),
             GestureDetector(
               onTap: () {
-                Get.offAll(AppPages());
+                Get.offAll(const AppPages());
               },
               child: Container(
-                  color: Color.fromARGB(255, 16, 77, 127),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 100),
+                  color: const Color.fromARGB(255, 16, 77, 127),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
                     child: Text(
                       "Continue",
                       style: TextStyle(

@@ -125,22 +125,22 @@ String userStreakIconURL(User user) {
   }
 
   return user.streak != 0
-      ? userStreakAverage(user) < 20
+      ? userStreakTier(user) == Tier.ORANGE
           ? "assets/streak_icon.png"
-          : userStreakAverage(user) < 40
+          : userStreakTier(user) == Tier.YELLOW
               ? "assets/streak_icon_yellow.png"
-              : userStreakAverage(user) < 60
+              : userStreakTier(user) == Tier.BLUE
                   ? "assets/streak_icon_blue.png"
                   : "assets/streak_icon_rainbow.png"
       : "assets/streak_icon_grey.png";
 }
 
 Tier userStreakTier(User user) {
-  return userStreakAverage(user) < 20
+  return userStreakAverage(user) < 10
       ? Tier.ORANGE
-      : userStreakAverage(user) < 40
+      : userStreakAverage(user) < 20
           ? Tier.YELLOW
-          : userStreakAverage(user) < 60
+          : userStreakAverage(user) < 40
               ? Tier.BLUE
               : Tier.RAINBOW;
 }

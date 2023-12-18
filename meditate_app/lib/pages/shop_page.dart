@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/util/logger.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
@@ -15,56 +16,110 @@ class ShopPage extends StatefulWidget {
   State<ShopPage> createState() => _ShopPageState();
 }
 
+//TODO: replace with User Controller
 class _ShopPageState extends State<ShopPage> {
   final int STREAK_FREEZE_PRICE = 80;
-
+  final int LURE_PRICE = 90;
   @override
   Widget build(BuildContext context) {
     var brightness = SchedulerBinding.instance.window.platformBrightness;
     bool isDarkMode = true;
-    SaveController save = Get.find();
+    UserController user = Get.find();
 
     return Obx(
       () => ListView(
         children: [
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Earn  ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                  height: 20, child: Image.asset("assets/sand_dollar.png")),
+              const Text(
+                " sand dollars",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const Text(
+                " by meditating. ",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+
+          const Text(
+            "Spend them here! ",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              color: Colors.grey,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 20,
+          ),
           GestureDetector(
             onTap: () {
-              if (save.gems.value >= STREAK_FREEZE_PRICE) {
-                if (save.streakFreezes < 2) {
+              if (user.user.value.gems >= STREAK_FREEZE_PRICE) {
+                if (user.user.value.streakFreezes < 2) {
                   //Log the event to AppsFlyer
-                  AppsflyerService appsflyer = Get.find();
-                  appsflyer
-                      .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
+                  HeapService heap = Get.find();
+                  heap.logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
 
-                  print("Purchasing Streak Freeze!");
+                  logSuccess("Purchasing Streak Freeze!");
                   HapticFeedback.lightImpact();
-                  save.updateGems(save.gems.value - STREAK_FREEZE_PRICE);
-                  save.updateStreakFreezes(save.streakFreezes.value + 1);
+
+                  user.updateProperty(UserProperty.gems,
+                      user.user.value.gems - STREAK_FREEZE_PRICE);
+                  user.updateProperty(UserProperty.streakFreezes,
+                      user.user.value.streakFreezes + 1);
                 } else {
                   //Log the event to AppsFlyer
-                  AppsflyerService appsflyer = Get.find();
-                  appsflyer.logEvent(
+                  HeapService heap = Get.find();
+                  heap.logEvent(
                       "STREAK_FREEZE_TAPPED", {"purchased": "false, >2"});
 
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  Scaffold.of(context).showSnackBar(SnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.greenAccent,
                     key: UniqueKey(),
-                    content: Text(
+                    content: const Text(
                         "You can only equip two Streak Freezes at a time!"),
                   ));
                 }
               } else {
                 //Log the event to AppsFlyer
-                AppsflyerService appsflyer = Get.find();
+                HeapService appsflyer = Get.find();
                 appsflyer
                     .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "false"});
 
                 ScaffoldMessenger.of(context).clearSnackBars();
-                Scaffold.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.greenAccent,
                   key: UniqueKey(),
-                  content: Text("Earn more gems to purchase this!"),
+                  content:
+                      const Text("Earn more sand dollars to purchase this!"),
                 ));
               }
             },
@@ -73,9 +128,17 @@ class _ShopPageState extends State<ShopPage> {
               child: Container(
                 height: 150,
                 decoration: BoxDecoration(
-                  color: isDarkMode ? Colors.black12 : Colors.white,
+                  color: isDarkMode
+                      ? user.user.value.streakFreezes > 0
+                          ? Color.fromARGB(255, 46, 48, 59)
+                          : Colors.black12
+                      : Colors.white,
                   border: Border.all(
-                    color: isDarkMode ? Colors.white24 : Colors.black26,
+                    color: isDarkMode
+                        ? user.user.value.streakFreezes > 0
+                            ? Color.fromARGB(255, 81, 80, 107)
+                            : Colors.white24
+                        : Colors.black26,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(20),
@@ -84,13 +147,33 @@ class _ShopPageState extends State<ShopPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 15.0,
-                          horizontal: MediaQuery.of(context).size.width / 70),
-                      child: Container(
-                          width: 60,
-                          child: Image.asset("assets/streak_freeze.png")),
-                    ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 15.0,
+                            horizontal: MediaQuery.of(context).size.width / 70),
+                        child: Container(
+                            width: 60,
+                            child: Stack(
+                              children: [
+                                Container(
+                                    height:
+                                        MediaQuery.of(context).size.height / 4,
+                                    child: Image.asset(
+                                        "assets/streak_freeze.png")),
+                                Opacity(
+                                  opacity: 0.8,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.white12,
+                                    highlightColor: Colors.white70,
+                                    child: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                4,
+                                        child: Image.asset(
+                                            "assets/streak_freeze.png")),
+                                  ),
+                                ),
+                              ],
+                            ))),
                     // SizedBox(
                     //   width: 10,
                     // ),
@@ -99,45 +182,51 @@ class _ShopPageState extends State<ShopPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Streak Freeze",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
-                          Container(
+                          const SizedBox(
                               width: 200,
                               child: Text(
                                   "Save your streak if you miss a day of meditation.")),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Row(
                             children: [
-                              Container(
-                                  height: 20,
-                                  child: Image.asset("assets/gem_icon.png")),
+                              Text(
+                                "Buy for ",
+                                style: TextStyle(
+                                    color: Colors.lightBlueAccent,
+                                    fontWeight: FontWeight.bold),
+                              ),
                               SizedBox(
-                                width: 5,
+                                  height: 20,
+                                  child: Image.asset("assets/sand_dollar.png")),
+                              const SizedBox(
+                                width: 2,
                               ),
                               Text(
                                 "${STREAK_FREEZE_PRICE}",
-                                style: TextStyle(
-                                    color: Colors.greenAccent,
+                                style: const TextStyle(
+                                    color: Colors.lightBlueAccent,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
-                            "${save.streakFreezes} OUT OF 2 ACTIVE",
+                            "${user.user.value.streakFreezes} OUT OF 2 ACTIVE",
                             style: TextStyle(
-                                color: save.streakFreezes.value > 0
-                                    ? Colors.greenAccent
+                                color: user.user.value.streakFreezes > 0
+                                    ? Colors.lightBlue
                                     : Colors.grey,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -149,6 +238,114 @@ class _ShopPageState extends State<ShopPage> {
               ),
             ),
           ),
+
+          //Lure
+          // GestureDetector(
+          //   onTap: () {
+          //     if (save.gems.value >= STREAK_FREEZE_PRICE) {
+          //       if (save.streakFreezes < 2) {
+          //         logInfo("Purchasing Streak Freeze!");
+          //         HapticFeedback.lightImpact();
+          //         save.updateGems(save.gems.value - STREAK_FREEZE_PRICE);
+          //         save.updateStreakFreezes(save.streakFreezes.value + 1);
+          //       } else {
+          //         ScaffoldMessenger.of(context).clearSnackBars();
+          //         Scaffold.of(context).showSnackBar(SnackBar(
+          //           backgroundColor: Colors.greenAccent,
+          //           key: UniqueKey(),
+          //           content: Text(
+          //               "You can only equip two Streak Freezes at a time!"),
+          //         ));
+          //       }
+          //     } else {
+          //       ScaffoldMessenger.of(context).clearSnackBars();
+          //       Scaffold.of(context).showSnackBar(SnackBar(
+          //         backgroundColor: Colors.greenAccent,
+          //         key: UniqueKey(),
+          //         content: Text("Earn more gems to purchase this!"),
+          //       ));
+          //     }
+          //   },
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: Container(
+          //       height: 150,
+          //       decoration: BoxDecoration(
+          //         color: isDarkMode ? Colors.black12 : Colors.white,
+          //         border: Border.all(
+          //           color: isDarkMode ? Colors.white24 : Colors.black26,
+          //           width: 2,
+          //         ),
+          //         borderRadius: BorderRadius.circular(20),
+          //       ),
+          //       child: Row(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Padding(
+          //             padding: EdgeInsets.symmetric(
+          //                 vertical: 15.0,
+          //                 horizontal: MediaQuery.of(context).size.width / 70),
+          //             child: Container(
+          //                 width: 60, child: Image.asset("assets/lure.png")),
+          //           ),
+          //           // SizedBox(
+          //           //   width: 10,
+          //           // ),
+          //           Padding(
+          //             padding: const EdgeInsets.all(15.0),
+          //             child: Column(
+          //               crossAxisAlignment: CrossAxisAlignment.start,
+          //               children: [
+          //                 Text(
+          //                   "Lure",
+          //                   style: TextStyle(
+          //                       fontWeight: FontWeight.bold, fontSize: 16),
+          //                 ),
+          //                 SizedBox(
+          //                   height: 5,
+          //                 ),
+          //                 Container(
+          //                     width: 200,
+          //                     child: Text(
+          //                         "Double your chance of finding an egg for 24 hours.")),
+          //                 SizedBox(
+          //                   height: 10,
+          //                 ),
+          //                 Row(
+          //                   children: [
+          //                     Container(
+          //                         height: 20,
+          //                         child: Image.asset("assets/gem_icon.png")),
+          //                     SizedBox(
+          //                       width: 5,
+          //                     ),
+          //                     Text(
+          //                       "${LURE_PRICE}",
+          //                       style: TextStyle(
+          //                           color: Colors.greenAccent,
+          //                           fontWeight: FontWeight.bold),
+          //                     ),
+          //                   ],
+          //                 ),
+          //                 SizedBox(
+          //                   height: 10,
+          //                 ),
+          //                 Text(
+          //                   "${save.streakFreezes} ACTIVE",
+          //                   style: TextStyle(
+          //                       color: save.streakFreezes.value > 0
+          //                           ? Colors.greenAccent
+          //                           : Colors.grey,
+          //                       fontWeight: FontWeight.bold),
+          //                 ),
+          //               ],
+          //             ),
+          //           )
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

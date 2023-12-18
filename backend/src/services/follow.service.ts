@@ -50,6 +50,39 @@ export async function followStylist(user: UserOrId, stylist: UserOrId): Promise<
   return (await Follow.create({ user, stylist, type: FollowType.Stylist })).populate(POPULATE).exec();
 }
 
+export async function sendEmoji(user: UserOrId, targetUser: UserOrId, emoji: string): Promise<void> {
+  const _targetUser = await User.findById(targetUser);
+  const _user = await User.findById(user);
+
+  switch (emoji) {
+    case "🙌": {
+      sendPushNotification(
+        //@ts-ignore
+        [_targetUser.deviceToken], `${_user.fullName} high-fived you! 🙌`,
+        ``,
+        {}, true, null
+      );
+    } break;
+    case "👉": {
+      sendPushNotification(
+        //@ts-ignore
+        [_targetUser.deviceToken], `${_user.fullName} poked you! 👉`,
+        //@ts-ignore
+        ``,
+        {}, true, null
+      );
+    } break;
+    default: {
+      sendPushNotification(
+        //@ts-ignore
+        [_targetUser.deviceToken], `${_user.fullName} sent you a ${emoji}`,
+        ``,
+        {}, true, null
+      );
+    } break;
+}
+}
+
 // Unflollow a stylist
 export async function unfollowStylist(user: UserOrId, stylist: UserOrId): Promise<FollowI | null> {
   return await Follow.findOneAndDelete({ user, stylist }).populate(POPULATE).exec();

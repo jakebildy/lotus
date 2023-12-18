@@ -1,20 +1,14 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
-import 'package:meditate_app/util/eggquation.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
+import 'package:meditate_app/services/heap_service.dart';
 
 import '../components/duration_picker.dart';
+import '../util/DEBUG_MODE.dart';
 
 class BeginMeditationPage extends StatefulWidget {
   const BeginMeditationPage({Key? key}) : super(key: key);
@@ -25,7 +19,7 @@ class BeginMeditationPage extends StatefulWidget {
 
 class _BeginMeditationPageState extends State<BeginMeditationPage> {
   Duration NO_TIME = const Duration(hours: 0, minutes: 0);
-  late Duration _duration = Duration(hours: 0, minutes: 5);
+  late Duration _duration = const Duration(hours: 0, minutes: 5);
 
   @override
   void initState() {
@@ -161,13 +155,16 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: _duration == NO_TIME ||
-                                  _duration < const Duration(minutes: 5)
+                                  _duration <
+                                      (DEBUG_MODE == true
+                                          ? const Duration(minutes: 1)
+                                          : const Duration(minutes: 5))
                               ? Container(
                                   height: 50,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 30.0),
-                                    child: const Text(
+                                  child: const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 30.0),
+                                    child: Text(
                                       "Meditate for at least five minutes to build a habit!",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
@@ -180,8 +177,8 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                     HapticFeedback.heavyImpact();
 
                                     //Log the event to AppsFlyer
-                                    AppsflyerService appsflyer = Get.find();
-                                    appsflyer.logEvent("MEDITATION_TAPPED", {
+                                    HeapService heap = Get.find();
+                                    heap.logEvent("MEDITATION_TAPPED", {
                                       "time": _duration.inMinutes.toString()
                                     });
 

@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/edit_profile_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/delete_account_popup.dart';
 
 class EditProfile extends StatelessWidget {
@@ -14,14 +15,14 @@ class EditProfile extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.grey[850],
         elevation: 0,
-        title: Text("Edit Profile"),
+        title: const Text("Edit Profile"),
       ),
       body: Container(
         color: Colors.grey[850],
         child: ListView(
           // physics: ClampingScrollPhysics(),
           children: <Widget>[
-            ProfileInfo(),
+            const ProfileInfo(),
             //ProfileItems(),
           ],
         ),
@@ -43,7 +44,7 @@ class ProfileInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     EditProfileController editProfileController =
         Get.put(EditProfileController());
-    AuthController authController = Get.find();
+    UserController userController = Get.find();
 
     return Obx(
       () => Container(
@@ -58,20 +59,20 @@ class ProfileInfo extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 50.0,
                     backgroundImage:
-                        NetworkImage(authController.user.value.avatar),
+                        NetworkImage(userController.user.value.avatar),
                     backgroundColor: Colors.transparent,
                   ),
                 )),
             // Change Profile Picture
             GestureDetector(
               onTap: editProfileController.changeProfilePhoto,
-              child: Text("Change Profile Picture",
+              child: const Text("Change Profile Picture",
                   style: TextStyle(fontSize: 16, color: Colors.tealAccent)),
             ),
 
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
 
-            Divider(
+            const Divider(
               thickness: 1,
             ),
 
@@ -80,24 +81,24 @@ class ProfileInfo extends StatelessWidget {
               child: Row(
                 children: [
                   Text("Name:", style: fieldTextStyle),
-                  SizedBox(width: 44),
+                  const SizedBox(width: 44),
                   Container(
                     width: MediaQuery.of(context).size.width - 120,
                     height: 60,
                     child: TextField(
                       // textAlign: TextAlign.center,
                       controller: editProfileController.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w600, color: Colors.white),
                       decoration: InputDecoration(
                         // hintText: "Enter your display name",
                         fillColor: Colors.black26,
                         filled: true,
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white24),
+                            borderSide: const BorderSide(color: Colors.white24),
                             borderRadius: BorderRadius.circular(10.0)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(10.0)),
                       ),
                     ),
@@ -106,7 +107,7 @@ class ProfileInfo extends StatelessWidget {
               ),
             ),
 
-            Divider(
+            const Divider(
               thickness: 1,
             ),
 
@@ -117,7 +118,7 @@ class ProfileInfo extends StatelessWidget {
                   Container(
                       height: 35,
                       child: Text("Username:", style: fieldTextStyle)),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Container(
@@ -128,17 +129,17 @@ class ProfileInfo extends StatelessWidget {
                       controller: editProfileController.username,
 
                       enabled: false,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w600, color: Colors.white),
                       decoration: InputDecoration(
                         fillColor: Colors.black26,
                         filled: true,
-                        suffixIcon: Icon(Icons.lock),
+                        suffixIcon: const Icon(Icons.lock),
                         enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(10.0)),
                         focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(10.0)),
                       ),
                     ),
@@ -147,7 +148,7 @@ class ProfileInfo extends StatelessWidget {
               ),
             ),
 
-            Divider(
+            const Divider(
               thickness: 1,
             ),
 
@@ -155,26 +156,26 @@ class ProfileInfo extends StatelessWidget {
               padding: const EdgeInsets.all(0.0),
               child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(width: 1.0, color: Colors.teal),
-                    shape: StadiumBorder(),
+                    side: const BorderSide(width: 1.0, color: Colors.teal),
+                    shape: const StadiumBorder(),
                   ),
                   onPressed: () {
                     editProfileController.updateUser();
                     Navigator.of(context).pop();
                   },
-                  child: Text("Save Changes",
+                  child: const Text("Save Changes",
                       style: TextStyle(color: Colors.tealAccent))),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Padding(
               padding: const EdgeInsets.all(0.0),
               child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(width: 1.0, color: Colors.white10),
-                    shape: StadiumBorder(),
+                    side: const BorderSide(width: 1.0, color: Colors.white10),
+                    shape: const StadiumBorder(),
                   ),
                   onPressed: () {
                     showDialog(
@@ -183,7 +184,7 @@ class ProfileInfo extends StatelessWidget {
                           buildDeleteAccountPopup(context),
                     );
                   },
-                  child: Text("Delete my account",
+                  child: const Text("Delete my account",
                       style: TextStyle(color: Colors.grey))),
             ),
           ],

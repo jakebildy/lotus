@@ -1,28 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/components/meditation_heatmap.dart';
 import 'package:meditate_app/components/streak_chart.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
-import 'package:meditate_app/controllers/login_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
-import 'package:meditate_app/controllers/signup_controller.dart';
-import 'package:meditate_app/models/follow.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -45,8 +38,7 @@ class _ProfilePageState extends State<ProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
-    AuthController auth = Get.find();
+    UserController userController = Get.find();
     FollowController followController;
     if (Get.isRegistered<FollowController>()) {
       followController = Get.find();
@@ -65,17 +57,17 @@ class _ProfilePageState extends State<ProfilePage>
               padding: const EdgeInsets.all(20.0),
               child: ListView(
                 children: [
-                  Container(
+                  SizedBox(
                       height: 240, child: Image.asset("assets/offline.png")),
-                  Text(
+                  const Text(
                     "Your profile is unavailable right now",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     "You seem to be offline. Check your connection or try again later!",
                     textAlign: TextAlign.center,
                   )
@@ -97,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage>
                           padding: const EdgeInsets.all(2.0),
                           child: Container(
                               height: 80,
-                              child: auth.user.value.avatar == null
+                              child: userController.user.value.avatar == null
                                   ? Image.asset("assets/profile_selected.png")
                                   : Center(
                                       child: Hero(
@@ -107,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage>
                                                 const BorderRadius.all(
                                                     Radius.circular(60)),
                                             child: Image.network(
-                                              auth.user.value.avatar,
+                                              userController.user.value.avatar,
                                               fit: BoxFit.fill,
                                             )),
                                       ),
@@ -119,40 +111,41 @@ class _ProfilePageState extends State<ProfilePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      auth.user.value.fullName,
+                      userController.user.value.fullName,
                       textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 5,
                     ),
                     Text(
-                      "(@" + auth.user.value.username + ")",
+                      "(@" + userController.user.value.username + ")",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: Colors.white70),
+                      style:
+                          const TextStyle(fontSize: 16, color: Colors.white70),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
-                  tierReadable(saveController.streakTier()),
+                  tierReadable(userController.streakTier()),
                   style: TextStyle(
-                      color: tierColor(saveController.streakTier()),
+                      color: tierColor(userController.streakTier()),
                       fontSize: 17),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
-                  "Joined ${formatMonth(auth.user.value.createdAt)}",
-                  style: TextStyle(color: Colors.grey),
+                  "Joined ${formatMonth(userController.user.value.createdAt)}",
+                  style: const TextStyle(color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -162,23 +155,43 @@ class _ProfilePageState extends State<ProfilePage>
                       padding: const EdgeInsets.all(0.0),
                       child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(width: 1.0, color: Colors.white24),
-                            shape: StadiumBorder(),
+                            side: const BorderSide(
+                                width: 1.0, color: Colors.white24),
+                            shape: const StadiumBorder(),
                           ),
                           onPressed: () {
-                            Get.to(EditProfile());
+                            Get.to(const EditProfile());
                           },
-                          child: Text("Edit Profile",
+                          child: const Text("   Edit Profile   ",
                               style: TextStyle(color: Colors.grey))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0.0),
+                      child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(
+                                width: 1.0, color: Colors.white),
+                            shape: const StadiumBorder(),
+                          ),
+                          onPressed: () async {
+                            final Uri url = Uri.parse('https://www.google.com');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                          child: const Text("Send Feedback",
+                              style: TextStyle(color: Colors.white))),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(StatsPage());
+                    Get.to(const StatsPage());
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -207,24 +220,25 @@ class _ProfilePageState extends State<ProfilePage>
                                       child: Hero(
                                         tag: "STREAK_STATS_ICON",
                                         child: Image.asset(
-                                            saveController.streakIconURL()),
+                                            userController.streakIconURL()),
                                       )),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Column(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Text(
-                                      saveController.streak.value.toString(),
-                                      style: TextStyle(
+                                      userController.user.value.streak
+                                          .toString(),
+                                      style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text(
+                                    const Text(
                                       "Day streak",
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.white70),
@@ -249,16 +263,17 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                             child: Column(
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
-                                  saveController.totalMinutes.value.toString(),
-                                  style: TextStyle(
+                                  userController.user.value.totalMinutes
+                                      .toString(),
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text(
+                                const Text(
                                   "Total Minutes",
                                   style: TextStyle(
                                       fontSize: 12, color: Colors.white70),
@@ -282,7 +297,7 @@ class _ProfilePageState extends State<ProfilePage>
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
-                        children: [
+                        children: const [
                           SizedBox(
                             height: 10,
                           ),
@@ -303,7 +318,7 @@ class _ProfilePageState extends State<ProfilePage>
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                      height: 300,
+                      height: 530,
                       decoration: BoxDecoration(
                         color: Colors.black12,
                         border: Border.all(
@@ -314,19 +329,70 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Text(
+                          const Text(
                             "My Meditation Calendar",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           MeditationHeatmap(
                             height: 240,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                (userController.streakTier() == Tier.ORANGE
+                                    ? "Level 1: Hatchling"
+                                    : userController.streakTier() == Tier.YELLOW
+                                        ? "Level 2: Champion"
+                                        : userController.streakTier() ==
+                                                Tier.BLUE
+                                            ? "Level 3: Expert"
+                                            : "Level 4: Turtlemaster"),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color:
+                                        tierColor(userController.streakTier())),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                  child: const Text(
+                                "Higher levels can find rarer turtles.\n\nReach new levels by increasing your average meditation length for a week.\n",
+                                textAlign: TextAlign.center,
+                              )),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Text(
+                                "Hatchling: 0-10 Minutes/Day",
+                                style: TextStyle(color: Colors.green),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text("Champion: 10-20 Minutes/Day",
+                                  style: TextStyle(color: Colors.yellow)),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text("Expert: 20-40 Minutes/Day",
+                                  style:
+                                      TextStyle(color: Colors.lightBlueAccent)),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text("Turtlemaster: 40+ Minutes/Day",
+                                  style: TextStyle(color: Colors.pink)),
+                            ],
                           ),
                         ],
                       )),
@@ -344,7 +410,7 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           TabBar(
@@ -355,27 +421,26 @@ class _ProfilePageState extends State<ProfilePage>
                                 });
                               },
                               tabs: [
-                                Tab(
+                                const Tab(
                                   text: "Following",
                                 ),
-                                Tab(
+                                const Tab(
                                   text: "Followers",
                                 )
                               ]),
                           Container(
                             height: 40 +
                                 (selectedTab == 0
-                                    ? followController
-                                            .stylistsFollowing.length *
+                                    ? followController.usersFollowing.length *
                                         64
                                     : followController.followers.length * 64),
                             child: TabBarView(
                                 controller: tabController,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 children: [
-                                  followController.stylistsFollowing.length == 0
+                                  followController.usersFollowing.length == 0
                                       ? Column(
-                                          children: [
+                                          children: const [
                                             SizedBox(
                                               height: 20,
                                             ),
@@ -388,22 +453,22 @@ class _ProfilePageState extends State<ProfilePage>
                                           ],
                                         )
                                       : Column(children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
-                                          ...(followController.stylistsFollowing
+                                          ...(followController.usersFollowing
                                               .map((user) => FollowerWidget(
                                                   user: user,
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 42, 42, 42))))
                                         ]),
-                                  followController.followers.length == 0
+                                  followController.followers.isEmpty
                                       ? Column(
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
-                                            Text(
+                                            const Text(
                                               "You don't have any followers yet!",
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -412,27 +477,27 @@ class _ProfilePageState extends State<ProfilePage>
                                           ],
                                         )
                                       : Column(children: [
-                                          SizedBox(
+                                          const SizedBox(
                                             height: 10,
                                           ),
                                           ...(followController.followers.map(
                                               (user) => FollowerWidget(
                                                   user: user,
-                                                  color: Color.fromARGB(
+                                                  color: const Color.fromARGB(
                                                       255, 42, 42, 42))))
                                         ]),
                                 ]),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           GestureDetector(
                             onTap: () {
                               //Log the event to AppsFlyer
-                              AppsflyerService appsflyer = Get.find();
+                              HeapService appsflyer = Get.find();
                               appsflyer.logEvent("ADD_FRIENDS_TAPPED", {});
 
-                              Get.to(Search());
+                              Get.to(const Search());
                             },
                             child: Container(
                               child: Row(
@@ -469,16 +534,16 @@ class _ProfilePageState extends State<ProfilePage>
                                                           0, 0, 5, 5.0),
                                                   child: Container(
                                                       height: 17,
-                                                      child: Icon(
+                                                      child: const Icon(
                                                         Icons.person_add,
                                                         color:
                                                             Colors.tealAccent,
                                                         size: 20,
                                                       ))),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: 10,
                                               ),
-                                              Text(
+                                              const Text(
                                                 "ADD FRIENDS",
                                                 style: TextStyle(
                                                     fontSize: 13,
@@ -500,91 +565,6 @@ class _ProfilePageState extends State<ProfilePage>
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 340,
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      border: Border.all(
-                        color: Colors.white24,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Container(
-                              width: MediaQuery.of(context).size.width * 0.16,
-                              child: Hero(
-                                tag: "STREAK_STATS_ICON",
-                                child: Image.asset(
-                                    saveController.streakIconURLBBright()),
-                              )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                (saveController.streakTier() == Tier.ORANGE
-                                    ? "Level 1: Hatchling"
-                                    : saveController.streakTier() == Tier.YELLOW
-                                        ? "Level 2: Champion"
-                                        : saveController.streakTier() ==
-                                                Tier.BLUE
-                                            ? "Level 3: Expert"
-                                            : "Level 4: Turtlemaster"),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color:
-                                        tierColor(saveController.streakTier())),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Container(
-                                  width: 200,
-                                  child: Text(
-                                      "Higher levels can find rarer turtles from Lotus Island.\n\nReach new levels by increasing your average meditation length for a week.\n")),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Hatchling: 0-20 Minutes/Day",
-                                style: TextStyle(color: Colors.green),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text("Champion: 20-40 Minutes/Day",
-                                  style: TextStyle(color: Colors.yellow)),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text("Expert: 40-60 Minutes/Day",
-                                  style:
-                                      TextStyle(color: Colors.lightBlueAccent)),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text("Turtlemaster: 60+ Minutes/Day",
-                                  style: TextStyle(color: Colors.redAccent)),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
                       decoration: BoxDecoration(
                         color: Colors.black12,
                         border: Border.all(
@@ -597,51 +577,52 @@ class _ProfilePageState extends State<ProfilePage>
                         padding: const EdgeInsets.all(4.0),
                         child: Column(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Text(
+                            const Text(
                               "People you may know",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 16),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
                             //Only showing people with active streaks to make the app feel more engaging/active
-                            ...(followController.stylistsNotFollowing
+                            ...(followController.usersNotFollowing
                                 .where((p0) => p0.streak > 0)
                                 .map((user) => FollowerWidget(
                                     user: user,
-                                    color: Color.fromARGB(255, 42, 42, 42)))),
-                            SizedBox(
+                                    color: const Color.fromARGB(
+                                        255, 42, 42, 42)))),
+                            const SizedBox(
                               height: 10,
                             ),
                           ],
                         ),
                       )),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
                     onTap: () {
-                      Get.to(MeditationGuide(time: null));
+                      Get.to(const MeditationGuide(time: null));
                     },
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "How to Meditate",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ))),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 GestureDetector(
                     onTap: () {
-                      AuthController authController = Get.find();
-                      authController.logoutRequest();
+                      UserController userController = Get.find();
+                      userController.logoutRequest();
                     },
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "Sign Out",
                       style: TextStyle(fontWeight: FontWeight.bold),

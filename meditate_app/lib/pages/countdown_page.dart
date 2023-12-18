@@ -7,15 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/util/DEBUG_MODE.dart';
 import 'package:meditate_app/util/eggquation.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:ocarina/ocarina.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+
+import '../models/user.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key, required this.time}) : super(key: key);
@@ -40,28 +46,38 @@ class _CountdownPageState extends State<CountdownPage>
 
   late AudioPlayer bell;
 
+  /// Whether the Continue button is loading after being pressed
+  bool loading = false;
+
+  /// The exact DateTime the meditation started
+  late DateTime startTime;
+
   @override
   void initState() {
     _playPauseController = AnimationController(
         duration: const Duration(milliseconds: 300), vsync: this);
     _playPauseController.forward();
 
+    UserController userController = Get.find();
     SaveController saveController = Get.find();
 
     bell = new AudioPlayer();
     bell.setVolume(10.0);
-    bell.play(AssetSource('sounds/tibetan_chime.wav'));
+    bell.play(AssetSource('audio/tibetan_chime.wav'));
     if (saveController.ambienceOn.value) {
       playAmbience();
     }
 
-    print("⚡️ ENABLING WAKELOCK");
+    logInfo("⚡️ ENABLING WAKELOCK");
     Wakelock.enable();
+
+    startTime = DateTime.now();
+
     super.initState();
   }
 
   final player = OcarinaPlayer(
-    asset: 'assets/sounds/water_sounds.wav',
+    asset: 'assets/audio/water_sounds.wav',
     loop: true,
     volume: 0.8,
   );
@@ -71,14 +87,14 @@ class _CountdownPageState extends State<CountdownPage>
     await player.play();
   }
 
-  // Dispose the controller
+  /// Dispose the controller
   @override
   void dispose() {
     _playPauseController.dispose();
     player.dispose();
     _timer.cancel();
     bell.dispose();
-    print("⚡️ DISABLING WAKELOCK");
+    logInfo("⚡️ DISABLING WAKELOCK");
     Wakelock.disable();
     super.dispose();
   }
@@ -88,8 +104,8 @@ class _CountdownPageState extends State<CountdownPage>
   int _start = 0;
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
-    _timer = new Timer.periodic(
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         setState(() {
@@ -98,6 +114,18 @@ class _CountdownPageState extends State<CountdownPage>
       },
     );
   }
+
+  //This function should execute when the app is reopened, and updates the timer accordingly. If the meditation is over, it will update the state and add the extra time.
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      //restart the timer to the amount of seconds that have passed
+      logInfo(
+          "RESUMED! This might be where we should restart the timer to the amount of seconds that have passed. Nothing is happening in this function at the moment.");
+    }
+  }
+
+  EggController eggController = Get.find();
+  UserController userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +137,7 @@ class _CountdownPageState extends State<CountdownPage>
         Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               // image: DecorationImage(
               //   fit: BoxFit.cover,
               //   image: AssetImage("assets/water_vibes.webp"),
@@ -119,8 +147,8 @@ class _CountdownPageState extends State<CountdownPage>
         Scaffold(
           // backgroundColor: isDarkMode ? Colors.black : Color(0xff87CEEB),
           body: Container(
-            decoration: new BoxDecoration(
-                gradient: new LinearGradient(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
@@ -143,8 +171,8 @@ class _CountdownPageState extends State<CountdownPage>
                 WaveWidget(
                   config: CustomConfig(
                     colors: [
-                      Color(0x338006994),
-                      Color(0x3300BBF9),
+                      const Color(0x338006994),
+                      const Color(0x3300BBF9),
                     ],
                     durations: [
                       10000,
@@ -156,12 +184,12 @@ class _CountdownPageState extends State<CountdownPage>
                     ],
                   ),
                   backgroundColor: Colors.transparent,
-                  size: Size(double.infinity, double.infinity),
+                  size: const Size(double.infinity, double.infinity),
                   waveAmplitude: 0,
                 ),
 
                 ListView(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   //mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Center(
@@ -179,28 +207,27 @@ class _CountdownPageState extends State<CountdownPage>
                               ? Padding(
                                   padding: EdgeInsets.fromLTRB(0, 120, 0,
                                       MediaQuery.of(context).size.height * 0.7),
-                                  child: Container(
-                                      child: Column(
+                                  child: Column(
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Meditation Complete!",
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 23,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 20,
                                       ),
                                       Text(
                                         "${addExtraTime ? widget.time.inMinutes + _start ~/ 60 : widget.time.inMinutes} minute${(addExtraTime ? widget.time.inMinutes + _start ~/ 60 : widget.time.inMinutes) > 1 ? "s" : ""}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 23,
                                             fontWeight: FontWeight.w400),
                                       ),
                                     ],
-                                  )),
+                                  ),
                                 )
                               : Padding(
                                   padding: EdgeInsets.fromLTRB(
@@ -267,7 +294,7 @@ class _CountdownPageState extends State<CountdownPage>
                                         // This Callback will execute when the Countdown Starts.
                                         onStart: () {
                                           // Here, do whatever you want
-                                          debugPrint('Countdown Started');
+                                          logInfo('Countdown Started');
                                           isEnded = false;
                                         },
 
@@ -275,7 +302,7 @@ class _CountdownPageState extends State<CountdownPage>
                                         onComplete: () {
                                           // Here, do whatever you want
                                           isEnded = true;
-                                          debugPrint('Countdown Ended');
+                                          logInfo('Countdown Ended');
                                           player.dispose();
                                           bell.dispose();
 
@@ -283,7 +310,7 @@ class _CountdownPageState extends State<CountdownPage>
                                               AudioPlayer();
                                           endingBell.setVolume(10.0);
                                           endingBell.play(AssetSource(
-                                              'sounds/tibetan_chime.wav'));
+                                              'audio/tibetan_chime.wav'));
                                           startTimer();
                                           setState(() {
                                             meditationComplete = true;
@@ -293,7 +320,7 @@ class _CountdownPageState extends State<CountdownPage>
                                         // This Callback will execute when the Countdown Changes.
                                         onChange: (String timeStamp) {
                                           // Here, do whatever you want
-                                          // debugPrint('Countdown Changed $timeStamp');
+                                          // logInfo('Countdown Changed $timeStamp');
                                         },
                                       ),
                                     ),
@@ -315,7 +342,7 @@ class _CountdownPageState extends State<CountdownPage>
                                       });
                                     },
                                     child: addExtraTime
-                                        ? Text(
+                                        ? const Text(
                                             "Added",
                                             style: TextStyle(
                                               fontSize: 18,
@@ -323,7 +350,7 @@ class _CountdownPageState extends State<CountdownPage>
                                           )
                                         : Text(
                                             "Add ${_start ~/ 60}:${_start % 60 < 10 ? "0" + (_start % 60).toString() : _start % 60}",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 18,
                                             ),
                                           ),
@@ -340,20 +367,20 @@ class _CountdownPageState extends State<CountdownPage>
                                     iconSize: 50,
                                     onPressed: () {
                                       if (isEnded) {
-                                        print("Restarting countdown...");
+                                        logInfo("Restarting countdown...");
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.forward();
                                         _controller.restart(
                                             duration: widget.time.inSeconds);
                                       } else if (isPaused) {
-                                        print("Resuming countdown...");
+                                        logInfo("Resuming countdown...");
                                         _controller.resume();
                                         player.resume();
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.forward();
                                         isPaused = false;
                                       } else {
-                                        print("Pausing countdown...");
+                                        logInfo("Pausing countdown...");
                                         _controller.pause();
                                         player.pause();
                                         HapticFeedback.mediumImpact();
@@ -391,8 +418,8 @@ class _CountdownPageState extends State<CountdownPage>
                                         Navigator.of(context).pop();
                                       },
                                       child: Container(
-                                          color:
-                                              Color.fromARGB(255, 16, 77, 127),
+                                          color: const Color.fromARGB(
+                                              255, 16, 77, 127),
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal:
@@ -401,7 +428,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                             .width -
                                                         280,
                                                 vertical: 10),
-                                            child: Text(
+                                            child: const Text(
                                               "End Session",
                                               style: TextStyle(
                                                   color: Colors.white,
@@ -417,175 +444,233 @@ class _CountdownPageState extends State<CountdownPage>
                                             0, 10, 0, 80.0),
                                         child: GestureDetector(
                                           onTap: () {
-                                            SaveController saveController =
-                                                Get.find();
+                                            // TODO: replace with UserController
 
-                                            int turtleToHatch = -1;
+                                            if (loading != true) {
+                                              setState(() {
+                                                loading = true;
+                                              });
+                                              SaveController saveController =
+                                                  Get.find();
 
-                                            int timeInMinutes =
-                                                widget.time.inMinutes;
-                                            if (addExtraTime) {
-                                              timeInMinutes += _start ~/ 60;
-                                            }
-                                            print(
-                                                "Time in Minutes to add: ${timeInMinutes}");
+                                              int turtleToHatch = -1;
+                                              int turtleColorToHatch = -1;
 
-                                            //Save the streak day
-                                            DateTime now = new DateTime.now();
-                                            DateTime date = new DateTime(
-                                                now.year, now.month, now.day);
-
-                                            String streakValue = saveController
-                                                .getValue("streak");
-
-                                            int gemsToGive = 0;
-                                            bool alreadyMeditatedToday = false;
-
-                                            if (streakValue == "") {
-                                              print("Streak value is empty.");
-                                              saveController.updateStreak(1);
-                                            } else {
-                                              int numDays = DateTime.parse(
-                                                      saveController.getValue(
-                                                          "last_meditated"))
-                                                  .difference(date)
-                                                  .inDays
-                                                  .abs();
-                                              if (numDays == 1) {
-                                                saveController.updateStreak(
-                                                    int.parse(streakValue) + 1);
-                                                print(
-                                                    "Streak value is updated to ${int.parse(streakValue) + 1}.");
-                                                saveController.updateGems(
-                                                    saveController.gems.value +
-                                                        5);
-                                                gemsToGive += 5;
-                                              } else if (numDays > 1) {
-                                                saveController.updateStreak(1);
-                                                saveController.updateGems(
-                                                    saveController.gems.value +
-                                                        5);
-                                                gemsToGive += 5;
-                                                print(
-                                                    "Streak value is set to 1. NumDays was > 1.");
-                                              } else {
-                                                print(
-                                                    "You already meditated today. Not updating streak!");
-                                                alreadyMeditatedToday = true;
+                                              int timeInMinutes =
+                                                  widget.time.inMinutes;
+                                              if (addExtraTime) {
+                                                timeInMinutes += _start ~/ 60;
                                               }
-                                            }
+                                              logInfo(
+                                                  "Time in Minutes to add: $timeInMinutes");
 
-                                            //update total meditation amount
-                                            String totalAmount = saveController
-                                                .getValue("total_minutes");
-                                            if (totalAmount == "") {
-                                              saveController.updateTotalAmount(
-                                                  timeInMinutes, timeInMinutes);
-                                            } else {
-                                              saveController.updateTotalAmount(
-                                                  int.parse(totalAmount) +
-                                                      timeInMinutes,
-                                                  timeInMinutes);
-                                            }
-                                            saveController.updateGems(
-                                                saveController.gems.value +
-                                                    timeInMinutes);
-                                            gemsToGive += timeInMinutes;
+                                              //Save the streak day
+                                              DateTime now = DateTime.now();
+                                              DateTime date = DateTime(
+                                                  now.year, now.month, now.day);
 
-                                            print(
-                                                "Handling hatching turtles...");
+                                              String streakValue =
+                                                  saveController
+                                                      .getValue("streak");
 
-                                            if (!alreadyMeditatedToday) {
-                                              //Updating the egg progress if haven't already meditated today
-                                              print(
-                                                  "First time meditating today");
-                                              if (saveController.eggs.value >
-                                                  0) {
-                                                print("Eggs!");
-                                                if (saveController
-                                                        .hatchProgressEggOne
-                                                        .value >=
-                                                    2) {
-                                                  //Hatch a turtle!
-                                                  saveController.updateEggs(
-                                                      saveController
-                                                              .eggs.value -
+                                              String lastMeditated =
+                                                  saveController.getValue(
+                                                      "last_meditated");
+
+                                              int gemsToGive = 0;
+                                              bool alreadyMeditatedToday =
+                                                  false;
+
+                                              if (streakValue == "" ||
+                                                  lastMeditated == "") {
+                                                logInfo(
+                                                    "Streak value is empty.");
+                                                userController.updateStreak(1);
+                                              } else {
+                                                int numDays = DateTime.parse(
+                                                        saveController.getValue(
+                                                            "last_meditated"))
+                                                    .difference(date)
+                                                    .inDays
+                                                    .abs();
+                                                if (numDays == 1) {
+                                                  userController.updateStreak(
+                                                      int.parse(streakValue) +
                                                           1);
-                                                  print("HATCHING A TURTLE!");
-                                                  turtleToHatch =
-                                                      getTurtleToHatch();
-                                                  saveController
-                                                      .addUnlockedTurtle(
-                                                          turtleToHatch, 1);
-                                                  saveController
-                                                      .updateHatchProgress(0);
+                                                  logInfo(
+                                                      "Streak value is updated to ${int.parse(streakValue) + 1}.");
+                                                  userController.updateProperty(
+                                                      UserProperty.gems,
+                                                      userController
+                                                              .user.value.gems +
+                                                          5);
+                                                  gemsToGive += 5;
+                                                } else if (numDays > 1) {
+                                                  userController
+                                                      .updateStreak(1);
+                                                  userController.updateProperty(
+                                                      UserProperty.gems,
+                                                      userController
+                                                              .user.value.gems +
+                                                          5);
+                                                  gemsToGive += 5;
+                                                  logInfo(
+                                                      "Streak value is set to 1. NumDays was > 1.");
                                                 } else {
-                                                  print(
-                                                      "updating hatch process");
-                                                  saveController
-                                                      .updateHatchProgress(
-                                                          saveController
-                                                                  .hatchProgressEggOne
-                                                                  .value +
-                                                              1);
+                                                  logInfo(
+                                                      "You already meditated today. Not updating streak!");
+                                                  alreadyMeditatedToday = true;
                                                 }
                                               }
-                                            }
 
-                                            //find an egg potentially
-                                            bool foundEgg =
-                                                receiveEgg(timeInMinutes);
-                                            if (foundEgg) {
-                                              if (saveController
-                                                      .getValue("eggs") ==
-                                                  "") {
-                                                saveController.updateEggs(1);
-                                              } else {
-                                                saveController.updateEggs(
-                                                    int.parse(saveController
-                                                            .getValue("eggs")) +
+                                              //update total meditation amount
+                                              // String totalAmount =
+                                              //     saveController.getValue(
+                                              //         "total_minutes");
+                                              // if (totalAmount == "") {
+                                              //   saveController
+                                              //       .updateTotalAmount(
+                                              //           timeInMinutes,
+                                              //           timeInMinutes);
+                                              // } else {
+                                              //   saveController
+                                              //       .updateTotalAmount(
+                                              //           int.parse(totalAmount) +
+                                              //               timeInMinutes,
+                                              //           timeInMinutes);
+                                              // }
+
+                                              userController.logMeditation(
+                                                  timeInMinutes, date);
+
+                                              userController.updateProperty(
+                                                  UserProperty.gems,
+                                                  userController
+                                                          .user.value.gems +
+                                                      timeInMinutes);
+                                              gemsToGive += timeInMinutes;
+
+                                              if (!alreadyMeditatedToday ||
+                                                  DEBUG_MODE) {
+                                                //Updating the egg progress if haven't already meditated today
+                                                logInfo(
+                                                    "First time meditating today");
+                                                if (userController
+                                                        .user.value.eggs >
+                                                    0) {
+                                                  if (userController.user.value
+                                                          .hatchProgressEggOne >=
+                                                      2) {
+                                                    //Hatch a turtle!
+                                                    userController
+                                                        .updateProperty(
+                                                            UserProperty.eggs,
+                                                            userController
+                                                                    .user
+                                                                    .value
+                                                                    .eggs -
+                                                                1);
+
+                                                    logInfo(
+                                                        "HATCHING A TURTLE!");
+                                                    turtleToHatch =
+                                                        getTurtleToHatch();
+                                                    turtleColorToHatch =
+                                                        Random().nextInt(
+                                                            TURTLE_COLORS
+                                                                .length);
+
+                                                    //if future turtles exist, this will be the one that displays on the
+                                                    //hatching turtle page
+                                                    if (userController
+                                                        .user
+                                                        .value
+                                                        .eggTypes
+                                                        .isNotEmpty) {
+                                                      String eggTypeNew =
+                                                          userController
+                                                              .user
+                                                              .value
+                                                              .eggTypes[0];
+                                                      turtleToHatch = int.parse(
+                                                          eggTypeNew
+                                                              .split("-")[0]);
+                                                      turtleColorToHatch =
+                                                          int.parse(eggTypeNew
+                                                              .split("-")[1]);
+                                                    }
+
+                                                    eggController.hatchTurtle(
+                                                        turtleToHatch,
+                                                        turtleColorToHatch);
+                                                    userController.updateProperty(
+                                                        UserProperty
+                                                            .hatchProgressEggOne,
+                                                        0);
+                                                  } else {
+                                                    logInfo(
+                                                        "Updating hatch process");
+
+                                                    userController.updateProperty(
+                                                        UserProperty
+                                                            .hatchProgressEggOne,
+                                                        userController
+                                                                .user
+                                                                .value
+                                                                .hatchProgressEggOne +
+                                                            1);
+                                                  }
+                                                }
+                                              }
+
+                                              //find an egg potentially
+                                              bool foundEgg =
+                                                  receiveEgg(timeInMinutes);
+                                              if (foundEgg) {
+                                                int tHatch = getTurtleToHatch();
+                                                int tColor = Random().nextInt(
+                                                    TURTLE_COLORS.length);
+
+                                                eggController.addFutureTurtle(
+                                                    tColor, tHatch);
+
+                                                userController.updateProperty(
+                                                    UserProperty.eggs,
+                                                    userController
+                                                            .user.value.eggs +
+                                                        1);
+
+                                                userController.updateProperty(
+                                                    UserProperty.totalEggs,
+                                                    userController.user.value
+                                                            .totalEggs +
                                                         1);
                                               }
 
-                                              if (saveController
-                                                      .getValue("total_eggs") ==
-                                                  "") {
-                                                saveController
-                                                    .updateTotalEggs(1);
-                                              } else {
-                                                saveController.updateTotalEggs(
-                                                    int.parse(saveController
-                                                            .getValue(
-                                                                "total_eggs")) +
-                                                        1);
-                                              }
+                                              //Log the event to AppsFlyer
+                                              HeapService heap = Get.find();
+                                              heap.logEvent(
+                                                  "MEDITATION_COMPLETE", {
+                                                "time": timeInMinutes.toString()
+                                              });
+
+                                              _timer.cancel();
+                                              setState(() {
+                                                loading = false;
+                                              });
+                                              Get.offAll(StreakCountPage(
+                                                gemsAmount: gemsToGive,
+                                                alreadyMeditatedToday:
+                                                    alreadyMeditatedToday,
+                                                foundEgg: foundEgg,
+                                                turtleToHatch: turtleToHatch,
+                                                turtleColorToHatch:
+                                                    turtleColorToHatch,
+                                              ));
                                             }
-
-                                            print(
-                                                "saving last_meditated to ${date.toIso8601String()}");
-                                            saveController.saveValue(
-                                                "last_meditated",
-                                                date.toIso8601String());
-
-                                            //Log the event to AppsFlyer
-                                            AppsflyerService appsflyer =
-                                                Get.find();
-                                            appsflyer.logEvent(
-                                                "MEDITATION_COMPLETE", {
-                                              "time": timeInMinutes.toString()
-                                            });
-
-                                            _timer.cancel();
-                                            Get.offAll(StreakCountPage(
-                                              gemsAmount: gemsToGive,
-                                              alreadyMeditatedToday:
-                                                  alreadyMeditatedToday,
-                                              foundEgg: foundEgg,
-                                              turtleToHatch: turtleToHatch,
-                                            ));
                                           },
                                           child: Container(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 16, 77, 127),
                                               child: Padding(
                                                 padding:
@@ -593,8 +678,10 @@ class _CountdownPageState extends State<CountdownPage>
                                                         horizontal: 100.0,
                                                         vertical: 10),
                                                 child: Text(
-                                                  "Continue",
-                                                  style: TextStyle(
+                                                  loading
+                                                      ? "Loading..."
+                                                      : "Continue",
+                                                  style: const TextStyle(
                                                       color: Colors.white,
                                                       fontWeight:
                                                           FontWeight.bold,

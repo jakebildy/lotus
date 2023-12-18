@@ -9,9 +9,7 @@ class PicturesApi {
   PicturesApi._internal();
 
   factory PicturesApi() {
-    if (_singleton == null) {
-      _singleton = PicturesApi._internal();
-    }
+    _singleton ??= PicturesApi._internal();
     return _singleton;
   }
 

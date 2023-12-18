@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:meditate_app/models/follow.dart';
+import 'package:meditate_app/util/logger.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import "index.dart" as Api;
@@ -71,23 +72,23 @@ class FollowApi {
     }
   }
 
-  Future<void> followStylist(User stylist) async {
+  Future<void> followUser(User user) async {
     final response = await http.post(
-        Api.https(url, "/api/follow/stylist/" + stylist.id!),
+        Api.https(url, "/api/follow/stylist/" + user.id!),
         headers: Api.headers);
     if (response.statusCode == 200) {
-      print(json.decode(response.body));
+      logSuccess(json.decode(response.body));
     } else {
       throw (response.body);
     }
   }
 
-  Future<void> unfollowStylist(User stylist) async {
+  Future<void> unfollowUser(User user) async {
     final response = await http.delete(
-        Api.https(url, "/api/unfollow/user/" + stylist.id!),
+        Api.https(url, "/api/unfollow/user/" + user.id!),
         headers: Api.headers);
     if (response.statusCode == 200) {
-      print(json.decode(response.body));
+      logSuccess(json.decode(response.body));
     } else {
       throw (response.body);
     }

@@ -1,16 +1,18 @@
-// Import package
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as Api;
-import 'package:meditate_app/services/appsflyer_service.dart';
+import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/version.dart';
 
+/// SignupController handles user signups
+/// {@category Controllers}
 class SignupController extends GetxController {
   final TextEditingController email = TextEditingController();
   final TextEditingController fullName = TextEditingController();
@@ -23,28 +25,25 @@ class SignupController extends GetxController {
   // Signup
   void signup() async {
     try {
-      final String _email = "${email.text}";
+      final String _email = email.text;
       final User user = await Api.auth.signup(
         _email,
         password.text,
         fullName.text,
         username.text.toLowerCase().replaceAll(" ", "_"),
       );
-      print("signing up user:");
-      print(user.email);
-      print(user.id);
-      AuthController authController = Get.find();
-      authController.setUser(user);
+      logSuccess("signing up user:" + user.email);
+      UserController userController = Get.find();
+      userController.setUser(user);
 
       //Log the event to AppsFlyer
-      AppsflyerService appsflyer = Get.find();
+      HeapService appsflyer = Get.find();
       appsflyer.logEvent("SIGNUP", {"version": APP_VERSION});
 
-      Get.offAll(AppPages());
+      Get.offAll(const AppPages());
     } catch (error, trace) {
-      print("error signing up");
-      print(error);
-      print(trace);
+      logError("error signing up: " + error.toString());
+      logError(trace.toString());
       String msg = "";
 
       if (error.toString().contains("Not a valid email")) {

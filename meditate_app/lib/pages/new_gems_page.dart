@@ -1,12 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:animated_counter/animated_counter.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
-import 'package:shimmer/shimmer.dart';
 
 class NewGemsPage extends StatefulWidget {
   final int gemsAmount;
@@ -22,6 +18,18 @@ class NewGemsPage extends StatefulWidget {
 
 class _NewGemsPageState extends State<NewGemsPage>
     with TickerProviderStateMixin {
+  late AudioPlayer gemNoise;
+
+  //init state
+  @override
+  void initState() {
+    super.initState();
+    //  play the noise "new_gems.mp3"
+    gemNoise = AudioPlayer();
+    gemNoise.setVolume(10.0);
+    gemNoise.play(AssetSource('audio/new_gems.mp3'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,62 +40,67 @@ class _NewGemsPageState extends State<NewGemsPage>
           mainAxisSize: MainAxisSize.min,
           children: [
             Padding(
-                padding: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Stack(
                   children: [
                     Container(
                         height: MediaQuery.of(context).size.height / 4,
-                        child: Image.asset("assets/gems_chest.png")),
-                    Shimmer.fromColors(
-                      baseColor: Colors.white12,
-                      highlightColor: Colors.white70,
-                      child: Container(
-                          height: MediaQuery.of(context).size.height / 4,
-                          child: Image.asset("assets/gems_overlay.png")),
-                    ),
+                        child: Image.asset("assets/sand_dollar_chest.png")),
+                    // Shimmer.fromColors(
+                    //   baseColor: Colors.white12,
+                    //   highlightColor: Colors.white70,
+                    //   child: Container(
+                    //       height: MediaQuery.of(context).size.height / 4,
+                    //       child: Image.asset("assets/gems_overlay.png")),
+                    // ),
                   ],
                 )),
             SizedBox(
               height: MediaQuery.of(context).size.height / 40,
             ),
-            Container(
-                child: Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text("+" + widget.gemsAmount.toString(),
-                  style: TextStyle(fontSize: 120, color: Colors.greenAccent)),
-            )),
-            Container(
-                child: Padding(
+                  style: const TextStyle(
+                      fontSize: 120, color: Colors.lightBlueAccent)),
+            ),
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                  "You earned " + widget.gemsAmount.toString() + " gems!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            )),
+                  "You earned " +
+                      widget.gemsAmount.toString() +
+                      " sand dollars!",
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold)),
+            ),
             Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+              padding: EdgeInsets.fromLTRB(16, 8.0, 16, 8),
               child: Text(
-                "The longer you meditate, the more gems you'll earn",
+                "The longer you meditate, the more sand dollars you'll earn",
                 style: TextStyle(fontSize: 14),
                 textAlign: TextAlign.center,
               ),
             )),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             GestureDetector(
               onTap: () {
                 if (widget.foundEgg) {
-                  Get.offAll(NewEggPage());
+                  Get.offAll(const NewEggPage());
                 } else {
-                  Get.offAll(AppPages());
+                  Get.offAll(const AppPages());
                 }
               },
               child: Container(
-                  color: Color.fromARGB(255, 16, 77, 127),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 100),
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 16, 77, 127),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  // color: const Color.fromARGB(255, 16, 77, 127),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 14.0, horizontal: 100),
                     child: Text(
                       "Continue",
                       style: TextStyle(

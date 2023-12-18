@@ -27,7 +27,7 @@ class Search extends StatelessWidget {
           child: Center(
             child: ListView(
               // physics: ClampingScrollPhysics(),
-              children: <Widget>[
+              children: const <Widget>[
                 StylistsSearchResults(),
               ],
             ),
@@ -39,7 +39,7 @@ class Search extends StatelessWidget {
 class SearchBox extends StatelessWidget {
   SearchBox({Key? key}) : super(key: key);
   final InputDecoration _inputDecoration = InputDecoration(
-      prefixIcon: Icon(
+      prefixIcon: const Icon(
         Icons.search,
         color: Colors.grey,
       ),
@@ -52,12 +52,6 @@ class SearchBox extends StatelessWidget {
         borderSide: BorderSide.none,
       ));
 
-  final TextStyle logoTextStyle = const TextStyle(
-      color: Colors.red,
-      fontSize: 27,
-      fontWeight: FontWeight.w400,
-      fontFamily: "Termina");
-
   @override
   Widget build(BuildContext context) {
     SearchController searchController = Get.find();
@@ -65,7 +59,7 @@ class SearchBox extends StatelessWidget {
       children: [
         Expanded(
             child: Padding(
-          padding: EdgeInsets.fromLTRB(0, 32, 16, 32),
+          padding: const EdgeInsets.fromLTRB(0, 32, 16, 32),
           child: TextField(
             controller: searchController.textEditingController,
             decoration: _inputDecoration,
@@ -100,7 +94,7 @@ class StylistsSearchResults extends StatelessWidget {
 
     return Obx(
       () => searchController.queryValue.value == ''
-          ? Container(
+          ? const SizedBox(
               height: 176,
               child: Center(child: Text("Search for friends!")),
             )
@@ -109,25 +103,26 @@ class StylistsSearchResults extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   searchController.searching.value
-                      ? Container(
+                      ? SizedBox(
                           height: MediaQuery.of(context).size.height - 500,
-                          child: Center(
+                          child: const Center(
                               child: SpinKitCircle(
                             color: Colors.teal,
                           )),
                         )
                       : searchController.userResults.length == 0
-                          ? Container(
+                          ? const SizedBox(
                               height: 176,
                               child: Center(child: Text("No results.")),
                             )
-                          : Container(
+                          : SizedBox(
                               height: searchController.userResults.length * 72,
-                              child: new ListView(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.only(left: 0, right: 0),
+                              child: ListView(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding:
+                                      const EdgeInsets.only(left: 0, right: 0),
                                   scrollDirection: Axis.vertical,
-                                  children: new List.generate(
+                                  children: List.generate(
                                       searchController.userResults.length,
                                       (int index) {
                                     return (searchController
@@ -135,7 +130,7 @@ class StylistsSearchResults extends StatelessWidget {
                                             index)
                                         ? Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: new FollowerWidget(
+                                            child: FollowerWidget(
                                                 color: Colors.grey[850]!,
                                                 user: searchController
                                                     .userResults[index]),

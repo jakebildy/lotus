@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/user_profile/user_profile_page.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/util.dart';
 
 class FollowerWidget extends StatelessWidget {
@@ -18,7 +18,7 @@ class FollowerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FollowController follow = Get.find();
-    AuthController auth = Get.find();
+    UserController userController = Get.find();
     return Obx(
       () => GestureDetector(
         onTap: () {
@@ -76,7 +76,7 @@ class FollowerWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    auth.user.value.id == user.id
+                    userController.user.value.id == user.id
                         ? Align(
                             alignment: Alignment.centerRight,
                             child: Padding(
@@ -91,7 +91,7 @@ class FollowerWidget extends StatelessWidget {
                                     child: Text("You",
                                         style:
                                             TextStyle(color: Colors.white)))))
-                        : follow.stylistsFollowing
+                        : follow.usersFollowing
                                 .map((element) => element.id)
                                 .contains(user.id)
                             ? Align(
@@ -112,6 +112,9 @@ class FollowerWidget extends StatelessWidget {
                                       ),
                                       onPressed: () {
                                         follow.followStylist(user);
+                                        //Log the event to AppsFlyer
+                                        HeapService appsflyer = Get.find();
+                                        appsflyer.logEvent("FOLLOW", {});
                                       },
                                       child: Text("Follow",
                                           style: TextStyle(

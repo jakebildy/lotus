@@ -1,114 +1,110 @@
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
-import 'package:meditate_app/models/follow.dart';
-import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/util/logger.dart';
 
+/// FollowController handles following and unfollowing other users. Still have a bit of refactoring left to do.
+/// {@category Controllers}
 class FollowController extends GetxController {
-  RxList<User> stylistsFollowing = new RxList();
-  RxList<User> stylistsNotFollowing = new RxList();
-  RxList<String> sellersFollowingIDs = new RxList();
-  RxList<String> stylistsFollowingIDs = new RxList();
-  //Note: for now, brands are unable to follow people,
-  //and thus all followers are also users. This may change in the future.
-  RxList<User> followers = new RxList();
-  RxList<Follow> following = new RxList();
+  RxList<User> usersFollowing = RxList();
+  RxList<User> usersNotFollowing = RxList();
+  RxList<String> usersFollowingIDs = RxList();
+  RxList<User> followers = RxList();
+  RxList<Follow> following = RxList();
 
   FollowController() {
     fetchFollows();
   }
 
   Future<List<Follow>> getStylistFollowers(User stylist) async {
-    List<Follow> _followers = new List.empty();
+    List<Follow> _followers = List.empty();
     try {
-      _followers = await Api.follow.getStylistFollowers(stylist);
+      _followers = await api.follow.getStylistFollowers(stylist);
     } catch (e) {
-      print(e);
+      logError("Failed to get users followers: " + e.toString());
     }
     return _followers;
   }
 
   Future<List<Follow>> getStylistFollowing(User stylist) async {
-    List<Follow> _followers = new List.empty();
+    List<Follow> _followers = List.empty();
     try {
-      _followers = await Api.follow.getStylistFollowing(stylist);
+      _followers = await api.follow.getStylistFollowing(stylist);
     } catch (e) {
-      print(e);
+      logError("Failed to get users following: " + e.toString());
     }
     return _followers;
   }
 
   Future<List<User>> getStylistNotFollowing(User stylist) async {
-    List<User> _followers = new List.empty();
+    List<User> _followers = List.empty();
     try {
-      _followers = await Api.follow.getStylistNotFollowing(stylist);
+      _followers = await api.follow.getStylistNotFollowing(stylist);
     } catch (e) {
-      print(e);
+      logError("Failed to get users not following: " + e.toString());
     }
     return _followers;
   }
 
   Future<void> fetchFollows() async {
     try {
-      print("Fetching follows...");
-      List<Follow> _followers = await Api.follow.getFollowers();
-      List<Follow> _following = await Api.follow.getFollowing();
-      AuthController auth = Get.find();
+      List<Follow> _followers = await api.follow.getFollowers();
+      List<Follow> _following = await api.follow.getFollowing();
+      UserController userController = Get.find();
       List<User> _notFollowing =
-          await Api.follow.getStylistNotFollowing(auth.user.value);
+          await api.follow.getStylistNotFollowing(userController.user.value);
       following.value = _followers;
       followers.value = [];
-      sellersFollowingIDs.value = [];
-      stylistsFollowing.value = [];
-      stylistsNotFollowing.value = [];
-      stylistsFollowingIDs.value = [];
+      usersFollowing.value = [];
+      usersNotFollowing.value = [];
+      usersFollowingIDs.value = [];
       for (Follow follow in _followers) {
-        print("Follow:");
-        print(follow);
         if (follow.type == "Stylist") {
           followers.add(follow.user);
         }
       }
 
       for (Follow follow in _following) {
-        stylistsFollowing.add(follow.stylist!);
-        stylistsFollowingIDs.add(follow.stylist!.id!);
+        usersFollowing.add(follow.stylist!);
+        usersFollowingIDs.add(follow.stylist!.id!);
       }
 
       for (User follow in _notFollowing) {
-        if (!stylistsFollowingIDs.contains(follow.id)) {
-          if (auth.user.value.id != follow.id) {
-            stylistsNotFollowing.add(follow);
+        if (!usersFollowingIDs.contains(follow.id)) {
+          if (userController.user.value.id != follow.id) {
+            usersNotFollowing.add(follow);
           }
         }
       }
     } catch (error, trace) {
-      print(error);
-      print(trace);
+      logError(error.toString());
+      logError(trace.toString());
     }
     update();
   }
 
   Future<void> followStylist(User stylist) async {
-    if (stylistsFollowingIDs.contains(stylist.id)) {
-      stylistsFollowing.remove(stylist);
-      stylistsFollowingIDs.remove(stylist.id);
+    if (usersFollowingIDs.contains(stylist.id)) {
+      usersFollowing.remove(stylist);
+      usersFollowingIDs.remove(stylist.id);
       try {
-        await Api.follow.unfollowStylist(stylist);
+        await api.follow.unfollowUser(stylist);
       } catch (error, trace) {
-        print(error);
-        print(trace);
+        logError("Failed to unfollow user: " + error.toString());
+        logError(trace.toString());
       }
     } else {
-      stylistsFollowing.add(stylist);
-      stylistsFollowingIDs.add(stylist.id!);
+      usersFollowing.add(stylist);
+      usersFollowingIDs.add(stylist.id!);
       try {
-        await Api.follow.followStylist(stylist);
+        await api.follow.followUser(stylist);
       } catch (error, trace) {
-        print(error);
-        print(trace);
+        logError("Failed to follow user " + error.toString());
+        logError(trace.toString());
       }
     }
 

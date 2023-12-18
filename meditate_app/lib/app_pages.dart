@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/loading_page.dart';
@@ -27,50 +26,43 @@ class _AppPagesState extends State<AppPages> {
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
-    AuthController authController = Get.find();
+    UserController userController = Get.find();
     NetworkStatusController network = Get.find();
-    var brightness = SchedulerBinding.instance!.window.platformBrightness;
     bool isDarkMode = true;
 
     return Obx(
       () => Stack(
         children: [
-          authController.user.value == DummyUser &&
-                  network.offline.value == false
-              ? Signup()
+          userController.user.value == noUser && network.offline.value == false
+              ? const Signup()
               : Scaffold(
                   appBar: PreferredSize(
                     preferredSize:
                         Size.fromHeight(network.offline.value ? 66 : 56),
                     child: AppBar(
                         elevation: 1,
-                        backgroundColor:
-                            isDarkMode ? Colors.grey[850] : Colors.white,
+                        backgroundColor: Colors.grey[850],
                         centerTitle: true,
                         title: Column(
                           children: [
                             network.offline.value
-                                ? Container(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.cloud_off_outlined,
-                                          size: 12,
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text(
-                                          "YOU ARE OFFLINE",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(
+                                        Icons.cloud_off_outlined,
+                                        size: 12,
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(
+                                        "YOU ARE OFFLINE",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
                                   )
                                 : Container(),
                             Container(
@@ -80,16 +72,16 @@ class _AppPagesState extends State<AppPages> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(StatsPage());
+                                      Get.to(const StatsPage());
                                     },
                                     child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           children: [
-                                            Container(
+                                            SizedBox(
                                                 height: 27,
                                                 child: Image.asset(
-                                                    saveController
+                                                    userController
                                                         .streakIconURL())),
                                             const SizedBox(
                                               width: 3,
@@ -99,22 +91,25 @@ class _AppPagesState extends State<AppPages> {
                                                   const EdgeInsets.fromLTRB(
                                                       0, 4.0, 0, 0),
                                               child: Text(
-                                                saveController.streak
+                                                userController.user.value.streak
                                                     .toString(),
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
-                                                    color: saveController.streak
-                                                                    .value ==
+                                                    color: userController
+                                                                    .user
+                                                                    .value
+                                                                    .streak ==
                                                                 0 ||
-                                                            !saveController
+                                                            !userController
                                                                 .hasDoneStreakToday
                                                                 .value
                                                         ? DateTime.now().hour >
                                                                     21 &&
-                                                                saveController
-                                                                        .streak
-                                                                        .value >
+                                                                userController
+                                                                        .user
+                                                                        .value
+                                                                        .streak >
                                                                     0
                                                             ? Colors.red
                                                             : Colors.grey
@@ -129,16 +124,6 @@ class _AppPagesState extends State<AppPages> {
                                           ],
                                         )),
                                   ),
-
-                                  // Column(
-                                  //   children: [
-                                  //      Text("You've meditated for",
-                                  //     style: TextStyle( fontSize: 13,  color: isDarkMode ? Colors.white70 : Colors.grey),),
-                                  //     Text("${saveController.totalMinutes} min",
-                                  //     style: TextStyle( fontSize: 20,  color: isDarkMode ? Colors.white : Colors.black),),
-                                  //   ],
-                                  // ),
-
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
@@ -152,7 +137,7 @@ class _AppPagesState extends State<AppPages> {
                                             Container(
                                                 height: 27,
                                                 child: Image.asset(
-                                                    "assets/gem_icon.png")),
+                                                    "assets/sand_dollar.png")),
                                             const SizedBox(
                                               width: 3,
                                             ),
@@ -161,13 +146,13 @@ class _AppPagesState extends State<AppPages> {
                                                   const EdgeInsets.fromLTRB(
                                                       0, 4.0, 0, 0),
                                               child: Text(
-                                                saveController.gems.value
+                                                userController.user.value.gems
                                                     .toString(),
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20,
-                                                    color: saveController
-                                                                .gems.value ==
+                                                    color: userController.user
+                                                                .value.gems ==
                                                             0
                                                         ? Colors.grey
                                                         : isDarkMode
@@ -206,11 +191,11 @@ class _AppPagesState extends State<AppPages> {
                         BottomNavigationBarItem(
                             icon: _page == 0
                                 ? Container(
-                                    height: 30,
+                                    height: 35,
                                     child: Image.asset(
                                         "assets/meditate_selected.png"))
                                 : Container(
-                                    height: 30,
+                                    height: 35,
                                     child: Image.asset(
                                         "assets/meditate_unselected.png")),
                             label: "Home"),
@@ -228,11 +213,11 @@ class _AppPagesState extends State<AppPages> {
                         BottomNavigationBarItem(
                             icon: _page == 2
                                 ? Container(
-                                    height: 30,
+                                    height: 35,
                                     child: Image.asset(
                                         "assets/turtle_selected.png"))
                                 : Container(
-                                    height: 30,
+                                    height: 35,
                                     child: Image.asset(
                                         "assets/turtle_unselected.png")),
                             label: "Turtles"),
@@ -249,9 +234,9 @@ class _AppPagesState extends State<AppPages> {
                             label: "Profile"),
                       ]),
                 ),
-          authController.isLoading.value ||
-                  authController.isLoadingPageNotDone.value
-              ? LoadingPage()
+          userController.isLoading.value ||
+                  userController.isLoadingPageNotDone.value
+              ? const LoadingPage()
               : Container(
                   height: 0,
                 )

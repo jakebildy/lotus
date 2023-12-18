@@ -72,6 +72,18 @@ async function followStylist(req: RequestI, res: Response) {
   }
 }
 
+async function sendEmoji(req: RequestI, res: Response) {
+  try {
+    if (!req.user) throw "Not logged in - unauthorized";
+    await FollowService.sendEmoji(req.user, req.params.targetUser, req.params.emoji);
+    return res.status(200).send();
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+}
+
+
 async function unfollowStylist(req: RequestI, res: Response) {
   try {
     if (!req.user) throw "Not logged in - unauthurized";
@@ -90,6 +102,8 @@ router.get("/follow/followers/", userAuth, getFollowers);
 router.get("/follow/stylist/following/:id", getStylistFollowing);
 router.get("/follow/stylist/not-following/:id", getStylistNotFollowing);
 router.get("/follow/stylist/followers/:id", getStylistFollowers);
+
+router.get("/follow/emoji/:targetUser/:emoji", userAuth, sendEmoji);
 
 router.post("/follow/stylist/:id", userAuth, followStylist);
 

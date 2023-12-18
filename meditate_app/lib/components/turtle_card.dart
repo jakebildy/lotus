@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
-import 'package:meditate_app/services/appsflyer_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
 class TurtleCard extends StatelessWidget {
   final int id;
   final bool unlocked;
-  const TurtleCard({Key? key, required this.unlocked, required this.id})
+  final int color;
+  final int quantity;
+  const TurtleCard(
+      {Key? key,
+      required this.unlocked,
+      required this.id,
+      required this.color,
+      required this.quantity})
       : super(key: key);
 
   @override
@@ -21,17 +25,12 @@ class TurtleCard extends StatelessWidget {
       duration: Duration(milliseconds: 110),
       onPressed: () {
         if (unlocked) {
-          //Log the event to AppsFlyer
-          AppsflyerService appsflyer = Get.find();
-          appsflyer.logEvent("TURTLE_TAPPED", {});
           HapticFeedback.lightImpact();
-          Get.to(TurtleDetailsPage(id: id), transition: Transition.downToUp);
+          Get.to(TurtleDetailsPage(id: id, color: color),
+              transition: Transition.downToUp);
         } else {
           HapticFeedback.lightImpact();
           ScaffoldMessenger.of(context).clearSnackBars();
-          //Log the event to AppsFlyer
-          AppsflyerService appsflyer = Get.find();
-          appsflyer.logEvent("LOCKED_TURTLE_TAPPED", {});
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               key: UniqueKey(),
               backgroundColor: tierColor(TURTLES[id].tier),
@@ -42,30 +41,75 @@ class TurtleCard extends StatelessWidget {
         }
       },
       child: Card(
-          child: unlocked
-              ? Hero(
-                  tag: "turtle-${id}",
-                  child: Stack(
-                    children: [
-                      Image.asset("assets/turtles/0.png"),
-                      id > 0 && id < TURTLES.length
-                          ? Image.asset("assets/turtles/${id}.png")
-                          : Container(),
-                    ],
-                  ))
-              : Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Image.asset("assets/turtles/locked.png"),
-                    Text(
-                      "?",
-                      style: TextStyle(
-                          color: Colors.grey[850],
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
+          color: unlocked ? null : Colors.white10,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              unlocked
+                  ? Hero(
+                      tag: "turtle-${id}",
+                      child: Stack(
+                        children: [
+                          Image.asset("assets/images/turtles/swim/swim1.png"),
+                          id >= 0 && id < TURTLES.length
+                              ? ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                      TURTLE_COLORS[color].withOpacity(0.5),
+                                      BlendMode.srcATop),
+                                  child: Image.asset(
+                                      "assets/images/turtles/${id}.png"))
+                              : Container(),
+                          id != 10
+                              ? Container()
+                              : Image.asset(
+                                  "assets/images/turtles/10_overlay.png"),
+                        ],
+                      ))
+                  : Opacity(
+                      opacity: 0.2,
+                      child: Stack(
+                        children: [
+                          Image.asset("assets/images/turtles/swim/swim1.png"),
+                          id >= 0 && id < TURTLES.length
+                              ? Image.asset("assets/images/turtles/locked.png")
+                              : Container(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.lock),
+                          ),
+                        ],
+                      ),
                     )
-                  ],
-                )),
+
+              // SizedBox(
+              //   width: 10,
+              // ),
+              // Expanded(
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text((TURTLE_COLORS_NAME[color] + " " + TURTLES[id].name),
+              //             style: TextStyle(
+              //                 fontSize: 15, fontWeight: FontWeight.w600)),
+              //         Text("${quantity} found",
+              //             style: TextStyle(
+              //                 fontSize: 14,
+              //                 color: quantity > 0
+              //                     ? Colors.tealAccent
+              //                     : Colors.grey))
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              // Icon(Icons.arrow_forward_ios),
+              // SizedBox(
+              //   width: 10,
+              // )
+            ],
+          )),
     );
   }
 }

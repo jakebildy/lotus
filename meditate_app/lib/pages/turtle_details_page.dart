@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/components/streak_chart.dart';
+import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TurtleDetailsPage extends StatefulWidget {
   final int id;
-  const TurtleDetailsPage({Key? key, required this.id}) : super(key: key);
+  final int color;
+  const TurtleDetailsPage({Key? key, required this.id, required this.color})
+      : super(key: key);
 
   @override
   State<TurtleDetailsPage> createState() => _TurtleDetailsPageState();
@@ -21,7 +29,8 @@ class TurtleDetailsPage extends StatefulWidget {
 class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
+    GameController gameController = Get.find();
+    UserController userController = Get.find();
     bool isDarkMode = true;
 
     return Scaffold(
@@ -29,11 +38,11 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text("Turtle"),
+        title: const Text("Tap the turtle"),
       ),
       body: Container(
-        decoration: new BoxDecoration(
-            gradient: new LinearGradient(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
@@ -60,26 +69,45 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
             )),
             ListView(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
                   //color: Colors.white24,
                   height: 300,
-                  child: Hero(
-                      tag: "turtle-${widget.id}",
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset("assets/turtles/0.png"),
-                          widget.id > 0 && widget.id < TURTLES.length
-                              ? Image.asset("assets/turtles/${widget.id}.png")
-                              : Container(),
-                        ],
-                      )),
+                  child: GestureDetector(
+                    onTap: () {
+                      gameController.startGame(
+                          widget.id, widget.color, context);
+                      HapticFeedback.lightImpact();
+                      Get.to(const TurtleGamePage(),
+                          transition: Transition.circularReveal);
+                    },
+                    child: Hero(
+                        tag: "turtle-${widget.id}",
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset("assets/images/turtles/swim/swim1.png"),
+                            widget.id >= 0 && widget.id < TURTLES.length
+                                ? ColorFiltered(
+                                    colorFilter: ColorFilter.mode(
+                                        TURTLE_COLORS[widget.color]
+                                            .withOpacity(0.5),
+                                        BlendMode.srcATop),
+                                    child: Image.asset(
+                                        "assets/images/turtles/${widget.id}.png"))
+                                : Container(),
+                            widget.id != 10
+                                ? Container()
+                                : Image.asset(
+                                    "assets/images/turtles/10_overlay.png"),
+                          ],
+                        )),
+                  ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Padding(
@@ -88,19 +116,21 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                       color: Colors.grey[850],
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              TURTLES[widget.id].name,
+                              TURTLE_COLORS_NAME[widget.color] +
+                                  " " +
+                                  TURTLES[widget.id].name,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                           ),
-                          Divider(),
+                          const Divider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -127,7 +157,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                                 : Colors.yellow,
                                       ),
                                     ),
-                                    Text(
+                                    const Text(
                                       "Rarity",
                                       style: TextStyle(fontSize: 12),
                                     ),
@@ -144,11 +174,11 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      "${saveController.unlockedTurtles[widget.id]}",
-                                      style: TextStyle(
+                                      "${userController.user.value.unlockedTurtles[widget.id]}",
+                                      style: const TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     ),
-                                    Text(
+                                    const Text(
                                       "Number Found",
                                       style: TextStyle(fontSize: 12),
                                     ),
@@ -174,10 +204,10 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                                                       Tier.BLUE
                                                   ? "Expert"
                                                   : "Turtlemaster",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     ),
-                                    Text(
+                                    const Text(
                                       "Level",
                                       style: TextStyle(fontSize: 12),
                                     ),
@@ -190,7 +220,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Padding(
@@ -200,19 +230,37 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                               textAlign: TextAlign.center,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(StatsPage());
-                            },
-                            child: Text(
-                              "View my Tier",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                          OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(
+                                    width: 1.0, color: Colors.teal),
+                                backgroundColor: Colors.tealAccent,
+                                shape: const StadiumBorder(),
+                              ),
+                              onPressed: () {
+                                //Log the event to AppsFlyer
+                                HeapService appsflyer = Get.find();
+                                appsflyer.logEvent("GAME_STARTED", {});
+                                gameController.startGame(
+                                    widget.id, widget.color, context);
+                                HapticFeedback.lightImpact();
+                                Get.to(const TurtleGamePage(),
+                                    transition: Transition.circularReveal);
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: Text(
+                                  "Go to Shallows",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                ),
+                              )),
                           SizedBox(
                             height: MediaQuery.of(context).size.height - 400,
                           )

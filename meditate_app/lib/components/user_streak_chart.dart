@@ -1,9 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:get/get.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/models/user.dart';
 
 class UserStreakChart extends StatelessWidget {
@@ -14,10 +10,8 @@ class UserStreakChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
-
-    DateTime now = new DateTime.now();
-    DateTime date = new DateTime(now.year, now.month, now.day);
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(now.year, now.month, now.day);
     int daysShifted = user.meditationTimesAsOf.difference(date).inDays.abs();
 
     return ClipRRect(
@@ -47,10 +41,10 @@ class UserStreakChart extends StatelessWidget {
                       show: true,
                       gradientFrom: Offset(1, 1),
                       gradientTo: Offset(1, 0),
-                      gradientColorStops: [0, 0.2, 0.4, 0.55, 1],
+                      gradientColorStops: [0.05, 0.15, 0.35, 1],
                       colors: [
-                        Color.fromARGB(0, 255, 153, 0),
-                        Colors.orange,
+                        // Color.fromARGB(0, 255, 153, 0),
+                        Colors.green,
                         Colors.yellow,
                         Colors.blue,
                         Colors.purpleAccent

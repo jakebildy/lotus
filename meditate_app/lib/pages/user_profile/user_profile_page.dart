@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/components/follower_widget.dart';
-import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/components/user_streak_chart.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
-import 'package:meditate_app/controllers/login_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/controllers/signup_controller.dart';
-import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/util.dart';
 
 import '../../models/user.dart';
+import 'send_vibe_widget.dart';
 
 class UserProfilePage extends StatefulWidget {
   final User user;
@@ -41,8 +30,7 @@ class _UserProfilePageState extends State<UserProfilePage>
 
   @override
   Widget build(BuildContext context) {
-    SaveController saveController = Get.find();
-    AuthController auth = Get.find();
+    UserController userController = Get.find();
     FollowController followController = Get.find();
 
     return Scaffold(
@@ -87,19 +75,20 @@ class _UserProfilePageState extends State<UserProfilePage>
                 Text(
                   widget.user.fullName,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Text(
                   "(@" + widget.user.username + ")",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.white70),
+                  style: const TextStyle(fontSize: 16, color: Colors.white70),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
@@ -108,15 +97,15 @@ class _UserProfilePageState extends State<UserProfilePage>
                   color: tierColor(userStreakTier(widget.user)), fontSize: 17),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Text(
               "Joined ${formatMonth(widget.user.createdAt)}",
-              style: TextStyle(color: Colors.grey),
+              style: const TextStyle(color: Colors.grey),
               textAlign: TextAlign.center,
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -128,40 +117,42 @@ class _UserProfilePageState extends State<UserProfilePage>
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(
                             width: 1.0,
-                            color: auth.user.value.id == widget.user.id
-                                ? Colors.white
-                                : followController.stylistsFollowing
-                                        .map((element) => element.id)
-                                        .contains(widget.user.id)
-                                    ? Colors.white24
-                                    : Colors.teal),
-                        shape: StadiumBorder(),
+                            color:
+                                userController.user.value.id == widget.user.id
+                                    ? Colors.white
+                                    : followController.usersFollowing
+                                            .map((element) => element.id)
+                                            .contains(widget.user.id)
+                                        ? Colors.white24
+                                        : Colors.teal),
+                        shape: const StadiumBorder(),
                       ),
                       onPressed: () {
-                        if (auth.user.value.id != widget.user.id) {
+                        if (userController.user.value.id != widget.user.id) {
                           followController.followStylist(widget.user);
                         }
                       },
                       child: Text(
-                          auth.user.value.id == widget.user.id
+                          userController.user.value.id == widget.user.id
                               ? "You"
-                              : followController.stylistsFollowing
+                              : followController.usersFollowing
                                       .map((element) => element.id)
                                       .contains(widget.user.id)
                                   ? "Following"
                                   : "Follow",
                           style: TextStyle(
-                              color: auth.user.value.id == widget.user.id
-                                  ? Colors.white
-                                  : followController.stylistsFollowing
-                                          .map((element) => element.id)
-                                          .contains(widget.user.id)
-                                      ? Colors.grey
-                                      : Colors.tealAccent))),
+                              color:
+                                  userController.user.value.id == widget.user.id
+                                      ? Colors.white
+                                      : followController.usersFollowing
+                                              .map((element) => element.id)
+                                              .contains(widget.user.id)
+                                          ? Colors.grey
+                                          : Colors.tealAccent))),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -190,20 +181,20 @@ class _UserProfilePageState extends State<UserProfilePage>
                                 child: Image.asset(
                                     userStreakIconURL(widget.user))),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 widget.user.streak.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                              Text(
+                              const Text(
                                 "Day streak",
                                 style: TextStyle(
                                     fontSize: 12, color: Colors.white70),
@@ -228,15 +219,15 @@ class _UserProfilePageState extends State<UserProfilePage>
                       ),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Text(
                             widget.user.totalMinutes.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                          Text(
+                          const Text(
                             "Total Minutes",
                             style:
                                 TextStyle(fontSize: 12, color: Colors.white70),
@@ -260,15 +251,15 @@ class _UserProfilePageState extends State<UserProfilePage>
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      Text(
+                      const Text(
                         "Minutes they meditated this week",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       UserStreakChart(
@@ -278,8 +269,11 @@ class _UserProfilePageState extends State<UserProfilePage>
                     ],
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
+            ),
+            SendVibeWidget(
+              targetUserId: widget.user.id ?? "",
             ),
           ],
         ),

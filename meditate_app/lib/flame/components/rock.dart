@@ -1,0 +1,39 @@
+import 'dart:math';
+
+import 'package:flame/components.dart';
+import 'package:flame/palette.dart';
+import 'package:flutter/material.dart';
+
+class Rock extends SpriteComponent with HasGameRef, Tappable {
+  static const speed = 0.25;
+
+  static Paint white = BasicPalette.white.paint();
+  static Paint red = BasicPalette.red.paint();
+  static Paint blue = BasicPalette.blue.paint();
+  final double rockSize;
+
+  Rock(Vector2 position, this.rockSize) : super(position: position);
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    // angle += speed * dt;
+    // angle %= 2 * math.pi;
+  }
+
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
+    sprite = await gameRef.loadSprite('game/rock.png');
+    size.setValues(rockSize, rockSize);
+    angle = Random().nextDouble() * 2 * pi;
+    anchor = Anchor.center;
+  }
+
+  // @override
+  // bool onTapUp(TapUpInfo info) {
+  //   removeFromParent();
+  //   info.handled = true;
+  //   return true;
+  // }
+}
