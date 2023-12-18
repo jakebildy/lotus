@@ -142,7 +142,7 @@ class User {
               ?.map((e) => List<int>.from(e as List))
               .toList() ??
           [],
-      eggTypes: map["eggTypes"] as List<String>? ?? [],
+      eggTypes: (map["eggTypes"] as List<dynamic>? ?? []).cast<String>(),
       meditationHistory: _parseMeditationHistory(
               map["meditationHistory"] as Map<String, dynamic>?)
           .obs,

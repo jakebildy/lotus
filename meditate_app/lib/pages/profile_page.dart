@@ -87,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage>
                             borderRadius: BorderRadius.circular(60)),
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
-                          child: Container(
+                          child: SizedBox(
                               height: 80,
                               child: userController.user.value.avatar == null
                                   ? Image.asset("assets/profile_selected.png")
@@ -215,7 +215,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 0, 5, 5.0),
-                                  child: Container(
+                                  child: SizedBox(
                                       height: 30,
                                       child: Hero(
                                         tag: "STREAK_STATS_ICON",
@@ -340,7 +340,7 @@ class _ProfilePageState extends State<ProfilePage>
                           const SizedBox(
                             height: 20,
                           ),
-                          MeditationHeatmap(
+                          const MeditationHeatmap(
                             height: 240,
                           ),
                           Column(
@@ -364,11 +364,10 @@ class _ProfilePageState extends State<ProfilePage>
                               const SizedBox(
                                 height: 5,
                               ),
-                              Container(
-                                  child: const Text(
+                              const Text(
                                 "Higher levels can find rarer turtles.\n\nReach new levels by increasing your average meditation length for a week.\n",
                                 textAlign: TextAlign.center,
-                              )),
+                              ),
                               const SizedBox(
                                 height: 5,
                               ),
