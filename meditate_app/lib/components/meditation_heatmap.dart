@@ -18,8 +18,7 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find();
-    logSuccess("!!! Meditation History " +
-        userController.user.value.meditationHistory.toString());
+
     return Obx(
       () => ClipRRect(
         child: Container(

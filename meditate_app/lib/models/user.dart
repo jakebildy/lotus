@@ -21,8 +21,8 @@ enum UserProperty {
   unlockedTurtleColors,
   meditationHistory,
   eggTypes,
-  emojiSendTime,
-  sentEmoji,
+  emojisSentAt,
+  sentEmojis,
 }
 
 class User {
@@ -49,6 +49,12 @@ class User {
   RxMap<DateTime, int> meditationHistory;
   final List<String> eggTypes;
 
+  /// Maps the User ID the emoji was sent to, to the DateTime of the last emoji sent to them
+  RxMap<String, DateTime> emojisSentAt;
+
+  /// Maps the User ID the emoji was sent to, to the emoji sent
+  RxMap<String, String> sentEmojis;
+
   static User deletedUser = User(
     id: "-1",
     email: "...",
@@ -67,6 +73,8 @@ class User {
     required this.createdAt,
     required this.lastMeditated,
     RxMap<DateTime, int>? meditationHistory,
+    RxMap<String, DateTime>? emojisSentAt,
+    RxMap<String, String>? sentEmojis,
     this.meditationTimes = const [],
     required this.meditationTimesAsOf,
     this.avatar = defaultProfilePicture,
@@ -80,7 +88,9 @@ class User {
     this.unlockedTurtles = const [],
     this.unlockedTurtleColors = const [],
     this.eggTypes = const [],
-  }) : meditationHistory = meditationHistory ?? <DateTime, int>{}.obs;
+  })  : meditationHistory = meditationHistory ?? <DateTime, int>{}.obs,
+        emojisSentAt = <String, DateTime>{}.obs,
+        sentEmojis = <String, String>{}.obs;
 
   // Method to parse the meditation history according to the key format used in loadData
   static Map<DateTime, int> _parseMeditationHistory(
@@ -136,6 +146,14 @@ class User {
       meditationHistory: _parseMeditationHistory(
               map["meditationHistory"] as Map<String, dynamic>?)
           .obs,
+      emojisSentAt: (map["emojisSentAt"] as Map<String, dynamic>?)
+              ?.map((key, value) => MapEntry(key, DateTime.parse(value)))
+              .obs ??
+          <String, DateTime>{}.obs,
+      sentEmojis: (map["sentEmojis"] as Map<String, dynamic>?)
+              ?.map((key, value) => MapEntry(key, value.toString()))
+              .obs ??
+          <String, String>{}.obs,
     );
   }
 

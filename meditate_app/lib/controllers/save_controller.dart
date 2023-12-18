@@ -114,7 +114,7 @@ class SaveController extends GetxController {
     if (lastMeditated != "") {
       Map<String, int> meditationHistory = {};
       today = DateTime.now(); // reset today to current date
-      DateTime aYearAgo = today.subtract(Duration(days: 365));
+      DateTime aYearAgo = today.subtract(const Duration(days: 365));
       while (today.isAfter(aYearAgo)) {
         String historyKey =
             'meditation-${today.day}-${today.month}-${today.year}';
@@ -230,18 +230,18 @@ class SaveController extends GetxController {
 
     // Load the entire meditation history for the past year
     // If gems does not exist, neither does meditation history yet
-    if (getValue('gems') == "") {
-      DateTime rn = DateTime.now();
-      today = DateTime.now();
-      while (rn.difference(today).abs().inDays <= 365) {
-        DateTime simpleDate = DateTime(today.year, today.month, today.day);
-        meditationHistory[simpleDate] = (double.tryParse(getValue(
-                    'meditation-${today.day}-${today.month}-${today.year}')) ??
-                0.0)
-            .round();
-        today = today.subtract(Duration(days: 1));
-      }
-    }
+    // if (getValue('gems') == "") {
+    //   DateTime rn = DateTime.now();
+    //   today = DateTime.now();
+    //   while (rn.difference(today).abs().inDays <= 365) {
+    //     DateTime simpleDate = DateTime(today.year, today.month, today.day);
+    //     meditationHistory[simpleDate] = (double.tryParse(getValue(
+    //                 'meditation-${today.day}-${today.month}-${today.year}')) ??
+    //             0.0)
+    //         .round();
+    //     today = today.subtract(const Duration(days: 1));
+    //   }
+    // }
 
     // Handle potential issue with a vast number of egg types
 

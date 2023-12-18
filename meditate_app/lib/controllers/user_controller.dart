@@ -74,8 +74,8 @@ class UserController extends GetxController {
   Future<void> updateProperty(UserProperty property, dynamic value) async {
     // If the user is online, update the database - otherwise, update the local storage
     if (user == databaseUser) {
-      await api.user.updateUserAttribute(property.toString(), value);
-      databaseUser.value = await api.user.me();
+      // await api.user.updateUserAttribute(property.toString(), value);
+      // databaseUser.value = await api.user.me();
     } else {
       User newUser = localStorageUser.value;
       // TODO: update the specific property
