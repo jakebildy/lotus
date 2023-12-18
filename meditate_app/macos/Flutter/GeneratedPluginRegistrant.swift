@@ -9,7 +9,7 @@ import audioplayers_darwin
 import firebase_core
 import firebase_messaging
 import heap_flutter_bridge
-import path_provider_foundation
+import path_provider_macos
 import url_launcher_macos
 import wakelock_macos
 

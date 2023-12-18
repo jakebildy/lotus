@@ -103,7 +103,7 @@ router.get("/follow/stylist/following/:id", getStylistFollowing);
 router.get("/follow/stylist/not-following/:id", getStylistNotFollowing);
 router.get("/follow/stylist/followers/:id", getStylistFollowers);
 
-router.get("/follow/emoji/:targetUser/:emoji", userAuth, sendEmoji);
+router.post("/follow/emoji/:targetUser/:emoji", userAuth, sendEmoji);
 
 router.post("/follow/stylist/:id", userAuth, followStylist);
 
