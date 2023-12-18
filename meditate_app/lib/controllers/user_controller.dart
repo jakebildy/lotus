@@ -244,12 +244,33 @@ class UserController extends GetxController {
 
   void logMeditation(int amountNew, DateTime date) {
     logInfo("Saving last_meditated to ${date.toIso8601String()}");
+    updateProperty(UserProperty.lastMeditated, date);
     // saveController.saveValue("last_meditated", date.toIso8601String());
 
+    updateProperty(
+        UserProperty.totalMinutes, user.value.totalMinutes + amountNew);
     // saveValue("total_minutes", newValue.toString());
     // // totalMinutes.value = newValue;
 
-    // DateTime today = DateTime.now();
+    DateTime today = DateTime.now();
+    today = DateTime(today.year, today.month, today.day);
+
+    // Check if today exists in meditationHistory
+    if (user.value.meditationHistory[today] != null) {
+      updateProperty(UserProperty.meditationHistory, {
+        today: user.value.meditationHistory[today]! + amountNew,
+        ...user.value.meditationHistory
+      });
+      logInfo(
+          "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
+    } else {
+      updateProperty(UserProperty.meditationHistory,
+          {today: amountNew, ...user.value.meditationHistory});
+      logInfo(
+          "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
+    }
+    update();
+
     // if (getValue('meditation-${today.day}-${today.month}-${today.year}') ==
     //     "") {
     //   saveValue('meditation-${today.day}-${today.month}-${today.year}',

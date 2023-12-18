@@ -1,13 +1,10 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/api/index.dart' as Api;
-import 'package:ocarina/ocarina.dart';
 
 import '../models/user.dart';
 
@@ -15,15 +12,6 @@ import '../models/user.dart';
 /// {@category Controllers}
 class SaveController extends GetxController {
   final storage = GetStorage();
-
-  //Boolean: Has the user meditaed today?
-  RxBool hasDoneStreakToday = false.obs;
-
-  //An array of the amount of time the user has meditated in the last 7 days
-  RxList lastSevenDays = new RxList();
-
-  //The number of streak freezes the user has
-  RxInt streakFreezes = 0.obs;
 
   //The list of unlocked turtles
   RxList unlockedTurtles = RxList();
@@ -152,21 +140,21 @@ class SaveController extends GetxController {
     // }
 
     // Initialize lists for the last seven days of meditation and unlocked turtles
-    lastSevenDays = RxList.empty();
+    // lastSevenDays = RxList.empty();
     unlockedTurtles = RxList.empty();
 
     // Load meditation data for the last seven days
     DateTime today = DateTime.now();
-    for (int i = 0; i < 7; i++) {
-      String meditationKey =
-          'meditation-${today.day}-${today.month}-${today.year}';
-      if (getValue(meditationKey) != "") {
-        lastSevenDays.add(double.parse(getValue(meditationKey)));
-      } else {
-        lastSevenDays.add(0.0);
-      }
-      today = today.subtract(const Duration(days: 1));
-    }
+    // for (int i = 0; i < 7; i++) {
+    //   String meditationKey =
+    //       'meditation-${today.day}-${today.month}-${today.year}';
+    //   if (getValue(meditationKey) != "") {
+    //     lastSevenDays.add(double.parse(getValue(meditationKey)));
+    //   } else {
+    //     lastSevenDays.add(0.0);
+    //   }
+    //   today = today.subtract(const Duration(days: 1));
+    // }
 
     // Load gems, eggs, and other related data
     // if (getValue('gems') != "") {
@@ -194,9 +182,9 @@ class SaveController extends GetxController {
     // }
 
     // Load streak freeze value
-    if (getValue('streak_freezes') != "") {
-      streakFreezes.value = int.parse(getValue('streak_freezes'));
-    }
+    // if (getValue('streak_freezes') != "") {
+    //   streakFreezes.value = int.parse(getValue('streak_freezes'));
+    // }
 
     // Load unlocked turtle data
     for (int i = 0; i < TURTLES.length; i++) {

@@ -1,18 +1,11 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
-import 'package:meditate_app/util/eggquation.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
 
 import '../components/duration_picker.dart';
 import '../util/DEBUG_MODE.dart';
@@ -26,7 +19,7 @@ class BeginMeditationPage extends StatefulWidget {
 
 class _BeginMeditationPageState extends State<BeginMeditationPage> {
   Duration NO_TIME = const Duration(hours: 0, minutes: 0);
-  late Duration _duration = Duration(hours: 0, minutes: 5);
+  late Duration _duration = const Duration(hours: 0, minutes: 5);
 
   @override
   void initState() {
