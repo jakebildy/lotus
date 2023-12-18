@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
+import "package:meditate_app/api/index.dart" as api;
 
 class SendVibeWidget extends StatefulWidget {
   final String targetUserId;
@@ -44,7 +45,6 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
   }
 
   void selectVibe(String vibe) {
-    print("Vibe selected");
     HapticFeedback.heavyImpact();
     setState(() {
       selectedVibe = vibe;
@@ -66,6 +66,9 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
 
       // Logic to send the emoji
       // Send push notification to the target user
+      if (selectedVibe != null) {
+        api.follow.sendEmoji(widget.targetUserId, selectedVibe!);
+      }
     }
 
     setState(() {

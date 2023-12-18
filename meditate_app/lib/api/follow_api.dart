@@ -83,6 +83,17 @@ class FollowApi {
     }
   }
 
+  Future<void> sendEmoji(String userId, String emoji) async {
+    final response = await http.post(
+        Api.https(url, "/api/emoji/" + userId + "/" + emoji),
+        headers: Api.headers);
+    if (response.statusCode == 200) {
+      logSuccess(json.decode(response.body));
+    } else {
+      throw (response.body);
+    }
+  }
+
   Future<void> unfollowUser(User user) async {
     final response = await http.delete(
         Api.https(url, "/api/unfollow/user/" + user.id!),
