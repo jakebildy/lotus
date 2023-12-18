@@ -16,27 +16,6 @@ import '../models/user.dart';
 class SaveController extends GetxController {
   final storage = GetStorage();
 
-  //The User's Current Streak
-  RxInt streak = 0.obs;
-
-  //The User's Total Meditation Minutes
-  RxInt totalMinutes = 0.obs;
-
-  //The User's Total Gems
-  RxInt gems = 0.obs;
-
-  //The number of eggs the user currently has
-  RxInt eggs = 0.obs;
-
-  //The total number of eggs the user has ever collected
-  RxInt totalEggs = 0.obs;
-
-  //The type of egg the user is currently hatching (?)
-  RxList eggType = new RxList(); //"3-3,2-5,etc"
-
-  //The progress of the current egg hatching (goes from 0 to 3 (?))
-  RxInt hatchProgressEggOne = 0.obs;
-
   //Boolean: Has the user meditaed today?
   RxBool hasDoneStreakToday = false.obs;
 
@@ -74,7 +53,6 @@ class SaveController extends GetxController {
 
   void updateFetchedData(User user) {
     meditationHistory.value = user.meditationHistory;
-    gems.value = user.gems;
     unlockedTurtles.value = user.unlockedTurtles;
     unlockedTurtleColors.value = user.unlockedTurtleColors;
     meditationHistory.refresh();
@@ -90,12 +68,12 @@ class SaveController extends GetxController {
 
   Future<void> uploadLocalData() async {
     // Upload simple attributes
-    await Api.user.updateUserAttribute("streak", streak.value);
-    await Api.user.updateUserAttribute("totalMinutes", totalMinutes.value);
-    await Api.user.updateUserAttribute("gems", gems.value);
-    await Api.user.updateUserAttribute("totalEggs", totalEggs.value);
-    await Api.user
-        .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
+    // await Api.user.updateUserAttribute("streak", streak.value);
+    // await Api.user.updateUserAttribute("totalMinutes", totalMinutes.value);
+    // await Api.user.updateUserAttribute("gems", gems.value);
+    // await Api.user.updateUserAttribute("totalEggs", totalEggs.value);
+    // await Api.user
+    // .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
 
     // Upload last meditated date
     String lastMeditated = getValue("last_meditated");
@@ -169,9 +147,9 @@ class SaveController extends GetxController {
     logInfo("Loading Data!");
 
     // Load total meditation minutes if available
-    if (getValue('total_minutes') != "") {
-      totalMinutes.value = int.parse(getValue('total_minutes'));
-    }
+    // if (getValue('total_minutes') != "") {
+    //   totalMinutes.value = int.parse(getValue('total_minutes'));
+    // }
 
     // Initialize lists for the last seven days of meditation and unlocked turtles
     lastSevenDays = RxList.empty();
@@ -191,29 +169,29 @@ class SaveController extends GetxController {
     }
 
     // Load gems, eggs, and other related data
-    if (getValue('gems') != "") {
-      gems.value = int.parse(getValue('gems'));
-    }
-    if (getValue('eggs') != "") {
-      eggs.value = int.parse(getValue('eggs'));
-    }
-    if (getValue('total_eggs') != "") {
-      totalEggs.value = int.parse(getValue('total_eggs'));
-    }
-    if (getValue('egg_progress_one') != "") {
-      hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
-    }
+    // if (getValue('gems') != "") {
+    //   gems.value = int.parse(getValue('gems'));
+    // }
+    // if (getValue('eggs') != "") {
+    //   eggs.value = int.parse(getValue('eggs'));
+    // }
+    // if (getValue('total_eggs') != "") {
+    //   totalEggs.value = int.parse(getValue('total_eggs'));
+    // }
+    // if (getValue('egg_progress_one') != "") {
+    //   hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
+    // }
 
     // Load egg types
-    if (getValue('egg_types') != "") {
-      List<String> eggTypesValue =
-          getValue('egg_types').replaceAll(" ", "").split(",");
-      eggType = RxList.empty();
-      for (String type in eggTypesValue) {
-        eggType.add(type);
-      }
-      logInfo("Egg types: " + eggType.toString());
-    }
+    // if (getValue('egg_types') != "") {
+    //   List<String> eggTypesValue =
+    //       getValue('egg_types').replaceAll(" ", "").split(",");
+    //   eggType = RxList.empty();
+    //   for (String type in eggTypesValue) {
+    //     eggType.add(type);
+    //   }
+    //   logInfo("Egg types: " + eggType.toString());
+    // }
 
     // Load streak freeze value
     if (getValue('streak_freezes') != "") {
@@ -279,22 +257,20 @@ class SaveController extends GetxController {
 
     // Handle potential issue with a vast number of egg types
 
-    if (eggType.length > eggs.value && eggType.length > 30) {
-      logWarning("CLEARING EGG ISSUE 🥚, eggType is " +
-          eggType.length.toString() +
-          " and eggs is " +
-          eggs.value.toString());
-      for (int i = 0; i < (eggType.length - eggs.value); i++) {
-        eggType.removeLast();
-      }
-      saveValue("egg_types",
-          eggType.toString().replaceAll("[", "").replaceAll("]", ""));
-    }
+    // if (eggType.length > eggs.value && eggType.length > 30) {
+    //   logWarning("CLEARING EGG ISSUE 🥚, eggType is " +
+    //       eggType.length.toString() +
+    //       " and eggs is " +
+    //       eggs.value.toString());
+    //   for (int i = 0; i < (eggType.length - eggs.value); i++) {
+    //     eggType.removeLast();
+    //   }
+    //   saveValue("egg_types",
+    //       eggType.toString().replaceAll("[", "").replaceAll("]", ""));
+    // }
 
     // Notify observers of the changes
     update();
-
-    logInfo("Streak is set to ${streak.value}");
   }
 
   Future<void> saveValue(String key, String value) async {
@@ -308,40 +284,5 @@ class SaveController extends GetxController {
 
   Future<void> clearValue(String key) async {
     storage.remove(key);
-  }
-
-  void updateTotalAmount(int newValue, int amountNew) {
-    saveValue("total_minutes", newValue.toString());
-    totalMinutes.value = newValue;
-
-    DateTime today = DateTime.now();
-    if (getValue('meditation-${today.day}-${today.month}-${today.year}') ==
-        "") {
-      saveValue('meditation-${today.day}-${today.month}-${today.year}',
-          amountNew.toString());
-    } else {
-      saveValue(
-          'meditation-${today.day}-${today.month}-${today.year}',
-          (double.parse(getValue(
-                      'meditation-${today.day}-${today.month}-${today.year}')) +
-                  amountNew)
-              .toString());
-    }
-
-    lastSevenDays[0] += amountNew;
-
-    DateTime simpleDate = new DateTime(today.year, today.month, today.day);
-    if (meditationHistory[simpleDate] != null) {
-      int oldValue = meditationHistory.remove(simpleDate) ?? 0;
-      meditationHistory.addAll({simpleDate: oldValue + amountNew});
-      logInfo(
-          "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
-    } else {
-      meditationHistory.addAll({simpleDate: amountNew});
-      logInfo(
-          "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
-    }
-    meditationHistory.refresh();
-    update();
   }
 }

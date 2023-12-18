@@ -1,13 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:animated_counter/animated_counter.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
-import 'package:shimmer/shimmer.dart';
 
 class NewGemsPage extends StatefulWidget {
   final int gemsAmount;

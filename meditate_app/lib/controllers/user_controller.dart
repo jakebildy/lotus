@@ -60,14 +60,15 @@ class UserController extends GetxController {
   }
 
   Future<void> setUser(User newUser) async {
-    // user.value = newUser;
-    // try {
-    //   // TODO: await saveController.saveCookies(api.cookies);
-    // } catch (error, trace) {
-    //   logError("Failed to set user " + error.toString());
-    //   logError(trace.toString());
-    // }
-    // update();
+    user.value = newUser;
+    try {
+      CookieController cookie = Get.find();
+      await cookie.saveCookies(api.cookies);
+    } catch (error, trace) {
+      logError("Failed to set user " + error.toString());
+      logError(trace.toString());
+    }
+    update();
   }
 
   Future<void> updateProperty(UserProperty property, dynamic value) async {
@@ -239,5 +240,43 @@ class UserController extends GetxController {
     hasDoneStreakToday.value = true;
     updateProperty(UserProperty.streak, newValue);
     update();
+  }
+
+  void logMeditation(int amountNew, DateTime date) {
+    logInfo("Saving last_meditated to ${date.toIso8601String()}");
+    // saveController.saveValue("last_meditated", date.toIso8601String());
+
+    // saveValue("total_minutes", newValue.toString());
+    // // totalMinutes.value = newValue;
+
+    // DateTime today = DateTime.now();
+    // if (getValue('meditation-${today.day}-${today.month}-${today.year}') ==
+    //     "") {
+    //   saveValue('meditation-${today.day}-${today.month}-${today.year}',
+    //       amountNew.toString());
+    // } else {
+    //   saveValue(
+    //       'meditation-${today.day}-${today.month}-${today.year}',
+    //       (double.parse(getValue(
+    //                   'meditation-${today.day}-${today.month}-${today.year}')) +
+    //               amountNew)
+    //           .toString());
+    // }
+
+    // lastSevenDays[0] += amountNew;
+
+    // DateTime simpleDate = new DateTime(today.year, today.month, today.day);
+    // if (meditationHistory[simpleDate] != null) {
+    //   int oldValue = meditationHistory.remove(simpleDate) ?? 0;
+    //   meditationHistory.addAll({simpleDate: oldValue + amountNew});
+    //   logInfo(
+    //       "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
+    // } else {
+    //   meditationHistory.addAll({simpleDate: amountNew});
+    //   logInfo(
+    //       "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
+    // }
+    // meditationHistory.refresh();
+    // update();
   }
 }

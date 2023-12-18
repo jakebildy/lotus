@@ -105,7 +105,7 @@ class _CountdownPageState extends State<CountdownPage>
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
-    _timer = new Timer.periodic(
+    _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
         setState(() {
@@ -147,19 +147,19 @@ class _CountdownPageState extends State<CountdownPage>
         Scaffold(
           // backgroundColor: isDarkMode ? Colors.black : Color(0xff87CEEB),
           body: Container(
-            decoration: new BoxDecoration(
-                gradient: new LinearGradient(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                const Color(0xff87CEEB),
-                const Color(0xff87CEEB),
-                const Color.fromARGB(255, 25, 178, 238),
-                const Color.fromARGB(255, 183, 163, 211),
-                const Color.fromARGB(255, 247, 190, 221),
-                const Color.fromARGB(255, 247, 244, 186),
-                const Color(0xff87CEEB),
-                const Color.fromARGB(255, 25, 178, 238),
+                Color(0xff87CEEB),
+                Color(0xff87CEEB),
+                Color.fromARGB(255, 25, 178, 238),
+                Color.fromARGB(255, 183, 163, 211),
+                Color.fromARGB(255, 247, 190, 221),
+                Color.fromARGB(255, 247, 244, 186),
+                Color(0xff87CEEB),
+                Color.fromARGB(255, 25, 178, 238),
               ],
             )),
             child: Stack(
@@ -207,8 +207,7 @@ class _CountdownPageState extends State<CountdownPage>
                               ? Padding(
                                   padding: EdgeInsets.fromLTRB(0, 120, 0,
                                       MediaQuery.of(context).size.height * 0.7),
-                                  child: Container(
-                                      child: Column(
+                                  child: Column(
                                     children: [
                                       const Text(
                                         "Meditation Complete!",
@@ -228,7 +227,7 @@ class _CountdownPageState extends State<CountdownPage>
                                             fontWeight: FontWeight.w400),
                                       ),
                                     ],
-                                  )),
+                                  ),
                                 )
                               : Padding(
                                   padding: EdgeInsets.fromLTRB(
@@ -525,21 +524,24 @@ class _CountdownPageState extends State<CountdownPage>
                                               }
 
                                               //update total meditation amount
-                                              String totalAmount =
-                                                  saveController.getValue(
-                                                      "total_minutes");
-                                              if (totalAmount == "") {
-                                                saveController
-                                                    .updateTotalAmount(
-                                                        timeInMinutes,
-                                                        timeInMinutes);
-                                              } else {
-                                                saveController
-                                                    .updateTotalAmount(
-                                                        int.parse(totalAmount) +
-                                                            timeInMinutes,
-                                                        timeInMinutes);
-                                              }
+                                              // String totalAmount =
+                                              //     saveController.getValue(
+                                              //         "total_minutes");
+                                              // if (totalAmount == "") {
+                                              //   saveController
+                                              //       .updateTotalAmount(
+                                              //           timeInMinutes,
+                                              //           timeInMinutes);
+                                              // } else {
+                                              //   saveController
+                                              //       .updateTotalAmount(
+                                              //           int.parse(totalAmount) +
+                                              //               timeInMinutes,
+                                              //           timeInMinutes);
+                                              // }
+
+                                              userController.logMeditation(
+                                                  timeInMinutes, date);
 
                                               userController.updateProperty(
                                                   UserProperty.gems,
@@ -553,11 +555,11 @@ class _CountdownPageState extends State<CountdownPage>
                                                 //Updating the egg progress if haven't already meditated today
                                                 logInfo(
                                                     "First time meditating today");
-                                                if (saveController.eggs.value >
+                                                if (userController
+                                                        .user.value.eggs >
                                                     0) {
-                                                  if (saveController
-                                                          .hatchProgressEggOne
-                                                          .value >=
+                                                  if (userController.user.value
+                                                          .hatchProgressEggOne >=
                                                       2) {
                                                     //Hatch a turtle!
                                                     userController
@@ -580,11 +582,16 @@ class _CountdownPageState extends State<CountdownPage>
 
                                                     //if future turtles exist, this will be the one that displays on the
                                                     //hatching turtle page
-                                                    if (saveController
-                                                        .eggType.isNotEmpty) {
+                                                    if (userController
+                                                        .user
+                                                        .value
+                                                        .eggTypes
+                                                        .isNotEmpty) {
                                                       String eggTypeNew =
-                                                          saveController
-                                                              .eggType[0];
+                                                          userController
+                                                              .user
+                                                              .value
+                                                              .eggTypes[0];
                                                       turtleToHatch = int.parse(
                                                           eggTypeNew
                                                               .split("-")[0]);
@@ -627,44 +634,22 @@ class _CountdownPageState extends State<CountdownPage>
                                                 eggController.addFutureTurtle(
                                                     tColor, tHatch);
 
-                                                if (saveController
-                                                        .getValue("eggs") ==
-                                                    "") {
-                                                  userController.updateProperty(
-                                                      UserProperty.eggs, 1);
-                                                } else {
-                                                  userController.updateProperty(
-                                                      UserProperty.eggs,
-                                                      userController
-                                                              .user.value.eggs +
-                                                          1);
-                                                }
+                                                userController.updateProperty(
+                                                    UserProperty.eggs,
+                                                    userController
+                                                            .user.value.eggs +
+                                                        1);
 
-                                                if (saveController.getValue(
-                                                        "total_eggs") ==
-                                                    "") {
-                                                  userController.updateProperty(
-                                                      UserProperty.totalEggs,
-                                                      1);
-                                                } else {
-                                                  userController.updateProperty(
-                                                      UserProperty.totalEggs,
-                                                      userController.user.value
-                                                              .totalEggs +
-                                                          1);
-                                                }
+                                                userController.updateProperty(
+                                                    UserProperty.totalEggs,
+                                                    userController.user.value
+                                                            .totalEggs +
+                                                        1);
                                               }
 
-                                              logInfo(
-                                                  "Saving last_meditated to ${date.toIso8601String()}");
-                                              saveController.saveValue(
-                                                  "last_meditated",
-                                                  date.toIso8601String());
-
                                               //Log the event to AppsFlyer
-                                              HeapService appsflyer =
-                                                  Get.find();
-                                              appsflyer.logEvent(
+                                              HeapService heap = Get.find();
+                                              heap.logEvent(
                                                   "MEDITATION_COMPLETE", {
                                                 "time": timeInMinutes.toString()
                                               });

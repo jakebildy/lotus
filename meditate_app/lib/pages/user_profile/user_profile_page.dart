@@ -6,6 +6,7 @@ import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/util.dart';
 
 import '../../models/user.dart';
+import 'send_vibe_widget.dart';
 
 class UserProfilePage extends StatefulWidget {
   final User user;
@@ -271,6 +272,7 @@ class _UserProfilePageState extends State<UserProfilePage>
             const SizedBox(
               height: 10,
             ),
+            SendVibeWidget(),
           ],
         ),
       ),

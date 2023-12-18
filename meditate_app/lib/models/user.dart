@@ -21,6 +21,8 @@ enum UserProperty {
   unlockedTurtleColors,
   meditationHistory,
   eggTypes,
+  emojiSendTime,
+  sentEmoji,
 }
 
 class User {
