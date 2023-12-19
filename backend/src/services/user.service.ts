@@ -83,6 +83,9 @@ export interface UserUpdate {
 
   streakFreezes?: number;
   eggTypes?: Array<string>;
+
+  emojisSentAt?: { [key: string]: Date };
+  sentEmojis?: { [key: string]: string };
 }
 
 

@@ -23,13 +23,16 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
   @override
   void initState() {
     super.initState();
+    setState(() {
+      lastSentAt = userController.user.value.emojisSentAt[widget.targetUserId];
+      selectedVibe = userController.user.value.sentEmojis[widget.targetUserId];
+    });
+
     _calculateNextAvailableTime();
   }
 
   void _calculateNextAvailableTime() {
     final DateTime now = DateTime.now();
-
-    // TODO: set lastSentAt to the user controller property if it exists
 
     if (lastSentAt != null &&
         now.difference(lastSentAt!) < const Duration(hours: 24)) {
