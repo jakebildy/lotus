@@ -176,7 +176,7 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
             tween: ConstantTween(1),
             builder: (context, child, value) {
               _simulateBubbles();
-              if (checkToStopAnimation == 0)
+              if (checkToStopAnimation == 0) {
                 return drawBubbles(
                   bubbles: BubbleModel(
                     bubbles: bubbles,
@@ -187,8 +187,9 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
                     shape: widget.shape,
                   ),
                 );
-              else
+              } else {
                 return Container(); // will display a empty container after playing the animations.
+              }
             },
           );
   }

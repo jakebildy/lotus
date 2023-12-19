@@ -26,7 +26,6 @@ class _AppPagesState extends State<AppPages> {
   Widget build(BuildContext context) {
     UserController userController = Get.find();
     NetworkStatusController network = Get.find();
-    bool isDarkMode = true;
 
     return Obx(
       () => Stack(
@@ -107,9 +106,7 @@ class _AppPagesState extends State<AppPages> {
                                                                   0
                                                           ? Colors.red
                                                           : Colors.grey
-                                                      : isDarkMode
-                                                          ? Colors.white
-                                                          : Colors.black),
+                                                      : Colors.white),
                                             ),
                                           ),
                                           const SizedBox(
@@ -148,9 +145,7 @@ class _AppPagesState extends State<AppPages> {
                                                               .value.gems ==
                                                           0
                                                       ? Colors.grey
-                                                      : isDarkMode
-                                                          ? Colors.white
-                                                          : Colors.black),
+                                                      : Colors.white),
                                             ),
                                           ),
                                           const SizedBox(

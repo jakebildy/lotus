@@ -143,7 +143,7 @@ class _DialPainter extends CustomPainter {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: getBaseUnitString(), //th: ${theta}',
-            style: TextStyle(color: Colors.white)),
+            style: const TextStyle(color: Colors.white)),
         textDirection: TextDirection.ltr)
       ..layout();
     textMinPainter.paint(
@@ -546,7 +546,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
     for (var duration in baseUnitMarkerValues) {
       var painter = TextPainter(
         text: TextSpan(
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             text: _durationToBaseUnitString(duration)),
         textDirection: TextDirection.ltr,
       )..layout();

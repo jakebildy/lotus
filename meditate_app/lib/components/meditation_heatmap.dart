@@ -84,8 +84,11 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
                           ),
                         ),
                         TextSpan(
-                          text:
-                              "${(formatDay(value) == "Today" ? "today" : "on " + formatDay(value)) + " " + Moon.emoji(value)}",
+                          text: (formatDay(value) == "Today"
+                                  ? "today"
+                                  : "on " + formatDay(value)) +
+                              " " +
+                              Moon.emoji(value),
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

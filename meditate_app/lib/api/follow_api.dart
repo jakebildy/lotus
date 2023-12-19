@@ -11,9 +11,7 @@ class FollowApi {
   FollowApi._internal();
 
   factory FollowApi() {
-    if (_singleton == null) {
-      _singleton = FollowApi._internal();
-    }
+    _singleton ??= FollowApi._internal();
     return _singleton;
   }
 
