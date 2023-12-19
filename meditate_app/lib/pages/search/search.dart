@@ -98,48 +98,45 @@ class StylistsSearchResults extends StatelessWidget {
               height: 176,
               child: Center(child: Text("Search for friends!")),
             )
-          : Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  searchController.searching.value
-                      ? SizedBox(
-                          height: MediaQuery.of(context).size.height - 500,
-                          child: const Center(
-                              child: SpinKitCircle(
-                            color: Colors.teal,
-                          )),
-                        )
-                      : searchController.userResults.length == 0
-                          ? const SizedBox(
-                              height: 176,
-                              child: Center(child: Text("No results.")),
-                            )
-                          : SizedBox(
-                              height: searchController.userResults.length * 72,
-                              child: ListView(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding:
-                                      const EdgeInsets.only(left: 0, right: 0),
-                                  scrollDirection: Axis.vertical,
-                                  children: List.generate(
-                                      searchController.userResults.length,
-                                      (int index) {
-                                    return (searchController
-                                                .userResults.length >
-                                            index)
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: FollowerWidget(
-                                                color: Colors.grey[850]!,
-                                                user: searchController
-                                                    .userResults[index]),
-                                          )
-                                        : Container();
-                                  })),
-                            )
-                ],
-              ),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                searchController.searching.value
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height - 500,
+                        child: const Center(
+                            child: SpinKitCircle(
+                          color: Colors.teal,
+                        )),
+                      )
+                    : searchController.userResults.isEmpty
+                        ? const SizedBox(
+                            height: 176,
+                            child: Center(child: Text("No results.")),
+                          )
+                        : SizedBox(
+                            height: searchController.userResults.length * 72,
+                            child: ListView(
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding:
+                                    const EdgeInsets.only(left: 0, right: 0),
+                                scrollDirection: Axis.vertical,
+                                children: List.generate(
+                                    searchController.userResults.length,
+                                    (int index) {
+                                  return (searchController.userResults.length >
+                                          index)
+                                      ? Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: FollowerWidget(
+                                              color: Colors.grey[850]!,
+                                              user: searchController
+                                                  .userResults[index]),
+                                        )
+                                      : Container();
+                                })),
+                          )
+              ],
             ),
     );
   }

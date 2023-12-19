@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/api/index.dart' as API;
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/controllers/user_controller.dart';
 
 Widget buildDeleteAccountPopup(BuildContext context) {
-  TextEditingController textEditingController = new TextEditingController();
   UserController userController = Get.find();
 
   return AlertDialog(
@@ -27,7 +26,7 @@ Widget buildDeleteAccountPopup(BuildContext context) {
             children: [
               TextButton(
                 onPressed: () async {
-                  await API.analytics.logUserEvent("DELETE_ACCOUNT_REQUEST");
+                  await api.analytics.logUserEvent("DELETE_ACCOUNT_REQUEST");
                   userController.logoutRequest();
                   Navigator.of(context).pop();
                 },

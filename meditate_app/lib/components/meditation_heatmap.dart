@@ -3,7 +3,6 @@ import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/crescent_time.dart';
-import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/util.dart';
 
 class MeditationHeatmap extends StatefulWidget {
@@ -84,8 +83,11 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
                           ),
                         ),
                         TextSpan(
-                          text:
-                              "${(formatDay(value) == "Today" ? "today" : "on " + formatDay(value)) + " " + Moon.emoji(value)}",
+                          text: (formatDay(value) == "Today"
+                                  ? "today"
+                                  : "on " + formatDay(value)) +
+                              " " +
+                              Moon.emoji(value),
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

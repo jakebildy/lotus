@@ -13,13 +13,6 @@ class Lotus extends SpriteComponent with HasGameRef, Tappable {
   Lotus(Vector2 position) : super(position: position);
 
   @override
-  void update(double dt) {
-    super.update(dt);
-    // angle += speed * dt;
-    // angle %= 2 * math.pi;
-  }
-
-  @override
   Future<void> onLoad() async {
     super.onLoad();
     sprite = await gameRef.loadSprite('game/lotus.png');

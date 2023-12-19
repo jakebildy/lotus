@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
-import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/logger.dart';
 
 /// FollowController handles following and unfollowing other users. Still have a bit of refactoring left to do.

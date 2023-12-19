@@ -3,17 +3,14 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
-import 'package:flame/palette.dart';
-import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
-import 'package:meditate_app/util/DEBUG_MODE.dart';
+import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'dart:math' as math;
 
@@ -124,7 +121,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                 children: <Widget>[
                   Text(
                       'You need to be a ${tierReadable(TURTLES[turtleType].tier)} to breed with this turtle!'),
-                  Text('\nIncrease your level by meditating more.'),
+                  const Text('\nIncrease your level by meditating more.'),
                 ],
               ),
             ),
@@ -152,7 +149,8 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
             child: ListBody(
               children: <Widget>[
                 (!DEBUG_MODE && userController.user.value.gems < 50)
-                    ? Text("You need at least 50 gems to breed this turtle!")
+                    ? const Text(
+                        "You need at least 50 gems to breed this turtle!")
                     : Text(
                         'Breed your ${TURTLE_COLORS_NAME[game.turtleColor.value]} ${TURTLES[game.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 gems?'),
               ],

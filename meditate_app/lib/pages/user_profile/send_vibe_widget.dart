@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import "package:meditate_app/api/index.dart" as api;
+import 'package:meditate_app/util/logger.dart';
 
 class SendVibeWidget extends StatefulWidget {
   final String targetUserId;
@@ -31,8 +32,9 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
     // TODO: set lastSentAt to the user controller property if it exists
 
     if (lastSentAt != null &&
-        now.difference(lastSentAt!) < Duration(hours: 24)) {
-      Duration timeLeft = Duration(hours: 24) - now.difference(lastSentAt!);
+        now.difference(lastSentAt!) < const Duration(hours: 24)) {
+      Duration timeLeft =
+          const Duration(hours: 24) - now.difference(lastSentAt!);
       setState(() {
         nextAvailableTime =
             "${timeLeft.inHours} more hours to send another emoji";
@@ -52,7 +54,7 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
     final DateTime now = DateTime.now();
 
     if (lastSentAt == null ||
-        now.difference(lastSentAt!) >= Duration(hours: 24)) {
+        now.difference(lastSentAt!) >= const Duration(hours: 24)) {
       userController.updateProperty(UserProperty.emojisSentAt, {
         widget.targetUserId: now,
         ...userController.user.value.emojisSentAt
@@ -72,7 +74,7 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
     }
 
     setState(() {
-      print("Next available time: $nextAvailableTime");
+      logInfo("Next available time: $nextAvailableTime");
     }); // Refresh UI
   }
 
@@ -80,69 +82,66 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                nextAvailableTime ?? "Send them an emoji",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: (nextAvailableTime != null
-                        ? Colors.grey
-                        : Colors.white)),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              nextAvailableTime ?? "Send them an emoji",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color:
+                      (nextAvailableTime != null ? Colors.grey : Colors.white)),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Vibe(
+                vibe: '🔥',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Vibe(
-                  vibe: '🔥',
-                  onSelect: selectVibe,
-                  isDisabled: nextAvailableTime != null,
-                  selectedVibe: selectedVibe ?? "",
-                ),
-                Vibe(
-                  vibe: '💜',
-                  onSelect: selectVibe,
-                  isDisabled: nextAvailableTime != null,
-                  selectedVibe: selectedVibe ?? "",
-                ),
-                Vibe(
-                  vibe: '❤️',
-                  onSelect: selectVibe,
-                  isDisabled: nextAvailableTime != null,
-                  selectedVibe: selectedVibe ?? "",
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Vibe(
-                  vibe: '👉',
-                  onSelect: selectVibe,
-                  isDisabled: nextAvailableTime != null,
-                  selectedVibe: selectedVibe ?? "",
-                ),
-                Vibe(
-                  vibe: '👋',
-                  onSelect: selectVibe,
-                  isDisabled: nextAvailableTime != null,
-                  selectedVibe: selectedVibe ?? "",
-                ),
-                Vibe(
-                  vibe: '🙌',
-                  onSelect: selectVibe,
-                  isDisabled: nextAvailableTime != null,
-                  selectedVibe: selectedVibe ?? "",
-                ),
-              ],
-            ),
-          ],
-        ),
+              Vibe(
+                vibe: '💜',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
+              ),
+              Vibe(
+                vibe: '❤️',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Vibe(
+                vibe: '👉',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
+              ),
+              Vibe(
+                vibe: '👋',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
+              ),
+              Vibe(
+                vibe: '🙌',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -183,11 +182,11 @@ class _VibeState extends State<Vibe> {
                   ? Colors.white24
                   : widget.isDisabled
                       ? Colors.transparent
-                      : Color.fromARGB(255, 46, 48, 59),
+                      : const Color.fromARGB(255, 46, 48, 59),
               border: Border.all(
                 color: widget.isDisabled
                     ? Colors.grey
-                    : Color.fromARGB(255, 81, 80, 107),
+                    : const Color.fromARGB(255, 81, 80, 107),
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(20),

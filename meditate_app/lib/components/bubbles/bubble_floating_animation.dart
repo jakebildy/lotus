@@ -78,8 +78,7 @@ class BubbleFloatingAnimation {
   /// Shuffles the position of bubbles around the screen.s
   void _shuffle() {
     startTime -= Duration(
-      milliseconds:
-          (this.random.nextDouble() * duration.inMilliseconds).round(),
+      milliseconds: (random.nextDouble() * duration.inMilliseconds).round(),
     );
   }
 
@@ -151,20 +150,20 @@ class BubbleModel extends CustomPainter {
         animation.get<double>(_OffsetProps.x) * size.width,
         animation.get<double>(_OffsetProps.y) * size.height,
       );
-      if (shape == BubbleShape.circle)
+      if (shape == BubbleShape.circle) {
         canvas.drawCircle(
           position,
           size.width * sizeFactor * particle.size,
           paint,
         );
-      else if (shape == BubbleShape.square)
+      } else if (shape == BubbleShape.square) {
         canvas.drawRect(
             Rect.fromCircle(
               center: position,
               radius: size.width * sizeFactor * particle.size,
             ),
             paint);
-      else {
+      } else {
         Rect rect() => Rect.fromCircle(
               center: position,
               radius: size.width * sizeFactor * particle.size,

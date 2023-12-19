@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/login/login.dart';
 
@@ -71,7 +69,7 @@ class Signup extends StatelessWidget {
                         const SizedBox(height: 20),
                         Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: this.isPopup == true ? 0 : 50),
+                                horizontal: isPopup == true ? 0 : 50),
                             // First Name
                             child: TextField(
                               textAlign: TextAlign.center,
@@ -100,7 +98,7 @@ class Signup extends StatelessWidget {
                         const SizedBox(height: 30),
                         Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: this.isPopup == true ? 0 : 50),
+                                horizontal: isPopup == true ? 0 : 50),
                             // User Name
                             child: TextField(
                               inputFormatters: [
@@ -133,7 +131,7 @@ class Signup extends StatelessWidget {
                         const SizedBox(height: 30),
                         Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: this.isPopup == true ? 0 : 50),
+                                horizontal: isPopup == true ? 0 : 50),
                             // Email
                             child: TextField(
                               textAlign: TextAlign.center,
@@ -162,7 +160,7 @@ class Signup extends StatelessWidget {
                         const SizedBox(height: 30),
                         Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: this.isPopup == true ? 0 : 50),
+                                horizontal: isPopup == true ? 0 : 50),
                             // Password
                             child: TextField(
                               textAlign: TextAlign.center,
@@ -192,7 +190,7 @@ class Signup extends StatelessWidget {
                         const SizedBox(height: 60),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: this.isPopup == true ? 0 : 50),
+                              horizontal: isPopup == true ? 0 : 50),
                           child: ElevatedButton(
                               style: ButtonStyle(
                                   elevation:

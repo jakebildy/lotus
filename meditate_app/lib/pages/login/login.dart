@@ -46,7 +46,7 @@ class Login extends StatelessWidget {
                     children: [
                       const SizedBox(height: 20),
                       Center(
-                          child: Container(
+                          child: SizedBox(
                               height: 100,
                               child: Hero(
                                   tag: "Logo",

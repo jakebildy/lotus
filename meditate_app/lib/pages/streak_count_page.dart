@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/app_pages.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:animated_counter/animated_counter.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
 import 'package:meditate_app/pages/turtle_hatch_page.dart';

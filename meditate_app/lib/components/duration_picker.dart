@@ -123,7 +123,7 @@ class _DialPainter extends CustomPainter {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: '$secondaryUnits$baseUnits',
-            style: Theme.of(context).textTheme.headline2!.copyWith(
+            style: Theme.of(context).textTheme.displayMedium!.copyWith(
                 fontSize: size.shortestSide * 0.15, color: Colors.white)),
         textDirection: TextDirection.ltr)
       ..layout();
@@ -143,7 +143,7 @@ class _DialPainter extends CustomPainter {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: getBaseUnitString(), //th: ${theta}',
-            style: TextStyle(color: Colors.white)),
+            style: const TextStyle(color: Colors.white)),
         textDirection: TextDirection.ltr)
       ..layout();
     textMinPainter.paint(
@@ -509,8 +509,6 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
   }
 
   List<TextPainter> _buildBaseUnitLabels(TextTheme textTheme) {
-    final style = textTheme.subtitle1;
-
     var baseUnitMarkerValues = <Duration>[];
 
     switch (widget.baseUnit) {
@@ -548,7 +546,7 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
     for (var duration in baseUnitMarkerValues) {
       var painter = TextPainter(
         text: TextSpan(
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             text: _durationToBaseUnitString(duration)),
         textDirection: TextDirection.ltr,
       )..layout();

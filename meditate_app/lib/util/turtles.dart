@@ -1,8 +1,9 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 
 enum Rarity { COMMON, RARE, LEGENDARY }

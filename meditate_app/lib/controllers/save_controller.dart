@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
-import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/api/index.dart' as api;
 
 import '../models/user.dart';
 
@@ -66,7 +66,7 @@ class SaveController extends GetxController {
     // Upload last meditated date
     String lastMeditated = getValue("last_meditated");
     if (lastMeditated != "") {
-      await Api.user.updateUserAttribute("lastMeditated", lastMeditated);
+      await api.user.updateUserAttribute("lastMeditated", lastMeditated);
     }
 
     // Upload meditation times for the past week
@@ -79,8 +79,8 @@ class SaveController extends GetxController {
       meditationTimes.add(value != "" ? double.parse(value) : 0.0);
       today = today.subtract(const Duration(days: 1));
     }
-    await Api.user.updateUserAttribute("meditationTimes", meditationTimes);
-    await Api.user
+    await api.user.updateUserAttribute("meditationTimes", meditationTimes);
+    await api.user
         .updateUserAttribute("meditationTimesAsOf", date.toIso8601String());
 
     // Upload unlocked turtles by their names
@@ -92,7 +92,7 @@ class SaveController extends GetxController {
         unlockedTurtlesNames.add(turtle.name);
       }
     }
-    await Api.user.updateUserAttribute("unlockedTurtles", unlockedTurtlesNames);
+    await api.user.updateUserAttribute("unlockedTurtles", unlockedTurtlesNames);
 
     // Upload unlocked turtle colors
     List<List<int>> unlockedTurtleColors = [];
@@ -107,7 +107,7 @@ class SaveController extends GetxController {
         unlockedTurtleColors.add(colors);
       }
     }
-    await Api.user
+    await api.user
         .updateUserAttribute("unlockedTurtleColors", unlockedTurtleColors);
 
     // Upload the entire meditation history for the past year
@@ -122,10 +122,10 @@ class SaveController extends GetxController {
         if (historyValue != "") {
           meditationHistory[historyKey] = double.parse(historyValue).round();
         }
-        today = today.subtract(Duration(days: 1));
+        today = today.subtract(const Duration(days: 1));
       }
 
-      await Api.user
+      await api.user
           .updateUserAttribute("meditationHistory", meditationHistory);
     }
   }
@@ -188,21 +188,21 @@ class SaveController extends GetxController {
 
     // Load unlocked turtle data
     for (int i = 0; i < TURTLES.length; i++) {
-      if (getValue('turtle-${i}') != "") {
-        unlockedTurtles.add(int.parse(getValue('turtle-${i}')));
+      if (getValue('turtle-$i') != "") {
+        unlockedTurtles.add(int.parse(getValue('turtle-$i')));
 
-        if (getValue('turtle-${i}-color') != "") {
+        if (getValue('turtle-$i-color') != "") {
           unlockedTurtleColors.add(
-              getValue('turtle-${i}-color').split(',').map(int.parse).toList());
+              getValue('turtle-$i-color').split(',').map(int.parse).toList());
           unlockedTurtleColors[i].add(-1);
         } else {
           // Generate random turtle colors if not available
           unlockedTurtleColors.add(List<int>.generate(
-              int.parse(getValue('turtle-${i}')),
+              int.parse(getValue('turtle-$i')),
               (i) => Random().nextInt(TURTLE_COLORS.length)));
 
           saveValue(
-              "turtle-${i}-color",
+              "turtle-$i-color",
               unlockedTurtleColors[i]
                   .toString()
                   .replaceAll("[", "")

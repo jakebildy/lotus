@@ -39,8 +39,8 @@ class UserStreakChart extends StatelessWidget {
                     barWidth: 5,
                     belowBarData: BarAreaData(
                       show: true,
-                      gradientFrom: Offset(1, 1),
-                      gradientTo: Offset(1, 0),
+                      gradientFrom: const Offset(1, 1),
+                      gradientTo: const Offset(1, 0),
                       gradientColorStops: [0.05, 0.15, 0.35, 1],
                       colors: [
                         // Color.fromARGB(0, 255, 153, 0),

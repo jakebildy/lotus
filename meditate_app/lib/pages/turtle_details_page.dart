@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
-import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
-import 'package:meditate_app/pages/stats_page.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
-import 'package:shimmer/shimmer.dart';
 
 class TurtleDetailsPage extends StatefulWidget {
   final int id;
@@ -31,7 +23,6 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
   Widget build(BuildContext context) {
     GameController gameController = Get.find();
     UserController userController = Get.find();
-    bool isDarkMode = true;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -72,7 +63,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                 const SizedBox(
                   height: 40,
                 ),
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   //color: Colors.white24,
                   height: 300,

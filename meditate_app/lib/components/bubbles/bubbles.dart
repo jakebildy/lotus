@@ -119,7 +119,7 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
 
   @override
   void initState() {
-    final _random = new Random();
+    final _random = Random();
     for (int i = 0; i < widget.noOfBubbles; i++) {
       bubbles.add(
         BubbleFloatingAnimation(
@@ -129,12 +129,13 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
         ),
       );
     }
-    if (widget.duration != null && widget.duration != 0)
+    if (widget.duration != null && widget.duration != 0) {
       Timer(Duration(seconds: widget.duration!), () {
         setState(() {
           checkToStopAnimation = 1;
         });
       });
+    }
     super.initState();
   }
 
@@ -175,7 +176,7 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
             tween: ConstantTween(1),
             builder: (context, child, value) {
               _simulateBubbles();
-              if (checkToStopAnimation == 0)
+              if (checkToStopAnimation == 0) {
                 return drawBubbles(
                   bubbles: BubbleModel(
                     bubbles: bubbles,
@@ -186,8 +187,9 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
                     shape: widget.shape,
                   ),
                 );
-              else
+              } else {
                 return Container(); // will display a empty container after playing the animations.
+              }
             },
           );
   }

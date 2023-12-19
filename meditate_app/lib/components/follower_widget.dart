@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
@@ -34,15 +33,15 @@ class FollowerWidget extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Container(
+                        SizedBox(
                             height: 40,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(60),
                                 child: Image.network(user.avatar))),
-                        SizedBox(
+                        const SizedBox(
                           width: 30,
                         ),
                         Column(
@@ -50,7 +49,7 @@ class FollowerWidget extends StatelessWidget {
                           children: [
                             Text(
                               user.fullName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),
                             Row(
@@ -58,16 +57,16 @@ class FollowerWidget extends StatelessWidget {
                               children: [
                                 Text(
                                   "${user.streak}",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.grey, fontSize: 14),
                                 ),
-                                Container(
+                                SizedBox(
                                     height: 13,
                                     child:
                                         Image.asset(userStreakIconURL(user))),
                                 Text(
                                   " • ${user.totalMinutes} min total",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.grey, fontSize: 14),
                                 ),
                               ],
@@ -83,20 +82,20 @@ class FollowerWidget extends StatelessWidget {
                                 padding: const EdgeInsets.all(0.0),
                                 child: OutlinedButton(
                                     style: OutlinedButton.styleFrom(
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                           width: 1.0, color: Colors.white),
-                                      shape: StadiumBorder(),
+                                      shape: const StadiumBorder(),
                                     ),
                                     onPressed: () {},
-                                    child: Text("You",
+                                    child: const Text("You",
                                         style:
                                             TextStyle(color: Colors.white)))))
                         : follow.usersFollowing
                                 .map((element) => element.id)
                                 .contains(user.id)
-                            ? Align(
+                            ? const Align(
                                 alignment: Alignment.centerRight,
-                                child: Container(
+                                child: SizedBox(
                                     height: 40,
                                     child:
                                         Icon(Icons.arrow_forward_ios_rounded)))
@@ -106,9 +105,9 @@ class FollowerWidget extends StatelessWidget {
                                   padding: const EdgeInsets.all(0.0),
                                   child: OutlinedButton(
                                       style: OutlinedButton.styleFrom(
-                                        side: BorderSide(
+                                        side: const BorderSide(
                                             width: 1.0, color: Colors.teal),
-                                        shape: StadiumBorder(),
+                                        shape: const StadiumBorder(),
                                       ),
                                       onPressed: () {
                                         follow.followStylist(user);
@@ -116,14 +115,14 @@ class FollowerWidget extends StatelessWidget {
                                         HeapService appsflyer = Get.find();
                                         appsflyer.logEvent("FOLLOW", {});
                                       },
-                                      child: Text("Follow",
+                                      child: const Text("Follow",
                                           style: TextStyle(
                                               color: Colors.tealAccent))),
                                 ),
                               )
                   ],
                 ),
-                Divider()
+                const Divider()
               ],
             ),
           ),

@@ -17,7 +17,7 @@ class SearchApi {
   //Endpoints
 
   Future<List<User>> searchUsers(String query) async {
-    final response = await http.get(api.https(url, "/api/user/search/${query}"),
+    final response = await http.get(api.https(url, "/api/user/search/$query"),
         headers: api.headers);
     if (response.statusCode == 200) {
       return User.listFromJson(json.decode(response.body));

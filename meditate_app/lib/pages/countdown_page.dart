@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
@@ -12,7 +11,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
-import 'package:meditate_app/util/DEBUG_MODE.dart';
+import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -61,7 +60,7 @@ class _CountdownPageState extends State<CountdownPage>
     UserController userController = Get.find();
     SaveController saveController = Get.find();
 
-    bell = new AudioPlayer();
+    bell = AudioPlayer();
     bell.setVolume(10.0);
     bell.play(AssetSource('audio/tibetan_chime.wav'));
     if (saveController.ambienceOn.value) {
@@ -129,9 +128,6 @@ class _CountdownPageState extends State<CountdownPage>
 
   @override
   Widget build(BuildContext context) {
-    var brightness = SchedulerBinding.instance.window.platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
-
     return Stack(
       children: [
         Container(
@@ -171,7 +167,7 @@ class _CountdownPageState extends State<CountdownPage>
                 WaveWidget(
                   config: CustomConfig(
                     colors: [
-                      const Color(0x338006994),
+                      const Color.fromRGBO(0, 105, 147, 0.22),
                       const Color(0x3300BBF9),
                     ],
                     durations: [

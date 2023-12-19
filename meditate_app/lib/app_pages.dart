@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/loading_page.dart';
 import 'package:meditate_app/pages/profile_page.dart';
 import 'package:meditate_app/pages/signup/signup.dart';
@@ -28,7 +26,6 @@ class _AppPagesState extends State<AppPages> {
   Widget build(BuildContext context) {
     UserController userController = Get.find();
     NetworkStatusController network = Get.find();
-    bool isDarkMode = true;
 
     return Obx(
       () => Stack(
@@ -65,109 +62,99 @@ class _AppPagesState extends State<AppPages> {
                                     ],
                                   )
                                 : Container(),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(const StatsPage());
-                                    },
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                                height: 27,
-                                                child: Image.asset(
-                                                    userController
-                                                        .streakIconURL())),
-                                            const SizedBox(
-                                              width: 3,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(const StatsPage());
+                                  },
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                              height: 27,
+                                              child: Image.asset(userController
+                                                  .streakIconURL())),
+                                          const SizedBox(
+                                            width: 3,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 4.0, 0, 0),
+                                            child: Text(
+                                              userController.user.value.streak
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  color: userController
+                                                                  .user
+                                                                  .value
+                                                                  .streak ==
+                                                              0 ||
+                                                          !userController
+                                                              .hasDoneStreakToday
+                                                              .value
+                                                      ? DateTime.now().hour >
+                                                                  21 &&
+                                                              userController
+                                                                      .user
+                                                                      .value
+                                                                      .streak >
+                                                                  0
+                                                          ? Colors.red
+                                                          : Colors.grey
+                                                      : Colors.white),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 4.0, 0, 0),
-                                              child: Text(
-                                                userController.user.value.streak
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: userController
-                                                                    .user
-                                                                    .value
-                                                                    .streak ==
-                                                                0 ||
-                                                            !userController
-                                                                .hasDoneStreakToday
-                                                                .value
-                                                        ? DateTime.now().hour >
-                                                                    21 &&
-                                                                userController
-                                                                        .user
-                                                                        .value
-                                                                        .streak >
-                                                                    0
-                                                            ? Colors.red
-                                                            : Colors.grey
-                                                        : isDarkMode
-                                                            ? Colors.white
-                                                            : Colors.black),
-                                              ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _page = 1;
+                                    });
+                                  },
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                              height: 27,
+                                              child: Image.asset(
+                                                  "assets/sand_dollar.png")),
+                                          const SizedBox(
+                                            width: 3,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 4.0, 0, 0),
+                                            child: Text(
+                                              userController.user.value.gems
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  color: userController.user
+                                                              .value.gems ==
+                                                          0
+                                                      ? Colors.grey
+                                                      : Colors.white),
                                             ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                          ],
-                                        )),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _page = 1;
-                                      });
-                                    },
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                                height: 27,
-                                                child: Image.asset(
-                                                    "assets/sand_dollar.png")),
-                                            const SizedBox(
-                                              width: 3,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 4.0, 0, 0),
-                                              child: Text(
-                                                userController.user.value.gems
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: userController.user
-                                                                .value.gems ==
-                                                            0
-                                                        ? Colors.grey
-                                                        : isDarkMode
-                                                            ? Colors.white
-                                                            : Colors.black),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                          ],
-                                        )),
-                                  ),
-                                ],
-                              ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              ],
                             ),
                           ],
                         )),
@@ -190,44 +177,44 @@ class _AppPagesState extends State<AppPages> {
                       items: [
                         BottomNavigationBarItem(
                             icon: _page == 0
-                                ? Container(
+                                ? SizedBox(
                                     height: 35,
                                     child: Image.asset(
                                         "assets/meditate_selected.png"))
-                                : Container(
+                                : SizedBox(
                                     height: 35,
                                     child: Image.asset(
                                         "assets/meditate_unselected.png")),
                             label: "Home"),
                         BottomNavigationBarItem(
                             icon: _page == 1
-                                ? Container(
+                                ? SizedBox(
                                     height: 30,
                                     child: Image.asset(
                                         "assets/store_selected.png"))
-                                : Container(
+                                : SizedBox(
                                     height: 30,
                                     child: Image.asset(
                                         "assets/store_unselected.png")),
                             label: "Shop"),
                         BottomNavigationBarItem(
                             icon: _page == 2
-                                ? Container(
+                                ? SizedBox(
                                     height: 35,
                                     child: Image.asset(
                                         "assets/turtle_selected.png"))
-                                : Container(
+                                : SizedBox(
                                     height: 35,
                                     child: Image.asset(
                                         "assets/turtle_unselected.png")),
                             label: "Turtles"),
                         BottomNavigationBarItem(
                             icon: _page == 3
-                                ? Container(
+                                ? SizedBox(
                                     height: 30,
                                     child: Image.asset(
                                         "assets/profile_selected.png"))
-                                : Container(
+                                : SizedBox(
                                     height: 30,
                                     child: Image.asset(
                                         "assets/profile_unselected.png")),
