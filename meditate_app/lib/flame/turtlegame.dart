@@ -289,7 +289,7 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
 
     return Stack(
       children: [
-        GameWidget.controlled(gameFactory: TurtleGame.new),
+        const GameWidget.controlled(gameFactory: TurtleGame.new),
         SizedBox(
             height: 100,
             child: AppBar(

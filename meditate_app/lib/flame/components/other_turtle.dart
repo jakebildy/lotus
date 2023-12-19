@@ -3,17 +3,14 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
-import 'package:flame/palette.dart';
-import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
-import 'package:meditate_app/util/DEBUG_MODE.dart';
+import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'dart:math' as math;
 

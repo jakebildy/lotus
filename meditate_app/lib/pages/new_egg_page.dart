@@ -51,80 +51,77 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
     UserController user = Get.find();
     return Scaffold(
         // backgroundColor: Colors.white,
-        body: Container(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-                height: 200,
-                child: ShakeWidget(
-                    // 4. pass the GlobalKey as an argument
-                    key: shakeKey,
-                    // 5. configure the animation parameters
-                    shakeCount: 3,
-                    shakeOffset: 10,
-                    shakeDuration: const Duration(milliseconds: 500),
-                    child: GestureDetector(
-                        onTap: () {
-                          HapticFeedback.mediumImpact();
-                          shakeKey.currentState?.shake();
-                        },
-                        child: Stack(
-                          children: [
-                            Image.asset("assets/egg.png"),
-                            ColorFiltered(
-                                colorFilter: ColorFilter.mode(
-                                    TURTLE_COLORS[int.parse(user
-                                            .user.value.eggTypes.last
-                                            .split("-")[1])]
-                                        .withOpacity(0.8),
-                                    BlendMode.srcATop),
-                                child: Image.asset(
-                                  "assets/egg_spots.png",
-                                  // height: 60,
-                                )),
-                          ],
-                        )))),
-            const SizedBox(
-              height: 50,
-            ),
-            Container(
-              height: 50,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("You found an egg!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Hatch it by meditating multiple days in a row.",
-                  style: TextStyle(fontSize: 14)),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            GestureDetector(
-              onTap: () {
-                Get.offAll(const AppPages());
-              },
-              child: Container(
-                  color: const Color.fromARGB(255, 16, 77, 127),
-                  child: const Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
-                    child: Text(
-                      "Continue",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
-                  )),
-            )
-          ],
-        ),
+        body: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+              height: 200,
+              child: ShakeWidget(
+                  // 4. pass the GlobalKey as an argument
+                  key: shakeKey,
+                  // 5. configure the animation parameters
+                  shakeCount: 3,
+                  shakeOffset: 10,
+                  shakeDuration: const Duration(milliseconds: 500),
+                  child: GestureDetector(
+                      onTap: () {
+                        HapticFeedback.mediumImpact();
+                        shakeKey.currentState?.shake();
+                      },
+                      child: Stack(
+                        children: [
+                          Image.asset("assets/egg.png"),
+                          ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  TURTLE_COLORS[int.parse(user
+                                          .user.value.eggTypes.last
+                                          .split("-")[1])]
+                                      .withOpacity(0.8),
+                                  BlendMode.srcATop),
+                              child: Image.asset(
+                                "assets/egg_spots.png",
+                                // height: 60,
+                              )),
+                        ],
+                      )))),
+          const SizedBox(
+            height: 50,
+          ),
+          Container(
+            height: 50,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("You found an egg!",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text("Hatch it by meditating multiple days in a row.",
+                style: TextStyle(fontSize: 14)),
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.offAll(const AppPages());
+            },
+            child: Container(
+                color: const Color.fromARGB(255, 16, 77, 127),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
+                  child: Text(
+                    "Continue",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                )),
+          )
+        ],
       ),
     ));
   }

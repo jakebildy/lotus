@@ -22,7 +22,7 @@ class TurtleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bounce(
-      duration: Duration(milliseconds: 110),
+      duration: const Duration(milliseconds: 110),
       onPressed: () {
         if (unlocked) {
           HapticFeedback.lightImpact();
@@ -36,7 +36,7 @@ class TurtleCard extends StatelessWidget {
               backgroundColor: tierColor(TURTLES[id].tier),
               content: Text(
                 "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               )));
         }
       },
@@ -47,7 +47,7 @@ class TurtleCard extends StatelessWidget {
             children: [
               unlocked
                   ? Hero(
-                      tag: "turtle-${id}",
+                      tag: "turtle-$id",
                       child: Stack(
                         children: [
                           Image.asset("assets/images/turtles/swim/swim1.png"),
@@ -57,7 +57,7 @@ class TurtleCard extends StatelessWidget {
                                       TURTLE_COLORS[color].withOpacity(0.5),
                                       BlendMode.srcATop),
                                   child: Image.asset(
-                                      "assets/images/turtles/${id}.png"))
+                                      "assets/images/turtles/$id.png"))
                               : Container(),
                           id != 10
                               ? Container()
@@ -73,8 +73,8 @@ class TurtleCard extends StatelessWidget {
                           id >= 0 && id < TURTLES.length
                               ? Image.asset("assets/images/turtles/locked.png")
                               : Container(),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Icon(Icons.lock),
                           ),
                         ],

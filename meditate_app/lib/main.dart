@@ -23,12 +23,12 @@ Future<void> main() async {
   }
 
   Get.put(PushNotificationService());
-  Get.put(NetworkStatusController());
 
   Get.put(SaveController()); //TODO: deprecate
   Get.put(CookieController());
 
   Get.put(UserController());
+  Get.put(NetworkStatusController());
   Get.put(AuthController());
   Get.put(HeapService());
   Get.put(GameController());

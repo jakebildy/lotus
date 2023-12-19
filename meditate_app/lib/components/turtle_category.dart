@@ -47,7 +47,7 @@ class TurtleCategory extends StatelessWidget {
             children: [
               unlocked
                   ? Hero(
-                      tag: "turtle-${id}",
+                      tag: "turtle-$id",
                       child: Stack(
                         children: [
                           Image.asset("assets/images/turtles/swim/swim1.png"),
@@ -58,7 +58,7 @@ class TurtleCategory extends StatelessWidget {
                                           .withOpacity(0.5),
                                       BlendMode.srcATop),
                                   child: Image.asset(
-                                      "assets/images/turtles/${id}.png"))
+                                      "assets/images/turtles/$id.png"))
                               : Container(),
                           id != 10
                               ? Container()

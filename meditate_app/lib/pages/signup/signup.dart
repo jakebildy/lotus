@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/login/login.dart';
 

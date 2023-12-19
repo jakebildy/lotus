@@ -8,7 +8,7 @@ import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
 
 import '../components/duration_picker.dart';
-import '../util/DEBUG_MODE.dart';
+import '../util/debug_mode.dart';
 
 class BeginMeditationPage extends StatefulWidget {
   const BeginMeditationPage({Key? key}) : super(key: key);
@@ -159,9 +159,9 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                       (DEBUG_MODE == true
                                           ? const Duration(minutes: 1)
                                           : const Duration(minutes: 5))
-                              ? SizedBox(
+                              ? const SizedBox(
                                   height: 50,
-                                  child: const Padding(
+                                  child: Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 30.0),
                                     child: Text(

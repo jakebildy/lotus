@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/services/heap_service.dart';
-import 'package:meditate_app/util/DEBUG_MODE.dart';
+import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class EggCard extends StatelessWidget {

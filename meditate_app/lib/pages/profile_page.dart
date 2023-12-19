@@ -88,21 +88,18 @@ class _ProfilePageState extends State<ProfilePage>
                           padding: const EdgeInsets.all(2.0),
                           child: SizedBox(
                               height: 80,
-                              child: userController.user.value.avatar == null
-                                  ? Image.asset("assets/profile_selected.png")
-                                  : Center(
-                                      child: Hero(
-                                        tag: "profile_picture",
-                                        child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(60)),
-                                            child: Image.network(
-                                              userController.user.value.avatar,
-                                              fit: BoxFit.fill,
-                                            )),
-                                      ),
-                                    )),
+                              child: Center(
+                                child: Hero(
+                                  tag: "profile_picture",
+                                  child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(60)),
+                                      child: Image.network(
+                                        userController.user.value.avatar,
+                                        fit: BoxFit.fill,
+                                      )),
+                                ),
+                              )),
                         ),
                       ),
                     )),

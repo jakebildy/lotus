@@ -122,7 +122,7 @@ class SaveController extends GetxController {
         if (historyValue != "") {
           meditationHistory[historyKey] = double.parse(historyValue).round();
         }
-        today = today.subtract(Duration(days: 1));
+        today = today.subtract(const Duration(days: 1));
       }
 
       await api.user

@@ -23,7 +23,6 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
   Widget build(BuildContext context) {
     GameController gameController = Get.find();
     UserController userController = Get.find();
-    bool isDarkMode = true;
 
     return Scaffold(
       extendBodyBehindAppBar: true,

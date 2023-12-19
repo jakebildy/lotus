@@ -3,7 +3,6 @@ import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/crescent_time.dart';
-import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/util.dart';
 
 class MeditationHeatmap extends StatefulWidget {

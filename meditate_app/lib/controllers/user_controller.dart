@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/cookie_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
@@ -74,6 +73,7 @@ class UserController extends GetxController {
   Future<void> updateProperty(UserProperty property, dynamic value) async {
     // If the user is online, update the database - otherwise, update the local storage
     if (user == databaseUser) {
+      // TODO: fix DateTime object issue
       await api.user.updateUserAttribute(property.toString(), value);
       databaseUser.value = await api.user.me();
     } else {
@@ -87,7 +87,7 @@ class UserController extends GetxController {
     // between databaseUser and localStorageUser,
     //select the one where lastUpdatedAt was more recent or exists* and sync both
 
-    // If no lastUpdatedAt in localStorage, add it, and call syncData()
+    // If no lastUpdatedAt in localStorage, add it, and sync databaseUser to match localStorageUser
   }
 
   int totalMinutes() {

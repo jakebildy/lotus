@@ -80,7 +80,7 @@ class _LoadingPageState extends State<LoadingPage> {
                 // If the widget is hidden, animate to 1.0 (fully visible).
                 opacity: opacity,
                 duration: const Duration(milliseconds: 2000),
-                child: Container(
+                child: SizedBox(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Center(
