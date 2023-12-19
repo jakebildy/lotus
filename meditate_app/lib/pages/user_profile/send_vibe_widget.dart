@@ -26,6 +26,9 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
     setState(() {
       lastSentAt = userController.user.value.emojisSentAt[widget.targetUserId];
       selectedVibe = userController.user.value.sentEmojis[widget.targetUserId];
+      logSuccess(widget.targetUserId +
+          "!!!" +
+          userController.user.value.sentEmojis.toString());
     });
 
     _calculateNextAvailableTime();

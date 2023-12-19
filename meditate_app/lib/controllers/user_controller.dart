@@ -77,8 +77,10 @@ class UserController extends GetxController {
         value =
             value.map((key, value) => MapEntry(key, value.toIso8601String()));
       }
-      await api.user.updateUserAttribute(property.toString(), value);
+      logSuccess("UPDATING PROPERTY:" + property.name + ":" + value.toString());
+      await api.user.updateUserAttribute(property.name, value);
       databaseUser.value = await api.user.me();
+      update();
     } else {
       User newUser = localStorageUser.value;
       // TODO: update the specific property

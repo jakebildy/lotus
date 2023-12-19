@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../util/logger.dart';
+
 const String defaultProfilePicture =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
@@ -87,8 +89,8 @@ class User {
     this.unlockedTurtleColors = const [],
     this.eggTypes = const [],
   })  : meditationHistory = meditationHistory ?? <DateTime, int>{}.obs,
-        emojisSentAt = <String, DateTime>{}.obs,
-        sentEmojis = <String, String>{}.obs;
+        emojisSentAt = emojisSentAt ?? <String, DateTime>{}.obs,
+        sentEmojis = sentEmojis ?? <String, String>{}.obs;
 
   // Method to parse the meditation history according to the key format used in loadData
   static Map<DateTime, int> _parseMeditationHistory(
@@ -101,6 +103,14 @@ class User {
       meditationHistory[date] = duration;
     });
     return meditationHistory;
+  }
+
+  static Map<String, String> _parseSentEmojis(Map<String, dynamic>? jsonMap) {
+    Map<String, String> sentEmojis = {};
+    jsonMap?.forEach((key, value) {
+      sentEmojis[key] = value.toString();
+    });
+    return sentEmojis;
   }
 
   // Method to create a User object from a JSON map
@@ -148,10 +158,8 @@ class User {
               ?.map((key, value) => MapEntry(key, DateTime.parse(value)))
               .obs ??
           <String, DateTime>{}.obs,
-      sentEmojis: (map["sentEmojis"] as Map<String, dynamic>?)
-              ?.map((key, value) => MapEntry(key, value.toString()))
-              .obs ??
-          <String, String>{}.obs,
+      sentEmojis:
+          _parseSentEmojis(map["sentEmojis"] as Map<String, dynamic>?).obs,
     );
   }
 
