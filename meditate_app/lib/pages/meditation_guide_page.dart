@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
@@ -122,15 +120,15 @@ class _MeditationGuideState extends State<MeditationGuide> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color.fromARGB(255, 33, 135, 175),
-              const Color.fromARGB(255, 65, 113, 142),
-              const Color.fromARGB(255, 21, 115, 155),
-              const Color.fromARGB(255, 1, 126, 137),
+              Color.fromARGB(255, 33, 135, 175),
+              Color.fromARGB(255, 65, 113, 142),
+              Color.fromARGB(255, 21, 115, 155),
+              Color.fromARGB(255, 1, 126, 137),
             ],
           )),
           child: Stack(

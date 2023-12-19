@@ -11,7 +11,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
-import 'package:meditate_app/util/DEBUG_MODE.dart';
+import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -167,7 +167,7 @@ class _CountdownPageState extends State<CountdownPage>
                 WaveWidget(
                   config: CustomConfig(
                     colors: [
-                      const Color(0x338006994),
+                      const Color.fromRGBO(0, 105, 147, 0.22),
                       const Color(0x3300BBF9),
                     ],
                     durations: [

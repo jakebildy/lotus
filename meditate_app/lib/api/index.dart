@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:http/http.dart' as http;
 import 'package:meditate_app/api/analytics_api.dart';
 import 'package:meditate_app/api/auth_api.dart';
@@ -33,7 +35,7 @@ String _generateCookieHeader() {
   String cookie = "";
 
   for (String key in _cookies.keys) {
-    if (cookie.length > 0) cookie += ";";
+    if (cookie.isNotEmpty) cookie += ";";
     String cookiesKey = _cookies[key]!;
     cookie += key + "=" + cookiesKey;
   }
@@ -51,7 +53,7 @@ Uri https(String authority, String unencodedPath,
 }
 
 void _setCookie(String rawCookie) {
-  if (rawCookie.length > 0) {
+  if (rawCookie.isNotEmpty) {
     var keyValue = rawCookie.split('=');
     if (keyValue.length == 2) {
       var key = keyValue[0].trim();

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -22,14 +24,13 @@ class _ShopPageState extends State<ShopPage> {
   final int LURE_PRICE = 90;
   @override
   Widget build(BuildContext context) {
-    var brightness = SchedulerBinding.instance.window.platformBrightness;
     bool isDarkMode = true;
     UserController user = Get.find();
 
     return Obx(
       () => ListView(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Row(
@@ -76,7 +77,7 @@ class _ShopPageState extends State<ShopPage> {
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           GestureDetector(
@@ -130,13 +131,13 @@ class _ShopPageState extends State<ShopPage> {
                 decoration: BoxDecoration(
                   color: isDarkMode
                       ? user.user.value.streakFreezes > 0
-                          ? Color.fromARGB(255, 46, 48, 59)
+                          ? const Color.fromARGB(255, 46, 48, 59)
                           : Colors.black12
                       : Colors.white,
                   border: Border.all(
                     color: isDarkMode
                         ? user.user.value.streakFreezes > 0
-                            ? Color.fromARGB(255, 81, 80, 107)
+                            ? const Color.fromARGB(255, 81, 80, 107)
                             : Colors.white24
                         : Colors.black26,
                     width: 2,
@@ -150,11 +151,11 @@ class _ShopPageState extends State<ShopPage> {
                         padding: EdgeInsets.symmetric(
                             vertical: 15.0,
                             horizontal: MediaQuery.of(context).size.width / 70),
-                        child: Container(
+                        child: SizedBox(
                             width: 60,
                             child: Stack(
                               children: [
-                                Container(
+                                SizedBox(
                                     height:
                                         MediaQuery.of(context).size.height / 4,
                                     child: Image.asset(
@@ -199,7 +200,7 @@ class _ShopPageState extends State<ShopPage> {
                           ),
                           Row(
                             children: [
-                              Text(
+                              const Text(
                                 "Buy for ",
                                 style: TextStyle(
                                     color: Colors.lightBlueAccent,

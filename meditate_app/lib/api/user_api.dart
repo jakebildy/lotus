@@ -1,11 +1,11 @@
 import 'dart:convert';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
-import "index.dart" as Api;
+import "index.dart" as api;
 
 class UserApi {
   static var _singleton;
-  String get url => Api.url;
+  String get url => api.url;
   UserApi._internal();
 
   factory UserApi() {
@@ -20,11 +20,11 @@ class UserApi {
     };
 
     final String body = jsonEncode(map);
-    final response = await http.post(Api.https(url, "/api/user/changeName"),
-        body: body, headers: Api.headers);
+    final response = await http.post(api.https(url, "/api/user/changeName"),
+        body: body, headers: api.headers);
 
     if (response.statusCode == 200) {
-      Api.updateCookie(response);
+      api.updateCookie(response);
       return User.fromJson(json.decode(response.body));
     } else {
       throw (response.body);
@@ -33,9 +33,9 @@ class UserApi {
 
   Future<User> me() async {
     final response =
-        await http.get(Api.https(url, "/api/user/me"), headers: Api.headers);
+        await http.get(api.https(url, "/api/user/me"), headers: api.headers);
     if (response.statusCode == 200) {
-      Api.updateCookie(response);
+      api.updateCookie(response);
       return User.fromJson(json.decode(response.body));
     } else {
       throw (response.body);
@@ -48,8 +48,8 @@ class UserApi {
     };
 
     final String body = jsonEncode(map);
-    final response = await http.post(Api.https(url, "/api/user/update"),
-        body: body, headers: Api.headers);
+    final response = await http.post(api.https(url, "/api/user/update"),
+        body: body, headers: api.headers);
 
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
@@ -65,8 +65,8 @@ class UserApi {
     };
 
     final String body = jsonEncode(map);
-    final response = await http.post(Api.https(url, "/api/user/update"),
-        body: body, headers: Api.headers);
+    final response = await http.post(api.https(url, "/api/user/update"),
+        body: body, headers: api.headers);
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
     } else {
@@ -80,8 +80,8 @@ class UserApi {
     };
 
     final String body = jsonEncode(map);
-    final response = await http.post(Api.https(url, "/api/user/update"),
-        body: body, headers: Api.headers);
+    final response = await http.post(api.https(url, "/api/user/update"),
+        body: body, headers: api.headers);
 
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
@@ -98,12 +98,12 @@ class UserApi {
     final String body = jsonEncode(map);
 
     final response = await http.post(
-        Api.https(url, "/api/user/getUsersFromUserIds"),
+        api.https(url, "/api/user/getUsersFromUserIds"),
         body: body,
-        headers: Api.headers);
+        headers: api.headers);
 
     if (response.statusCode == 200) {
-      Api.updateCookie(response);
+      api.updateCookie(response);
       return json.decode(response.body);
     } else {
       throw (response.body);
@@ -112,10 +112,10 @@ class UserApi {
 
   Future<void> updateDeviceToken(String token) async {
     final response = await http.post(
-        Api.https(url, "/api/user/update-device-token/" + token),
-        headers: Api.headers);
+        api.https(url, "/api/user/update-device-token/" + token),
+        headers: api.headers);
     if (response.statusCode == 200) {
-      Api.updateCookie(response);
+      api.updateCookie(response);
       return;
       //response.body;
     } else {
@@ -125,8 +125,8 @@ class UserApi {
 
   Future<User?> getUserFromUsername(String username) async {
     final response = await http.get(
-        Api.https(url, "/api/user/username/${username}"),
-        headers: Api.headers);
+        api.https(url, "/api/user/username/${username}"),
+        headers: api.headers);
 
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));

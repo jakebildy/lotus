@@ -53,19 +53,17 @@ class _UserProfilePageState extends State<UserProfilePage>
                         borderRadius: BorderRadius.circular(60)),
                     child: Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Container(
+                      child: SizedBox(
                           height: 80,
-                          child: widget.user.avatar == null
-                              ? Image.asset("assets/profile_selected.png")
-                              : Center(
-                                  child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(60)),
-                                      child: Image.network(
-                                        widget.user.avatar,
-                                        fit: BoxFit.fill,
-                                      )),
+                          child: Center(
+                            child: ClipRRect(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(60)),
+                                child: Image.network(
+                                  widget.user.avatar,
+                                  fit: BoxFit.fill,
                                 )),
+                          )),
                     ),
                   ),
                 )),
@@ -176,7 +174,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 5, 5.0),
-                            child: Container(
+                            child: SizedBox(
                                 height: 30,
                                 child: Image.asset(
                                     userStreakIconURL(widget.user))),

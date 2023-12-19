@@ -43,7 +43,7 @@ class _NewGemsPageState extends State<NewGemsPage>
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Stack(
                   children: [
-                    Container(
+                    SizedBox(
                         height: MediaQuery.of(context).size.height / 4,
                         child: Image.asset("assets/sand_dollar_chest.png")),
                     // Shimmer.fromColors(

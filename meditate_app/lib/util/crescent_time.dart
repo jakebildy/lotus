@@ -176,5 +176,6 @@ class Moon {
     if (daysSinceNewMoon >= 25.7 && daysSinceNewMoon < 29.5) {
       return MoonPhase.WaningCrescent;
     }
+    return null;
   }
 }
