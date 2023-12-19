@@ -73,7 +73,10 @@ class UserController extends GetxController {
   Future<void> updateProperty(UserProperty property, dynamic value) async {
     // If the user is online, update the database - otherwise, update the local storage
     if (user == databaseUser) {
-      // TODO: fix DateTime object issue
+      if (property == UserProperty.emojisSentAt) {
+        value =
+            value.map((key, value) => MapEntry(key, value.toIso8601String()));
+      }
       await api.user.updateUserAttribute(property.toString(), value);
       databaseUser.value = await api.user.me();
     } else {
@@ -84,6 +87,7 @@ class UserController extends GetxController {
 
   /// Triggered when user goes offline to online
   Future<void> syncData() async {
+    logSuccess("Syncing Data!");
     // between databaseUser and localStorageUser,
     //select the one where lastUpdatedAt was more recent or exists* and sync both
 
@@ -208,8 +212,6 @@ class UserController extends GetxController {
   }
 
   String streakIconURL() {
-    logInfo(
-        "Has the user meditated today? " + hasDoneStreakToday.value.toString());
     return hasDoneStreakToday.value
         ? streakAverage() < 10
             ? "assets/streak_icon.png"

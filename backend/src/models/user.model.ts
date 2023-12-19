@@ -28,6 +28,9 @@ export interface UserI {
   eggs?: number;
   streakFreezes?: number;
   eggTypes?: Array<string>;
+
+  emojisSentAt?: { [key: string]: Date };
+  sentEmojis?: { [key: string]: string };
 }
 
 const UserSchema = new mongoose.Schema<UserI>(
@@ -57,6 +60,9 @@ const UserSchema = new mongoose.Schema<UserI>(
     eggs: { type: Number, required: false },
     streakFreezes: { type: Number, required: false },
     eggTypes: {type: Array, required: false},
+
+    emojisSentAt: { type: Map, of: Date, required: false },
+    sentEmojis: { type: Map, of: String, required: false },
   },
   {
     versionKey: false,

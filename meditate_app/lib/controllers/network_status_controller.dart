@@ -6,12 +6,15 @@ import 'package:meditate_app/controllers/user_controller.dart';
 /// {@category Controllers}
 class NetworkStatusController extends GetxController {
   RxBool offline = false.obs;
-  UserController userController = Get.find();
+
   NetworkStatusController() {
     DataConnectionChecker().onStatusChange.listen(
       (status) async {
         _getNetworkStatus(status);
-        userController.syncData();
+        // Wait for User Controller to exist
+        if (Get.find<UserController>().initialized) {
+          Get.find<UserController>().syncData();
+        }
       },
     );
   }

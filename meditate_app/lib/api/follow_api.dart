@@ -86,7 +86,7 @@ class FollowApi {
         api.https(url, "/api/emoji/" + userId + "/" + emoji),
         headers: api.headers);
     if (response.statusCode == 200) {
-      logSuccess(json.decode(response.body));
+      logSuccess("Emoji sent! " + emoji);
     } else {
       throw (response.body);
     }
