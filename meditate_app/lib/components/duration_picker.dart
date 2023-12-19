@@ -509,8 +509,6 @@ class _DialState extends State<_Dial> with SingleTickerProviderStateMixin {
   }
 
   List<TextPainter> _buildBaseUnitLabels(TextTheme textTheme) {
-    final style = textTheme.subtitle1;
-
     var baseUnitMarkerValues = <Duration>[];
 
     switch (widget.baseUnit) {

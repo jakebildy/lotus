@@ -18,7 +18,7 @@ import 'package:meditate_app/util/turtles.dart';
 
 class TurtleGame extends FlameGame with HasTappables {
   late Sprite background;
-  TurtleWorld _turtleWorld = TurtleWorld();
+  final TurtleWorld _turtleWorld = TurtleWorld();
   PlayerBase playerBase = PlayerBase(
       Vector2(
         400,

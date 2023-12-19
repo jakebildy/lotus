@@ -1,6 +1,8 @@
 /// JulianDate extension on DateTime provides thee DateTime object a `julianDate` property which useful for plently astronomy algorithms.
 /// Calculations were all adapted and based on the following book:
 /// "Practical Astronomy with your Calculator or Spreadsheet Fourth Edition" by Peter Duffett-Smith and Jonathan Zwart
+// ignore_for_file: constant_identifier_names
+
 extension JulianDate on DateTime {
   /// isLeapYear determines if the given DateTime is a leap year
   /// `DateTime.now().isLeapYear`
@@ -44,8 +46,8 @@ extension JulianDate on DateTime {
   /// `DateTime.now().julianDate`
   double get julianDate {
     var utcnow = toUtc();
-    var yPrime;
-    var mPrime;
+    int yPrime;
+    int mPrime;
     if (utcnow.month == 1 || utcnow.month == 2) {
       yPrime = year - 1;
       mPrime = month + 12;

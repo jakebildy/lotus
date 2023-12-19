@@ -64,7 +64,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                 const SizedBox(
                   height: 40,
                 ),
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   //color: Colors.white24,
                   height: 300,

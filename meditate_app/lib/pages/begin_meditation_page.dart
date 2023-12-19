@@ -36,16 +36,16 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
 
     return Obx(
       () => Scaffold(
-        backgroundColor: Color.fromARGB(255, 47, 111, 129),
+        backgroundColor: const Color.fromARGB(255, 47, 111, 129),
         body: Stack(
           alignment: Alignment.topCenter,
           children: [
             Padding(
-              padding: EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               //  padding: const EdgeInsets.fromLTRB(20,20,20,38),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(0),
-                child: Container(
+                child: SizedBox(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Image.asset(
@@ -69,11 +69,11 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
             )),
             Center(
               child: ListView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 //mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   //The Turtle Timer 🐢
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height / 2.3 + 40,
                     child: FittedBox(
                       child: Hero(
@@ -83,14 +83,14 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 38),
-                              child: Container(
+                              child: SizedBox(
                                   height: 360,
                                   child:
                                       Image.asset("assets/turtle_timer.png")),
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                              child: Container(
+                              child: SizedBox(
                                 height: 400,
                                 width: 240,
                                 child: DurationPicker(
@@ -111,7 +111,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                 padding: const EdgeInsets.fromLTRB(3, 10, 0, 0),
                                 child: Opacity(
                                   opacity: 0.15,
-                                  child: Container(
+                                  child: SizedBox(
                                       height: 190,
                                       width: 190,
                                       child: Image.asset(
@@ -134,14 +134,14 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                       children: [
                         MediaQuery.of(context).size.height < 680
                             ? Container()
-                            : SizedBox(
+                            : const SizedBox(
                                 height: 30,
                               ),
                         Text(
                           saveController.ambienceOn.value
                               ? "Ambience: ON"
                               : "Ambience: OFF",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 13,
                               color: Colors.white70,
                               fontWeight: FontWeight.bold),
@@ -159,7 +159,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                       (DEBUG_MODE == true
                                           ? const Duration(minutes: 1)
                                           : const Duration(minutes: 5))
-                              ? Container(
+                              ? SizedBox(
                                   height: 50,
                                   child: const Padding(
                                     padding:
@@ -193,11 +193,11 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                         "TRUE") {
                                       Get.to(CountdownPage(time: _duration),
                                           transition: Transition.circularReveal,
-                                          duration: Duration(seconds: 1));
+                                          duration: const Duration(seconds: 1));
                                     } else {
                                       Get.to(MeditationGuide(time: _duration),
                                           transition: Transition.circularReveal,
-                                          duration: Duration(seconds: 1));
+                                          duration: const Duration(seconds: 1));
                                       saveController.saveValue(
                                           "GUIDE_SHOWN", "TRUE");
                                     }
@@ -207,11 +207,11 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                         color: Colors.cyan,
                                         borderRadius:
                                             BorderRadius.circular(60)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(8.0),
                                       child: Hero(
                                           tag: "PLAY_BUTTON",
-                                          child: const Icon(
+                                          child: Icon(
                                             Icons.play_arrow,
                                             size: 50,
                                             color: Colors.white,

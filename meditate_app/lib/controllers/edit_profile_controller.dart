@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
-import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 
@@ -21,7 +20,7 @@ class EditProfileController extends GetxController {
   }
 
   Future<void> updateUser() async {
-    User user = await Api.user.updateUser(name.text);
+    User user = await api.user.updateUser(name.text);
     uC.setUser(user);
   }
 

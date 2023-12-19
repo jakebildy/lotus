@@ -523,22 +523,21 @@ class _ProfilePageState extends State<ProfilePage>
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           mainAxisSize: MainAxisSize.min,
-                                          children: [
+                                          children: const [
                                             Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 5, 5.0),
-                                                child: Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 0, 5, 5.0),
+                                                child: SizedBox(
                                                     height: 17,
-                                                    child: const Icon(
+                                                    child: Icon(
                                                       Icons.person_add,
                                                       color: Colors.tealAccent,
                                                       size: 20,
                                                     ))),
-                                            const SizedBox(
+                                            SizedBox(
                                               width: 10,
                                             ),
-                                            const Text(
+                                            Text(
                                               "ADD FRIENDS",
                                               style: TextStyle(
                                                   fontSize: 13,

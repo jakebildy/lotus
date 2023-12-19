@@ -94,7 +94,7 @@ class _NewGemsPageState extends State<NewGemsPage>
                 }
               },
               child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 16, 77, 127),
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   // color: const Color.fromARGB(255, 16, 77, 127),

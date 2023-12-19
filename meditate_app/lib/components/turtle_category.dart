@@ -27,7 +27,7 @@ class TurtleCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bounce(
-      duration: Duration(milliseconds: 110),
+      duration: const Duration(milliseconds: 110),
       onPressed: () {
         if (unlocked) {
           HapticFeedback.lightImpact();
@@ -40,7 +40,7 @@ class TurtleCategory extends StatelessWidget {
               backgroundColor: tierColor(TURTLES[id].tier),
               content: Text(
                 "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               )));
         }
       },
@@ -74,7 +74,7 @@ class TurtleCategory extends StatelessWidget {
                       id: id,
                       colorId: -1,
                     ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
@@ -85,17 +85,17 @@ class TurtleCategory extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text((TURTLES[id].name.split(" ")[0] + " Turtles"),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
-                      Text("${tierReadable(TURTLES[id].tier)}",
+                      Text(tierReadable(TURTLES[id].tier),
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: tierColor(TURTLES[id].tier))),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Text(
                           "${unlocked ? uniqueQuantity : '0'} of ${TURTLE_COLORS.length}",
-                          style: TextStyle(fontSize: 12))
+                          style: const TextStyle(fontSize: 12))
                     ],
                   ),
                 ),
@@ -105,11 +105,11 @@ class TurtleCategory extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 17,
                       color: unlocked ? Colors.tealAccent : Colors.grey)),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
-              Icon(Icons.arrow_forward_ios),
-              SizedBox(
+              const Icon(Icons.arrow_forward_ios),
+              const SizedBox(
                 width: 10,
               ),
             ],

@@ -3,10 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
-import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/version.dart';
@@ -26,7 +25,7 @@ class SignupController extends GetxController {
   void signup() async {
     try {
       final String _email = email.text;
-      final User user = await Api.auth.signup(
+      final User user = await api.auth.signup(
         _email,
         password.text,
         fullName.text,

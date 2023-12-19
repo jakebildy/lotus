@@ -9,9 +9,7 @@ class AuthApi {
   AuthApi._internal();
 
   factory AuthApi() {
-    if (_singleton == null) {
-      _singleton = AuthApi._internal();
-    }
+    _singleton ??= AuthApi._internal();
     return _singleton;
   }
 

@@ -2,11 +2,8 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame/events.dart';
 import 'package:flame/palette.dart';
-import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'dart:math' as math;
 
 class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {

@@ -1,10 +1,8 @@
 import 'dart:math';
 
 import 'package:flame/components.dart';
-import 'package:flame/events.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class Lilypad extends SpriteComponent with HasGameRef {
   static const speed = 0.25;
@@ -16,13 +14,6 @@ class Lilypad extends SpriteComponent with HasGameRef {
   final double lilypadSize;
 
   Lilypad(Vector2 position, this.lilypadSize) : super(position: position);
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    // angle += speed * dt;
-    // angle %= 2 * math.pi;
-  }
 
   @override
   Future<void> onLoad() async {

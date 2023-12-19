@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
-import 'package:meditate_app/api/index.dart' as Api;
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/logger.dart';
 
@@ -43,7 +42,7 @@ class SearchController extends GetxController {
     update();
     try {
       logInfo("Fetching search results...");
-      List<User> responseUsers = await Api.search.searchUsers(query);
+      List<User> responseUsers = await api.search.searchUsers(query);
 
       userResults.value = responseUsers;
       update();

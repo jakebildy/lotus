@@ -63,109 +63,103 @@ class _AppPagesState extends State<AppPages> {
                                     ],
                                   )
                                 : Container(),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(const StatsPage());
-                                    },
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                                height: 27,
-                                                child: Image.asset(
-                                                    userController
-                                                        .streakIconURL())),
-                                            const SizedBox(
-                                              width: 3,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(const StatsPage());
+                                  },
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                              height: 27,
+                                              child: Image.asset(userController
+                                                  .streakIconURL())),
+                                          const SizedBox(
+                                            width: 3,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 4.0, 0, 0),
+                                            child: Text(
+                                              userController.user.value.streak
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  color: userController
+                                                                  .user
+                                                                  .value
+                                                                  .streak ==
+                                                              0 ||
+                                                          !userController
+                                                              .hasDoneStreakToday
+                                                              .value
+                                                      ? DateTime.now().hour >
+                                                                  21 &&
+                                                              userController
+                                                                      .user
+                                                                      .value
+                                                                      .streak >
+                                                                  0
+                                                          ? Colors.red
+                                                          : Colors.grey
+                                                      : isDarkMode
+                                                          ? Colors.white
+                                                          : Colors.black),
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 4.0, 0, 0),
-                                              child: Text(
-                                                userController.user.value.streak
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: userController
-                                                                    .user
-                                                                    .value
-                                                                    .streak ==
-                                                                0 ||
-                                                            !userController
-                                                                .hasDoneStreakToday
-                                                                .value
-                                                        ? DateTime.now().hour >
-                                                                    21 &&
-                                                                userController
-                                                                        .user
-                                                                        .value
-                                                                        .streak >
-                                                                    0
-                                                            ? Colors.red
-                                                            : Colors.grey
-                                                        : isDarkMode
-                                                            ? Colors.white
-                                                            : Colors.black),
-                                              ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _page = 1;
+                                    });
+                                  },
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                              height: 27,
+                                              child: Image.asset(
+                                                  "assets/sand_dollar.png")),
+                                          const SizedBox(
+                                            width: 3,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 4.0, 0, 0),
+                                            child: Text(
+                                              userController.user.value.gems
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  color: userController.user
+                                                              .value.gems ==
+                                                          0
+                                                      ? Colors.grey
+                                                      : isDarkMode
+                                                          ? Colors.white
+                                                          : Colors.black),
                                             ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                          ],
-                                        )),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _page = 1;
-                                      });
-                                    },
-                                    child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                                height: 27,
-                                                child: Image.asset(
-                                                    "assets/sand_dollar.png")),
-                                            const SizedBox(
-                                              width: 3,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      0, 4.0, 0, 0),
-                                              child: Text(
-                                                userController.user.value.gems
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                    color: userController.user
-                                                                .value.gems ==
-                                                            0
-                                                        ? Colors.grey
-                                                        : isDarkMode
-                                                            ? Colors.white
-                                                            : Colors.black),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                          ],
-                                        )),
-                                  ),
-                                ],
-                              ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              ],
                             ),
                           ],
                         )),

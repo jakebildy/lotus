@@ -124,7 +124,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                 children: <Widget>[
                   Text(
                       'You need to be a ${tierReadable(TURTLES[turtleType].tier)} to breed with this turtle!'),
-                  Text('\nIncrease your level by meditating more.'),
+                  const Text('\nIncrease your level by meditating more.'),
                 ],
               ),
             ),
@@ -152,7 +152,8 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
             child: ListBody(
               children: <Widget>[
                 (!DEBUG_MODE && userController.user.value.gems < 50)
-                    ? Text("You need at least 50 gems to breed this turtle!")
+                    ? const Text(
+                        "You need at least 50 gems to breed this turtle!")
                     : Text(
                         'Breed your ${TURTLE_COLORS_NAME[game.turtleColor.value]} ${TURTLES[game.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 gems?'),
               ],
