@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
@@ -52,15 +50,15 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                       selectedTab = val;
                     });
                   },
-                  tabs: [
-                    const Tab(
+                  tabs: const [
+                    Tab(
                       text: "Following",
                     ),
-                    const Tab(
+                    Tab(
                       text: "Followers",
                     )
                   ]),
-              Container(
+              SizedBox(
                 height: 40.0 +
                     (selectedTab == 0
                         ? followController.usersFollowing.length * 64
@@ -69,13 +67,13 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                     controller: tabController,
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
-                      followController.usersFollowing.length == 0
+                      followController.usersFollowing.isEmpty
                           ? Column(
-                              children: [
-                                const SizedBox(
+                              children: const [
+                                SizedBox(
                                   height: 20,
                                 ),
-                                const Text(
+                                Text(
                                   "You don't have any friends yet - add some!",
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.grey),
@@ -92,13 +90,13 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                                       color: const Color.fromARGB(
                                           255, 42, 42, 42))))
                             ]),
-                      followController.followers.length == 0
+                      followController.followers.isEmpty
                           ? Column(
-                              children: [
-                                const SizedBox(
+                              children: const [
+                                SizedBox(
                                   height: 20,
                                 ),
-                                const Text(
+                                Text(
                                   "You don't have any followers yet!",
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.grey),
@@ -124,55 +122,52 @@ class _UserFollowingWidgetState extends State<UserFollowingWidget>
                 onTap: () {
                   //Log the event to AppsFlyer
                 },
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 180,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width / 2 - 20,
-                              decoration: BoxDecoration(
-                                color: Colors.black12,
-                                border: Border.all(
-                                  color: Colors.white24,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      width: 180,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width / 2 - 20,
+                            decoration: BoxDecoration(
+                              color: Colors.black12,
+                              border: Border.all(
+                                color: Colors.white24,
+                                width: 2,
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 0, 5, 5.0),
-                                      child: Container(
-                                          height: 17,
-                                          child: const Icon(
-                                            Icons.person_add,
-                                            color: Colors.tealAccent,
-                                            size: 20,
-                                          ))),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  const Text(
-                                    "ADD FRIENDS",
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              )),
-                        ),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 0, 5, 5.0),
+                                    child: SizedBox(
+                                        height: 17,
+                                        child: Icon(
+                                          Icons.person_add,
+                                          color: Colors.tealAccent,
+                                          size: 20,
+                                        ))),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  "ADD FRIENDS",
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

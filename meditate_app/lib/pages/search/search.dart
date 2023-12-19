@@ -110,7 +110,7 @@ class StylistsSearchResults extends StatelessWidget {
                             color: Colors.teal,
                           )),
                         )
-                      : searchController.userResults.length == 0
+                      : searchController.userResults.isEmpty
                           ? const SizedBox(
                               height: 176,
                               child: Center(child: Text("No results.")),

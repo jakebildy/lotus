@@ -1,17 +1,17 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 
 /// NetworkStatusController checks if the user is online. It logs in if the connection is restored.
 /// {@category Controllers}
 class NetworkStatusController extends GetxController {
   RxBool offline = false.obs;
-
+  UserController userController = Get.find();
   NetworkStatusController() {
     DataConnectionChecker().onStatusChange.listen(
       (status) async {
         _getNetworkStatus(status);
+        userController.syncData();
       },
     );
   }

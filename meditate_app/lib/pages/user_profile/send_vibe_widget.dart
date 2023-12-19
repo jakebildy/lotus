@@ -187,7 +187,7 @@ class _VibeState extends State<Vibe> {
               border: Border.all(
                 color: widget.isDisabled
                     ? Colors.grey
-                    : Color.fromARGB(255, 81, 80, 107),
+                    : const Color.fromARGB(255, 81, 80, 107),
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(20),

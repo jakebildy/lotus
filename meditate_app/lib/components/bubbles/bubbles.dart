@@ -119,7 +119,7 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
 
   @override
   void initState() {
-    final _random = new Random();
+    final _random = Random();
     for (int i = 0; i < widget.noOfBubbles; i++) {
       bubbles.add(
         BubbleFloatingAnimation(
@@ -129,12 +129,13 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
         ),
       );
     }
-    if (widget.duration != null && widget.duration != 0)
+    if (widget.duration != null && widget.duration != 0) {
       Timer(Duration(seconds: widget.duration!), () {
         setState(() {
           checkToStopAnimation = 1;
         });
       });
+    }
     super.initState();
   }
 

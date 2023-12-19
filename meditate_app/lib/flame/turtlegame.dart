@@ -1,24 +1,18 @@
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
-import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
-import 'package:flame/parallax.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/flame/components/bubble.dart';
 import 'package:meditate_app/flame/components/butterfly.dart';
 import 'package:meditate_app/flame/components/fish.dart';
 import 'package:meditate_app/flame/components/lilypad.dart';
-import 'package:meditate_app/flame/components/lotus.dart';
 import 'package:meditate_app/flame/components/other_turtle.dart';
-import 'package:meditate_app/flame/components/rock.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
 import 'package:meditate_app/util/turtles.dart';
 

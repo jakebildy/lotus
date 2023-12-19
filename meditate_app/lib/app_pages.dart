@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/loading_page.dart';
 import 'package:meditate_app/pages/profile_page.dart';
 import 'package:meditate_app/pages/signup/signup.dart';
@@ -134,7 +132,7 @@ class _AppPagesState extends State<AppPages> {
                                         padding: const EdgeInsets.all(8.0),
                                         child: Row(
                                           children: [
-                                            Container(
+                                            SizedBox(
                                                 height: 27,
                                                 child: Image.asset(
                                                     "assets/sand_dollar.png")),
@@ -190,44 +188,44 @@ class _AppPagesState extends State<AppPages> {
                       items: [
                         BottomNavigationBarItem(
                             icon: _page == 0
-                                ? Container(
+                                ? SizedBox(
                                     height: 35,
                                     child: Image.asset(
                                         "assets/meditate_selected.png"))
-                                : Container(
+                                : SizedBox(
                                     height: 35,
                                     child: Image.asset(
                                         "assets/meditate_unselected.png")),
                             label: "Home"),
                         BottomNavigationBarItem(
                             icon: _page == 1
-                                ? Container(
+                                ? SizedBox(
                                     height: 30,
                                     child: Image.asset(
                                         "assets/store_selected.png"))
-                                : Container(
+                                : SizedBox(
                                     height: 30,
                                     child: Image.asset(
                                         "assets/store_unselected.png")),
                             label: "Shop"),
                         BottomNavigationBarItem(
                             icon: _page == 2
-                                ? Container(
+                                ? SizedBox(
                                     height: 35,
                                     child: Image.asset(
                                         "assets/turtle_selected.png"))
-                                : Container(
+                                : SizedBox(
                                     height: 35,
                                     child: Image.asset(
                                         "assets/turtle_unselected.png")),
                             label: "Turtles"),
                         BottomNavigationBarItem(
                             icon: _page == 3
-                                ? Container(
+                                ? SizedBox(
                                     height: 30,
                                     child: Image.asset(
                                         "assets/profile_selected.png"))
-                                : Container(
+                                : SizedBox(
                                     height: 30,
                                     child: Image.asset(
                                         "assets/profile_unselected.png")),

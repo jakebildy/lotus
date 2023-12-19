@@ -5,7 +5,6 @@ import 'package:meditate_app/components/meditation_heatmap.dart';
 import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
@@ -419,15 +418,15 @@ class _ProfilePageState extends State<ProfilePage>
                                   selectedTab = val;
                                 });
                               },
-                              tabs: [
-                                const Tab(
+                              tabs: const [
+                                Tab(
                                   text: "Following",
                                 ),
-                                const Tab(
+                                Tab(
                                   text: "Followers",
                                 )
                               ]),
-                          Container(
+                          SizedBox(
                             height: 40 +
                                 (selectedTab == 0
                                     ? followController.usersFollowing.length *
@@ -437,7 +436,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 controller: tabController,
                                 physics: const NeverScrollableScrollPhysics(),
                                 children: [
-                                  followController.usersFollowing.length == 0
+                                  followController.usersFollowing.isEmpty
                                       ? Column(
                                           children: const [
                                             SizedBox(
@@ -463,11 +462,11 @@ class _ProfilePageState extends State<ProfilePage>
                                         ]),
                                   followController.followers.isEmpty
                                       ? Column(
-                                          children: [
-                                            const SizedBox(
+                                          children: const [
+                                            SizedBox(
                                               height: 20,
                                             ),
-                                            const Text(
+                                            Text(
                                               "You don't have any followers yet!",
                                               style: TextStyle(
                                                   fontSize: 14,
@@ -498,64 +497,59 @@ class _ProfilePageState extends State<ProfilePage>
 
                               Get.to(const Search());
                             },
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    width: 180,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                          height: 50,
-                                          width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2 -
-                                              20,
-                                          decoration: BoxDecoration(
-                                            color: Colors.black12,
-                                            border: Border.all(
-                                              color: Colors.white24,
-                                              width: 2,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                SizedBox(
+                                  width: 180,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                        height: 50,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                    2 -
+                                                20,
+                                        decoration: BoxDecoration(
+                                          color: Colors.black12,
+                                          border: Border.all(
+                                            color: Colors.white24,
+                                            width: 2,
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 0, 5, 5.0),
-                                                  child: Container(
-                                                      height: 17,
-                                                      child: const Icon(
-                                                        Icons.person_add,
-                                                        color:
-                                                            Colors.tealAccent,
-                                                        size: 20,
-                                                      ))),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              const Text(
-                                                "ADD FRIENDS",
-                                                style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          )),
-                                    ),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 5, 5.0),
+                                                child: Container(
+                                                    height: 17,
+                                                    child: const Icon(
+                                                      Icons.person_add,
+                                                      color: Colors.tealAccent,
+                                                      size: 20,
+                                                    ))),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            const Text(
+                                              "ADD FRIENDS",
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        )),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ],

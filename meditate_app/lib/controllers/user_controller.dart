@@ -74,8 +74,8 @@ class UserController extends GetxController {
   Future<void> updateProperty(UserProperty property, dynamic value) async {
     // If the user is online, update the database - otherwise, update the local storage
     if (user == databaseUser) {
-      // await api.user.updateUserAttribute(property.toString(), value);
-      // databaseUser.value = await api.user.me();
+      await api.user.updateUserAttribute(property.toString(), value);
+      databaseUser.value = await api.user.me();
     } else {
       User newUser = localStorageUser.value;
       // TODO: update the specific property
@@ -83,7 +83,12 @@ class UserController extends GetxController {
   }
 
   /// Triggered when user goes offline to online
-  Future<void> syncData() async {}
+  Future<void> syncData() async {
+    // between databaseUser and localStorageUser,
+    //select the one where lastUpdatedAt was more recent or exists* and sync both
+
+    // If no lastUpdatedAt in localStorage, add it, and call syncData()
+  }
 
   int totalMinutes() {
     return 0;

@@ -9,9 +9,7 @@ class UserApi {
   UserApi._internal();
 
   factory UserApi() {
-    if (_singleton == null) {
-      _singleton = UserApi._internal();
-    }
+    _singleton ??= UserApi._internal();
     return _singleton;
   }
 

@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
@@ -61,7 +60,7 @@ class _CountdownPageState extends State<CountdownPage>
     UserController userController = Get.find();
     SaveController saveController = Get.find();
 
-    bell = new AudioPlayer();
+    bell = AudioPlayer();
     bell.setVolume(10.0);
     bell.play(AssetSource('audio/tibetan_chime.wav'));
     if (saveController.ambienceOn.value) {
@@ -129,9 +128,6 @@ class _CountdownPageState extends State<CountdownPage>
 
   @override
   Widget build(BuildContext context) {
-    var brightness = SchedulerBinding.instance.window.platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
-
     return Stack(
       children: [
         Container(

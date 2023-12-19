@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -94,8 +92,8 @@ String formatMonth(DateTime date) {
 }
 
 double userStreakAverage(User user) {
-  DateTime now = new DateTime.now();
-  DateTime date = new DateTime(now.year, now.month, now.day);
+  DateTime now = DateTime.now();
+  DateTime date = DateTime(now.year, now.month, now.day);
   int daysShifted = user.meditationTimesAsOf.difference(date).inDays.abs();
   List<double> lastSevenDays = [
     daysShifted >= 1 ? 0.0 : user.meditationTimes[0 - daysShifted].toDouble(),
@@ -115,15 +113,6 @@ double userStreakAverage(User user) {
 }
 
 String userStreakIconURL(User user) {
-  bool hasDoneStreakToday = true;
-  DateTime now = new DateTime.now();
-  DateTime date = new DateTime(now.year, now.month, now.day);
-  int numDays = user.lastMeditated.difference(date).inDays.abs();
-
-  if (numDays >= 1) {
-    hasDoneStreakToday = false;
-  }
-
   return user.streak != 0
       ? userStreakTier(user) == Tier.ORANGE
           ? "assets/streak_icon.png"

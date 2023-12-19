@@ -123,7 +123,7 @@ class _DialPainter extends CustomPainter {
         textAlign: TextAlign.center,
         text: TextSpan(
             text: '$secondaryUnits$baseUnits',
-            style: Theme.of(context).textTheme.headline2!.copyWith(
+            style: Theme.of(context).textTheme.displayMedium!.copyWith(
                 fontSize: size.shortestSide * 0.15, color: Colors.white)),
         textDirection: TextDirection.ltr)
       ..layout();

@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:meditate_app/api/index.dart' as Api;
-import 'package:meditate_app/controllers/auth_controller.dart';
+import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/util/logger.dart';
 
 class PushNotificationService extends GetxService {
@@ -54,7 +51,7 @@ class PushNotificationService extends GetxService {
       if (token == null) {
         return logError("💢💢💢 Cannot update a NULL device token!");
       }
-      await Api.user.updateDeviceToken(token!);
+      await api.user.updateDeviceToken(token!);
     } catch (error, trace) {
       logError("error updating firebase device token.");
       logError(error.toString());
