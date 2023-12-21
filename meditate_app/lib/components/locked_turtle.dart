@@ -21,7 +21,7 @@ class LockedTurtle extends StatelessWidget {
                               : colorId]
                           .withOpacity(0.5),
                       BlendMode.srcATop),
-                  child: Image.asset("assets/images/turtles/${id}.png"))
+                  child: Image.asset("assets/images/turtles/$id.png"))
               : Container(),
           id != 10
               ? Container()

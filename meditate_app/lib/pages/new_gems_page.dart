@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NewGemsPage extends StatefulWidget {
   final int gemsAmount;
@@ -39,24 +40,21 @@ class _NewGemsPageState extends State<NewGemsPage>
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Stack(
                 children: [
                   SizedBox(
-                      height: MediaQuery.of(context).size.height / 4,
+                      height: MediaQuery.of(context).size.height / 3.5,
                       child: Image.asset("assets/sand_dollar_chest.png")),
-                  // Shimmer.fromColors(
-                  //   baseColor: Colors.white12,
-                  //   highlightColor: Colors.white70,
-                  //   child: Container(
-                  //       height: MediaQuery.of(context).size.height / 4,
-                  //       child: Image.asset("assets/gems_overlay.png")),
-                  // ),
+                  Shimmer.fromColors(
+                    baseColor: Colors.white12,
+                    highlightColor: Colors.white70,
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height / 3.5,
+                        child: Image.asset("assets/sand_dollar_overlay.png")),
+                  ),
                 ],
               )),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 40,
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text("+" + widget.gemsAmount.toString(),

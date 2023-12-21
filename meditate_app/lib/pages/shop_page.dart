@@ -211,7 +211,7 @@ class _ShopPageState extends State<ShopPage> {
                                 width: 2,
                               ),
                               Text(
-                                "${STREAK_FREEZE_PRICE}",
+                                "$STREAK_FREEZE_PRICE",
                                 style: const TextStyle(
                                     color: Colors.lightBlueAccent,
                                     fontWeight: FontWeight.bold),

@@ -125,7 +125,7 @@ class UserApi {
 
   Future<User?> getUserFromUsername(String username) async {
     final response = await http.get(
-        api.https(url, "/api/user/username/${username}"),
+        api.https(url, "/api/user/username/$username"),
         headers: api.headers);
 
     if (response.statusCode == 200) {

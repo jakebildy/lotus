@@ -44,6 +44,8 @@ class UserController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxBool isLoadingPageNotDone = false.obs;
 
+  bool loadedStreak = false;
+
   @override
   void onInit() {
     super.onInit();
@@ -54,7 +56,10 @@ class UserController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
-      updateProperty(UserProperty.streak, loadStreak());
+      if (!loadedStreak) {
+        loadedStreak = true;
+        updateProperty(UserProperty.streak, loadStreak());
+      }
     });
   }
 
@@ -76,7 +81,11 @@ class UserController extends GetxController {
       if (property == UserProperty.emojisSentAt) {
         value =
             value.map((key, value) => MapEntry(key, value.toIso8601String()));
+      } else if (property == UserProperty.meditationHistory) {
+        value =
+            value.map((key, value) => MapEntry(key.toIso8601String(), value));
       }
+
       logSuccess("UPDATING PROPERTY:" + property.name + ":" + value.toString());
       await api.user.updateUserAttribute(property.name, value);
       databaseUser.value = await api.user.me();
@@ -135,6 +144,7 @@ class UserController extends GetxController {
 
   void logoutRequest() async {
     isLoading.value = false;
+    loadedStreak = false;
     try {
       String message = await api.auth.logout();
       logSuccess(message);
@@ -253,7 +263,7 @@ class UserController extends GetxController {
 
   void logMeditation(int amountNew, DateTime date) {
     logInfo("Saving last_meditated to ${date.toIso8601String()}");
-    updateProperty(UserProperty.lastMeditated, date);
+    updateProperty(UserProperty.lastMeditated, date.toIso8601String);
     // saveController.saveValue("last_meditated", date.toIso8601String());
 
     updateProperty(
@@ -267,14 +277,14 @@ class UserController extends GetxController {
     // Check if today exists in meditationHistory
     if (user.value.meditationHistory[today] != null) {
       updateProperty(UserProperty.meditationHistory, {
+        ...user.value.meditationHistory,
         today: user.value.meditationHistory[today]! + amountNew,
-        ...user.value.meditationHistory
       });
       logInfo(
           "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
     } else {
       updateProperty(UserProperty.meditationHistory,
-          {today: amountNew, ...user.value.meditationHistory});
+          {...user.value.meditationHistory, today: amountNew});
       logInfo(
           "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
     }

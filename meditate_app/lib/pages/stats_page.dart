@@ -14,7 +14,6 @@ class _StatsPageState extends State<StatsPage> {
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find();
-    bool isDarkMode = true;
 
     return Obx(
       () => Scaffold(
@@ -85,9 +84,9 @@ class _StatsPageState extends State<StatsPage> {
               child: Container(
                   height: 270,
                   decoration: BoxDecoration(
-                    color: isDarkMode ? Colors.black12 : Colors.white,
+                    color: Colors.black12,
                     border: Border.all(
-                      color: isDarkMode ? Colors.white24 : Colors.black26,
+                      color: Colors.white24,
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(20),

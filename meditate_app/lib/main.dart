@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/cookie_controller.dart';
+import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
@@ -32,6 +33,7 @@ Future<void> main() async {
   Get.put(AuthController());
   Get.put(HeapService());
   Get.put(GameController());
+  Get.put(EggController());
 
   runApp(const MyApp());
   SystemChannels.lifecycle.setMessageHandler((msg) {

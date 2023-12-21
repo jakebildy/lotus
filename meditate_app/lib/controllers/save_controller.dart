@@ -144,7 +144,7 @@ class SaveController extends GetxController {
     unlockedTurtles = RxList.empty();
 
     // Load meditation data for the last seven days
-    DateTime today = DateTime.now();
+    // DateTime today = DateTime.now();
     // for (int i = 0; i < 7; i++) {
     //   String meditationKey =
     //       'meditation-${today.day}-${today.month}-${today.year}';
