@@ -62,11 +62,11 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
     if (lastSentAt == null ||
         now.difference(lastSentAt!) >= const Duration(hours: 24)) {
       userController.updateProperty(UserProperty.emojisSentAt, {
+        ...userController.user.value.emojisSentAt,
         widget.targetUserId: now,
-        ...userController.user.value.emojisSentAt
       });
       userController.updateProperty(UserProperty.sentEmojis,
-          {widget.targetUserId: vibe, ...userController.user.value.sentEmojis});
+          {...userController.user.value.sentEmojis, widget.targetUserId: vibe});
       setState(() {
         lastSentAt = now;
       });
@@ -184,7 +184,7 @@ class _VibeState extends State<Vibe> {
           child: Container(
             width: 100,
             decoration: BoxDecoration(
-              color: widget.selectedVibe == widget.vibe
+              color: widget.selectedVibe == widget.vibe && widget.isDisabled
                   ? Colors.white24
                   : widget.isDisabled
                       ? Colors.transparent
@@ -208,11 +208,11 @@ class _VibeState extends State<Vibe> {
                     style: const TextStyle(fontSize: 30),
                   ),
                   Text(
-                    widget.selectedVibe == widget.vibe
-                        ? "Sent"
-                        : widget.isDisabled
-                            ? "Wait"
-                            : "Send",
+                    widget.isDisabled
+                        ? widget.selectedVibe == widget.vibe
+                            ? "Sent"
+                            : "Wait"
+                        : "Send",
                     style: TextStyle(
                         color: widget.isDisabled &&
                                 widget.selectedVibe != widget.vibe
