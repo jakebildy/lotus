@@ -104,7 +104,7 @@ export async function updateUser(user: UserI, userUpdate: UserUpdate): Promise<U
 export async function login(email: string, password: string): Promise<UserI> {
   const user: UserI | null = await findUserByEmail(email);
   if (!user) throw "No user found with email: " + email;
-  if (!comparePassword(user, password)) {
+  if (!await comparePassword(user, password)) {
     console.log("Incorrect password 😡");
     throw "Incorrect password";
   } else {
