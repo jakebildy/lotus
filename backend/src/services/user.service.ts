@@ -46,9 +46,9 @@ export async function findUserByUsername(username: string): Promise<UserI | null
 
 export async function comparePassword(user: UserI, password: string): Promise<boolean> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  console.log(`Comparing password: ${password} with user password: ${user.password}`);
+  // console.log(`Comparing password: ${password} with user password: ${user.password}`);
   const result = await bcrypt.compare(password, user.password!);
-  console.log(`Compare result: ${result}`);
+  // console.log(`Compare result: ${result}`);
   return result;
 }
 
