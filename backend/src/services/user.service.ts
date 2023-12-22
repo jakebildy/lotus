@@ -46,7 +46,10 @@ export async function findUserByUsername(username: string): Promise<UserI | null
 
 export async function comparePassword(user: UserI, password: string): Promise<boolean> {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return await bcrypt.compare(password, user.password!);
+  console.log(`Comparing password: ${password} with user password: ${user.password}`);
+  const result = await bcrypt.compare(password, user.password!);
+  console.log(`Compare result: ${result}`);
+  return result;
 }
 
 export async function createUserFromGoogleUser(googleUser: GoogleUser): Promise<UserI> {
@@ -90,21 +93,18 @@ export interface UserUpdate {
 
 
 export async function updateUser(user: UserI, userUpdate: UserUpdate): Promise<UserI | null> {
-  console.log("!!!!!!!");
   await User.findByIdAndUpdate(user, {
     ...userUpdate,
     username: user.username
   });
   const _user = await User.findById(user);
-
-  console.log(_user);
   return _user;
 }
 
 export async function login(email: string, password: string): Promise<UserI> {
   const user: UserI | null = await findUserByEmail(email);
   if (!user) throw "No user found with email: " + email;
-  if (!comparePassword(user, password)) throw "incorrect password";
+  if (!comparePassword(user, password)) throw "Incorrect password!";
 
   return user;
 }
