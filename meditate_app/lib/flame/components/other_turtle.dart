@@ -150,9 +150,9 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
               children: <Widget>[
                 (!DEBUG_MODE && userController.user.value.gems < 50)
                     ? const Text(
-                        "You need at least 50 gems to breed this turtle!")
+                        "You need at least 50 sand dollars to breed this turtle!")
                     : Text(
-                        'Breed your ${TURTLE_COLORS_NAME[game.turtleColor.value]} ${TURTLES[game.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 gems?'),
+                        'Breed your ${TURTLE_COLORS_NAME[game.turtleColor.value]} ${TURTLES[game.selectedTurtle.value].name} with this ${TURTLE_COLORS_NAME[turtleColor]} ${TURTLES[turtleType].name} for 50 sand dollars?'),
               ],
             ),
           ),

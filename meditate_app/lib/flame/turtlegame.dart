@@ -328,7 +328,7 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
                       children: [
                         SizedBox(
                             height: 27,
-                            child: Image.asset("assets/gem_icon.png")),
+                            child: Image.asset("assets/sand_dollar.png")),
                         const SizedBox(
                           width: 3,
                         ),
