@@ -270,9 +270,13 @@ class _UserProfilePageState extends State<UserProfilePage>
             const SizedBox(
               height: 10,
             ),
-            SendVibeWidget(
-              targetUserId: widget.user.id ?? "",
-            ),
+            followController.followers
+                    .map((element) => element.id)
+                    .contains(widget.user.id)
+                ? SendVibeWidget(
+                    targetUserId: widget.user.id ?? "",
+                  )
+                : Container(),
           ],
         ),
       ),
