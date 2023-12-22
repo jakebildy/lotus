@@ -11,6 +11,8 @@ async function login(req: Request, res: Response) {
   try {
     const user = await AuthService.login(req.body.email, req.body.password);
 
+    if (!user) throw "Invalid email or password";
+
     // set user jwt cookie.
     const jwt = await AuthService.getJwtFromUser(user);
     res.cookie('user', jwt);
@@ -31,7 +33,7 @@ async function signup(req: Request, res: Response) {
     if (!req.body.email.match(validRegex)) throw "Not a valid email";
 
     await AuthService.createUser(req.body as UserI, req.body.password);
-    const user = await AuthService.login(req.body.email, req.body.password);
+    const user = await AuthService.login(req.body.email, req.body.password) as UserI;
     // set user jwt cookie.
     const jwt = await AuthService.getJwtFromUser(user);
     res.cookie('user', jwt);

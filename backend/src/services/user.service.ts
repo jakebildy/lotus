@@ -101,10 +101,12 @@ export async function updateUser(user: UserI, userUpdate: UserUpdate): Promise<U
   return _user;
 }
 
-export async function login(email: string, password: string): Promise<UserI> {
+export async function login(email: string, password: string): Promise<UserI|null> {
   const user: UserI | null = await findUserByEmail(email);
   if (!user) throw "No user found with email: " + email;
-  if (!comparePassword(user, password)) throw "Incorrect password!";
+  if (!comparePassword(user, password)) {
+    return null;
+  };
 
   return user;
 }
