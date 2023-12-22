@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:meditate_app/util/turtles.dart';
 
 const String defaultProfilePicture =
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -121,6 +122,26 @@ class User {
             .inDays
             .abs();
 
+    var unlockedTurtles = map["unlockedTurtles"] as List<dynamic>? ?? [];
+    var unlockedTurtleColors =
+        (map["unlockedTurtleColors"] as List<dynamic>? ?? []).map((item) {
+      if (item is List) {
+        return item.map((e) => e as int).toList();
+      } else {
+        return [-1];
+      }
+    }).toList();
+
+    for (int i = 0; i < TURTLES.length; i++) {
+      if (unlockedTurtles.length <= i || unlockedTurtles[i] == null) {
+        unlockedTurtles.add(0);
+      }
+
+      if (unlockedTurtleColors.length <= i) {
+        unlockedTurtleColors.add([]);
+      }
+    }
+
     return User(
       id: map["_id"],
       email: map["email"] ?? "",
@@ -143,11 +164,8 @@ class User {
       meditationTimes: map["meditationTimes"] ?? [],
       meditationTimesAsOf: DateTime.parse(
           map["meditationTimesAsOf"] ?? "2011-10-05T14:48:00.000Z"),
-      unlockedTurtles: map["unlockedTurtles"] as List<dynamic>? ?? [],
-      unlockedTurtleColors: (map["unlockedTurtleColors"] as List<dynamic>?)
-              ?.map((e) => List<int>.from(e as List))
-              .toList() ??
-          [],
+      unlockedTurtles: unlockedTurtles,
+      unlockedTurtleColors: unlockedTurtleColors,
       eggTypes: (map["eggTypes"] as List<dynamic>? ?? []).cast<String>(),
       meditationHistory: _parseMeditationHistory(
               map["meditationHistory"] as Map<String, dynamic>?)

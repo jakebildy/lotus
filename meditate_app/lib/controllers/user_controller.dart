@@ -82,11 +82,12 @@ class UserController extends GetxController {
         value =
             value.map((key, value) => MapEntry(key, value.toIso8601String()));
       } else if (property == UserProperty.meditationHistory) {
-        value =
-            value.map((key, value) => MapEntry(key.toIso8601String(), value));
+        value = value.map((key, value) =>
+            MapEntry('meditation-${key.day}-${key.month}-${key.year}', value));
       }
 
-      logSuccess("UPDATING PROPERTY:" + property.name + ":" + value.toString());
+      logSuccess(
+          "UPDATING PROPERTY=> " + property.name + ":" + value.toString());
       await api.user.updateUserAttribute(property.name, value);
       databaseUser.value = await api.user.me();
       update();
@@ -103,6 +104,13 @@ class UserController extends GetxController {
     //select the one where lastUpdatedAt was more recent or exists* and sync both
 
     // If no lastUpdatedAt in localStorage, add it, and sync databaseUser to match localStorageUser
+
+    // Syncing database to LOCAL STORAGE
+    // streak = databaseUser.streak
+    // totalMinutes = databaseUser.totalMinutes
+    // streakFreezes = databaseUser.streakFreezes
+    // turtleColors = databaseUser.turtleColors
+    // unlockedTurtles = databaseUser.unlockedTurtles
   }
 
   int totalMinutes() {
@@ -263,7 +271,7 @@ class UserController extends GetxController {
 
   void logMeditation(int amountNew, DateTime date) {
     logInfo("Saving last_meditated to ${date.toIso8601String()}");
-    updateProperty(UserProperty.lastMeditated, date.toIso8601String);
+    updateProperty(UserProperty.lastMeditated, date.toIso8601String());
     // saveController.saveValue("last_meditated", date.toIso8601String());
 
     updateProperty(

@@ -57,7 +57,6 @@ class _CountdownPageState extends State<CountdownPage>
         duration: const Duration(milliseconds: 300), vsync: this);
     _playPauseController.forward();
 
-    UserController userController = Get.find();
     SaveController saveController = Get.find();
 
     bell = AudioPlayer();
@@ -446,8 +445,6 @@ class _CountdownPageState extends State<CountdownPage>
                                               setState(() {
                                                 loading = true;
                                               });
-                                              SaveController saveController =
-                                                  Get.find();
 
                                               int turtleToHatch = -1;
                                               int turtleColorToHatch = -1;
@@ -465,58 +462,42 @@ class _CountdownPageState extends State<CountdownPage>
                                               DateTime date = DateTime(
                                                   now.year, now.month, now.day);
 
-                                              String streakValue =
-                                                  saveController
-                                                      .getValue("streak");
-
-                                              String lastMeditated =
-                                                  saveController.getValue(
-                                                      "last_meditated");
-
                                               int gemsToGive = 0;
                                               bool alreadyMeditatedToday =
                                                   false;
 
-                                              if (streakValue == "" ||
-                                                  lastMeditated == "") {
+                                              int numDays = userController
+                                                  .user.value.lastMeditated
+                                                  .difference(date)
+                                                  .inDays
+                                                  .abs();
+                                              if (numDays == 1) {
+                                                userController.updateStreak(
+                                                    userController
+                                                            .user.value.streak +
+                                                        1);
                                                 logInfo(
-                                                    "Streak value is empty.");
+                                                    "Streak value is updated to ${userController.user.value.streak} + 1}.");
+                                                userController.updateProperty(
+                                                    UserProperty.gems,
+                                                    userController
+                                                            .user.value.gems +
+                                                        5);
+                                                gemsToGive += 5;
+                                              } else if (numDays > 1) {
                                                 userController.updateStreak(1);
+                                                userController.updateProperty(
+                                                    UserProperty.gems,
+                                                    userController
+                                                            .user.value.gems +
+                                                        5);
+                                                gemsToGive += 5;
+                                                logInfo(
+                                                    "Streak value is set to 1. NumDays was > 1.");
                                               } else {
-                                                int numDays = DateTime.parse(
-                                                        saveController.getValue(
-                                                            "last_meditated"))
-                                                    .difference(date)
-                                                    .inDays
-                                                    .abs();
-                                                if (numDays == 1) {
-                                                  userController.updateStreak(
-                                                      int.parse(streakValue) +
-                                                          1);
-                                                  logInfo(
-                                                      "Streak value is updated to ${int.parse(streakValue) + 1}.");
-                                                  userController.updateProperty(
-                                                      UserProperty.gems,
-                                                      userController
-                                                              .user.value.gems +
-                                                          5);
-                                                  gemsToGive += 5;
-                                                } else if (numDays > 1) {
-                                                  userController
-                                                      .updateStreak(1);
-                                                  userController.updateProperty(
-                                                      UserProperty.gems,
-                                                      userController
-                                                              .user.value.gems +
-                                                          5);
-                                                  gemsToGive += 5;
-                                                  logInfo(
-                                                      "Streak value is set to 1. NumDays was > 1.");
-                                                } else {
-                                                  logInfo(
-                                                      "You already meditated today. Not updating streak!");
-                                                  alreadyMeditatedToday = true;
-                                                }
+                                                logInfo(
+                                                    "You already meditated today. Not updating streak!");
+                                                alreadyMeditatedToday = true;
                                               }
 
                                               //update total meditation amount

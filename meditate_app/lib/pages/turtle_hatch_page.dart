@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class TurtleHatchPage extends StatefulWidget {
   final int gemsAmount;
@@ -24,6 +26,9 @@ class TurtleHatchPage extends StatefulWidget {
 class _TurtleHatchPageState extends State<TurtleHatchPage>
     with TickerProviderStateMixin {
   double opacity = 0;
+
+  final InAppReview inAppReview = InAppReview.instance;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +41,8 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
       opacity = 1;
     });
   }
+
+  SaveController save = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +93,13 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
             height: 50,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              if (save.hasReviewed.value == false) {
+                if (await inAppReview.isAvailable()) {
+                  inAppReview.requestReview();
+                  save.updateHasReviewed();
+                }
+              }
               Get.offAll(NewGemsPage(
                 gemsAmount: widget.gemsAmount,
                 foundEgg: widget.foundEgg,

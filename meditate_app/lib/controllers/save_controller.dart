@@ -22,6 +22,7 @@ class SaveController extends GetxController {
   //Saved Settings
   RxInt defaultMeditationTime = 5.obs;
   RxBool ambienceOn = true.obs;
+  RxBool hasReviewed = false.obs;
 
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
@@ -36,6 +37,12 @@ class SaveController extends GetxController {
     defaultMeditationTime.value = newVal;
     saveValue(
         "default_meditation_time", defaultMeditationTime.value.toString());
+    update();
+  }
+
+  void updateHasReviewed() {
+    hasReviewed.value = !hasReviewed.value;
+    saveValue("has_reviewed", hasReviewed.value.toString());
     update();
   }
 
@@ -225,8 +232,10 @@ class SaveController extends GetxController {
           int.parse(getValue('default_meditation_time'));
     }
 
-    // Load current streak value
-    // streak.value = loadStreak(); moved to UserController
+    // Load if the user has been prompted to rate the app
+    if (getValue('has_reviewed') != "") {
+      hasReviewed.value = getValue('has_reviewed').toLowerCase() == 'true';
+    }
 
     // Load the entire meditation history for the past year
     // If gems does not exist, neither does meditation history yet

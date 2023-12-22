@@ -72,7 +72,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
     turtleType = Random().nextInt(TURTLES.length);
     turtleColor = Random().nextInt(TURTLE_COLORS.length);
     Sprite overlay = await gameRef.loadSprite(
-      'turtles/${turtleType}.png',
+      'turtles/$turtleType.png',
     );
     Paint newPaint = Paint()
       ..colorFilter = ColorFilter.mode(
