@@ -139,7 +139,7 @@ class BubbleModel extends CustomPainter {
   /// Painting the bubbles in the screen.
   @override
   void paint(Canvas canvas, Size size) {
-    bubbles.forEach((particle) {
+    for (var particle in bubbles) {
       final paint = Paint()
         ..color = particle.color.withAlpha(opacity)
         ..style = paintingStyle
@@ -175,7 +175,7 @@ class BubbleModel extends CustomPainter {
             ),
             paint);
       }
-    });
+    }
   }
 
   @override

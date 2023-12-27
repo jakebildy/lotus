@@ -5,13 +5,13 @@ import 'package:http/http.dart' as http;
 import "index.dart" as api;
 
 class SearchApi {
-  static var _singleton;
+  static SearchApi? _singleton;
   String get url => api.url;
   SearchApi._internal();
 
   factory SearchApi() {
     _singleton ??= SearchApi._internal();
-    return _singleton;
+    return _singleton!;
   }
 
   //Endpoints

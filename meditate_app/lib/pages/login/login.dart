@@ -148,7 +148,10 @@ class Login extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
-                            child: Text(controller.warningMessage.value,
+                            child: Text(
+                                controller.isLoggingIn.value
+                                    ? "Loading..."
+                                    : controller.warningMessage.value,
                                 style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                           ),

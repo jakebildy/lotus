@@ -68,15 +68,14 @@ class _NewGemsPageState extends State<NewGemsPage>
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
-          Container(
-              child: const Padding(
+          const Padding(
             padding: EdgeInsets.fromLTRB(16, 8.0, 16, 8),
             child: Text(
               "The longer you meditate, the more sand dollars you'll earn",
               style: TextStyle(fontSize: 14),
               textAlign: TextAlign.center,
             ),
-          )),
+          ),
           const SizedBox(
             height: 50,
           ),

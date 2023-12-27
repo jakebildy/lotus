@@ -18,7 +18,7 @@ class BeginMeditationPage extends StatefulWidget {
 }
 
 class _BeginMeditationPageState extends State<BeginMeditationPage> {
-  Duration NO_TIME = const Duration(hours: 0, minutes: 0);
+  Duration noTime = const Duration(hours: 0, minutes: 0);
   late Duration _duration = const Duration(hours: 0, minutes: 5);
 
   @override
@@ -154,7 +154,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
-                          child: _duration == NO_TIME ||
+                          child: _duration == noTime ||
                                   _duration <
                                       (DEBUG_MODE == true
                                           ? const Duration(minutes: 1)

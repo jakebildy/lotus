@@ -6,13 +6,13 @@ import 'package:http/http.dart' as http;
 import "index.dart" as api;
 
 class FollowApi {
-  static var _singleton;
+  static FollowApi? _singleton;
   String get url => api.url;
   FollowApi._internal();
 
   factory FollowApi() {
     _singleton ??= FollowApi._internal();
-    return _singleton;
+    return _singleton!;
   }
 
   //Endpoints

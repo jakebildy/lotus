@@ -50,6 +50,7 @@ class FloatingBubbles extends StatefulWidget {
   /// If you want the bubbles to be floating always then use the constructor
   /// `FloatingBubbles.alwaysRepeating()`.
   FloatingBubbles({
+    super.key,
     required this.noOfBubbles,
     required this.colorsOfBubbles,
     required this.sizeFactor,
@@ -80,6 +81,7 @@ class FloatingBubbles extends StatefulWidget {
   /// Creates Floating Bubbles that always floats and doesn't stop.
   /// All Fields Are Required to make a new [Instance] of FloatingBubbles.
   FloatingBubbles.alwaysRepeating({
+    super.key,
     required this.noOfBubbles,
     required this.colorsOfBubbles,
     required this.sizeFactor,
@@ -197,6 +199,8 @@ class _FloatingBubblesState extends State<FloatingBubbles> {
   /// This Function checks whether the bubbles in the screen have to be restarted due to
   /// frame skips.
   _simulateBubbles() {
-    bubbles.forEach((bubbles) => bubbles.checkIfBubbleNeedsToBeRestarted());
+    for (var bubbles in bubbles) {
+      bubbles.checkIfBubbleNeedsToBeRestarted();
+    }
   }
 }

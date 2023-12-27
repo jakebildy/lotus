@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:meditate_app/controllers/cookie_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
@@ -26,6 +27,7 @@ User noUser = User(
 class UserController extends GetxController {
   final PushNotificationService pushNotificationService = Get.find();
   final NetworkStatusController networkStatusController = Get.find();
+  final storage = GetStorage();
 
   final Rx<User> databaseUser = noUser.obs;
   final Rx<User> localStorageUser = noUser.obs;
@@ -74,6 +76,59 @@ class UserController extends GetxController {
     }
     update();
   }
+
+  /// This saves the changed value to the local storage. Also updates the localStorageUser and lastUpdatedAt - this is used to sync data when the user goes online.
+  Future<void> saveLocalValue(String key, String value) async {
+    storage.write(key, value);
+
+    //TODO: confirm on values. Then use old phone and print
+    switch (key) {
+      case "streak":
+        localStorageUser.value.streak = int.parse(value);
+        break;
+      case "total_minutes":
+        localStorageUser.value.totalMinutes = int.parse(value);
+        break;
+      case "streak_freezes":
+        localStorageUser.value.streakFreezes = int.parse(value);
+        break;
+      case "unlocked_turtle_colors":
+        localStorageUser.value.unlockedTurtleColors = value.split(",").map((e) {
+          return e.split(":").map((e) {
+            return int.parse(e);
+          }).toList();
+        }).toList();
+        break;
+      case "unlocked_turtles":
+        localStorageUser.value.unlockedTurtles = value.split(",").map((e) {
+          return int.parse(e);
+        }).toList();
+        break;
+      case "last_meditated":
+        localStorageUser.value.lastMeditated = DateTime.parse(value);
+        break;
+      case "meditation_history":
+        // localStorageUser.value.meditationHistory = {}; TODO: fix this
+        value.split(",").forEach((element) {
+          List<String> split = element.split(":");
+          localStorageUser.value.meditationHistory[DateTime.parse(split[0])] =
+              int.parse(split[1]);
+        });
+        break;
+      default:
+        logError("Unknown key: $key");
+    }
+
+    storage.write("LAST_UPDATED_AT", DateTime.now().toIso8601String());
+  }
+
+  /// This gets the local storage value.
+  String getValue(String key) {
+    return storage.read(key) ?? "";
+  }
+
+  /// This function loads the localStorageUser.
+  Future<void> getLocalStorageUser() async {}
 
   Future<void> updateProperty(UserProperty property, dynamic value) async {
     // If the user is online, update the database - otherwise, update the local storage
@@ -127,6 +182,8 @@ class UserController extends GetxController {
       String cookies = cookie.getCookies();
       api.setCookies(cookies);
       databaseUser.value = await api.user.me();
+
+      // TODO: set localStorageUser values here
     } catch (e, stackTrace) {
       logError(e.toString());
       logError(stackTrace.toString());
@@ -162,8 +219,9 @@ class UserController extends GetxController {
     }
     databaseUser.value = noUser;
     localStorageUser.value = noUser;
-    // isAuthenticated.value = false;
-    // TODO: saveController.clearCookies();
+
+    CookieController cookie = Get.find();
+    cookie.clearCookies();
     Get.offAll(const Signup());
 
     update();

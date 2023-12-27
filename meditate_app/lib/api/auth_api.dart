@@ -4,13 +4,13 @@ import 'package:http/http.dart' as http;
 import "index.dart" as api;
 
 class AuthApi {
-  static var _singleton;
+  static AuthApi? _singleton;
   String get url => api.url;
   AuthApi._internal();
 
   factory AuthApi() {
     _singleton ??= AuthApi._internal();
-    return _singleton;
+    return _singleton!;
   }
 
   //Endpoints
@@ -44,6 +44,9 @@ class AuthApi {
         body: body, headers: api.headers);
 
     if (response.statusCode == 200) {
+      if (response.body == "null") {
+        throw ("Invalid email or password");
+      }
       api.updateCookie(response);
       return User.fromJson(json.decode(response.body));
     } else {

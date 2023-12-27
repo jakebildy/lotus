@@ -4,13 +4,13 @@ import 'package:http/http.dart' as http;
 import "index.dart" as api;
 
 class UserApi {
-  static var _singleton;
+  static UserApi? _singleton;
   String get url => api.url;
   UserApi._internal();
 
   factory UserApi() {
     _singleton ??= UserApi._internal();
-    return _singleton;
+    return _singleton!;
   }
 
   //Endpoints

@@ -32,21 +32,21 @@ class User {
   final String username;
   final DateTime createdAt;
 
-  final int streak;
-  final int totalMinutes;
-  final int gems;
-  final int eggs;
-  final int totalEggs;
-  final int hatchProgressEggOne;
-  final int streakFreezes;
-  final DateTime lastMeditated;
-  final List<dynamic> meditationTimes;
-  final DateTime meditationTimesAsOf;
+  int streak;
+  int totalMinutes;
+  int gems;
+  int eggs;
+  int totalEggs;
+  int hatchProgressEggOne;
+  int streakFreezes;
+  DateTime lastMeditated;
+  List<dynamic> meditationTimes;
+  DateTime meditationTimesAsOf;
 
-  final List<dynamic> unlockedTurtles;
-  final List<List<int>> unlockedTurtleColors;
+  List<dynamic> unlockedTurtles;
+  List<List<int>> unlockedTurtleColors;
   RxMap<DateTime, int> meditationHistory;
-  final List<String> eggTypes;
+  List<String> eggTypes;
 
   /// Maps the User ID the emoji was sent to, to the DateTime of the last emoji sent to them
   RxMap<String, DateTime> emojisSentAt;

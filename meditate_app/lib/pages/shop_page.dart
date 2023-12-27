@@ -16,13 +16,11 @@ class ShopPage extends StatefulWidget {
   State<ShopPage> createState() => _ShopPageState();
 }
 
-//TODO: replace with User Controller
 class _ShopPageState extends State<ShopPage> {
   final int STREAK_FREEZE_PRICE = 80;
   final int LURE_PRICE = 90;
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = true;
     UserController user = Get.find();
 
     return Obx(
@@ -127,17 +125,13 @@ class _ShopPageState extends State<ShopPage> {
               child: Container(
                 height: 150,
                 decoration: BoxDecoration(
-                  color: isDarkMode
-                      ? user.user.value.streakFreezes > 0
-                          ? const Color.fromARGB(255, 46, 48, 59)
-                          : Colors.black12
-                      : Colors.white,
+                  color: user.user.value.streakFreezes > 0
+                      ? const Color.fromARGB(255, 46, 48, 59)
+                      : Colors.black12,
                   border: Border.all(
-                    color: isDarkMode
-                        ? user.user.value.streakFreezes > 0
-                            ? const Color.fromARGB(255, 81, 80, 107)
-                            : Colors.white24
-                        : Colors.black26,
+                    color: user.user.value.streakFreezes > 0
+                        ? const Color.fromARGB(255, 81, 80, 107)
+                        : Colors.white24,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(20),

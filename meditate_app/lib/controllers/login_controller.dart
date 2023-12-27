@@ -16,10 +16,12 @@ class LoginController extends GetxController {
 
   final Rx<String> warningMessage = "".obs;
   final Rx<bool> isLoading = false.obs;
+  final Rx<bool> isLoggingIn = false.obs;
 
   // Login
   void login() async {
     try {
+      isLoggingIn.value = true;
       final String _email = email.text;
       final User user = await api.auth.login(
         _email,
@@ -28,11 +30,13 @@ class LoginController extends GetxController {
       logSuccess("Logged in " + user.fullName);
       UserController userController = Get.find();
       userController.setUser(user);
+      isLoggingIn.value = false;
       Get.offAll(const AppPages());
     } catch (error, trace) {
       logError("Error signing up " + error.toString());
       logError(trace.toString());
       warningMessage.value = error.toString();
+      isLoggingIn.value = false;
     }
     update();
   }
