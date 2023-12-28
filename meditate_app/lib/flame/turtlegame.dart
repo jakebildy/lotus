@@ -277,7 +277,6 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO: add UI overlay on top via Stack
     UserController user = Get.find();
 
     return Stack(

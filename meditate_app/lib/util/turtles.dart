@@ -117,8 +117,6 @@ int getTurtleToHatch() {
   int result = 0;
 
   //Randomly choose a turtle from the available options
-
-  //TODO: this is likely broken
   Turtle selectedTurtle =
       possibleTurtles[Random().nextInt(possibleTurtles.length)];
 

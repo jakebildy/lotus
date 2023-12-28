@@ -439,8 +439,6 @@ class _CountdownPageState extends State<CountdownPage>
                                             0, 10, 0, 80.0),
                                         child: GestureDetector(
                                           onTap: () {
-                                            // TODO: replace with UserController
-
                                             if (loading != true) {
                                               setState(() {
                                                 loading = true;
@@ -499,23 +497,6 @@ class _CountdownPageState extends State<CountdownPage>
                                                     "You already meditated today. Not updating streak!");
                                                 alreadyMeditatedToday = true;
                                               }
-
-                                              //update total meditation amount TODO: remove this if implemented
-                                              // String totalAmount =
-                                              //     saveController.getValue(
-                                              //         "total_minutes");
-                                              // if (totalAmount == "") {
-                                              //   saveController
-                                              //       .updateTotalAmount(
-                                              //           timeInMinutes,
-                                              //           timeInMinutes);
-                                              // } else {
-                                              //   saveController
-                                              //       .updateTotalAmount(
-                                              //           int.parse(totalAmount) +
-                                              //               timeInMinutes,
-                                              //           timeInMinutes);
-                                              // }
 
                                               userController.logMeditation(
                                                   timeInMinutes, date);
