@@ -88,8 +88,8 @@ class TurtleGame extends FlameGame with HasTappables {
   }
 
   @override
-  void onTapUp(int id, TapUpInfo info) {
-    super.onTapUp(id, info);
+  void onTapUp(int pointerId, TapUpInfo info) {
+    super.onTapUp(pointerId, info);
 
     if (!info.handled && canMove) {
       debounceCanMove();
@@ -161,13 +161,6 @@ class Player extends SpriteComponent with HasGameRef, Tappable {
   bool isBase = false;
 
   Player(Vector2 position, this.isBase) : super(position: position);
-
-  @override
-  void update(double dt) {
-    super.update(dt);
-    // angle += speed * dt;
-    // angle %= 2 * math.pi;
-  }
 
   @override
   Future<void> onLoad() async {

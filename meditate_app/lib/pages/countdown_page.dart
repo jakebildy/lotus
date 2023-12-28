@@ -500,7 +500,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                 alreadyMeditatedToday = true;
                                               }
 
-                                              //update total meditation amount
+                                              //update total meditation amount TODO: remove this if implemented
                                               // String totalAmount =
                                               //     saveController.getValue(
                                               //         "total_minutes");

@@ -78,43 +78,46 @@ class UserController extends GetxController {
   }
 
   /// This saves the changed value to the local storage. Also updates the localStorageUser and lastUpdatedAt - this is used to sync data when the user goes online.
-  Future<void> saveLocalValue(String key, String value) async {
-    storage.write(key, value);
-
+  Future<void> saveLocalValue(UserProperty key, dynamic value) async {
     //TODO: confirm on values. Then use old phone and print
     switch (key) {
-      case "streak":
-        localStorageUser.value.streak = int.parse(value);
+      case UserProperty.streak: //Completed
+        storage.write("streak", value.toString());
+        localStorageUser.value.streak = value as int;
         break;
-      case "total_minutes":
+      case UserProperty.totalMinutes: //Completed
+        storage.write("total_minutes", value.toString());
         localStorageUser.value.totalMinutes = int.parse(value);
         break;
-      case "streak_freezes":
-        localStorageUser.value.streakFreezes = int.parse(value);
+      case UserProperty.streakFreezes:
+        storage.write("streak_freezes", value.toString());
+        localStorageUser.value.streakFreezes = value as int;
         break;
-      case "unlocked_turtle_colors":
-        localStorageUser.value.unlockedTurtleColors = value.split(",").map((e) {
-          return e.split(":").map((e) {
-            return int.parse(e);
-          }).toList();
-        }).toList();
-        break;
-      case "unlocked_turtles":
+      // case "unlocked_turtle_colors":
+      //   localStorageUser.value.unlockedTurtleColors = value.split(",").map((e) {
+      //     return e.split(":").map((e) {
+      //       return int.parse(e);
+      //     }).toList();
+      //   }).toList();
+      //   break;
+      case UserProperty.unlockedTurtles:
+        //'turtle-${turtle.name}'
         localStorageUser.value.unlockedTurtles = value.split(",").map((e) {
           return int.parse(e);
         }).toList();
         break;
-      case "last_meditated":
+      case UserProperty.lastMeditated: //Completed
+        storage.write("last_meditated", value);
         localStorageUser.value.lastMeditated = DateTime.parse(value);
         break;
-      case "meditation_history":
-        // localStorageUser.value.meditationHistory = {}; TODO: fix this
-        value.split(",").forEach((element) {
-          List<String> split = element.split(":");
-          localStorageUser.value.meditationHistory[DateTime.parse(split[0])] =
-              int.parse(split[1]);
-        });
-        break;
+      // case "meditation_history": //'meditation-${today.day}-${today.month}-${today.year}' check back to 2020
+      //   // localStorageUser.value.meditationHistory = {}; TODO: fix this
+      //   value.split(",").forEach((element) {
+      //     List<String> split = element.split(":");
+      //     localStorageUser.value.meditationHistory[DateTime.parse(split[0])] =
+      //         int.parse(split[1]);
+      //   });
+      //   break;
       default:
         logError("Unknown key: $key");
     }
@@ -147,8 +150,7 @@ class UserController extends GetxController {
       databaseUser.value = await api.user.me();
       update();
     } else {
-      User newUser = localStorageUser.value;
-      // TODO: update the specific property
+      //saveLocalValue(property, value); TODO: uncomment once getLocalStorageUser verified
     }
   }
 

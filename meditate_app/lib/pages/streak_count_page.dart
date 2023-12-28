@@ -32,6 +32,8 @@ class _StreakCountPageState extends State<StreakCountPage>
   void initState() {
     super.initState();
 
+    //TODO: fix weird streak issue where the streak value is one behind what it should be if its the first time meditating for the day
+
     UserController userController = Get.find();
     streak = widget.alreadyMeditatedToday
         ? userController.user.value.streak

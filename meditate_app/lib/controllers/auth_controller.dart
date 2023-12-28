@@ -80,7 +80,6 @@ class AuthController extends GetxController {
             logSuccess("Set profile picture successfully");
             UserController userController = Get.find();
             userController.setUser(newUser);
-            //TODO: add setUser function
             update();
           }).catchError((error) {
             logError("Failed to set profile pic!");

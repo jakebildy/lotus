@@ -23,6 +23,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
 
   @override
   void initState() {
+    super.initState();
     SaveController saveController = Get.find();
     setState(() {
       _duration = Duration(

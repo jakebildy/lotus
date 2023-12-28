@@ -1,23 +1,13 @@
-import 'dart:math';
-
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/api/index.dart' as api;
 
-import '../models/user.dart';
-
 /// SaveController is going to be deprecated. It will only be used for the saved settings.
 /// {@category Controllers}
 class SaveController extends GetxController {
   final storage = GetStorage();
-
-  //The list of unlocked turtles
-  RxList unlockedTurtles = RxList();
-
-  //The list of unlocked turtle colors
-  RxList unlockedTurtleColors = RxList<List<int>>();
 
   //Saved Settings
   RxInt defaultMeditationTime = 5.obs;
@@ -46,13 +36,13 @@ class SaveController extends GetxController {
     update();
   }
 
-  void updateFetchedData(User user) {
-    meditationHistory.value = user.meditationHistory;
-    unlockedTurtles.value = user.unlockedTurtles;
-    unlockedTurtleColors.value = user.unlockedTurtleColors;
-    meditationHistory.refresh();
-    update();
-  }
+  // void updateFetchedData(User user) {
+  //   meditationHistory.value = user.meditationHistory;
+  //   // unlockedTurtles.value = user.unlockedTurtles;
+  //   // unlockedTurtleColors.value = user.unlockedTurtleColors;
+  //   meditationHistory.refresh();
+  //   update();
+  // }
 
   // SaveController() {
   //   loadData();
@@ -148,7 +138,7 @@ class SaveController extends GetxController {
 
     // Initialize lists for the last seven days of meditation and unlocked turtles
     // lastSevenDays = RxList.empty();
-    unlockedTurtles = RxList.empty();
+    // unlockedTurtles = RxList.empty();
 
     // Load meditation data for the last seven days
     // DateTime today = DateTime.now();
@@ -194,32 +184,32 @@ class SaveController extends GetxController {
     // }
 
     // Load unlocked turtle data
-    for (int i = 0; i < TURTLES.length; i++) {
-      if (getValue('turtle-$i') != "") {
-        unlockedTurtles.add(int.parse(getValue('turtle-$i')));
+    // for (int i = 0; i < TURTLES.length; i++) {
+    //   if (getValue('turtle-$i') != "") {
+    //     unlockedTurtles.add(int.parse(getValue('turtle-$i')));
 
-        if (getValue('turtle-$i-color') != "") {
-          unlockedTurtleColors.add(
-              getValue('turtle-$i-color').split(',').map(int.parse).toList());
-          unlockedTurtleColors[i].add(-1);
-        } else {
-          // Generate random turtle colors if not available
-          unlockedTurtleColors.add(List<int>.generate(
-              int.parse(getValue('turtle-$i')),
-              (i) => Random().nextInt(TURTLE_COLORS.length)));
+    //     if (getValue('turtle-$i-color') != "") {
+    //       unlockedTurtleColors.add(
+    //           getValue('turtle-$i-color').split(',').map(int.parse).toList());
+    //       unlockedTurtleColors[i].add(-1);
+    //     } else {
+    //       // Generate random turtle colors if not available
+    //       unlockedTurtleColors.add(List<int>.generate(
+    //           int.parse(getValue('turtle-$i')),
+    //           (i) => Random().nextInt(TURTLE_COLORS.length)));
 
-          saveValue(
-              "turtle-$i-color",
-              unlockedTurtleColors[i]
-                  .toString()
-                  .replaceAll("[", "")
-                  .replaceAll("]", ""));
-        }
-      } else {
-        unlockedTurtles.add(0);
-        unlockedTurtleColors.add([-1]);
-      }
-    }
+    //       saveValue(
+    //           "turtle-$i-color",
+    //           unlockedTurtleColors[i]
+    //               .toString()
+    //               .replaceAll("[", "")
+    //               .replaceAll("]", ""));
+    //     }
+    //   } else {
+    //     unlockedTurtles.add(0);
+    //     unlockedTurtleColors.add([-1]);
+    //   }
+    // }
 
     // Load ambience setting
     if (getValue('ambience_on') != "") {
