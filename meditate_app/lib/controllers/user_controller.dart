@@ -79,7 +79,10 @@ class UserController extends GetxController {
   }
 
   /// This saves the changed value to the local storage. Also updates the localStorageUser and lastUpdatedAt - this is used to sync data when the user goes online.
-  Future<void> saveLocalValue(UserProperty key, dynamic value) async {
+  Future<void> saveLocalValue(
+    UserProperty key,
+    dynamic value,
+  ) async {
     //TODO: confirm on values. Then use old phone and print
     switch (key) {
       case UserProperty.streak: //Completed
@@ -123,10 +126,10 @@ class UserController extends GetxController {
         logError("Unknown key: $key");
     }
 
-    storage.write(
-        "LAST_UPDATED_AT",
-        DateTime.now()
-            .toIso8601String()); //TODO: just for save local value only? or is this correct
+    storage.write("LAST_UPDATED_AT", DateTime.now().toIso8601String());
+
+    logSuccess(
+        "UPDATING LOCAL STORAGE => " + key.name + ":" + value.toString());
   }
 
   /// This gets the local storage value.
@@ -258,7 +261,7 @@ class UserController extends GetxController {
       }
 
       logSuccess(
-          "UPDATING PROPERTY=> " + property.name + ":" + value.toString());
+          "UPDATING DATABASE => " + property.name + ":" + value.toString());
       await api.user.updateUserAttribute(property.name, value);
       databaseUser.value = await api.user.me();
       update();
@@ -290,6 +293,7 @@ class UserController extends GetxController {
     // TODO:
   }
 
+  //TODO: edge case where syncData doesnt get called
   /// Triggered when user goes offline to online
   Future<void> syncData() async {
     await getLocalStorageUser();

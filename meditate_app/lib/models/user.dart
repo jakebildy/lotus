@@ -156,7 +156,7 @@ class User {
       streak: numDays > 1
           ? 0
           : map["streak"] ??
-              0, // TODO - verify against number of streak freezes + time last logged in
+              0, // Logic to update the streak on app load in UserController
       totalMinutes: map["totalMinutes"] ?? 0,
       gems: map["gems"] ?? 0,
       eggs: map["eggs"] ?? 0,
