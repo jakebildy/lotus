@@ -622,5 +622,3 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 }
-
-//TODO: fix the average streak time

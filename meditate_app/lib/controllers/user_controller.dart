@@ -452,7 +452,7 @@ class UserController extends GetxController {
     double sum = lastSevenDays.fold(0, (prev, entry) => prev + entry.value);
 
     // Calculate the average
-    return lastSevenDays.isNotEmpty ? sum / lastSevenDays.length : 0.0;
+    return lastSevenDays.isNotEmpty ? sum / 7 : 0.0;
   }
 
   String streakIconURL() {
