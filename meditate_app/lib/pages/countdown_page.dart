@@ -101,6 +101,9 @@ class _CountdownPageState extends State<CountdownPage>
   late Timer _timer;
   int _start = 0;
 
+  // Current DateTime
+  DateTime lastTimerTime = DateTime.now();
+
   void startTimer() {
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
@@ -108,6 +111,7 @@ class _CountdownPageState extends State<CountdownPage>
       (Timer timer) {
         setState(() {
           _start++;
+          lastTimerTime = DateTime.now();
         });
       },
     );
@@ -118,7 +122,13 @@ class _CountdownPageState extends State<CountdownPage>
     if (state == AppLifecycleState.resumed) {
       //restart the timer to the amount of seconds that have passed
       logInfo(
-          "RESUMED! This might be where we should restart the timer to the amount of seconds that have passed. Nothing is happening in this function at the moment.");
+          "RESUMED! This might be where we should restart the timer to the amount of seconds that have passed.");
+
+      // Check how many seconds have passed since lastTimerTime and update _start accordingly
+      int secondsPassed = DateTime.now().difference(lastTimerTime).inSeconds;
+      setState(() {
+        _start += secondsPassed;
+      });
     }
   }
 
