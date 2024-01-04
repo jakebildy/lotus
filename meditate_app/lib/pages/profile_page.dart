@@ -171,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage>
                           ),
                           onPressed: () async {
                             final Uri url = Uri.parse(
-                                'https://docs.google.com/forms/d/1zBLgtOWvtVF6jOv3_aqCC-xsslqz7lmnbdiSTH41MO8/prefill');
+                                'https://docs.google.com/forms/d/1zBLgtOWvtVF6jOv3_aqCC-xsslqz7lmnbdiSTH41MO8/prefill'); //TODO: see if can be done without logging in
                             if (await canLaunchUrl(url)) {
                               await launchUrl(url);
                             } else {
@@ -622,3 +622,5 @@ class _ProfilePageState extends State<ProfilePage>
     );
   }
 }
+
+//TODO: fix the average streak time

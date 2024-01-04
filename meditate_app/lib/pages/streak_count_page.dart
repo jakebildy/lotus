@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
 import 'package:meditate_app/pages/turtle_hatch_page.dart';
+import 'package:meditate_app/util/logger.dart';
 
 class StreakCountPage extends StatefulWidget {
   final int gemsAmount;
@@ -35,6 +36,7 @@ class _StreakCountPageState extends State<StreakCountPage>
     //TODO: fix weird streak issue where the streak value is one behind what it should be if its the first time meditating for the day
 
     UserController userController = Get.find();
+    logInfo("Streak: " + userController.user.value.streak.toString());
     streak = widget.alreadyMeditatedToday
         ? userController.user.value.streak
         : userController.user.value.streak - 1 < 0

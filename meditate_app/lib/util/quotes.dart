@@ -32,7 +32,22 @@ List<String> quotes = [
   "“Our life is what our thoughts make it.” \n- Marcus Aurelius",
   "“The best revenge is not to be like your enemy.” \n- Marcus Aurelius",
   "“Your mind will take the shape of what you frequently hold in thought...” \n- Marcus Aurelius",
+  "“Confine yourself to the present.” \n- Marcus Aurelius",
   "“Very little is needed to make a happy life; it is all within yourself in your way of thinking.” \n- Marcus Aurelius",
+  "“The mind is definitely something that can be transformed, and meditation is a means to transform it” \n- Dalai Lama",
+  "“But in the end it's only a passing thing, this shadow; even darkness must pass.” \n- Samwise Gamgee",
+  "“There’s some good in this world, Mr. Frodo, and it’s worth fighting for.” \n- Samwise Gamgee",
+  // "“I cannot escape death, but at least I can escape the fear of it.” \n- Epictetus",
+  "“Don't explain your philosophy. Embody it.” \n- Epictetus",
+  "“There is only one way to happiness and that is to cease worrying about things which are beyond the power or our will.” \n- Epictetus",
+  "“If you want to improve, be content to be thought foolish and stupid.” \n- Epictetus",
+  "“It's not what happens to you, but how you react to it that matters.” \n- Epictetus",
+  "“Wealth consists not in having great possessions, but in having few wants.” \n- Epictetus",
+  "“No man is free who is not master of himself.” \n- Epictetus",
+  "“You become what you give your attention to.” \n- Epictetus",
+  "“Do or do not. There is no try.” \n- Yoda",
+  "“Your focus determines your reality.” \n- Qui-Gon Jinn",
+  "“What I advise you to do is, not to be unhappy before the crisis comes.” \n- Seneca",
 ];
 
 String randomQuote() {

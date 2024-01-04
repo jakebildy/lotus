@@ -153,31 +153,6 @@ class SaveController extends GetxController {
     //   today = today.subtract(const Duration(days: 1));
     // }
 
-    // Load gems, eggs, and other related data
-    // if (getValue('gems') != "") {
-    //   gems.value = int.parse(getValue('gems'));
-    // }
-    // if (getValue('eggs') != "") {
-    //   eggs.value = int.parse(getValue('eggs'));
-    // }
-    // if (getValue('total_eggs') != "") {
-    //   totalEggs.value = int.parse(getValue('total_eggs'));
-    // }
-    // if (getValue('egg_progress_one') != "") {
-    //   hatchProgressEggOne.value = int.parse(getValue('egg_progress_one'));
-    // }
-
-    // Load egg types
-    // if (getValue('egg_types') != "") {
-    //   List<String> eggTypesValue =
-    //       getValue('egg_types').replaceAll(" ", "").split(",");
-    //   eggType = RxList.empty();
-    //   for (String type in eggTypesValue) {
-    //     eggType.add(type);
-    //   }
-    //   logInfo("Egg types: " + eggType.toString());
-    // }
-
     // Load streak freeze value
     // if (getValue('streak_freezes') != "") {
     //   streakFreezes.value = int.parse(getValue('streak_freezes'));

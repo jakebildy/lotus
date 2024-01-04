@@ -31,6 +31,7 @@ class User {
   final String email;
   final String username;
   final DateTime createdAt;
+  final DateTime updatedAt;
 
   int streak;
   int totalMinutes;
@@ -61,7 +62,8 @@ class User {
     username: "null",
     lastMeditated: DateTime.now(),
     meditationTimesAsOf: DateTime.now(),
-    createdAt: DateTime.now(),
+    createdAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
+    updatedAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
   );
 
   User({
@@ -70,6 +72,7 @@ class User {
     required this.fullName,
     required this.username,
     required this.createdAt,
+    required this.updatedAt,
     required this.lastMeditated,
     RxMap<DateTime, int>? meditationHistory,
     RxMap<String, DateTime>? emojisSentAt,
@@ -148,6 +151,7 @@ class User {
       fullName: map['fullName'] ?? "",
       username: (map["username"] ?? "user22").replaceAll(" ", "").toLowerCase(),
       createdAt: DateTime.parse(map["createdAt"] ?? "2011-10-05T14:48:00.000Z"),
+      updatedAt: DateTime.parse(map["updatedAt"] ?? "2011-10-05T14:48:00.000Z"),
       avatar: map["avatar"] ?? defaultProfilePicture,
       streak: numDays > 1
           ? 0

@@ -16,7 +16,8 @@ User noUser = User(
   email: "...",
   fullName: "Loading User",
   username: "null",
-  createdAt: DateTime.now(),
+  createdAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
+  updatedAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
   lastMeditated: DateTime.now(),
   meditationTimesAsOf: DateTime.now(),
   meditationHistory: <DateTime, int>{}.obs,
@@ -122,7 +123,10 @@ class UserController extends GetxController {
         logError("Unknown key: $key");
     }
 
-    storage.write("LAST_UPDATED_AT", DateTime.now().toIso8601String());
+    storage.write(
+        "LAST_UPDATED_AT",
+        DateTime.now()
+            .toIso8601String()); //TODO: just for save local value only? or is this correct
   }
 
   /// This gets the local storage value.
@@ -131,7 +135,116 @@ class UserController extends GetxController {
   }
 
   /// This function loads the localStorageUser.
-  Future<void> getLocalStorageUser() async {}
+  Future<void> getLocalStorageUser() async {
+    logInfo("Getting Local Storage User");
+    if (getValue('streak') != "") {
+      localStorageUser.value.streak = int.parse(getValue("streak"));
+      logSuccess("Loaded streak: ${localStorageUser.value.streak}");
+    }
+
+    if (getValue('total_minutes') != "") {
+      localStorageUser.value.totalMinutes =
+          int.parse(getValue("total_minutes"));
+      logSuccess("Loaded totalMinutes: ${localStorageUser.value.totalMinutes}");
+    }
+
+    if (getValue('gems') != "") {
+      localStorageUser.value.gems = int.parse(getValue("gems"));
+      logSuccess("Loaded gems: ${localStorageUser.value.gems}");
+    }
+
+    if (getValue('streak_freezes') != "") {
+      localStorageUser.value.streakFreezes =
+          int.parse(getValue("streak_freezes"));
+      logSuccess(
+          "Loaded streakFreezes: ${localStorageUser.value.streakFreezes}");
+    }
+
+    if (getValue('last_meditated') != "") {
+      localStorageUser.value.lastMeditated =
+          DateTime.parse(getValue("last_meditated"));
+      logSuccess(
+          "Loaded lastMeditated: ${localStorageUser.value.lastMeditated}");
+    }
+
+    if (getValue('egg_progress_one') != "") {
+      localStorageUser.value.hatchProgressEggOne =
+          int.parse(getValue("egg_progress_one"));
+      logSuccess(
+          "Loaded hatchProgressEggOne: ${localStorageUser.value.hatchProgressEggOne}");
+    }
+
+    if (getValue('eggs') != "") {
+      localStorageUser.value.eggs = int.parse(getValue("eggs"));
+      logSuccess("Loaded eggs: ${localStorageUser.value.eggs}");
+    }
+
+    if (getValue('total_eggs') != "") {
+      localStorageUser.value.totalEggs = int.parse(getValue("total_eggs"));
+      logSuccess("Loaded total eggs: ${localStorageUser.value.totalEggs}");
+    }
+
+    if (getValue('egg_types') != "") {
+      List<String> eggTypesValue =
+          getValue('egg_types').replaceAll(" ", "").split(",");
+      localStorageUser.value.eggTypes = RxList.empty();
+      for (String type in eggTypesValue) {
+        localStorageUser.value.eggTypes.add(type);
+      }
+      logSuccess("Loaded eggTypes: ${localStorageUser.value.eggTypes}");
+    } else {
+      logWarning("No eggTypes found in local storage.");
+    }
+
+    // Load unlocked turtle data
+    for (int i = 0; i < TURTLES.length; i++) {
+      if (getValue('turtle-$i') != "") {
+        localStorageUser.value.unlockedTurtles =
+            List<int>.from(localStorageUser.value.unlockedTurtles)
+              ..add(int.parse(getValue('turtle-$i')));
+
+        if (getValue('turtle-$i-color') != "") {
+          localStorageUser.value.unlockedTurtleColors = List<List<int>>.from(
+              localStorageUser.value.unlockedTurtleColors)
+            ..add(
+                getValue('turtle-$i-color').split(',').map(int.parse).toList());
+
+          // localStorageUser.value.unlockedTurtleColors.add(
+          //     getValue('turtle-$i-color').split(',').map(int.parse).toList());
+          // localStorageUser.value.unlockedTurtleColors[i].add(-1);
+        } else {
+          logError("No turtle color found for turtle $i");
+        }
+      } else {
+        localStorageUser.value.unlockedTurtles =
+            List<int>.from(localStorageUser.value.unlockedTurtles)..add(0);
+
+        localStorageUser.value.unlockedTurtleColors.add([-1]);
+      }
+    }
+    logSuccess(
+        "Loaded unlocked turtles: ${localStorageUser.value.unlockedTurtles}");
+    logSuccess(
+        "Loaded unlocked turtle colors: ${localStorageUser.value.unlockedTurtleColors}");
+
+    // Load the entire meditation history for the past year
+    // If gems does not exist, neither does meditation history yet
+    if (getValue('gems') != "") {
+      DateTime rn = DateTime.now();
+      DateTime today = DateTime.now();
+      while (rn.difference(today).abs().inDays <= 365) {
+        DateTime simpleDate = DateTime(today.year, today.month, today.day);
+        localStorageUser
+            .value.meditationHistory[simpleDate] = (double.tryParse(getValue(
+                    'meditation-${today.day}-${today.month}-${today.year}')) ??
+                0.0)
+            .round();
+        today = today.subtract(const Duration(days: 1));
+      }
+    }
+    logSuccess(
+        "Loaded meditation history with length: ${localStorageUser.value.meditationHistory.length}");
+  }
 
   Future<void> updateProperty(UserProperty property, dynamic value) async {
     // If the user is online, update the database - otherwise, update the local storage
@@ -149,25 +262,78 @@ class UserController extends GetxController {
       await api.user.updateUserAttribute(property.name, value);
       databaseUser.value = await api.user.me();
       update();
-    } else {
-      //saveLocalValue(property, value); TODO: uncomment once getLocalStorageUser verified
     }
+    //saveLocalValue(property, value); TODO: uncomment once getLocalStorageUser verified
+  }
+
+  Future<void> syncDatabasetoMatchLocalStorage() async {
+    databaseUser.value = localStorageUser.value;
+    updateProperty(UserProperty.streak, localStorageUser.value.streak);
+    updateProperty(
+        UserProperty.totalMinutes, localStorageUser.value.totalMinutes);
+    updateProperty(
+        UserProperty.streakFreezes, localStorageUser.value.streakFreezes);
+    updateProperty(UserProperty.lastMeditated,
+        localStorageUser.value.lastMeditated.toIso8601String());
+    updateProperty(UserProperty.meditationHistory,
+        localStorageUser.value.meditationHistory);
+    updateProperty(UserProperty.eggs, localStorageUser.value.eggs);
+    updateProperty(UserProperty.totalEggs, localStorageUser.value.totalEggs);
+    updateProperty(UserProperty.eggTypes, localStorageUser.value.eggTypes);
+    updateProperty(
+        UserProperty.unlockedTurtles, localStorageUser.value.unlockedTurtles);
+    updateProperty(UserProperty.unlockedTurtleColors,
+        localStorageUser.value.unlockedTurtleColors);
+  }
+
+  Future<void> syncLocalStorageToMatchDatabase() async {
+    // TODO:
   }
 
   /// Triggered when user goes offline to online
   Future<void> syncData() async {
-    logSuccess("Syncing Data!");
-    // between databaseUser and localStorageUser,
-    //select the one where lastUpdatedAt was more recent or exists* and sync both
+    await getLocalStorageUser();
 
-    // If no lastUpdatedAt in localStorage, add it, and sync databaseUser to match localStorageUser
+    if (databaseUser.value.id == "-1") {
+      logWarning("Not Syncing Data - database user has not been returned");
+    } else {
+      logWarning("Syncing Data!");
 
-    // Syncing database to LOCAL STORAGE
-    // streak = databaseUser.streak
-    // totalMinutes = databaseUser.totalMinutes
-    // streakFreezes = databaseUser.streakFreezes
-    // turtleColors = databaseUser.turtleColors
-    // unlockedTurtles = databaseUser.unlockedTurtles
+      // If no lastUpdatedAt in localStorage, add it, and sync databaseUser to match localStorageUser -
+      //this is the edge case when the user UPDATES the app
+      if (getValue("LAST_UPDATED_AT") == "") {
+        logInfo("No lastUpdatedAt in localStorage. Adding it now.");
+        storage.write("LAST_UPDATED_AT", DateTime.now().toIso8601String());
+
+        syncDatabasetoMatchLocalStorage();
+      } else {
+        // If lastUpdatedAt in localStorage, compare it to databaseUser's lastUpdatedAt
+        DateTime lastUpdatedAtLocalStorage =
+            DateTime.parse(getValue("LAST_UPDATED_AT"));
+        DateTime lastUpdatedAtDatabase = databaseUser.value.updatedAt; //TODO:
+
+        // If lastUpdatedAt in localStorage is more recent, sync databaseUser to match localStorageUser
+        if (lastUpdatedAtLocalStorage.isAfter(lastUpdatedAtDatabase)) {
+          logWarning(
+              "localStorage is more recent. Syncing databaseUser to match localStorageUser. Last updated local storage: " +
+                  lastUpdatedAtLocalStorage.toIso8601String() +
+                  " vs " +
+                  lastUpdatedAtDatabase.toIso8601String() +
+                  " in the database");
+          syncDatabasetoMatchLocalStorage();
+        } else {
+          // If lastUpdatedAt in database is more recent, sync localStorageUser to match databaseUser
+          logWarning(
+              "databaseUser is more recent. Syncing localStorageUser to match databaseUser. Last updated local storage: " +
+                  lastUpdatedAtLocalStorage.toIso8601String() +
+                  " vs " +
+                  lastUpdatedAtDatabase.toIso8601String() +
+                  " in the database");
+          syncLocalStorageToMatchDatabase();
+        }
+      }
+      update();
+    }
   }
 
   int totalMinutes() {
@@ -184,8 +350,6 @@ class UserController extends GetxController {
       String cookies = cookie.getCookies();
       api.setCookies(cookies);
       databaseUser.value = await api.user.me();
-
-      // TODO: set localStorageUser values here
     } catch (e, stackTrace) {
       logError(e.toString());
       logError(stackTrace.toString());
