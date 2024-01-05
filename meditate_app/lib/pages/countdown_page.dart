@@ -99,13 +99,14 @@ class _CountdownPageState extends State<CountdownPage>
 
   // The timer that starts as soon as the meditation concludes
   late Timer _timer;
-  int _start = 0;
+  static int _start = 0;
 
   // Current DateTime
   DateTime lastTimerTime = DateTime.now();
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
+
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) {
@@ -125,10 +126,10 @@ class _CountdownPageState extends State<CountdownPage>
           "RESUMED! This might be where we should restart the timer to the amount of seconds that have passed.");
 
       // Check how many seconds have passed since lastTimerTime and update _start accordingly
-      int secondsPassed = DateTime.now().difference(lastTimerTime).inSeconds;
-      setState(() {
-        _start += secondsPassed;
-      });
+      // int secondsPassed = DateTime.now().difference(lastTimerTime).inSeconds;
+      // // setState(() {
+      // //   _start += secondsPassed;
+      // // });
     }
   }
 
