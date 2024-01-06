@@ -114,14 +114,20 @@ class UserController extends GetxController {
         storage.write("last_meditated", value);
         localStorageUser.value.lastMeditated = DateTime.parse(value);
         break;
-      // case "meditation_history": //'meditation-${today.day}-${today.month}-${today.year}' check back to 2020
-      //   // localStorageUser.value.meditationHistory = {}; TODO: fix this
-      //   value.split(",").forEach((element) {
-      //     List<String> split = element.split(":");
-      //     localStorageUser.value.meditationHistory[DateTime.parse(split[0])] =
-      //         int.parse(split[1]);
-      //   });
-      //   break;
+      case UserProperty.eggTypes:
+        // Convert List<String> to a comma-separated string to store
+        String eggTypesString = value.join(",");
+        storage.write("egg_types", eggTypesString);
+        localStorageUser.value.eggTypes = RxList<String>.from(value);
+        break;
+      case UserProperty.meditationHistory:
+        for (String key in value.keys) {
+          storage.write(key, value[key]);
+        }
+        localStorageUser.value.meditationHistory = RxMap<DateTime, int>.from(
+            value.map((key, value) => MapEntry(DateTime.parse(key), value)));
+        break;
+
       default:
         logError("Unknown key: $key");
     }
@@ -250,14 +256,20 @@ class UserController extends GetxController {
   }
 
   Future<void> updateProperty(UserProperty property, dynamic value) async {
-    // If the user is online, update the database - otherwise, update the local storage
+    // If the user is online, update the database - regardless, update the local storage
     if (user == databaseUser) {
-      if (property == UserProperty.emojisSentAt) {
-        value =
-            value.map((key, value) => MapEntry(key, value.toIso8601String()));
-      } else if (property == UserProperty.meditationHistory) {
-        value = value.map((key, value) =>
-            MapEntry('meditation-${key.day}-${key.month}-${key.year}', value));
+      switch (property) {
+        case UserProperty.emojisSentAt:
+          value =
+              value.map((key, value) => MapEntry(key, value.toIso8601String()));
+          break;
+        case UserProperty.meditationHistory:
+          value = value.map((key, value) => MapEntry(
+              'meditation-${key.day}-${key.month}-${key.year}', value));
+          break;
+
+        default:
+          break;
       }
 
       logSuccess(
@@ -290,7 +302,21 @@ class UserController extends GetxController {
   }
 
   Future<void> syncLocalStorageToMatchDatabase() async {
-    // TODO:
+    saveLocalValue(UserProperty.streak, databaseUser.value.streak);
+    saveLocalValue(UserProperty.totalMinutes, databaseUser.value.totalMinutes);
+    saveLocalValue(
+        UserProperty.streakFreezes, databaseUser.value.streakFreezes);
+    saveLocalValue(UserProperty.lastMeditated,
+        databaseUser.value.lastMeditated.toIso8601String());
+    saveLocalValue(
+        UserProperty.meditationHistory, databaseUser.value.meditationHistory);
+    saveLocalValue(UserProperty.eggs, databaseUser.value.eggs);
+    saveLocalValue(UserProperty.totalEggs, databaseUser.value.totalEggs);
+    saveLocalValue(UserProperty.eggTypes, databaseUser.value.eggTypes);
+    saveLocalValue(
+        UserProperty.unlockedTurtles, databaseUser.value.unlockedTurtles);
+    saveLocalValue(UserProperty.unlockedTurtleColors,
+        databaseUser.value.unlockedTurtleColors);
   }
 
   //TODO: edge case where syncData doesnt get called
@@ -314,7 +340,7 @@ class UserController extends GetxController {
         // If lastUpdatedAt in localStorage, compare it to databaseUser's lastUpdatedAt
         DateTime lastUpdatedAtLocalStorage =
             DateTime.parse(getValue("LAST_UPDATED_AT"));
-        DateTime lastUpdatedAtDatabase = databaseUser.value.updatedAt; //TODO:
+        DateTime lastUpdatedAtDatabase = databaseUser.value.updatedAt;
 
         // If lastUpdatedAt in localStorage is more recent, sync databaseUser to match localStorageUser
         if (lastUpdatedAtLocalStorage.isAfter(lastUpdatedAtDatabase)) {
@@ -333,7 +359,7 @@ class UserController extends GetxController {
                   " vs " +
                   lastUpdatedAtDatabase.toIso8601String() +
                   " in the database");
-          syncLocalStorageToMatchDatabase();
+          // syncLocalStorageToMatchDatabase(); TODO: call when ready
         }
       }
       update();
@@ -525,34 +551,5 @@ class UserController extends GetxController {
           "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
     }
     update();
-
-    // if (getValue('meditation-${today.day}-${today.month}-${today.year}') ==
-    //     "") {
-    //   saveValue('meditation-${today.day}-${today.month}-${today.year}',
-    //       amountNew.toString());
-    // } else {
-    //   saveValue(
-    //       'meditation-${today.day}-${today.month}-${today.year}',
-    //       (double.parse(getValue(
-    //                   'meditation-${today.day}-${today.month}-${today.year}')) +
-    //               amountNew)
-    //           .toString());
-    // }
-
-    // lastSevenDays[0] += amountNew;
-
-    // DateTime simpleDate = new DateTime(today.year, today.month, today.day);
-    // if (meditationHistory[simpleDate] != null) {
-    //   int oldValue = meditationHistory.remove(simpleDate) ?? 0;
-    //   meditationHistory.addAll({simpleDate: oldValue + amountNew});
-    //   logInfo(
-    //       "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
-    // } else {
-    //   meditationHistory.addAll({simpleDate: amountNew});
-    //   logInfo(
-    //       "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
-    // }
-    // meditationHistory.refresh();
-    // update();
   }
 }

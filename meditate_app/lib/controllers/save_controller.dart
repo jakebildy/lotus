@@ -237,7 +237,6 @@ class SaveController extends GetxController {
 
   Future<void> saveValue(String key, String value) async {
     storage.write(key, value);
-    uploadLocalData();
   }
 
   String getValue(String key) {
