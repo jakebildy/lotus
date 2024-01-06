@@ -99,12 +99,14 @@ class TurtleCategory extends StatelessWidget {
               Text(
                   "${((unlocked ? uniqueQuantity : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(1)}%",
                   style: TextStyle(
-                      fontSize: 17,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                       color: unlocked ? Colors.tealAccent : Colors.grey)),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
-              const Icon(Icons.arrow_forward_ios),
+              Icon(Icons.arrow_forward_ios,
+                  color: unlocked ? Colors.tealAccent : Colors.white12),
               const SizedBox(
                 width: 10,
               ),
