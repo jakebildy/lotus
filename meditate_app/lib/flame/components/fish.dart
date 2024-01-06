@@ -6,6 +6,8 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:meditate_app/util/turtles.dart';
+
 class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 70.0;
@@ -44,17 +46,19 @@ class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
     // angle %= 2 * math.pi;
   }
 
+  late int fishColor;
+
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    final sprites = [
-      Sprite.load("game/fish.png"),
-      Sprite.load("game/fish2.png")
-    ];
-    animation = SpriteAnimation.spriteList(
-      await Future.wait(sprites),
-      stepTime: 0.4,
-    );
+
+    fishColor = Random().nextInt(2);
+
+    final sprites = fishColor == 1
+        ? [Sprite.load("game/fish.png"), Sprite.load("game/fish2.png")]
+        : [Sprite.load("game/fish_2.png"), Sprite.load("game/fish_2_2.png")];
+    animation =
+        SpriteAnimation.spriteList(await Future.wait(sprites), stepTime: 0.4);
 
     //sprite = await gameRef.loadSprite('game/fish.png');
 

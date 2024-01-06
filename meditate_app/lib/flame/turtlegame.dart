@@ -94,6 +94,7 @@ class TurtleGame extends FlameGame with HasTappables {
     if (!info.handled && canMove) {
       debounceCanMove();
       FlameAudio.play('splash.wav');
+      // HapticFeedback.lightImpact();
       final touchPoint = info.eventPosition.game;
 
       double borderX = touchPoint.x > 10000
