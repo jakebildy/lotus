@@ -59,10 +59,21 @@ class _UserProfilePageState extends State<UserProfilePage>
                             child: ClipRRect(
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(60)),
-                                child: Image.network(
-                                  widget.user.avatar,
-                                  fit: BoxFit.fill,
-                                )),
+                                child: widget.user.avatar ==
+                                            "https://i.imgur.com/BIRdTgg.png" ||
+                                        widget.user.avatar ==
+                                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                                    ? Image.asset(
+                                        "assets/blank_profile.png",
+                                        // height: 40,
+                                        fit: BoxFit.fill,
+                                      )
+                                    : FadeInImage.assetNetwork(
+                                        placeholder: 'assets/blank_profile.png',
+                                        image: widget.user.avatar,
+                                        // height: 40,
+                                        fit: BoxFit.fill,
+                                      )),
                           )),
                     ),
                   ),

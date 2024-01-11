@@ -51,81 +51,81 @@ class SaveController extends GetxController {
   //   // unlockedTurtleColors[0].add(0);
   // }
 
-  Future<void> uploadLocalData() async {
-    // Upload simple attributes
-    // await Api.user.updateUserAttribute("streak", streak.value);
-    // await Api.user.updateUserAttribute("totalMinutes", totalMinutes.value);
-    // await Api.user.updateUserAttribute("gems", gems.value);
-    // await Api.user.updateUserAttribute("totalEggs", totalEggs.value);
-    // await Api.user
-    // .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
+  // Future<void> uploadLocalData() async {
+  //   // Upload simple attributes
+  //   // await Api.user.updateUserAttribute("streak", streak.value);
+  //   // await Api.user.updateUserAttribute("totalMinutes", totalMinutes.value);
+  //   // await Api.user.updateUserAttribute("gems", gems.value);
+  //   // await Api.user.updateUserAttribute("totalEggs", totalEggs.value);
+  //   // await Api.user
+  //   // .updateUserAttribute("hatchProgressEggOne", hatchProgressEggOne.value);
 
-    // Upload last meditated date
-    String lastMeditated = getValue("last_meditated");
-    if (lastMeditated != "") {
-      await api.user.updateUserAttribute("lastMeditated", lastMeditated);
-    }
+  //   // Upload last meditated date
+  //   String lastMeditated = getValue("last_meditated");
+  //   if (lastMeditated != "") {
+  //     await api.user.updateUserAttribute("lastMeditated", lastMeditated);
+  //   }
 
-    // Upload meditation times for the past week
-    List<double> meditationTimes = [];
-    DateTime today = DateTime.now();
-    DateTime date = DateTime(today.year, today.month, today.day);
-    for (int i = 0; i < 7; i++) {
-      String key = 'meditation-${today.day}-${today.month}-${today.year}';
-      String value = getValue(key);
-      meditationTimes.add(value != "" ? double.parse(value) : 0.0);
-      today = today.subtract(const Duration(days: 1));
-    }
-    await api.user.updateUserAttribute("meditationTimes", meditationTimes);
-    await api.user
-        .updateUserAttribute("meditationTimesAsOf", date.toIso8601String());
+  //   // Upload meditation times for the past week
+  //   List<double> meditationTimes = [];
+  //   DateTime today = DateTime.now();
+  //   DateTime date = DateTime(today.year, today.month, today.day);
+  //   for (int i = 0; i < 7; i++) {
+  //     String key = 'meditation-${today.day}-${today.month}-${today.year}';
+  //     String value = getValue(key);
+  //     meditationTimes.add(value != "" ? double.parse(value) : 0.0);
+  //     today = today.subtract(const Duration(days: 1));
+  //   }
+  //   await api.user.updateUserAttribute("meditationTimes", meditationTimes);
+  //   await api.user
+  //       .updateUserAttribute("meditationTimesAsOf", date.toIso8601String());
 
-    // Upload unlocked turtles by their names
-    List<String> unlockedTurtlesNames = [];
-    for (Turtle turtle in TURTLES) {
-      String turtleKey = 'turtle-${turtle.name}';
-      String turtleValue = getValue(turtleKey);
-      if (turtleValue != "") {
-        unlockedTurtlesNames.add(turtle.name);
-      }
-    }
-    await api.user.updateUserAttribute("unlockedTurtles", unlockedTurtlesNames);
+  //   // Upload unlocked turtles by their names
+  //   List<String> unlockedTurtlesNames = [];
+  //   for (Turtle turtle in TURTLES) {
+  //     String turtleKey = 'turtle-${turtle.name}';
+  //     String turtleValue = getValue(turtleKey);
+  //     if (turtleValue != "") {
+  //       unlockedTurtlesNames.add(turtle.name);
+  //     }
+  //   }
+  //   await api.user.updateUserAttribute("unlockedTurtles", unlockedTurtlesNames);
 
-    // Upload unlocked turtle colors
-    List<List<int>> unlockedTurtleColors = [];
-    for (Turtle turtle in TURTLES) {
-      String turtleColorKey = 'turtle-${turtle.name}-color';
-      String turtleColorValue = getValue(turtleColorKey);
-      if (turtleColorValue != "") {
-        List<int> colors = turtleColorValue
-            .split(',')
-            .map((color) => int.parse(color.trim()))
-            .toList();
-        unlockedTurtleColors.add(colors);
-      }
-    }
-    await api.user
-        .updateUserAttribute("unlockedTurtleColors", unlockedTurtleColors);
+  //   // Upload unlocked turtle colors
+  //   List<List<int>> unlockedTurtleColors = [];
+  //   for (Turtle turtle in TURTLES) {
+  //     String turtleColorKey = 'turtle-${turtle.name}-color';
+  //     String turtleColorValue = getValue(turtleColorKey);
+  //     if (turtleColorValue != "") {
+  //       List<int> colors = turtleColorValue
+  //           .split(',')
+  //           .map((color) => int.parse(color.trim()))
+  //           .toList();
+  //       unlockedTurtleColors.add(colors);
+  //     }
+  //   }
+  //   await api.user
+  //       .updateUserAttribute("unlockedTurtleColors", unlockedTurtleColors);
 
-    // Upload the entire meditation history for the past year
-    if (lastMeditated != "") {
-      Map<String, int> meditationHistory = {};
-      today = DateTime.now(); // reset today to current date
-      DateTime aYearAgo = today.subtract(const Duration(days: 365));
-      while (today.isAfter(aYearAgo)) {
-        String historyKey =
-            'meditation-${today.day}-${today.month}-${today.year}';
-        String historyValue = getValue(historyKey);
-        if (historyValue != "") {
-          meditationHistory[historyKey] = double.parse(historyValue).round();
-        }
-        today = today.subtract(const Duration(days: 1));
-      }
+  //   // Upload the entire me ditation history for the past year
+  //   if (lastMeditated != "") {
+  //     Map<String, int> meditationHistory = {};
+  //     today = DateTime.now(); // reset today to current date
+  //     DateTime aYearAgo = today.subtract(const Duration(days: 365));
+  //     while (today.isAfter(aYearAgo)) {
+  //       String historyKey =
+  //           'meditation-${today.day}-${today.month}-${today.year}';
+  //       String historyValue = getValue(historyKey);
+  //       if (historyValue != "") {
+  //         meditationHistory[historyKey] = double.parse(historyValue).round();
+  //       }
+  //       today = today.subtract(const Duration(days: 1));
+  //     }
 
-      await api.user
-          .updateUserAttribute("meditationHistory", meditationHistory);
-    }
-  }
+  //     await api.user
+  //         .updateUserAttribute("meditationHistory", meditationHistory);
+  //   }
+  // }
 
   void loadData() {
     // Print loading message

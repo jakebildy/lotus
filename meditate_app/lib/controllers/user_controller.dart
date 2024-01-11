@@ -83,46 +83,108 @@ class UserController extends GetxController {
     UserProperty key,
     dynamic value,
   ) async {
-    //TODO: confirm on values. Then use old phone and print
     switch (key) {
       case UserProperty.streak: //Completed
         storage.write("streak", value.toString());
+
+        logWarning("streak storage value: " + storage.read("streak"));
+        logInfo("streak: " + value.toString());
         localStorageUser.value.streak = value as int;
+        break;
+      case UserProperty.gems: //Completed
+        storage.write("gems", value.toString());
+
+        logWarning("gems storage value: " + storage.read("gems"));
+        logInfo("gems: " + value.toString());
+        localStorageUser.value.gems = value as int;
+        break;
+      case UserProperty.eggs: //Completed
+        storage.write("eggs", value.toString());
+
+        logWarning("eggs storage value: " + storage.read("eggs"));
+        logInfo("eggs: " + value.toString());
+        localStorageUser.value.eggs = value as int;
+        break;
+      case UserProperty.totalEggs: //Completed
+        storage.write("total_eggs", value.toString());
+
+        logWarning("total_eggs storage value: " + storage.read("total_eggs"));
+        logInfo("total_eggs: " + value.toString());
+        localStorageUser.value.totalEggs = value as int;
         break;
       case UserProperty.totalMinutes: //Completed
         storage.write("total_minutes", value.toString());
-        localStorageUser.value.totalMinutes = int.parse(value);
+
+        logWarning(
+            "total_minutes storage value: " + storage.read("total_minutes"));
+        logInfo("total_minutes: " + value.toString());
+        localStorageUser.value.totalMinutes = value as int;
         break;
       case UserProperty.streakFreezes:
         storage.write("streak_freezes", value.toString());
+
+        logWarning(
+            "streak_freezes storage value: " + storage.read("streak_freezes"));
+        logInfo("streak_freezes: " + value.toString());
         localStorageUser.value.streakFreezes = value as int;
         break;
-      // case "unlocked_turtle_colors":
-      //   localStorageUser.value.unlockedTurtleColors = value.split(",").map((e) {
-      //     return e.split(":").map((e) {
-      //       return int.parse(e);
-      //     }).toList();
-      //   }).toList();
-      //   break;
+      case UserProperty.unlockedTurtleColors:
+        localStorageUser.value.unlockedTurtleColors = value;
+        for (int i = 0; i < TURTLES.length; i++) {
+          logWarning("turtle-$i-color storage value: " +
+              localStorageUser.value.unlockedTurtleColors[i]
+                  .toString()
+                  .replaceAll("[", "")
+                  .replaceAll("]", ""));
+          storage.write(
+              "turtle-$i-color",
+              localStorageUser.value.unlockedTurtleColors[i]
+                  .toString()
+                  .replaceAll("[", "")
+                  .replaceAll("]", ""));
+        }
+
+        break;
       case UserProperty.unlockedTurtles:
-        //'turtle-${turtle.name}'
-        localStorageUser.value.unlockedTurtles = value.split(",").map((e) {
-          return int.parse(e);
-        }).toList();
+        localStorageUser.value.unlockedTurtles = value;
+        for (int i = 0; i < TURTLES.length; i++) {
+          logWarning("turtle-$i: " + storage.read("turtle-$i").toString());
+
+          logWarning("turtle-$i storage value: " +
+              localStorageUser.value.unlockedTurtles[i].toString());
+
+          storage.write("turtle-$i",
+              localStorageUser.value.unlockedTurtles[i].toString());
+        }
+
         break;
       case UserProperty.lastMeditated: //Completed
         storage.write("last_meditated", value);
+
+        logWarning(
+            "last_meditated storage value: " + storage.read("last_meditated"));
+        logInfo("last_meditated: " + value.toString());
         localStorageUser.value.lastMeditated = DateTime.parse(value);
         break;
       case UserProperty.eggTypes:
+        logWarning("egg_types storage value: " + storage.read("egg_types"));
         // Convert List<String> to a comma-separated string to store
         String eggTypesString = value.join(",");
+        logInfo("egg_types: " +
+            eggTypesString.replaceAll("[", "").replaceAll("]", ""));
         storage.write("egg_types", eggTypesString);
         localStorageUser.value.eggTypes = RxList<String>.from(value);
         break;
       case UserProperty.meditationHistory:
-        for (String key in value.keys) {
-          storage.write(key, value[key]);
+        logWarning("meditation_history storage value: " +
+            (storage.read("meditation_history") ?? ""));
+
+        for (DateTime key in value.keys) {
+          logInfo(
+              "Saving meditation history: meditation-${key.day}-${key.month}-${key.year}:" +
+                  value[key].toString());
+          storage.write("meditation-${key.day}-${key.month}-${key.year}",
+              value[key].toString());
         }
         localStorageUser.value.meditationHistory = RxMap<DateTime, int>.from(
             value.map((key, value) => MapEntry(DateTime.parse(key), value)));
@@ -140,6 +202,10 @@ class UserController extends GetxController {
 
   /// This gets the local storage value.
   String getValue(String key) {
+    // check if it's an int, if so, convert to string
+    if (storage.read(key) is int) {
+      return (storage.read(key) as int).toString();
+    }
     return storage.read(key) ?? "";
   }
 
@@ -278,12 +344,13 @@ class UserController extends GetxController {
       databaseUser.value = await api.user.me();
       update();
     }
-    //saveLocalValue(property, value); TODO: uncomment once getLocalStorageUser verified
+    saveLocalValue(property, value);
   }
 
   Future<void> syncDatabasetoMatchLocalStorage() async {
     databaseUser.value = localStorageUser.value;
     updateProperty(UserProperty.streak, localStorageUser.value.streak);
+    updateProperty(UserProperty.gems, localStorageUser.value.eggs);
     updateProperty(
         UserProperty.totalMinutes, localStorageUser.value.totalMinutes);
     updateProperty(
@@ -303,6 +370,7 @@ class UserController extends GetxController {
 
   Future<void> syncLocalStorageToMatchDatabase() async {
     saveLocalValue(UserProperty.streak, databaseUser.value.streak);
+    saveLocalValue(UserProperty.gems, databaseUser.value.eggs);
     saveLocalValue(UserProperty.totalMinutes, databaseUser.value.totalMinutes);
     saveLocalValue(
         UserProperty.streakFreezes, databaseUser.value.streakFreezes);
@@ -359,7 +427,7 @@ class UserController extends GetxController {
                   " vs " +
                   lastUpdatedAtDatabase.toIso8601String() +
                   " in the database");
-          // syncLocalStorageToMatchDatabase(); TODO: call when ready
+          syncLocalStorageToMatchDatabase();
         }
       }
       update();
@@ -380,6 +448,7 @@ class UserController extends GetxController {
       String cookies = cookie.getCookies();
       api.setCookies(cookies);
       databaseUser.value = await api.user.me();
+      syncData();
     } catch (e, stackTrace) {
       logError(e.toString());
       logError(stackTrace.toString());

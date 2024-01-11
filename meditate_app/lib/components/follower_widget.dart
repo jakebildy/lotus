@@ -40,7 +40,21 @@ class FollowerWidget extends StatelessWidget {
                             height: 40,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(60),
-                                child: Image.network(user.avatar))),
+                                child: user.avatar ==
+                                            "https://i.imgur.com/BIRdTgg.png" ||
+                                        user.avatar ==
+                                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                                    ? Image.asset(
+                                        "assets/blank_profile.png",
+                                        height: 40,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : FadeInImage.assetNetwork(
+                                        placeholder: 'assets/blank_profile.png',
+                                        image: user.avatar,
+                                        height: 40,
+                                        fit: BoxFit.cover,
+                                      ))),
                         const SizedBox(
                           width: 30,
                         ),

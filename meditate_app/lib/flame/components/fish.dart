@@ -6,8 +6,6 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:meditate_app/util/turtles.dart';
-
 class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 70.0;
