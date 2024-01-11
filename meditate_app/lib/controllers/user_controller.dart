@@ -180,9 +180,9 @@ class UserController extends GetxController {
             (storage.read("meditation_history") ?? ""));
 
         for (DateTime key in value.keys) {
-          logInfo(
-              "Saving meditation history: meditation-${key.day}-${key.month}-${key.year}:" +
-                  value[key].toString());
+          // logInfo(
+          //     "Saving meditation history: meditation-${key.day}-${key.month}-${key.year}:" +
+          //         value[key].toString());
           storage.write("meditation-${key.day}-${key.month}-${key.year}",
               value[key].toString());
         }
@@ -370,7 +370,7 @@ class UserController extends GetxController {
 
   Future<void> syncLocalStorageToMatchDatabase() async {
     saveLocalValue(UserProperty.streak, databaseUser.value.streak);
-    saveLocalValue(UserProperty.gems, databaseUser.value.eggs);
+    saveLocalValue(UserProperty.gems, databaseUser.value.gems);
     saveLocalValue(UserProperty.totalMinutes, databaseUser.value.totalMinutes);
     saveLocalValue(
         UserProperty.streakFreezes, databaseUser.value.streakFreezes);
@@ -387,7 +387,7 @@ class UserController extends GetxController {
         databaseUser.value.unlockedTurtleColors);
   }
 
-  //TODO: edge case where syncData doesnt get called
+  //TODO: is there edge case where syncData doesnt get called??
   /// Triggered when user goes offline to online
   Future<void> syncData() async {
     await getLocalStorageUser();

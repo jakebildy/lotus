@@ -35,20 +35,29 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
   }
 
   void _calculateNextAvailableTime() {
-    final DateTime now = DateTime.now();
+    final DateTime nowUtc = DateTime.now().toUtc();
 
-    if (lastSentAt != null &&
-        now.difference(lastSentAt!) < const Duration(hours: 24)) {
-      Duration timeLeft =
-          const Duration(hours: 24) - now.difference(lastSentAt!);
-      setState(() {
-        nextAvailableTime =
-            "${timeLeft.inHours} more hours to send another emoji";
-      });
-    } else {
-      setState(() {
-        nextAvailableTime = null;
-      });
+    if (lastSentAt != null) {
+      final DateTime lastSentAtUtc = lastSentAt!.toUtc();
+      final Duration difference = nowUtc.difference(lastSentAtUtc);
+
+      logWarning("Current Time (UTC): $nowUtc");
+      logWarning("Last Sent Time (UTC): $lastSentAtUtc");
+      logWarning("Time Difference: $difference");
+
+      if (difference < const Duration(hours: 24)) {
+        Duration timeLeft = const Duration(hours: 24) - difference;
+        setState(() {
+          nextAvailableTime =
+              "${timeLeft.inHours} more hours to send another emoji";
+        });
+        logWarning(
+            "timeLeft: ${timeLeft.inHours} hours, ${timeLeft.inMinutes % 60} minutes");
+      } else {
+        setState(() {
+          nextAvailableTime = null;
+        });
+      }
     }
   }
 
@@ -57,7 +66,7 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
     setState(() {
       selectedVibe = vibe;
     });
-    final DateTime now = DateTime.now();
+    final DateTime now = DateTime.now().toUtc();
 
     if (lastSentAt == null ||
         now.difference(lastSentAt!) >= const Duration(hours: 24)) {
