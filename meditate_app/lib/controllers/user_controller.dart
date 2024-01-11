@@ -350,7 +350,7 @@ class UserController extends GetxController {
   Future<void> syncDatabasetoMatchLocalStorage() async {
     databaseUser.value = localStorageUser.value;
     updateProperty(UserProperty.streak, localStorageUser.value.streak);
-    updateProperty(UserProperty.gems, localStorageUser.value.eggs);
+    updateProperty(UserProperty.gems, localStorageUser.value.gems);
     updateProperty(
         UserProperty.totalMinutes, localStorageUser.value.totalMinutes);
     updateProperty(
