@@ -19,8 +19,12 @@ class EggController extends GetxController {
   }
 
   void popFutureTurtle() {
+    //create eggTypesNew and remove eggTypesNew[0]
+    var newEggTypes = user.user.value.eggTypes;
+    newEggTypes.removeAt(0);
+
     user.updateProperty(
-        UserProperty.eggTypes, user.user.value.eggTypes.removeAt(0));
+        UserProperty.eggTypes, newEggTypes); //update eggTypes with eggTypesNew
     update();
   }
 

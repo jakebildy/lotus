@@ -17,9 +17,9 @@ bool receiveEgg(int timeMeditated) {
               ? 0.125
               : 0.1);
 
-  if (DEBUG_MODE) {
-    chanceOfEgg = 1;
-  }
+  // if (DEBUG_MODE) {
+  //   chanceOfEgg = 1;
+  // }
 
   logInfo("Time meditated is $timeMeditated. Chance of egg:" +
       chanceOfEgg.toString());

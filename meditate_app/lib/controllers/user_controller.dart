@@ -98,6 +98,15 @@ class UserController extends GetxController {
         logInfo("gems: " + value.toString());
         localStorageUser.value.gems = value as int;
         break;
+      case UserProperty.hatchProgressEggOne: //Completed
+        storage.write("egg_progress_one", value.toString());
+
+        logWarning("egg_progress_one storage value: " +
+            storage.read("egg_progress_one"));
+        logInfo("egg_progress_one: " + value.toString());
+        localStorageUser.value.hatchProgressEggOne = value as int;
+        break;
+
       case UserProperty.eggs: //Completed
         storage.write("eggs", value.toString());
 
