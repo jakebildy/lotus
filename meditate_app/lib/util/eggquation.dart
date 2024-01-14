@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/logger.dart';
 
 bool receiveEgg(int timeMeditated) {

@@ -626,6 +626,7 @@ class _CountdownPageState extends State<CountdownPage>
                                               _timer.cancel();
                                               setState(() {
                                                 loading = false;
+                                                _start = 0;
                                               });
                                               Get.offAll(StreakCountPage(
                                                 gemsAmount: gemsToGive,

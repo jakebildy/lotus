@@ -1,8 +1,6 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/util/logger.dart';
-import 'package:meditate_app/util/turtles.dart';
-import 'package:meditate_app/api/index.dart' as api;
 
 /// SaveController is going to be deprecated. It will only be used for the saved settings.
 /// {@category Controllers}

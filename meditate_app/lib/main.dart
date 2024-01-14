@@ -39,7 +39,7 @@ Future<void> main() async {
   final AudioContext audioContext = AudioContext(
     iOS: AudioContextIOS(
       defaultToSpeaker: true,
-      category: AVAudioSessionCategory.ambient,
+      category: AVAudioSessionCategory.playback,
       options: [
         AVAudioSessionOptions.allowBluetooth,
         AVAudioSessionOptions.mixWithOthers,
