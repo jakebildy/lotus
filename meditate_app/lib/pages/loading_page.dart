@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/quotes.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -23,23 +24,23 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   Future<void> increaseCount() async {
-    AuthController auth = Get.find();
-    auth.isLoadingPageNotDone.value = true;
-    auth.update();
+    UserController user = Get.find();
+    user.isLoadingPageNotDone.value = true;
+    user.update();
     await Future.delayed(const Duration(milliseconds: 200));
     setState(() {
       opacity = 1;
     });
     await Future.delayed(const Duration(milliseconds: 3200));
-    while (auth.isLoading.value) {
+    while (user.isLoading.value) {
       await Future.delayed(const Duration(milliseconds: 200));
     }
     setState(() {
       backgroundOpacity = 0;
     });
     await Future.delayed(const Duration(milliseconds: 600));
-    auth.isLoadingPageNotDone.value = false;
-    auth.update();
+    user.isLoadingPageNotDone.value = false;
+    user.update();
   }
 
   @override

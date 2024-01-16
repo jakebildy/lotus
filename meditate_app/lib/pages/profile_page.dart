@@ -430,12 +430,18 @@ class _ProfilePageState extends State<ProfilePage>
                                   selectedTab = val;
                                 });
                               },
-                              tabs: const [
+                              tabs: [
                                 Tab(
-                                  text: "Following",
+                                  text: "Following (" +
+                                      followController.usersFollowing.length
+                                          .toString() +
+                                      ")",
                                 ),
                                 Tab(
-                                  text: "Followers",
+                                  text: "Followers (" +
+                                      followController.followers.length
+                                          .toString() +
+                                      ")",
                                 )
                               ]),
                           SizedBox(

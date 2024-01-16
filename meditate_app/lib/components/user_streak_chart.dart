@@ -53,46 +53,82 @@ class UserStreakChart extends StatelessWidget {
                     spots: [
                       FlSpot(
                           1,
-                          daysShifted >= 7
-                              ? 0.0
-                              : user.meditationTimes[6 - daysShifted]
-                                  .toDouble()),
+                          (user.meditationHistory.map((key, value) => MapEntry(
+                                      DateTime(key.year, key.month, key.day),
+                                      value))[DateTime(
+                                          DateTime.now().year,
+                                          DateTime.now().month,
+                                          DateTime.now().day)
+                                      .subtract(const Duration(days: 6))] ??
+                                  0)
+                              .toDouble()),
                       FlSpot(
                           2,
-                          daysShifted >= 6
-                              ? 0.0
-                              : user.meditationTimes[5 - daysShifted]
-                                  .toDouble()),
+                          (user.meditationHistory.map((key, value) => MapEntry(
+                                      DateTime(key.year, key.month, key.day),
+                                      value))[DateTime(
+                                          DateTime.now().year,
+                                          DateTime.now().month,
+                                          DateTime.now().day)
+                                      .subtract(const Duration(days: 5))] ??
+                                  0)
+                              .toDouble()),
                       FlSpot(
                           3,
-                          daysShifted >= 5
-                              ? 0.0
-                              : user.meditationTimes[4 - daysShifted]
-                                  .toDouble()),
+                          (user.meditationHistory.map((key, value) => MapEntry(
+                                      DateTime(key.year, key.month, key.day),
+                                      value))[DateTime(
+                                          DateTime.now().year,
+                                          DateTime.now().month,
+                                          DateTime.now().day)
+                                      .subtract(const Duration(days: 4))] ??
+                                  0)
+                              .toDouble()),
                       FlSpot(
                           4,
-                          daysShifted >= 4
-                              ? 0.0
-                              : user.meditationTimes[3 - daysShifted]
-                                  .toDouble()),
+                          (user.meditationHistory.map((key, value) => MapEntry(
+                                      DateTime(key.year, key.month, key.day),
+                                      value))[DateTime(
+                                          DateTime.now().year,
+                                          DateTime.now().month,
+                                          DateTime.now().day)
+                                      .subtract(const Duration(days: 3))] ??
+                                  0)
+                              .toDouble()),
                       FlSpot(
                           5,
-                          daysShifted >= 3
-                              ? 0.0
-                              : user.meditationTimes[2 - daysShifted]
-                                  .toDouble()),
+                          (user.meditationHistory.map((key, value) => MapEntry(
+                                      DateTime(key.year, key.month, key.day),
+                                      value))[DateTime(
+                                          DateTime.now().year,
+                                          DateTime.now().month,
+                                          DateTime.now().day)
+                                      .subtract(const Duration(days: 2))] ??
+                                  0)
+                              .toDouble()),
                       FlSpot(
                           6,
-                          daysShifted >= 2
-                              ? 0.0
-                              : user.meditationTimes[1 - daysShifted]
-                                  .toDouble()),
+                          (user.meditationHistory.map((key, value) => MapEntry(
+                                      DateTime(key.year, key.month, key.day),
+                                      value))[DateTime(
+                                          DateTime.now().year,
+                                          DateTime.now().month,
+                                          DateTime.now().day)
+                                      .subtract(const Duration(days: 1))] ??
+                                  0)
+                              .toDouble()),
                       FlSpot(
                           7,
-                          daysShifted >= 1
-                              ? 0.0
-                              : user.meditationTimes[0 - daysShifted]
-                                  .toDouble()),
+                          (user.meditationHistory.map((key, value) =>
+                                      MapEntry(
+                                          DateTime(
+                                              key.year, key.month, key.day),
+                                          value))[DateTime(
+                                      DateTime.now().year,
+                                      DateTime.now().month,
+                                      DateTime.now().day)] ??
+                                  0)
+                              .toDouble()),
                     ])
               ]),
         ),

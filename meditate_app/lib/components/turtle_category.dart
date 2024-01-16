@@ -6,6 +6,7 @@ import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/pages/turtle_category_page.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TurtleCategory extends StatelessWidget {
   final int id;
@@ -66,10 +67,22 @@ class TurtleCategory extends StatelessWidget {
                                   "assets/images/turtles/10_overlay.png"),
                         ],
                       ))
-                  : LockedTurtle(
-                      id: id,
-                      colorId: -1,
-                    ),
+                  : Stack(children: [
+                      LockedTurtle(
+                        id: id,
+                        colorId: -1,
+                      ),
+                      TURTLES[id].tier == Tier.RAINBOW
+                          ? Shimmer.fromColors(
+                              baseColor: Colors.white12,
+                              highlightColor: Colors.white30,
+                              child: LockedTurtle(
+                                id: id,
+                                colorId: -1,
+                              ),
+                            )
+                          : Container()
+                    ]),
               const SizedBox(
                 width: 10,
               ),

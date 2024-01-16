@@ -467,7 +467,7 @@ class UserController extends GetxController {
   }
 
   Future<void> waitThenSetLoadingFalse() async {
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 3));
     isLoading.value = false;
     update();
   }
