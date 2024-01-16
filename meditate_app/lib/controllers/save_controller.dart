@@ -11,6 +11,7 @@ class SaveController extends GetxController {
   RxInt defaultMeditationTime = 5.obs;
   RxBool ambienceOn = true.obs;
   RxBool hasReviewed = false.obs;
+  RxBool requestNotifications = false.obs;
 
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
@@ -31,6 +32,12 @@ class SaveController extends GetxController {
   void updateHasReviewed() {
     hasReviewed.value = !hasReviewed.value;
     saveValue("has_reviewed", hasReviewed.value.toString());
+    update();
+  }
+
+  void updateRequestNotifications() {
+    requestNotifications.value = !requestNotifications.value;
+    saveValue("request_notifications", requestNotifications.value.toString());
     update();
   }
 
@@ -198,6 +205,12 @@ class SaveController extends GetxController {
     // Load if the user has been prompted to rate the app
     if (getValue('has_reviewed') != "") {
       hasReviewed.value = getValue('has_reviewed').toLowerCase() == 'true';
+    }
+
+    //Load if notifications have been requested
+    if (getValue('request_notifications') != "") {
+      requestNotifications.value =
+          getValue('request_notifications').toLowerCase() == 'true';
     }
 
     // Load the entire meditation history for the past year

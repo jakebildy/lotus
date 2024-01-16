@@ -4,6 +4,9 @@ import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
 import 'package:meditate_app/pages/turtle_hatch_page.dart';
 import 'package:meditate_app/util/logger.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../controllers/save_controller.dart';
 
 class StreakCountPage extends StatefulWidget {
   final int gemsAmount;
@@ -89,7 +92,13 @@ class _StreakCountPageState extends State<StreakCountPage>
             height: 50,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
+              SaveController save = Get.find();
+              if (save.requestNotifications.value == false) {
+                await Permission.notification.request();
+                save.updateRequestNotifications();
+              }
+
               if (widget.turtleToHatch >= 0) {
                 Get.offAll(TurtleHatchPage(
                   gemsAmount: widget.gemsAmount,
