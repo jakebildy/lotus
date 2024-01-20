@@ -187,23 +187,27 @@ class UserController extends GetxController {
       case UserProperty.meditationHistory:
         logWarning("meditation_history storage value: " +
             (storage.read("meditation_history") ?? ""));
-
-        for (DateTime key in value.keys) {
-          // logInfo(
-          //     "Saving meditation history: meditation-${key.day}-${key.month}-${key.year}:" +
-          //         value[key].toString());
-          storage.write("meditation-${key.day}-${key.month}-${key.year}",
-              value[key].toString());
+        logError("MEDITATION HISTORY saveLocalValue");
+        logError(value.toString());
+        for (String key in value.keys) {
+          logInfo("Saving meditation history: $key:" + value[key].toString());
+          storage.write(key, value[key].toString());
         }
         localStorageUser.value.meditationHistory = RxMap<DateTime, int>.from(
-            value.map((key, value) => MapEntry(DateTime.parse(key), value)));
+            value.map((key, value) => MapEntry(
+                DateTime(
+                    key.split("-")[3], key.split("-")[2], key.split("-")[1]),
+                value)));
         break;
 
       default:
         logError("Unknown key: $key");
     }
 
-    storage.write("LAST_UPDATED_AT", DateTime.now().toIso8601String());
+    logSuccess("Setting LAST_UPDATED_AT: " +
+        DateTime.now().toUtc().toIso8601String() +
+        " (UTC)");
+    storage.write("LAST_UPDATED_AT", DateTime.now().toUtc().toIso8601String());
 
     logSuccess(
         "UPDATING LOCAL STORAGE => " + key.name + ":" + value.toString());
@@ -332,28 +336,32 @@ class UserController extends GetxController {
 
   Future<void> updateProperty(UserProperty property, dynamic value) async {
     // If the user is online, update the database - regardless, update the local storage
-    if (user == databaseUser) {
-      switch (property) {
-        case UserProperty.emojisSentAt:
-          value =
-              value.map((key, value) => MapEntry(key, value.toIso8601String()));
-          break;
-        case UserProperty.meditationHistory:
-          value = value.map((key, value) => MapEntry(
-              'meditation-${key.day}-${key.month}-${key.year}', value));
-          break;
 
-        default:
-          break;
-      }
+    switch (property) {
+      case UserProperty.emojisSentAt:
+        value =
+            value.map((key, value) => MapEntry(key, value.toIso8601String()));
+        break;
+      case UserProperty.meditationHistory:
+        value = value.map((key, value) =>
+            MapEntry('meditation-${key.day}-${key.month}-${key.year}', value));
+        break;
 
+      default:
+        break;
+    }
+    if (!networkStatusController.offline.value) {
       logSuccess(
           "UPDATING DATABASE => " + property.name + ":" + value.toString());
-      await api.user.updateUserAttribute(property.name, value);
-      databaseUser.value = await api.user.me();
-      update();
+      try {
+        await api.user.updateUserAttribute(property.name, value);
+        databaseUser.value = await api.user.me();
+      } catch (e) {
+        logError("Failed to update database");
+      }
     }
     saveLocalValue(property, value);
+    update();
   }
 
   Future<void> syncDatabasetoMatchLocalStorage() async {
@@ -410,7 +418,8 @@ class UserController extends GetxController {
       //this is the edge case when the user UPDATES the app
       if (getValue("LAST_UPDATED_AT") == "") {
         logInfo("No lastUpdatedAt in localStorage. Adding it now.");
-        storage.write("LAST_UPDATED_AT", DateTime.now().toIso8601String());
+        storage.write(
+            "LAST_UPDATED_AT", DateTime.now().toUtc().toIso8601String());
 
         syncDatabasetoMatchLocalStorage();
       } else {

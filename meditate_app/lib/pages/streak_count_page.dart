@@ -41,7 +41,7 @@ class _StreakCountPageState extends State<StreakCountPage>
         ? userController.user.value.streak
         : userController.user.value.streak - 1 < 0
             ? 0
-            : userController.user.value.streak;
+            : userController.user.value.streak - 1;
 
     increaseCount();
   }
