@@ -37,7 +37,7 @@ class _StatsPageState extends State<StatsPage> {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "${userController.totalMinutes()} min",
+                  "${userController.user.value.totalMinutes} min",
                   style: const TextStyle(
                       fontSize: 20,
                       color: Colors.white,

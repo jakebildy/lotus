@@ -4,6 +4,7 @@ List<String> quotes = [
   '"All we have to decide is what to do with the time that is given us." \n- Gandalf',
   "“If you look for the light, you can often find it. But if you look for the dark, that is all you will ever see.” \n– Uncle Iroh",
   "“Hope is something you give yourself. That is the meaning of inner strength.” \n– Uncle Iroh",
+  "“True wisdom begins when we accept things as they are.” \n– Tenzin",
   "“I sit in silence and find whenever I meditate, my fears alleviate, my tears evaporate” \n- J. Cole",
   "“Anything’s possible, you gotta dream like you never seen obstacles.” \n- J. Cole",
   "“No such thing as a life that’s better than yours, no such thing..” \n- J. Cole",

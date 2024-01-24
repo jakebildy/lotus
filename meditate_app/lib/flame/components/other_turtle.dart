@@ -180,12 +180,6 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                             userController.user.value.gems - 50);
                       }
 
-                      //In the future consider moving this logic into Egg Controller, also handle on countdown page.
-                      userController.updateProperty(UserProperty.eggs,
-                          userController.user.value.eggs + 1);
-                      userController.updateProperty(UserProperty.totalEggs,
-                          userController.user.value.totalEggs + 1);
-
                       bool babyType = Random().nextBool();
                       int futureColor =
                           !babyType ? game.turtleColor.value : turtleColor;
@@ -195,7 +189,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                           TURTLE_COLORS_NAME[futureColor] +
                           " " +
                           TURTLES[futureType].name);
-                      egg.addFutureTurtle(futureColor, futureType);
+                      egg.addEgg(futureColor, futureType);
 
                       Get.to(const NewEggPage());
                     },

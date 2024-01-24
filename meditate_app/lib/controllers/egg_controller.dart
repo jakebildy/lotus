@@ -8,23 +8,31 @@ import '../util/logger.dart';
 /// {@category Controllers}
 class EggController extends GetxController {
   UserController user = Get.find();
-  void addFutureTurtle(int futureColor, int futureType) {
+  void addEgg(int futureColor, int futureType) {
     logInfo(
         'Add future turtle called, adding $futureType-$futureColor to egg_types');
 
     var newEggTypes = user.user.value.eggTypes;
     newEggTypes.add("$futureType-$futureColor");
     user.updateProperty(UserProperty.eggTypes, newEggTypes);
+
+    user.updateProperty(UserProperty.eggs, user.user.value.eggs + 1);
+    user.updateProperty(UserProperty.totalEggs, user.user.value.totalEggs + 1);
     update();
+
+    //TODO: this breaks on refresh. Egg appears fine initially but then when refreshing disappears. To fix, figure out 1) localstorage and database value after this function is called. 2) localstorage and database value on refresh if needed
   }
 
-  void popFutureTurtle() {
+  void popEgg() {
     //create eggTypesNew and remove eggTypesNew[0]
     var newEggTypes = user.user.value.eggTypes;
     newEggTypes.removeAt(0);
 
     user.updateProperty(
         UserProperty.eggTypes, newEggTypes); //update eggTypes with eggTypesNew
+
+    user.updateProperty(UserProperty.eggs, user.user.value.eggs - 1);
+    user.updateProperty(UserProperty.hatchProgressEggOne, 0);
     update();
   }
 
@@ -35,7 +43,7 @@ class EggController extends GetxController {
       int eggColorNewInt = int.parse(eggTypeNew.split("-")[1]);
       logInfo("Hatching turtle $eggTypeNewInt-$eggColorNewInt (type-color)");
       addUnlockedTurtle(eggTypeNewInt, 1, eggColorNewInt);
-      popFutureTurtle();
+      popEgg();
     } else {
       addUnlockedTurtle(i, 1, turtleColorToHatch);
     }

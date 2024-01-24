@@ -178,9 +178,9 @@ class UserController extends GetxController {
       case UserProperty.eggTypes:
         logWarning("egg_types storage value: " + storage.read("egg_types"));
         // Convert List<String> to a comma-separated string to store
-        String eggTypesString = value.join(",");
-        logInfo("egg_types: " +
-            eggTypesString.replaceAll("[", "").replaceAll("]", ""));
+        String eggTypesString =
+            value.join(",").replaceAll("[", "").replaceAll("]", "");
+        logInfo("egg_types: " + eggTypesString);
         storage.write("egg_types", eggTypesString);
         localStorageUser.value.eggTypes = RxList<String>.from(value);
         break;
@@ -450,10 +450,6 @@ class UserController extends GetxController {
       }
       update();
     }
-  }
-
-  int totalMinutes() {
-    return 0;
   }
 
   /// On Success: set user, isAuthenticated to true and go to main page.

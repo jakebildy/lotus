@@ -531,14 +531,6 @@ class _CountdownPageState extends State<CountdownPage>
                                                           .hatchProgressEggOne >=
                                                       2) {
                                                     //Hatch a turtle!
-                                                    userController
-                                                        .updateProperty(
-                                                            UserProperty.eggs,
-                                                            userController
-                                                                    .user
-                                                                    .value
-                                                                    .eggs -
-                                                                1);
 
                                                     logInfo(
                                                         "HATCHING A TURTLE!");
@@ -572,10 +564,6 @@ class _CountdownPageState extends State<CountdownPage>
                                                     eggController.hatchTurtle(
                                                         turtleToHatch,
                                                         turtleColorToHatch);
-                                                    userController.updateProperty(
-                                                        UserProperty
-                                                            .hatchProgressEggOne,
-                                                        0);
                                                   } else {
                                                     logInfo(
                                                         "Updating hatch process");
@@ -600,20 +588,8 @@ class _CountdownPageState extends State<CountdownPage>
                                                 int tColor = Random().nextInt(
                                                     TURTLE_COLORS.length);
 
-                                                eggController.addFutureTurtle(
+                                                eggController.addEgg(
                                                     tColor, tHatch);
-
-                                                userController.updateProperty(
-                                                    UserProperty.eggs,
-                                                    userController
-                                                            .user.value.eggs +
-                                                        1);
-
-                                                userController.updateProperty(
-                                                    UserProperty.totalEggs,
-                                                    userController.user.value
-                                                            .totalEggs +
-                                                        1);
                                               }
 
                                               //Log the event to AppsFlyer
