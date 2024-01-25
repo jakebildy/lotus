@@ -307,7 +307,9 @@ class UserController extends GetxController {
         localStorageUser.value.unlockedTurtles =
             List<int>.from(localStorageUser.value.unlockedTurtles)..add(0);
 
-        localStorageUser.value.unlockedTurtleColors.add([-1]);
+        localStorageUser.value.unlockedTurtleColors =
+            List<List<int>>.from(localStorageUser.value.unlockedTurtleColors)
+              ..add([-1]);
       }
     }
     logSuccess(

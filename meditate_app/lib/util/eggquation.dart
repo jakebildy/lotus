@@ -15,6 +15,7 @@ bool receiveEgg(int timeMeditated) {
           : (timeMeditated / 10) >= 1
               ? 0.125
               : 0.1);
+  //note (unrelated to this remove later) check if the guide appears on update, if it does, all data was wiped
 
   // if (DEBUG_MODE) {
   //   chanceOfEgg = 1;
