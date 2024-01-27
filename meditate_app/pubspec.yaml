@@ -195,6 +195,10 @@ flutter:
     - assets/images/game/insects/butterfly_1.png
     - assets/images/game/insects/butterfly_2.png
     - assets/images/game/insects/butterfly_3.png
+    - assets/images/game/starfish_1.png
+    - assets/images/game/shell_1.png
+    - assets/images/game/water_spritesheet.png
+    - assets/images/game/water_spritesheet2.png
     - assets/gems_overlay.png
     - assets/offline.png
     - assets/lure.png

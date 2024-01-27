@@ -13,8 +13,11 @@ import 'package:meditate_app/flame/components/butterfly.dart';
 import 'package:meditate_app/flame/components/fish.dart';
 import 'package:meditate_app/flame/components/lilypad.dart';
 import 'package:meditate_app/flame/components/other_turtle.dart';
+import 'package:meditate_app/flame/components/seafloor_object.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
 import 'package:meditate_app/util/turtles.dart';
+
+import 'components/wateranimation.dart';
 
 class TurtleGame extends FlameGame with HasTappables {
   late Sprite background;
@@ -33,15 +36,32 @@ class TurtleGame extends FlameGame with HasTappables {
       false);
   CameraPoint cameraPoint = CameraPoint(Vector2(400, 400));
 
+  List<SeaFloorObject> seafloorObjects = [];
+  WaterAnimation waterAnimation = WaterAnimation(Vector2(400, 100), (700));
+  WaterAnimation waterAnimation2 = WaterAnimation(Vector2(400, 800), (700));
   @override
   Future<void> onLoad() async {
     // FlameAudio.loopLongAudio('water_sounds.wav', volume: 0.5);
     add(_turtleWorld);
 
+    for (int i = 0; i < 700; i++) {
+      seafloorObjects.add(SeaFloorObject(
+          Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+              math.Random().nextInt(20000).toDouble() - 10000),
+          (50 + math.Random().nextInt(30)).toDouble()));
+    }
+
+    for (var seafloorObject in seafloorObjects) {
+      add(seafloorObject);
+    }
+
     for (int i = 0; i < 400; i++) {
       add(Fish(Vector2(math.Random().nextInt(20000).toDouble() - 10000,
           math.Random().nextInt(20000).toDouble() - 10000)));
     }
+
+    add(waterAnimation);
+    add(waterAnimation2);
 
     for (int i = 0; i < 100; i++) {
       add(OtherTurtle(
@@ -54,13 +74,6 @@ class TurtleGame extends FlameGame with HasTappables {
     add(player);
 
     add(cameraPoint);
-
-    // for (int i = 0; i < 100; i++) {
-    //   add(Rock(
-    //       Vector2(math.Random().nextInt(2000).toDouble(),
-    //           math.Random().nextInt(20000).toDouble()),
-    //       (70 + math.Random().nextInt(60)).toDouble()));
-    // }
 
     for (int i = 0; i < 1600; i++) {
       add(Lilypad(
@@ -114,7 +127,9 @@ class TurtleGame extends FlameGame with HasTappables {
       player.add(
         MoveByEffect(
             Vector2(borderX - player.position.x, borderY - player.position.y),
-            EffectController(duration: 0.6)),
+            EffectController(
+              duration: 0.6,
+            )),
       );
       playerBase.angle = math.atan2(
           borderX - player.position.x, -1 * (borderY - player.position.y));
@@ -143,10 +158,33 @@ class TurtleGame extends FlameGame with HasTappables {
   Future<void> parallaxMove(double x, double y) async {
     double ratio = 8;
     _turtleWorld.parallax?.baseVelocity = Vector2(
-        (x - player.position.x) / ratio, (y - player.position.y) / ratio);
+        (x - player.position.x) / ratio * 2,
+        (y - player.position.y) / ratio * 2);
 
-    await Future.delayed(const Duration(milliseconds: 700));
+    // For all SeafloorObjects, add parallax
+    for (var seafloorObject in seafloorObjects) {
+      seafloorObject.add(
+        MoveByEffect(
+            Vector2((x - player.position.x) / (ratio / 4),
+                (y - player.position.y) / (ratio / 4)),
+            EffectController(duration: 0.6, curve: Curves.linear)),
+      );
+    }
+    waterAnimation.add(
+      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
+          EffectController(duration: 0.6, curve: Curves.linear)),
+    );
 
+    waterAnimation2.add(
+      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
+          EffectController(duration: 0.6, curve: Curves.linear)),
+    );
+    await Future.delayed(const Duration(milliseconds: 600));
+
+    _turtleWorld.parallax?.baseVelocity = Vector2(
+        (-1 * x - player.position.x) / (ratio * 10),
+        (-1 * y - player.position.y) / (ratio * 10));
+    await Future.delayed(const Duration(milliseconds: 50));
     _turtleWorld.parallax?.baseVelocity = Vector2(0, 0);
   }
 }
