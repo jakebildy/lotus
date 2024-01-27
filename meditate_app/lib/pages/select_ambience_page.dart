@@ -34,31 +34,37 @@ class SelectAmbiencePage extends StatelessWidget {
                   Get.offAll(const AppPages());
                 },
                 child: Card(
-                    child: (Column(
-                  children: [
-                    Image.asset(
-                      AMBIENCES[index].image,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 4),
-                      child: Text(
-                        AMBIENCES[index].name,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: save.selectedAmbience.value ==
-                                    AMBIENCES[index].name
-                                ? Colors.tealAccent
-                                : Colors.white),
+                    child: ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: (Column(
+                    children: [
+                      AspectRatio(
+                          aspectRatio: 1.5,
+                          child: Image.asset(
+                            AMBIENCES[index].image,
+                            fit: BoxFit.fitWidth,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 4),
+                        child: Text(
+                          AMBIENCES[index].name,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: save.selectedAmbience.value ==
+                                      AMBIENCES[index].name
+                                  ? Colors.tealAccent
+                                  : Colors.white),
+                        ),
                       ),
-                    ),
-                    AMBIENCES[index].premium
-                        ? const SizedBox(width: 80, child: PremiumContainer())
-                        : const SizedBox(
-                            width: 80,
-                            height: 30,
-                          )
-                  ],
-                ))),
+                      AMBIENCES[index].premium
+                          ? const SizedBox(width: 80, child: PremiumContainer())
+                          : const SizedBox(
+                              width: 80,
+                              height: 30,
+                            )
+                    ],
+                  )),
+                )),
               ),
             );
           })),

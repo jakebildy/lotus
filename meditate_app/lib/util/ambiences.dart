@@ -28,4 +28,9 @@ const List<Ambience> AMBIENCES = [
       image: 'assets/ambiences/mourning_doves.jpg',
       audio: 'assets/audio/mourning_doves.wav',
       premium: true),
+  Ambience(
+      name: "Forest",
+      image: 'assets/ambiences/forest.jpg',
+      audio: 'assets/audio/forest.wav',
+      premium: true),
 ];

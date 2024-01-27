@@ -212,6 +212,8 @@ flutter:
     - assets/audio/mourning_doves.wav
     - assets/stars.jpg
     - assets/audio/night.wav
+    - assets/ambiences/forest.jpg
+    - assets/audio/forest.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
