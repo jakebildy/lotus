@@ -215,6 +215,8 @@ flutter:
     - assets/ambiences/forest.jpg
     - assets/audio/forest.mp3
     - assets/ambiences/random.jpg
+    - assets/ambiences/wind.jpg
+    - assets/audio/wind.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

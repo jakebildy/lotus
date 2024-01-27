@@ -39,6 +39,11 @@ const List<Ambience> AMBIENCES = [
       audio: 'assets/audio/forest.mp3',
       premium: true),
   Ambience(
+      name: "Wind",
+      image: 'assets/ambiences/wind.jpg',
+      audio: 'assets/audio/wind.wav',
+      premium: true),
+  Ambience(
       name: "Random",
       image: 'assets/ambiences/random.jpg',
       audio: 'assets/audio/water_sounds.wav',

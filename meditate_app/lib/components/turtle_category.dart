@@ -131,7 +131,7 @@ class TurtleCategory extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                      "${((unlocked ? uniqueQuantity : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(1)}%",
+                      " ${((unlocked ? uniqueQuantity : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(0)}%",
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
