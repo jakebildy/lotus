@@ -6,7 +6,9 @@ import 'package:meditate_app/pages/countdown_page.dart';
 
 class MeditationGuide extends StatefulWidget {
   final Duration? time;
-  const MeditationGuide({Key? key, required this.time}) : super(key: key);
+  final String ambience;
+  const MeditationGuide({Key? key, required this.time, required this.ambience})
+      : super(key: key);
 
   @override
   State<MeditationGuide> createState() => _MeditationGuideState();
@@ -168,7 +170,11 @@ class _MeditationGuideState extends State<MeditationGuide> {
                       if (widget.time == null) {
                         Navigator.of(context).pop();
                       } else {
-                        Get.off(CountdownPage(time: widget.time!),
+                        Get.off(
+                            CountdownPage(
+                              time: widget.time!,
+                              ambience: widget.ambience,
+                            ),
                             transition: Transition.circularReveal,
                             duration: const Duration(seconds: 1));
                       }

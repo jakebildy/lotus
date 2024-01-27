@@ -11,6 +11,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/util/ambiences.dart';
 import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/logger.dart';
@@ -23,9 +24,11 @@ import 'package:wave/wave.dart';
 import '../models/user.dart';
 
 class CountdownPage extends StatefulWidget {
-  const CountdownPage({Key? key, required this.time}) : super(key: key);
+  const CountdownPage({Key? key, required this.time, required this.ambience})
+      : super(key: key);
 
   final Duration time;
+  final String ambience;
 
   @override
   State<CountdownPage> createState() => _CountdownPageState();
@@ -74,13 +77,17 @@ class _CountdownPageState extends State<CountdownPage>
     super.initState();
   }
 
-  final player = OcarinaPlayer(
-    asset: 'assets/audio/water_sounds.wav',
-    loop: true,
-    volume: 0.8,
-  );
-
+  late OcarinaPlayer player;
   Future<void> playAmbience() async {
+    player = OcarinaPlayer(
+      asset: AMBIENCES
+          .where((element) => element.name == widget.ambience)
+          .first
+          .audio,
+      loop: true,
+      volume: 0.8,
+    );
+
     await player.load();
     await player.play();
   }
@@ -153,21 +160,48 @@ class _CountdownPageState extends State<CountdownPage>
         Scaffold(
           // backgroundColor: isDarkMode ? Colors.black : Color(0xff87CEEB),
           body: Container(
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xff87CEEB),
-                Color(0xff87CEEB),
-                Color.fromARGB(255, 25, 178, 238),
-                Color.fromARGB(255, 183, 163, 211),
-                Color.fromARGB(255, 247, 190, 221),
-                Color.fromARGB(255, 247, 244, 186),
-                Color(0xff87CEEB),
-                Color.fromARGB(255, 25, 178, 238),
-              ],
-            )),
+            decoration: widget.ambience == "Rain"
+                ? const BoxDecoration(
+                    gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(255, 205, 205, 205),
+                      Color(0xff87CEEB),
+                      Color.fromARGB(255, 25, 178, 238),
+                      Color.fromARGB(255, 255, 255, 255),
+                      Color.fromRGBO(255, 255, 255, 1),
+                      Color.fromARGB(255, 255, 255, 255),
+                      Color(0xff87CEEB),
+                      Color.fromARGB(255, 25, 178, 238),
+                    ],
+                  ))
+                : widget.ambience == "Night"
+                    ? const BoxDecoration(
+                        gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black,
+                          Colors.black,
+                          Color.fromARGB(255, 183, 163, 211),
+                        ],
+                      ))
+                    : const BoxDecoration(
+                        gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xff87CEEB),
+                          Color(0xff87CEEB),
+                          Color.fromARGB(255, 25, 178, 238),
+                          Color.fromARGB(255, 183, 163, 211),
+                          Color.fromARGB(255, 247, 190, 221),
+                          Color.fromARGB(255, 247, 244, 186),
+                          Color(0xff87CEEB),
+                          Color.fromARGB(255, 25, 178, 238),
+                        ],
+                      )),
             child: Stack(
               children: [
                 // Padding(
@@ -194,6 +228,16 @@ class _CountdownPageState extends State<CountdownPage>
                   waveAmplitude: 0,
                 ),
 
+                widget.ambience == "Night"
+                    ? Opacity(
+                        opacity: 0.2,
+                        child: Image.asset(
+                          "assets/stars.jpg",
+                          height: 500,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Container(),
                 ListView(
                   physics: const NeverScrollableScrollPhysics(),
                   //mainAxisAlignment: MainAxisAlignment.end,
@@ -647,6 +691,14 @@ class _CountdownPageState extends State<CountdownPage>
             ),
           ),
         ),
+        // Opacity(
+        //   opacity: 0.5,
+        //   child: Image.network(
+        //     "https://im7.ezgif.com/tmp/ezgif-7-cb00cc7318.gif",
+        //     height: 1000,
+        //     fit: BoxFit.cover,
+        //   ),
+        // )
       ],
     );
   }

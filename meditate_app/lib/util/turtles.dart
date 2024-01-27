@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 
+import 'ambiences.dart';
+
 enum Rarity { COMMON, RARE, LEGENDARY }
 
 enum Tier { ORANGE, YELLOW, BLUE, RAINBOW }
@@ -14,8 +16,13 @@ class Turtle {
   final String name;
   final Rarity rarity;
   final Tier tier;
+  final Ambience? foundIn;
 
-  const Turtle({required this.name, required this.rarity, required this.tier})
+  const Turtle(
+      {required this.name,
+      required this.rarity,
+      required this.tier,
+      this.foundIn})
       : super();
 }
 
@@ -60,28 +67,42 @@ const List<String> TURTLE_COLORS_NAME = [
   "White",
 ];
 
-const List<Turtle> TURTLES = [
-  Turtle(name: "Swamp Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Rockshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Hexagon Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
-  Turtle(name: "Smoothback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Obsidian Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
-  Turtle(name: "Flora Turtle", rarity: Rarity.RARE, tier: Tier.RAINBOW),
-  Turtle(name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.YELLOW),
-  Turtle(name: "Swirl Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Sun Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
-  Turtle(name: "Crystal Turtle", rarity: Rarity.LEGENDARY, tier: Tier.RAINBOW),
-  Turtle(name: "Balance Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
-  Turtle(name: "Poseidon Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Watermelon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
-  Turtle(name: "Honeyshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Citrus Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  Turtle(name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
-  Turtle(name: "Luna Turtle", rarity: Rarity.RARE, tier: Tier.RAINBOW),
-  Turtle(name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.BLUE),
+List<Turtle> TURTLES = [
+  const Turtle(name: "Swamp Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(
+      name: "Rockshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(name: "Hexagon Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
+  const Turtle(
+      name: "Smoothback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(name: "Obsidian Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
+  const Turtle(name: "Flora Turtle", rarity: Rarity.RARE, tier: Tier.RAINBOW),
+  const Turtle(
+      name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(
+      name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.YELLOW),
+  const Turtle(name: "Swirl Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(name: "Sun Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
+  const Turtle(
+      name: "Crystal Turtle", rarity: Rarity.LEGENDARY, tier: Tier.RAINBOW),
+  const Turtle(name: "Balance Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
+  const Turtle(
+      name: "Poseidon Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(
+      name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(
+      name: "Watermelon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
+  const Turtle(
+      name: "Honeyshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(name: "Citrus Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(
+      name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
+  Turtle(
+      name: "Luna Turtle",
+      rarity: Rarity.RARE,
+      tier: Tier.RAINBOW,
+      foundIn: AMBIENCES[1]),
+  const Turtle(name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.BLUE),
 ];
 
 int getTurtleToHatch() {

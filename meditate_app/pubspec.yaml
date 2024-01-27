@@ -207,6 +207,11 @@ flutter:
     - assets/sand_dollar_chest.png
     - assets/sand_dollar_overlay.png
     - assets/blank_profile.png
+    - assets/ambiences/water_sounds.jpg
+    - assets/ambiences/mourning_doves.jpg
+    - assets/audio/mourning_doves.wav
+    - assets/stars.jpg
+    - assets/audio/night.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

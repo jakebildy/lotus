@@ -12,6 +12,7 @@ class SaveController extends GetxController {
   RxBool ambienceOn = true.obs;
   RxBool hasReviewed = false.obs;
   RxBool requestNotifications = false.obs;
+  RxString selectedAmbience = "Water Sounds".obs;
 
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
@@ -19,6 +20,12 @@ class SaveController extends GetxController {
   void updateAmbience() {
     ambienceOn.value = !ambienceOn.value;
     saveValue("ambience_on", ambienceOn.value.toString());
+    update();
+  }
+
+  void updateSelectedAmbience(String newVal) {
+    selectedAmbience.value = newVal;
+    saveValue("selected_ambience", selectedAmbience.value);
     update();
   }
 
@@ -194,6 +201,13 @@ class SaveController extends GetxController {
     // Load ambience setting
     if (getValue('ambience_on') != "") {
       ambienceOn.value = getValue('ambience_on').toLowerCase() == 'true';
+    }
+
+    // Load selected ambience
+    if (getValue('selected_ambience') != "") {
+      selectedAmbience.value = getValue('selected_ambience');
+    } else {
+      selectedAmbience.value = "Water Sounds";
     }
 
     // Load default meditation time

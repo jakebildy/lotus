@@ -5,6 +5,7 @@ import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
+import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
 
 import '../components/duration_picker.dart';
@@ -129,7 +130,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                   ),
                   GestureDetector(
                     onTap: (() {
-                      saveController.updateAmbience();
+                      Get.to(const SelectAmbiencePage());
                     }),
                     child: Column(
                       children: [
@@ -138,20 +139,34 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                             : const SizedBox(
                                 height: 30,
                               ),
-                        Text(
-                          saveController.ambienceOn.value
-                              ? "Ambience: ON"
-                              : "Ambience: OFF",
-                          style: const TextStyle(
-                              fontSize: 13,
-                              color: Colors.white70,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Icon(
-                          saveController.ambienceOn.value
-                              ? Icons.music_note
-                              : Icons.music_off,
-                          size: 35,
+                        Container(
+                          // white outline
+                          // decoration: BoxDecoration(
+                          //     color: Colors.transparent,
+                          //     border:
+                          //         Border.all(color: Colors.white24, width: 2.0),
+                          //     borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Ambience: " +
+                                      saveController.selectedAmbience.value,
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white70,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(
+                                  saveController.selectedAmbience.value != "OFF"
+                                      ? Icons.music_note
+                                      : Icons.music_off,
+                                  size: 35,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -192,11 +207,19 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                     if (saveController
                                             .getValue("GUIDE_SHOWN") ==
                                         "TRUE") {
-                                      Get.to(CountdownPage(time: _duration),
+                                      Get.to(
+                                          CountdownPage(
+                                              time: _duration,
+                                              ambience: saveController
+                                                  .selectedAmbience.value),
                                           transition: Transition.circularReveal,
                                           duration: const Duration(seconds: 1));
                                     } else {
-                                      Get.to(MeditationGuide(time: _duration),
+                                      Get.to(
+                                          MeditationGuide(
+                                              time: _duration,
+                                              ambience: saveController
+                                                  .selectedAmbience.value),
                                           transition: Transition.circularReveal,
                                           duration: const Duration(seconds: 1));
                                       saveController.saveValue(

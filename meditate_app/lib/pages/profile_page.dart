@@ -617,7 +617,7 @@ class _ProfilePageState extends State<ProfilePage>
                 ),
                 GestureDetector(
                     onTap: () {
-                      Get.to(const MeditationGuide(time: null));
+                      Get.to(const MeditationGuide(time: null, ambience: ""));
                     },
                     child: const Center(
                         child: Text(
