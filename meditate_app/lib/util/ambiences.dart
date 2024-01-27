@@ -13,6 +13,11 @@ class Ambience {
 }
 
 const List<Ambience> AMBIENCES = [
+  // Ambience(
+  //   name: "OFF",
+  //   image: 'assets/ambiences/random.jpg',
+  //   audio: '',
+  //   premium: false),
   Ambience(
       name: "Water Sounds",
       image: 'assets/ambiences/water_sounds.jpg',
@@ -31,6 +36,11 @@ const List<Ambience> AMBIENCES = [
   Ambience(
       name: "Forest",
       image: 'assets/ambiences/forest.jpg',
-      audio: 'assets/audio/forest.wav',
+      audio: 'assets/audio/forest.mp3',
+      premium: true),
+  Ambience(
+      name: "Random",
+      image: 'assets/ambiences/random.jpg',
+      audio: 'assets/audio/water_sounds.wav',
       premium: true),
 ];

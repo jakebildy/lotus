@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -9,6 +11,7 @@ import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
 
 import '../components/duration_picker.dart';
+import '../util/ambiences.dart';
 import '../util/debug_mode.dart';
 
 class BeginMeditationPage extends StatefulWidget {
@@ -211,7 +214,16 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                           CountdownPage(
                                               time: _duration,
                                               ambience: saveController
-                                                  .selectedAmbience.value),
+                                                          .selectedAmbience
+                                                          .value ==
+                                                      "Random"
+                                                  ?
+                                                  // Random one of AMBIENCES
+                                                  AMBIENCES[Random().nextInt(
+                                                          AMBIENCES.length)]
+                                                      .name
+                                                  : saveController
+                                                      .selectedAmbience.value),
                                           transition: Transition.circularReveal,
                                           duration: const Duration(seconds: 1));
                                     } else {
