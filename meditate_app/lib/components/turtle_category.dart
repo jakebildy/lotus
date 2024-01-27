@@ -1,8 +1,10 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/locked_turtle.dart';
+import 'package:meditate_app/components/piechart_painter.dart';
 import 'package:meditate_app/pages/turtle_category_page.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
@@ -109,12 +111,33 @@ class TurtleCategory extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
-                  "${((unlocked ? uniqueQuantity : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(1)}%",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: unlocked ? Colors.tealAccent : Colors.grey)),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomPaint(
+                    size: const Size(10, 10), // Size of the pie chart
+                    painter: PieChartPainter(
+                      percentage: (unlocked ? uniqueQuantity : 0) /
+                          TURTLE_COLORS.length *
+                          100,
+                      fillColor: Colors.tealAccent,
+                      backgroundColor: Colors.black12,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                      "${((unlocked ? uniqueQuantity : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(1)}%",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: unlocked ? Colors.tealAccent : Colors.grey)),
+                ],
+              ),
               const SizedBox(
                 width: 5,
               ),
