@@ -1,4 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/components/turtle_card.dart';
@@ -10,8 +13,16 @@ import 'package:meditate_app/util/turtles.dart';
 
 import '../app_pages.dart';
 
-class SelectAmbiencePage extends StatelessWidget {
+class SelectAmbiencePage extends StatefulWidget {
   const SelectAmbiencePage({super.key});
+
+  @override
+  State<SelectAmbiencePage> createState() => _SelectAmbiencePageState();
+}
+
+class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
+  int currentAudioSource = -1;
+  AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +39,10 @@ class SelectAmbiencePage extends StatelessWidget {
           mainAxisSpacing: 8.0,
           children: List.generate(AMBIENCES.length, (index) {
             return Center(
-              child: GestureDetector(
-                onTap: () {
+              child: Bounce(
+                duration: const Duration(milliseconds: 110),
+                onPressed: () {
+                  HapticFeedback.mediumImpact();
                   save.updateSelectedAmbience(AMBIENCES[index].name);
                   Get.offAll(const AppPages());
                 },
@@ -44,24 +57,73 @@ class SelectAmbiencePage extends StatelessWidget {
                             AMBIENCES[index].image,
                             fit: BoxFit.fitWidth,
                           )),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 4),
-                        child: Text(
-                          AMBIENCES[index].name,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: save.selectedAmbience.value ==
-                                      AMBIENCES[index].name
-                                  ? Colors.tealAccent
-                                  : Colors.white),
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 8, 0, 4),
+                                child: Text(
+                                  AMBIENCES[index].name,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: save.selectedAmbience.value ==
+                                              AMBIENCES[index].name
+                                          ? Colors.tealAccent
+                                          : Colors.white),
+                                ),
+                              ),
+                              AMBIENCES[index].premium
+                                  ? const SizedBox(
+                                      width: 80, child: PremiumContainer())
+                                  : const SizedBox(
+                                      width: 80,
+                                      height: 30,
+                                    )
+                            ],
+                          ),
+                          AMBIENCES[index].name == "Random"
+                              ? Container(
+                                  width: 30,
+                                )
+                              : IconButton(
+                                  onPressed: () {
+                                    // If currently playing this sound
+                                    if (currentAudioSource == index) {
+                                      // stop the audio
+
+                                      audioPlayer.stop();
+                                      setState(() {
+                                        currentAudioSource = -1;
+                                      });
+                                    } else {
+                                      // pause any audio already playing
+                                      audioPlayer.stop();
+
+                                      // play the audio for 10 seconds
+
+                                      audioPlayer.play(
+                                        AssetSource(AMBIENCES[index].audio),
+                                      );
+                                      setState(() {
+                                        currentAudioSource = index;
+                                      });
+                                      Future.delayed(
+                                          const Duration(seconds: 10), () {
+                                        audioPlayer.stop();
+                                        setState(() {
+                                          currentAudioSource = -1;
+                                        });
+                                      });
+                                    }
+                                  },
+                                  icon: Icon(currentAudioSource == index
+                                      ? Icons.pause
+                                      : Icons.play_arrow))
+                        ],
                       ),
-                      AMBIENCES[index].premium
-                          ? const SizedBox(width: 80, child: PremiumContainer())
-                          : const SizedBox(
-                              width: 80,
-                              height: 30,
-                            )
                     ],
                   )),
                 )),

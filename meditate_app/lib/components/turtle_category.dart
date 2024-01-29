@@ -125,6 +125,7 @@ class TurtleCategory extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: 10,
+                    width: 40,
                   ),
                   CustomPaint(
                     size: const Size(10, 10), // Size of the pie chart
