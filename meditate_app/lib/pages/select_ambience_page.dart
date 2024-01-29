@@ -22,7 +22,20 @@ class SelectAmbiencePage extends StatefulWidget {
 
 class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
   int currentAudioSource = -1;
-  AudioPlayer audioPlayer = AudioPlayer();
+  late AudioPlayer audioPlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer = AudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.stop();
+    audioPlayer.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,22 +113,18 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                                       });
                                     } else {
                                       // pause any audio already playing
+                                      // TODO: debug
                                       audioPlayer.stop();
 
                                       // play the audio for 10 seconds
-
+                                      audioPlayer.setVolume(5);
                                       audioPlayer.play(
-                                        AssetSource(AMBIENCES[index].audio),
+                                        AssetSource(AMBIENCES[index]
+                                            .audio
+                                            .replaceAll("assets/", "")),
                                       );
                                       setState(() {
                                         currentAudioSource = index;
-                                      });
-                                      Future.delayed(
-                                          const Duration(seconds: 10), () {
-                                        audioPlayer.stop();
-                                        setState(() {
-                                          currentAudioSource = -1;
-                                        });
                                       });
                                     }
                                   },

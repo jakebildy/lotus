@@ -48,7 +48,7 @@ const List<Ambience> AMBIENCES = [
       name: "Forest",
       image: 'assets/ambiences/forest.jpg',
       audio: 'assets/audio/forest.mp3',
-      setting: 'Default',
+      setting: 'Forest',
       premium: true),
   Ambience(
       name: "Wind",
@@ -68,7 +68,7 @@ const List<Ambience> AMBIENCES = [
       //TODO: from the one in your downloads, crop sound
       image: 'assets/ambiences/jungle.jpg',
       audio: 'assets/audio/jungle.wav',
-      setting: 'Default',
+      setting: 'Jungle',
       premium: true),
   Ambience(
       name: "Beach",
@@ -92,13 +92,13 @@ const List<Ambience> AMBIENCES = [
       name: "Lost Civilization",
       image: 'assets/ambiences/lostcivilization.jpg',
       audio: 'assets/audio/lostcivilization.wav',
-      setting: 'Default',
+      setting: 'Jungle',
       premium: true),
   Ambience(
       name: "Prehistoric Sea",
       image: 'assets/ambiences/prehistoricsea.jpg',
       audio: 'assets/audio/prehistoricsea.wav',
-      setting: 'Default',
+      setting: 'Underwater',
       premium: true),
   Ambience(
       name: "Random",

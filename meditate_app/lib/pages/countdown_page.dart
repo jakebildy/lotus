@@ -250,6 +250,19 @@ class _CountdownPageState extends State<CountdownPage>
                         ),
                       )
                     : Container(),
+
+                AMBIENCES
+                            .where((element) => element.name == widget.ambience)
+                            .first
+                            .setting ==
+                        "Jungle"
+                    ? Image.asset(
+                        "assets/jungle_top.png",
+                        height: 300,
+                        fit: BoxFit.cover,
+                      )
+                    : Container(),
+
                 Center(
                   child: Stack(alignment: Alignment.bottomCenter, children: [
                     SizedBox(
@@ -275,6 +288,30 @@ class _CountdownPageState extends State<CountdownPage>
                         ),
                       )
                     : Container(),
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    AMBIENCES
+                                    .where((element) =>
+                                        element.name == widget.ambience)
+                                    .first
+                                    .setting ==
+                                "Jungle" ||
+                            AMBIENCES
+                                    .where((element) =>
+                                        element.name == widget.ambience)
+                                    .first
+                                    .setting ==
+                                "Forest"
+                        ? Image.asset(
+                            "assets/jungle_bottom.png",
+                            height: 230,
+                            fit: BoxFit.cover,
+                          )
+                        : Container(),
+                  ],
+                ),
                 ListView(
                   physics: const NeverScrollableScrollPhysics(),
                   //mainAxisAlignment: MainAxisAlignment.end,
@@ -489,6 +526,7 @@ class _CountdownPageState extends State<CountdownPage>
                                     ),
                                   ),
                                 ),
+
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                             child: isPaused

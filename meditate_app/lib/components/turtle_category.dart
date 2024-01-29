@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
@@ -123,9 +122,9 @@ class TurtleCategory extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
-                    width: 40,
+                    width: 50,
                   ),
                   CustomPaint(
                     size: const Size(10, 10), // Size of the pie chart
@@ -137,7 +136,7 @@ class TurtleCategory extends StatelessWidget {
                       backgroundColor: Colors.black12,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(

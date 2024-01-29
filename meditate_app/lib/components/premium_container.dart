@@ -6,9 +6,9 @@ class PremiumContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(5), // Add some padding around the text
+      padding: const EdgeInsets.all(5), // Add some padding around the text
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
@@ -21,7 +21,7 @@ class PremiumContainer extends StatelessWidget {
       child: Center(
         // Center the text inside the container
         child: Row(
-          children: [
+          children: const [
             SizedBox(
               width: 2,
             ),

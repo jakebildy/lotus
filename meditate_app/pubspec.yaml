@@ -234,6 +234,8 @@ flutter:
     - assets/audio/beach.wav
     - assets/ambiences/thunderstorm.jpg
     - assets/audio/thunderstorm.wav
+    - assets/jungle_top.png
+    - assets/jungle_bottom.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
