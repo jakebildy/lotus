@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 
 import 'ambiences.dart';
@@ -107,6 +108,16 @@ List<Turtle> TURTLES = [
 
 int getTurtleToHatch() {
   List<Turtle> possibleTurtles = TURTLES;
+
+  //If the user doesn't have at least one friend, filter the Litback turtle
+  FollowController followController = Get.find();
+
+  if (followController.following.isEmpty) {
+    possibleTurtles = possibleTurtles
+        .where((element) => element.name != "Litback Turtle")
+        .toList();
+  }
+
   int checkRarity = Random().nextInt(10);
 
   if (checkRarity < 7) {

@@ -36,9 +36,13 @@ class TurtleCategory extends StatelessWidget {
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               key: UniqueKey(),
-              backgroundColor: tierColor(TURTLES[id].tier),
+              backgroundColor: TURTLES[id].name == "Litback Turtle"
+                  ? Colors.deepPurpleAccent
+                  : tierColor(TURTLES[id].tier),
               content: Text(
-                "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
+                TURTLES[id].name == "Litback Turtle"
+                    ? "This social turtle can be found once you add at least one friend on Shellevate!"
+                    : "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               )));
         }
@@ -98,11 +102,16 @@ class TurtleCategory extends StatelessWidget {
                       Text((TURTLES[id].name.split(" ")[0] + " Turtles"),
                           style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
-                      Text(tierReadable(TURTLES[id].tier),
+                      Text(
+                          TURTLES[id].name == "Litback Turtle"
+                              ? "Add Friends to Find"
+                              : tierReadable(TURTLES[id].tier),
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: tierColor(TURTLES[id].tier))),
+                              color: TURTLES[id].name == "Litback Turtle"
+                                  ? Colors.deepPurpleAccent
+                                  : tierColor(TURTLES[id].tier))),
                       const SizedBox(height: 20),
                       Text(
                           "${unlocked ? uniqueQuantity : '0'} of ${TURTLE_COLORS.length}",

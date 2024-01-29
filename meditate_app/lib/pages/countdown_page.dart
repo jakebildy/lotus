@@ -160,7 +160,11 @@ class _CountdownPageState extends State<CountdownPage>
         Scaffold(
           // backgroundColor: isDarkMode ? Colors.black : Color(0xff87CEEB),
           body: Container(
-            decoration: widget.ambience == "Rain"
+            decoration: AMBIENCES
+                        .where((element) => element.name == widget.ambience)
+                        .first
+                        .setting ==
+                    "Rain"
                 ? const BoxDecoration(
                     gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -176,7 +180,11 @@ class _CountdownPageState extends State<CountdownPage>
                       Color.fromARGB(255, 25, 178, 238),
                     ],
                   ))
-                : widget.ambience == "Night"
+                : AMBIENCES
+                            .where((element) => element.name == widget.ambience)
+                            .first
+                            .setting ==
+                        "Night"
                     ? const BoxDecoration(
                         gradient: LinearGradient(
                         begin: Alignment.topCenter,
@@ -228,12 +236,41 @@ class _CountdownPageState extends State<CountdownPage>
                   waveAmplitude: 0,
                 ),
 
-                widget.ambience == "Night"
+                AMBIENCES
+                            .where((element) => element.name == widget.ambience)
+                            .first
+                            .setting ==
+                        "Night"
                     ? Opacity(
                         opacity: 0.2,
                         child: Image.asset(
                           "assets/stars.jpg",
                           height: 500,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Container(),
+                Center(
+                  child: Stack(alignment: Alignment.bottomCenter, children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height - 60,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+                      child: Image.asset("assets/lotus2.png"),
+                    ),
+                  ]),
+                ),
+                AMBIENCES
+                            .where((element) => element.name == widget.ambience)
+                            .first
+                            .setting ==
+                        "Rain"
+                    ? Opacity(
+                        opacity: 0.5,
+                        child: Image.asset(
+                          "assets/images/rainy_overlay.gif",
+                          height: 1000,
                           fit: BoxFit.cover,
                         ),
                       )
@@ -249,10 +286,10 @@ class _CountdownPageState extends State<CountdownPage>
                           SizedBox(
                             height: MediaQuery.of(context).size.height - 200,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
-                            child: Image.asset("assets/lotus2.png"),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+                          //   child: Image.asset("assets/lotus2.png"),
+                          // ),
                           meditationComplete
                               ? Padding(
                                   padding: EdgeInsets.fromLTRB(0, 120, 0,
@@ -691,14 +728,6 @@ class _CountdownPageState extends State<CountdownPage>
             ),
           ),
         ),
-        // Opacity(
-        //   opacity: 0.5,
-        //   child: Image.network(
-        //     "https://im7.ezgif.com/tmp/ezgif-7-cb00cc7318.gif",
-        //     height: 1000,
-        //     fit: BoxFit.cover,
-        //   ),
-        // )
       ],
     );
   }
