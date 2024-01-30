@@ -33,9 +33,17 @@ class TurtleCard extends StatelessWidget {
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               key: UniqueKey(),
-              backgroundColor: tierColor(TURTLES[id].tier),
+              backgroundColor: TURTLES[id].name == "Litback Turtle"
+                  ? Colors.deepPurpleAccent
+                  : TURTLES[id].foundIn != null
+                      ? Colors.tealAccent
+                      : tierColor(TURTLES[id].tier),
               content: Text(
-                "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
+                TURTLES[id].name == "Litback Turtle"
+                    ? "This social turtle can be found once you add at least one friend on Shellevate!"
+                    : TURTLES[id].foundIn != null
+                        ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
+                        : "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               )));
         }

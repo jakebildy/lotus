@@ -41,7 +41,6 @@ class AuthController extends GetxController {
   final Rx<String> displayName = "".obs;
 
   final Rx<bool> isLoading = false.obs;
-  final Rx<bool> isLoadingPageNotDone = false.obs;
 
   Future<void> waitThenSetLoadingFalse() async {
     await Future.delayed(const Duration(seconds: 4));

@@ -49,6 +49,11 @@ class UserController extends GetxController {
 
   bool loadedStreak = false;
 
+  void updateLoadingPage(bool value) {
+    isLoadingPageNotDone.value = value;
+    update();
+  }
+
   @override
   void onInit() {
     super.onInit();

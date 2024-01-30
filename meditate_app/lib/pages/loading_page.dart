@@ -24,8 +24,7 @@ class _LoadingPageState extends State<LoadingPage> {
 
   Future<void> increaseCount() async {
     UserController user = Get.find();
-    user.isLoadingPageNotDone.value = true;
-    user.update();
+    user.updateLoadingPage(true);
     await Future.delayed(const Duration(milliseconds: 200));
     setState(() {
       opacity = 1;
@@ -38,8 +37,7 @@ class _LoadingPageState extends State<LoadingPage> {
       backgroundOpacity = 0;
     });
     await Future.delayed(const Duration(milliseconds: 600));
-    user.isLoadingPageNotDone.value = false;
-    user.update();
+    user.updateLoadingPage(false);
   }
 
   @override
