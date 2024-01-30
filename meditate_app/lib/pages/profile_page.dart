@@ -448,8 +448,9 @@ class _ProfilePageState extends State<ProfilePage>
                             height: 40 +
                                 (selectedTab == 0
                                     ? followController.usersFollowing.length *
-                                        64
-                                    : followController.followers.length * 64),
+                                        72
+                                    : followController.followers.length *
+                                        72), //TODO: figure out exact
                             child: TabBarView(
                                 controller: tabController,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -510,8 +511,8 @@ class _ProfilePageState extends State<ProfilePage>
                           GestureDetector(
                             onTap: () {
                               //Log the event to AppsFlyer
-                              HeapService appsflyer = Get.find();
-                              appsflyer.logEvent("ADD_FRIENDS_TAPPED", {});
+                              HeapService heap = Get.find();
+                              heap.logEvent("ADD_FRIENDS_TAPPED", {});
 
                               Get.to(const Search());
                             },

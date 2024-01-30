@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import "package:meditate_app/api/index.dart" as api;
+import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/logger.dart';
 
 class SendVibeWidget extends StatefulWidget {
@@ -63,6 +64,8 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
 
   void selectVibe(String vibe) {
     HapticFeedback.heavyImpact();
+    HeapService heap = Get.find();
+    heap.logEvent("VIBE_SENT", {});
     setState(() {
       selectedVibe = vibe;
     });

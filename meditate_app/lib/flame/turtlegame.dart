@@ -189,7 +189,7 @@ class TurtleGame extends FlameGame with HasTappables {
   }
 }
 
-class Player extends SpriteComponent with HasGameRef, Tappable {
+class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 200.0;
 
@@ -206,16 +206,51 @@ class Player extends SpriteComponent with HasGameRef, Tappable {
     super.onLoad();
     GameController game = Get.find();
     if (!isBase) {
-      sprite = await gameRef.loadSprite('turtles/${game.selectedTurtle}.png');
+      // TODO: crystal turtle
+
+      if (game.selectedTurtle.value == 21) {
+        Sprite underlay = await gameRef.loadSprite(
+          'turtles/21_underlay.png',
+        );
+
+        add(SpriteComponent(
+            sprite: underlay,
+            size: Vector2(squareSize, squareSize),
+            anchor: Anchor.center));
+      }
+
+      Sprite sprite =
+          await gameRef.loadSprite('turtles/${game.selectedTurtle}.png');
       paint = Paint()
         ..colorFilter = ColorFilter.mode(
             TURTLE_COLORS[game.turtleColor.value].withOpacity(0.4),
             BlendMode.srcATop);
+      add(SpriteComponent(
+          sprite: sprite,
+          paint: paint,
+          size: Vector2(squareSize, squareSize),
+          anchor: Anchor.center));
+
+      if (game.selectedTurtle.value == 10) {
+        Sprite overlay = await gameRef.loadSprite(
+          'turtles/10_overlay.png',
+        );
+
+        add(SpriteComponent(
+            sprite: overlay,
+            size: Vector2(squareSize, squareSize),
+            anchor: Anchor.center));
+      }
     } else {
-      sprite = await gameRef.loadSprite('turtle_basic.png');
+      Sprite turtleBasic = await gameRef.loadSprite('turtle_basic.png');
+      add(SpriteComponent(
+          sprite: turtleBasic,
+          size: Vector2(squareSize, squareSize),
+          anchor: Anchor.center));
+
+      // size.setValues(squareSize, squareSize);
+      anchor = Anchor.center;
     }
-    size.setValues(squareSize, squareSize);
-    anchor = Anchor.center;
   }
 
   // @override

@@ -49,6 +49,7 @@ List<String> quotes = [
   "“Do or do not. There is no try.” \n- Yoda",
   "“Your focus determines your reality.” \n- Qui-Gon Jinn",
   "“What I advise you to do is, not to be unhappy before the crisis comes.” \n- Seneca",
+  "“I've had a lot of worries in my life, most of which never happened.” \n- Mark Twain",
 ];
 
 String randomQuote() {
