@@ -101,12 +101,12 @@ List<Turtle> TURTLES = [
   Turtle(
       name: "Luna Turtle",
       rarity: Rarity.RARE,
-      tier: Tier.RAINBOW,
+      tier: Tier.ORANGE,
       foundIn: AMBIENCES[1]),
   const Turtle(name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.BLUE),
 ];
 
-int getTurtleToHatch() {
+int getTurtleToHatch(String ambience) {
   List<Turtle> possibleTurtles = TURTLES;
 
   //If the user doesn't have at least one friend, filter the Litback turtle
@@ -117,6 +117,13 @@ int getTurtleToHatch() {
         .where((element) => element.name != "Litback Turtle")
         .toList();
   }
+
+  // Only show ambience turtles if the user meditated with that ambience
+  possibleTurtles = possibleTurtles
+      // TODO: test to ensure this doesnt break anything
+      .where((element) =>
+          element.foundIn == null || element.foundIn!.name == ambience)
+      .toList();
 
   int checkRarity = Random().nextInt(10);
 

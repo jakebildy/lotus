@@ -37,11 +37,15 @@ class TurtleCategory extends StatelessWidget {
               key: UniqueKey(),
               backgroundColor: TURTLES[id].name == "Litback Turtle"
                   ? Colors.deepPurpleAccent
-                  : tierColor(TURTLES[id].tier),
+                  : TURTLES[id].foundIn != null
+                      ? Colors.tealAccent
+                      : tierColor(TURTLES[id].tier),
               content: Text(
                 TURTLES[id].name == "Litback Turtle"
                     ? "This social turtle can be found once you add at least one friend on Shellevate!"
-                    : "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
+                    : TURTLES[id].foundIn != null
+                        ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
+                        : "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               )));
         }
@@ -104,13 +108,17 @@ class TurtleCategory extends StatelessWidget {
                       Text(
                           TURTLES[id].name == "Litback Turtle"
                               ? "Add Friends to Find"
-                              : tierReadable(TURTLES[id].tier),
+                              : TURTLES[id].foundIn != null
+                                  ? "${TURTLES[id].foundIn!.name} Ambience"
+                                  : tierReadable(TURTLES[id].tier),
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: TURTLES[id].name == "Litback Turtle"
                                   ? Colors.deepPurpleAccent
-                                  : tierColor(TURTLES[id].tier))),
+                                  : (TURTLES[id].foundIn != null
+                                      ? Colors.tealAccent
+                                      : tierColor(TURTLES[id].tier)))),
                       const SizedBox(height: 20),
                       Text(
                           "${unlocked ? uniqueQuantity : '0'} of ${TURTLE_COLORS.length}",

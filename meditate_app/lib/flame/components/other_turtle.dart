@@ -69,6 +69,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
     );
     size.setValues(squareSize, squareSize);
 
+// only turtles without a foundIn property can be found in the wild
     turtleType = Random().nextInt(TURTLES.length);
     turtleColor = Random().nextInt(TURTLE_COLORS.length);
     Sprite overlay = await gameRef.loadSprite(
@@ -122,6 +123,35 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                   Text(
                       'You need to be a ${tierReadable(TURTLES[turtleType].tier)} to breed with this turtle!'),
                   const Text('\nIncrease your level by meditating more.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text(
+                  'Okay',
+                  style: TextStyle(color: Colors.tealAccent),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  } else if (TURTLES[turtleType].foundIn != null) {
+    return showDialog<void>(
+        context: game.localContext!,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            //  title: const Text('AlertDialog Title'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('You need to meditate with the ' +
+                      TURTLES[turtleType].foundIn!.name +
+                      ' ambience to find this turtle!'),
                 ],
               ),
             ),

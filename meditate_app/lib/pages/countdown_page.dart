@@ -694,7 +694,8 @@ class _CountdownPageState extends State<CountdownPage>
                                                     logInfo(
                                                         "HATCHING A TURTLE!");
                                                     turtleToHatch =
-                                                        getTurtleToHatch();
+                                                        getTurtleToHatch(
+                                                            widget.ambience);
                                                     turtleColorToHatch =
                                                         Random().nextInt(
                                                             TURTLE_COLORS
@@ -743,7 +744,8 @@ class _CountdownPageState extends State<CountdownPage>
                                               bool foundEgg =
                                                   receiveEgg(timeInMinutes);
                                               if (foundEgg) {
-                                                int tHatch = getTurtleToHatch();
+                                                int tHatch = getTurtleToHatch(
+                                                    widget.ambience);
                                                 int tColor = Random().nextInt(
                                                     TURTLE_COLORS.length);
 
