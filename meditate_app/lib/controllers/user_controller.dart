@@ -406,7 +406,6 @@ class UserController extends GetxController {
         databaseUser.value.unlockedTurtleColors);
   }
 
-  //TODO: is there edge case where syncData doesnt get called??
   /// Triggered when user goes offline to online
   Future<void> syncData() async {
     await getLocalStorageUser();

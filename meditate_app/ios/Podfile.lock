@@ -75,6 +75,9 @@ PODS:
     - TOCropViewController (~> 2.6.1)
   - image_picker_ios (0.0.1):
     - Flutter
+  - in_app_purchase_storekit (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - in_app_review (0.2.0):
     - Flutter
   - nanopb (2.30909.1):
@@ -105,6 +108,7 @@ DEPENDENCIES:
   - heap_flutter_bridge (from `.symlinks/plugins/heap_flutter_bridge/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - ocarina (from `.symlinks/plugins/ocarina/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
@@ -146,6 +150,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_cropper/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  in_app_purchase_storekit:
+    :path: ".symlinks/plugins/in_app_purchase_storekit/ios"
   in_app_review:
     :path: ".symlinks/plugins/in_app_review/ios"
   ocarina:
@@ -178,6 +184,7 @@ SPEC CHECKSUMS:
   HeapSwiftCoreInterfaces: 45219bc4e48cc4fc9bcb3419276cc77f6ca9569c
   image_cropper: 60c2789d1f1a78c873235d4319ca0c34a69f2d98
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
+  in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
   in_app_review: 318597b3a06c22bb46dc454d56828c85f444f99d
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   ocarina: 632a3387b2cf3f130af7ce53a6014e3bf0c145d2

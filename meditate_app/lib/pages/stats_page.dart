@@ -37,12 +37,34 @@ class _StatsPageState extends State<StatsPage> {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "${userController.user.value.totalMinutes} min",
+                  "${userController.user.value.totalMinutes} minutes",
                   style: const TextStyle(
                       fontSize: 20,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
+                userController.user.value.totalMinutes >= 60
+                    ? Column(children: [
+                        // Format like this 4d 4h 4m
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "equivalent to",
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.white70,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          "${userController.user.value.totalMinutes ~/ (60 * 24)} days, ${userController.user.value.totalMinutes % (60 * 24) ~/ 60} hours, ${userController.user.value.totalMinutes % 60} minutes",
+                          style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ])
+                    : Container(),
               ],
             ),
             const SizedBox(

@@ -36,56 +36,80 @@ class FollowerWidget extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        SizedBox(
-                            height: 40,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(60),
-                                child: user.avatar ==
-                                            "https://i.imgur.com/BIRdTgg.png" ||
-                                        user.avatar ==
-                                            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                                    ? Image.asset(
-                                        "assets/blank_profile.png",
-                                        height: 40,
-                                        fit: BoxFit.cover,
-                                      )
-                                    : FadeInImage.assetNetwork(
-                                        placeholder: 'assets/blank_profile.png',
-                                        image: user.avatar,
-                                        height: 40,
-                                        fit: BoxFit.cover,
-                                      ))),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Stack(
+                          alignment: AlignmentDirectional.bottomEnd,
                           children: [
-                            Text(
-                              user.fullName,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 8, 8),
+                              child: SizedBox(
+                                  height: 40,
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(60),
+                                      child: user.avatar ==
+                                                  "https://i.imgur.com/BIRdTgg.png" ||
+                                              user.avatar ==
+                                                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                                          ? Image.asset(
+                                              "assets/blank_profile.png",
+                                              height: 40,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : FadeInImage.assetNetwork(
+                                              placeholder:
+                                                  'assets/blank_profile.png',
+                                              image: user.avatar,
+                                              height: 40,
+                                              fit: BoxFit.cover,
+                                            ))),
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "${user.streak}",
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 14),
-                                ),
-                                SizedBox(
-                                    height: 13,
-                                    child:
-                                        Image.asset(userStreakIconURL(user))),
-                                Text(
-                                  " • ${user.totalMinutes} min total",
-                                  style: const TextStyle(
-                                      color: Colors.grey, fontSize: 14),
-                                ),
-                              ],
+                            //TODO: hide after 24 hours
+
+                            Text(
+                              user.sentEmojis[userController.user.value.id]
+                                          .toString() !=
+                                      "null"
+                                  ? user
+                                      .sentEmojis[userController.user.value.id]
+                                      .toString()
+                                  : "",
+                              style: const TextStyle(fontSize: 20),
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user.fullName,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${user.streak}",
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 14),
+                                  ),
+                                  SizedBox(
+                                      height: 13,
+                                      child:
+                                          Image.asset(userStreakIconURL(user))),
+                                  Text(
+                                    " • ${user.totalMinutes} min total",
+                                    style: const TextStyle(
+                                        color: Colors.grey, fontSize: 14),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

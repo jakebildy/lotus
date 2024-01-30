@@ -14,6 +14,7 @@ class Ambience {
       : super();
 }
 
+// ignore: constant_identifier_names
 const List<Ambience> AMBIENCES = [
   // Ambience(
   //   name: "OFF",
