@@ -81,6 +81,10 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                           alignment: Alignment.center,
                           children: [
                             Image.asset("assets/images/turtles/swim/swim1.png"),
+                            widget.id != 21
+                                ? Container()
+                                : Image.asset(
+                                    "assets/images/turtles/21_underlay.png"),
                             widget.id >= 0 && widget.id < TURTLES.length
                                 ? ColorFiltered(
                                     colorFilter: ColorFilter.mode(

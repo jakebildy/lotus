@@ -75,6 +75,15 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
     Sprite overlay = await gameRef.loadSprite(
       'turtles/$turtleType.png',
     );
+
+    if (turtleType == 21) {
+      Sprite underlay = await gameRef.loadSprite(
+        'turtles/21_underlay.png',
+      );
+
+      add(SpriteComponent(sprite: underlay, size: Vector2(200, 200)));
+    }
+
     Paint newPaint = Paint()
       ..colorFilter = ColorFilter.mode(
           TURTLE_COLORS[turtleColor].withOpacity(0.4), BlendMode.srcATop);
