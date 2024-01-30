@@ -87,7 +87,7 @@ const List<Ambience> AMBIENCES = [
       name: "Extradimensional",
       image: 'assets/ambiences/extradimensional.jpg',
       audio: 'assets/audio/extradimensional.wav',
-      setting: 'Default',
+      setting: 'Extradimensional',
       premium: true),
   Ambience(
       name: "Lost Civilization",

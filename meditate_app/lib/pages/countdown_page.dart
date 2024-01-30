@@ -21,6 +21,7 @@ import 'package:wakelock/wakelock.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
+import '../components/bubbles/bubbles.dart';
 import '../models/user.dart';
 
 class CountdownPage extends StatefulWidget {
@@ -286,6 +287,45 @@ class _CountdownPageState extends State<CountdownPage>
                           height: 1000,
                           fit: BoxFit.cover,
                         ),
+                      )
+                    : Container(),
+
+                AMBIENCES
+                            .where((element) => element.name == widget.ambience)
+                            .first
+                            .setting ==
+                        "Underwater"
+                    ? Stack(
+                        children: [
+                          Image.asset(
+                            "assets/ocean_background.jpeg",
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            fit: BoxFit.cover,
+                          ),
+                          Opacity(
+                            opacity: 0.3,
+                            child: Image.asset(
+                              "assets/images/game/water_2.gif",
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Positioned.fill(
+                              child: FloatingBubbles.alwaysRepeating(
+                            noOfBubbles: 20,
+                            colorsOfBubbles: [
+                              Colors.white.withAlpha(30),
+                            ],
+                            sizeFactor: 0.03,
+                            opacity: 70,
+                            paintingStyle: PaintingStyle.fill,
+                            strokeWidth: 1,
+                            shape: BubbleShape
+                                .circle, // circle is the default. No need to explicitly mention if its a circle.
+                          )),
+                        ],
                       )
                     : Container(),
 

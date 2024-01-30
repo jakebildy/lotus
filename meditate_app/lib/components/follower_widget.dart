@@ -18,6 +18,12 @@ class FollowerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     FollowController follow = Get.find();
     UserController userController = Get.find();
+    final DateTime lastSentAtUtc =
+        user.emojisSentAt[userController.user.value.id] ??
+            DateTime.now().toUtc();
+    final DateTime nowUtc = DateTime.now().toUtc();
+    final Duration difference = nowUtc.difference(lastSentAtUtc);
+
     return Obx(
       () => GestureDetector(
         onTap: () {
@@ -62,15 +68,17 @@ class FollowerWidget extends StatelessWidget {
                                               fit: BoxFit.cover,
                                             ))),
                             ),
-                            //TODO: hide after 24 hours
+                            //TODO: hide after 24 hours ?? i think this should work
 
                             Text(
                               user.sentEmojis[userController.user.value.id]
                                           .toString() !=
                                       "null"
-                                  ? user
-                                      .sentEmojis[userController.user.value.id]
-                                      .toString()
+                                  ? difference < const Duration(hours: 24)
+                                      ? user.sentEmojis[
+                                              userController.user.value.id]
+                                          .toString()
+                                      : ""
                                   : "",
                               style: const TextStyle(fontSize: 20),
                             ),
