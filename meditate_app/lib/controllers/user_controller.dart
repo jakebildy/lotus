@@ -468,7 +468,7 @@ class UserController extends GetxController {
       String cookies = cookie.getCookies();
       api.setCookies(cookies);
       databaseUser.value = await api.user.me();
-      syncData();
+      await syncData(); //TODO: adding await, lets see if this fixes it
     } catch (e, stackTrace) {
       logError(e.toString());
       logError(stackTrace.toString());
