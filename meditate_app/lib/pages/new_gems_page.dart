@@ -27,7 +27,7 @@ class _NewGemsPageState extends State<NewGemsPage>
     super.initState();
     //  play the noise "new_gems.mp3"
     gemNoise = AudioPlayer();
-    gemNoise.setVolume(10.0);
+    gemNoise.setVolume(5.0);
     gemNoise.play(AssetSource('audio/new_gems.mp3'));
   }
 

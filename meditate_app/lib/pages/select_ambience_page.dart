@@ -97,7 +97,8 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                                     )
                             ],
                           ),
-                          AMBIENCES[index].name == "Random"
+                          AMBIENCES[index].name == "Random" ||
+                                  AMBIENCES[index].name == "None"
                               ? Container(
                                   width: 30,
                                 )

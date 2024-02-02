@@ -64,10 +64,6 @@ class UserController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
-      if (!loadedStreak) {
-        loadedStreak = true;
-        updateProperty(UserProperty.streak, loadStreak());
-      }
     });
   }
 
@@ -469,6 +465,7 @@ class UserController extends GetxController {
       api.setCookies(cookies);
       databaseUser.value = await api.user.me();
       await syncData(); //TODO: adding await, lets see if this fixes it
+      loadStreak();
     } catch (e, stackTrace) {
       logError(e.toString());
       logError(stackTrace.toString());
@@ -512,12 +509,12 @@ class UserController extends GetxController {
     update();
   }
 
-  int loadStreak() {
+  void loadStreak() {
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
     if (user.value.lastMeditated.isBefore(DateTime(2019))) {
       logInfo("last_meditated hasn't been set yet.");
-      return 0;
+      updateProperty(UserProperty.streak, 0);
     } else {
       int numDays = user.value.lastMeditated.difference(date).inDays.abs();
 
@@ -532,7 +529,7 @@ class UserController extends GetxController {
         } else {
           logInfo("Parsing streak...");
         }
-        return user.value.streak;
+        //Don't change the streak value
       } else {
         //If you lose your streak
 
@@ -546,9 +543,9 @@ class UserController extends GetxController {
           updateProperty(
               UserProperty.streakFreezes, user.value.streakFreezes - 1);
           logInfo("Streak freeze has been used. Returning streak.");
-          return user.value.streak;
+          updateProperty(UserProperty.streak, user.value.streak);
         } else {
-          return 0;
+          updateProperty(UserProperty.streak, 0);
         }
       }
     }

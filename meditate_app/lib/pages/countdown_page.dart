@@ -64,7 +64,7 @@ class _CountdownPageState extends State<CountdownPage>
     SaveController saveController = Get.find();
 
     bell = AudioPlayer();
-    bell.setVolume(10.0);
+    bell.setVolume(5.0);
     bell.play(AssetSource('audio/tibetan_chime.wav'));
     if (saveController.ambienceOn.value) {
       playAmbience();
@@ -80,24 +80,28 @@ class _CountdownPageState extends State<CountdownPage>
 
   late OcarinaPlayer player;
   Future<void> playAmbience() async {
-    player = OcarinaPlayer(
-      asset: AMBIENCES
-          .where((element) => element.name == widget.ambience)
-          .first
-          .audio,
-      loop: true,
-      volume: 0.8,
-    );
+    if (widget.ambience != "None") {
+      player = OcarinaPlayer(
+        asset: AMBIENCES
+            .where((element) => element.name == widget.ambience)
+            .first
+            .audio,
+        loop: true,
+        volume: 0.8,
+      );
 
-    await player.load();
-    await player.play();
+      await player.load();
+      await player.play();
+    }
   }
 
   /// Dispose the controller
   @override
   void dispose() {
     _playPauseController.dispose();
-    player.dispose();
+    if (widget.ambience != "None") {
+      player.dispose();
+    }
     _timer.cancel();
     bell.dispose();
     logInfo("⚡️ DISABLING WAKELOCK");
@@ -467,12 +471,14 @@ class _CountdownPageState extends State<CountdownPage>
                                           // Here, do whatever you want
                                           isEnded = true;
                                           logInfo('Countdown Ended');
-                                          player.dispose();
+                                          if (widget.ambience != "None") {
+                                            player.dispose();
+                                          }
                                           bell.dispose();
 
                                           AudioPlayer endingBell =
                                               AudioPlayer();
-                                          endingBell.setVolume(10.0);
+                                          endingBell.setVolume(5.0);
                                           endingBell.play(AssetSource(
                                               'audio/tibetan_chime.wav'));
                                           startTimer();
@@ -539,14 +545,19 @@ class _CountdownPageState extends State<CountdownPage>
                                       } else if (isPaused) {
                                         logInfo("Resuming countdown...");
                                         _controller.resume();
-                                        player.resume();
+
+                                        if (widget.ambience != "None") {
+                                          player.resume();
+                                        }
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.forward();
                                         isPaused = false;
                                       } else {
                                         logInfo("Pausing countdown...");
                                         _controller.pause();
-                                        player.pause();
+                                        if (widget.ambience != "None") {
+                                          player.pause();
+                                        }
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.reverse();
                                         isPaused = true;

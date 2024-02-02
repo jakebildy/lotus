@@ -22,7 +22,7 @@ class EggCard extends StatelessWidget {
       onTap: () {
         shakeKey.currentState?.shake();
         AudioPlayer egg = AudioPlayer();
-        egg.setVolume(10.0);
+        egg.setVolume(5.0);
         egg.play(AssetSource('audio/egg_crack.wav'));
         egg.dispose();
         ScaffoldMessenger.of(context).clearSnackBars();

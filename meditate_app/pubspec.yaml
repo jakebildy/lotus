@@ -241,6 +241,7 @@ flutter:
     - assets/jungle_top.png
     - assets/jungle_bottom.png
     - assets/images/game/water_2.gif
+    - assets/ambiences/none.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
