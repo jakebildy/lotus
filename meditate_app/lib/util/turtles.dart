@@ -102,18 +102,18 @@ List<Turtle> TURTLES = [
       name: "Luna Turtle",
       rarity: Rarity.RARE,
       tier: Tier.ORANGE,
-      foundIn: AMBIENCES[1]),
+      foundIn: AMBIENCES[2]),
   const Turtle(name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.BLUE),
   // Turtle(
   //     name: "Dino Turtle",
   //     rarity: Rarity.COMMON,
   //     tier: Tier.ORANGE,
-  //     foundIn: AMBIENCES[12]),
+  //     foundIn: AMBIENCES[13]),
   // Turtle(
   //     name: "Lightning Turtle",
   //     rarity: Rarity.COMMON,
   //     tier: Tier.ORANGE,
-  //     foundIn: AMBIENCES[9]),
+  //     foundIn: AMBIENCES[10]),
 ];
 
 int getTurtleToHatch(String ambience) {
