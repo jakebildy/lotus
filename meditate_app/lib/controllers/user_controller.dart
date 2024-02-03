@@ -379,146 +379,81 @@ class UserController extends GetxController {
   Future<void> syncDatabasetoMatchLocalStorage() async {
     logInfo("Starting syncDatabaseToMatchLocalStorage...");
     databaseUser.value = localStorageUser.value;
-    try {
-      await updateProperty(UserProperty.streak, localStorageUser.value.streak);
-    } catch (e) {
-      logError("Failed to update streak: " + e.toString());
-    }
-    try {
-      await updateProperty(UserProperty.gems, localStorageUser.value.gems);
-    } catch (e) {
-      logError("Failed to update gems: " + e.toString());
-    }
 
-    try {
-      await updateProperty(
-          UserProperty.totalMinutes, localStorageUser.value.totalMinutes);
-    } catch (e) {
-      logError("Failed to update totalMinutes: " + e.toString());
-    }
+    // Collecting all update operations in a list of Futures
+    var updateOperations = [
+      updatePropertySafe(UserProperty.streak, localStorageUser.value.streak),
+      updatePropertySafe(UserProperty.gems, localStorageUser.value.gems),
+      updatePropertySafe(
+          UserProperty.totalMinutes, localStorageUser.value.totalMinutes),
+      updatePropertySafe(
+          UserProperty.streakFreezes, localStorageUser.value.streakFreezes),
+      updatePropertySafe(UserProperty.lastMeditated,
+          localStorageUser.value.lastMeditated.toIso8601String()),
+      updatePropertySafe(UserProperty.meditationHistory,
+          localStorageUser.value.meditationHistory),
+      updatePropertySafe(UserProperty.eggs, localStorageUser.value.eggs),
+      updatePropertySafe(
+          UserProperty.totalEggs, localStorageUser.value.totalEggs),
+      updatePropertySafe(
+          UserProperty.eggTypes, localStorageUser.value.eggTypes),
+      updatePropertySafe(
+          UserProperty.unlockedTurtles, localStorageUser.value.unlockedTurtles),
+      updatePropertySafe(UserProperty.unlockedTurtleColors,
+          localStorageUser.value.unlockedTurtleColors),
+    ];
 
-    try {
-      await updateProperty(
-          UserProperty.streakFreezes, localStorageUser.value.streakFreezes);
-    } catch (e) {
-      logError("Failed to update streakFreezes: " + e.toString());
-    }
-
-    try {
-      await updateProperty(UserProperty.lastMeditated,
-          localStorageUser.value.lastMeditated.toIso8601String());
-    } catch (e) {
-      logError("Failed to update lastMeditated: " + e.toString());
-    }
-
-    try {
-      await updateProperty(UserProperty.meditationHistory,
-          localStorageUser.value.meditationHistory);
-    } catch (e) {
-      logError("Failed to update meditationHistory: " + e.toString());
-    }
-
-    try {
-      await updateProperty(UserProperty.eggs, localStorageUser.value.eggs);
-    } catch (e) {
-      logError("Failed to update eggs: " + e.toString());
-    }
-
-    try {
-      await updateProperty(
-          UserProperty.totalEggs, localStorageUser.value.totalEggs);
-    } catch (e) {
-      logError("Failed to update totalEggs: " + e.toString());
-    }
-
-    try {
-      await updateProperty(
-          UserProperty.eggTypes, localStorageUser.value.eggTypes);
-    } catch (e) {
-      logError("Failed to update eggTypes: " + e.toString());
-    }
-
-    try {
-      await updateProperty(
-          UserProperty.unlockedTurtles, localStorageUser.value.unlockedTurtles);
-    } catch (e) {
-      logError("Failed to update unlockedTurtles: " + e.toString());
-    }
-
-    try {
-      await updateProperty(UserProperty.unlockedTurtleColors,
-          localStorageUser.value.unlockedTurtleColors);
-    } catch (e) {
-      logError("Failed to update unlockedTurtleColors: " + e.toString());
-    }
+    // Waiting for all update operations to complete
+    await Future.wait(updateOperations);
 
     logInfo("Completed syncDatabasetoMatchLocalStorage");
   }
 
+// Helper function to perform update operations safely and log errors
+  Future<void> updatePropertySafe(UserProperty property, dynamic value) async {
+    try {
+      await updateProperty(property, value);
+    } catch (e) {
+      logError("Failed to update ${property.toString()}: $e");
+    }
+  }
+
   Future<void> syncLocalStorageToMatchDatabase() async {
-    try {
-      await saveLocalValue(UserProperty.streak, databaseUser.value.streak);
-    } catch (e) {
-      logError("Failed to save streak" + e.toString());
-    }
-    try {
-      await saveLocalValue(UserProperty.gems, databaseUser.value.gems);
-    } catch (e) {
-      logError("Failed to save gems" + e.toString());
-    }
-    try {
-      await saveLocalValue(
-          UserProperty.totalMinutes, databaseUser.value.totalMinutes);
-    } catch (e) {
-      logError("Failed to save total minutes" + e.toString());
-    }
-    try {
-      await saveLocalValue(
-          UserProperty.streakFreezes, databaseUser.value.streakFreezes);
-    } catch (e) {
-      logError("Failed to save streak freezes" + e.toString());
-    }
-    try {
-      await saveLocalValue(UserProperty.lastMeditated,
-          databaseUser.value.lastMeditated.toIso8601String());
-    } catch (e) {
-      logError("Failed to save last meditated" + e.toString());
-    }
-    try {
-      await saveLocalValue(
-          UserProperty.meditationHistory, databaseUser.value.meditationHistory);
-    } catch (e) {
-      logError("Failed to save meditation history: " + e.toString());
-    }
-    try {
-      await saveLocalValue(UserProperty.eggs, databaseUser.value.eggs);
-    } catch (e) {
-      logError("Failed to save eggs: " + e.toString());
-    }
-    try {
-      await saveLocalValue(
-          UserProperty.totalEggs, databaseUser.value.totalEggs);
-    } catch (e) {
-      logError("Failed to save total eggs: " + e.toString());
-    }
-    try {
-      await saveLocalValue(UserProperty.eggTypes, databaseUser.value.eggTypes);
-    } catch (e) {
-      logError("Failed to save egg types: " + e.toString());
-    }
-    try {
-      await saveLocalValue(
-          UserProperty.unlockedTurtles, databaseUser.value.unlockedTurtles);
-    } catch (e) {
-      logError("Failed to save unlocked turtles: " + e.toString());
-    }
-    try {
-      await saveLocalValue(UserProperty.unlockedTurtleColors,
-          databaseUser.value.unlockedTurtleColors);
-    } catch (e) {
-      logError("Failed to save unlocked turtle colors: " + e.toString());
-    }
+    logInfo("Starting syncLocalStorageToMatchDatabase...");
+
+    var saveOperations = [
+      saveLocalValueSafe(UserProperty.streak, databaseUser.value.streak),
+      saveLocalValueSafe(UserProperty.gems, databaseUser.value.gems),
+      saveLocalValueSafe(
+          UserProperty.totalMinutes, databaseUser.value.totalMinutes),
+      saveLocalValueSafe(
+          UserProperty.streakFreezes, databaseUser.value.streakFreezes),
+      saveLocalValueSafe(UserProperty.lastMeditated,
+          databaseUser.value.lastMeditated.toIso8601String()),
+      saveLocalValueSafe(
+          UserProperty.meditationHistory, databaseUser.value.meditationHistory),
+      saveLocalValueSafe(UserProperty.eggs, databaseUser.value.eggs),
+      saveLocalValueSafe(UserProperty.totalEggs, databaseUser.value.totalEggs),
+      saveLocalValueSafe(UserProperty.eggTypes, databaseUser.value.eggTypes),
+      saveLocalValueSafe(
+          UserProperty.unlockedTurtles, databaseUser.value.unlockedTurtles),
+      saveLocalValueSafe(UserProperty.unlockedTurtleColors,
+          databaseUser.value.unlockedTurtleColors),
+    ];
+
+    // Waiting for all save operations to complete
+    await Future.wait(saveOperations);
+
     logInfo("Completed syncLocalStorageToMatchDatabase");
+  }
+
+// Helper function for save operations with error handling
+  Future<void> saveLocalValueSafe(UserProperty property, dynamic value) async {
+    try {
+      await saveLocalValue(property, value);
+    } catch (e) {
+      logError("Failed to save ${property.toString()}: $e");
+    }
   }
 
   /// Triggered when user goes offline to online

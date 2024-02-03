@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/user_streak_chart.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
+import '../../components/turtle_image.dart';
 import '../../models/user.dart';
 import 'send_vibe_widget.dart';
 
@@ -278,6 +280,52 @@ class _UserProfilePageState extends State<UserProfilePage>
                     ],
                   )),
             ),
+
+            // Display the user's turtles
+            widget.user.unlockedTurtleColors
+                    .map((list) => list.where((color) => color != -1).toList())
+                    .where((list) => list.isNotEmpty)
+                    .toList()
+                    .isEmpty
+                ? Container()
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 100,
+                      width: MediaQuery.of(context).size.width / 2 - 20,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        border: Border.all(
+                          color: Colors.white24,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: SingleChildScrollView(
+                        scrollDirection:
+                            Axis.horizontal, // To scroll horizontally
+                        child: Row(
+                          children: widget.user.unlockedTurtleColors
+                              .sublist(0, TURTLES.length)
+                              .asMap() // Convert list to map to get index
+                              .entries
+                              .expand((entry) => entry.value
+                                  .where((color) =>
+                                      color != -1) // Filter out -1 values
+                                  .map((color) => Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: TurtleImage(
+                                          id: entry.key,
+                                          color:
+                                              color, // Assuming `color` is the desired type for TurtleImage
+                                        ),
+                                      )))
+                              .toList(),
+                        ),
+                      ),
+                    ),
+                  ),
+
             const SizedBox(
               height: 10,
             ),
