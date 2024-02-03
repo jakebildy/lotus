@@ -12,25 +12,25 @@ class NetworkStatusController extends GetxController {
       (status) async {
         _getNetworkStatus(status);
         // Wait for User Controller to exist
-        if (Get.find<UserController>().initialized) {
-          Get.find<UserController>().syncData();
-        }
+        // if (Get.find<UserController>().initialized) {}
       },
     );
   }
 
-  void _getNetworkStatus(DataConnectionStatus status) {
+  Future<void> _getNetworkStatus(DataConnectionStatus status) async {
     if (status == DataConnectionStatus.connected) {
       offline.value = false;
 
       //Login if not already logged in
       UserController userController = Get.find();
       if (userController.user.value == noUser) {
-        userController.loginFromCookiesRequest();
+        await userController.loginFromCookiesRequest();
+        await Get.find<UserController>().syncData();
       }
     } else {
       offline.value = true;
     }
+    Get.find<UserController>().loadStreak();
     update();
   }
 }

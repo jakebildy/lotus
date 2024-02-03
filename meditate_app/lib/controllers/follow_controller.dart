@@ -18,7 +18,71 @@ class FollowController extends GetxController {
     fetchFollows();
   }
 
-  Future<List<Follow>> getStylistFollowers(User stylist) async {
+  List<User> getActiveUsers(List<User> users) {
+    // Only return users for whom lastMeditated was at most yesterday, OR lastMeditated was at most 2 days ago and they have one streak freeze, OR last meditated was 3 days ago and they have two streak freezes
+    List<User> activeUsers = [];
+    DateTime now = DateTime.now();
+    // TODAY in the local time zone
+    DateTime today = DateTime(now.year, now.month, now.day);
+    logWarning(today.toIso8601String());
+    for (User user in users) {
+      DateTime lastMeditatedAdjusted = DateTime(user.lastMeditated.year,
+          user.lastMeditated.month, user.lastMeditated.day);
+      logWarning(lastMeditatedAdjusted.toIso8601String());
+      logInfo(user.fullName +
+          " lastMeditated->" +
+          user.lastMeditated.toString() +
+          " created at->" +
+          user.createdAt.toString() +
+          " " +
+          user.streakFreezes.toString());
+      if (user.streakFreezes == 0) {
+        if (lastMeditatedAdjusted
+                .isAfter(today.subtract(const Duration(days: 1))) ||
+            lastMeditatedAdjusted
+                .isAtSameMomentAs(today.subtract(const Duration(days: 1)))) {
+          activeUsers.add(user);
+        }
+      } else if (user.streakFreezes == 1) {
+        if (lastMeditatedAdjusted
+                .isAfter(today.subtract(const Duration(days: 2))) ||
+            lastMeditatedAdjusted
+                .isAtSameMomentAs(today.subtract(const Duration(days: 2)))) {
+          activeUsers.add(user);
+        }
+      } else if (user.streakFreezes == 2) {
+        if (lastMeditatedAdjusted
+                .isAfter(today.subtract(const Duration(days: 3))) ||
+            lastMeditatedAdjusted
+                .isAtSameMomentAs(today.subtract(const Duration(days: 3)))) {
+          activeUsers.add(user);
+        }
+      }
+    }
+    return activeUsers;
+  }
+
+  // TODO: GetActiveUsers PLUS New Users (last 3 days) createdAt <= 3 days ago. Ensure no duplicates
+  List<User> getActiveAndNewUsers(List<User> users) {
+    List<User> activeUsers = getActiveUsers(users);
+    DateTime now = DateTime.now();
+    // TODAY in the local time zone
+    DateTime today = DateTime(now.year, now.month, now.day);
+    List<User> newUsers = [];
+    for (User user in users) {
+      if (user.createdAt.isAfter(today.subtract(const Duration(days: 3)))) {
+        newUsers.add(user);
+      }
+    }
+    for (User user in activeUsers) {
+      if (newUsers.contains(user)) {
+        newUsers.remove(user);
+      }
+    }
+    return activeUsers + newUsers;
+  }
+
+  Future<List<Follow>> getFollowers(User stylist) async {
     List<Follow> _followers = List.empty();
     try {
       _followers = await api.follow.getStylistFollowers(stylist);
@@ -28,7 +92,7 @@ class FollowController extends GetxController {
     return _followers;
   }
 
-  Future<List<Follow>> getStylistFollowing(User stylist) async {
+  Future<List<Follow>> getFollowing(User stylist) async {
     List<Follow> _followers = List.empty();
     try {
       _followers = await api.follow.getStylistFollowing(stylist);

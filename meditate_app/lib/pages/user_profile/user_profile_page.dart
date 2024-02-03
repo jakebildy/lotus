@@ -199,7 +199,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                                 height: 10,
                               ),
                               Text(
-                                widget.user.streak.toString(),
+                                getUserStreak(widget.user).toString(),
                                 style: const TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.bold),
                               ),

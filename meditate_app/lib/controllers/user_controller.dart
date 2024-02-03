@@ -188,16 +188,23 @@ class UserController extends GetxController {
       case UserProperty.meditationHistory:
         logWarning("meditation_history storage value: " +
             (storage.read("meditation_history") ?? ""));
-        logError("MEDITATION HISTORY saveLocalValue");
-        logError(value.toString());
+        // logError("MEDITATION HISTORY saveLocalValue");
+        // logError(value.toString());
+
+        // If its still a datetime, convert to string
+        if (value is Map<DateTime, int>) {
+          Map<String, int> newValue = value.map((key, value) => MapEntry(
+              'meditation-${key.day}-${key.month}-${key.year}', value));
+          value = newValue;
+        }
         for (String key in value.keys) {
-          logInfo("Saving meditation history: $key:" + value[key].toString());
+          // logInfo("Saving meditation history: $key:" + value[key].toString());
           storage.write(key, value[key].toString());
         }
         localStorageUser.value.meditationHistory = RxMap<DateTime, int>.from(
-            value.map((key, value) => MapEntry(
-                DateTime(
-                    key.split("-")[3], key.split("-")[2], key.split("-")[1]),
+            (value as Map<String, int>).map((key, value) => MapEntry(
+                DateTime(int.parse(key.split("-")[3]),
+                    int.parse(key.split("-")[2]), int.parse(key.split("-")[1])),
                 value)));
         break;
 
@@ -335,6 +342,8 @@ class UserController extends GetxController {
     }
     logSuccess(
         "Loaded meditation history with length: ${localStorageUser.value.meditationHistory.length}");
+
+    update();
   }
 
   Future<void> updateProperty(UserProperty property, dynamic value) async {
@@ -368,43 +377,148 @@ class UserController extends GetxController {
   }
 
   Future<void> syncDatabasetoMatchLocalStorage() async {
+    logInfo("Starting syncDatabaseToMatchLocalStorage...");
     databaseUser.value = localStorageUser.value;
-    updateProperty(UserProperty.streak, localStorageUser.value.streak);
-    updateProperty(UserProperty.gems, localStorageUser.value.gems);
-    updateProperty(
-        UserProperty.totalMinutes, localStorageUser.value.totalMinutes);
-    updateProperty(
-        UserProperty.streakFreezes, localStorageUser.value.streakFreezes);
-    updateProperty(UserProperty.lastMeditated,
-        localStorageUser.value.lastMeditated.toIso8601String());
-    updateProperty(UserProperty.meditationHistory,
-        localStorageUser.value.meditationHistory);
-    updateProperty(UserProperty.eggs, localStorageUser.value.eggs);
-    updateProperty(UserProperty.totalEggs, localStorageUser.value.totalEggs);
-    updateProperty(UserProperty.eggTypes, localStorageUser.value.eggTypes);
-    updateProperty(
-        UserProperty.unlockedTurtles, localStorageUser.value.unlockedTurtles);
-    updateProperty(UserProperty.unlockedTurtleColors,
-        localStorageUser.value.unlockedTurtleColors);
+    try {
+      await updateProperty(UserProperty.streak, localStorageUser.value.streak);
+    } catch (e) {
+      logError("Failed to update streak: " + e.toString());
+    }
+    try {
+      await updateProperty(UserProperty.gems, localStorageUser.value.gems);
+    } catch (e) {
+      logError("Failed to update gems: " + e.toString());
+    }
+
+    try {
+      await updateProperty(
+          UserProperty.totalMinutes, localStorageUser.value.totalMinutes);
+    } catch (e) {
+      logError("Failed to update totalMinutes: " + e.toString());
+    }
+
+    try {
+      await updateProperty(
+          UserProperty.streakFreezes, localStorageUser.value.streakFreezes);
+    } catch (e) {
+      logError("Failed to update streakFreezes: " + e.toString());
+    }
+
+    try {
+      await updateProperty(UserProperty.lastMeditated,
+          localStorageUser.value.lastMeditated.toIso8601String());
+    } catch (e) {
+      logError("Failed to update lastMeditated: " + e.toString());
+    }
+
+    try {
+      await updateProperty(UserProperty.meditationHistory,
+          localStorageUser.value.meditationHistory);
+    } catch (e) {
+      logError("Failed to update meditationHistory: " + e.toString());
+    }
+
+    try {
+      await updateProperty(UserProperty.eggs, localStorageUser.value.eggs);
+    } catch (e) {
+      logError("Failed to update eggs: " + e.toString());
+    }
+
+    try {
+      await updateProperty(
+          UserProperty.totalEggs, localStorageUser.value.totalEggs);
+    } catch (e) {
+      logError("Failed to update totalEggs: " + e.toString());
+    }
+
+    try {
+      await updateProperty(
+          UserProperty.eggTypes, localStorageUser.value.eggTypes);
+    } catch (e) {
+      logError("Failed to update eggTypes: " + e.toString());
+    }
+
+    try {
+      await updateProperty(
+          UserProperty.unlockedTurtles, localStorageUser.value.unlockedTurtles);
+    } catch (e) {
+      logError("Failed to update unlockedTurtles: " + e.toString());
+    }
+
+    try {
+      await updateProperty(UserProperty.unlockedTurtleColors,
+          localStorageUser.value.unlockedTurtleColors);
+    } catch (e) {
+      logError("Failed to update unlockedTurtleColors: " + e.toString());
+    }
+
+    logInfo("Completed syncDatabasetoMatchLocalStorage");
   }
 
   Future<void> syncLocalStorageToMatchDatabase() async {
-    saveLocalValue(UserProperty.streak, databaseUser.value.streak);
-    saveLocalValue(UserProperty.gems, databaseUser.value.gems);
-    saveLocalValue(UserProperty.totalMinutes, databaseUser.value.totalMinutes);
-    saveLocalValue(
-        UserProperty.streakFreezes, databaseUser.value.streakFreezes);
-    saveLocalValue(UserProperty.lastMeditated,
-        databaseUser.value.lastMeditated.toIso8601String());
-    saveLocalValue(
-        UserProperty.meditationHistory, databaseUser.value.meditationHistory);
-    saveLocalValue(UserProperty.eggs, databaseUser.value.eggs);
-    saveLocalValue(UserProperty.totalEggs, databaseUser.value.totalEggs);
-    saveLocalValue(UserProperty.eggTypes, databaseUser.value.eggTypes);
-    saveLocalValue(
-        UserProperty.unlockedTurtles, databaseUser.value.unlockedTurtles);
-    saveLocalValue(UserProperty.unlockedTurtleColors,
-        databaseUser.value.unlockedTurtleColors);
+    try {
+      await saveLocalValue(UserProperty.streak, databaseUser.value.streak);
+    } catch (e) {
+      logError("Failed to save streak" + e.toString());
+    }
+    try {
+      await saveLocalValue(UserProperty.gems, databaseUser.value.gems);
+    } catch (e) {
+      logError("Failed to save gems" + e.toString());
+    }
+    try {
+      await saveLocalValue(
+          UserProperty.totalMinutes, databaseUser.value.totalMinutes);
+    } catch (e) {
+      logError("Failed to save total minutes" + e.toString());
+    }
+    try {
+      await saveLocalValue(
+          UserProperty.streakFreezes, databaseUser.value.streakFreezes);
+    } catch (e) {
+      logError("Failed to save streak freezes" + e.toString());
+    }
+    try {
+      await saveLocalValue(UserProperty.lastMeditated,
+          databaseUser.value.lastMeditated.toIso8601String());
+    } catch (e) {
+      logError("Failed to save last meditated" + e.toString());
+    }
+    try {
+      await saveLocalValue(
+          UserProperty.meditationHistory, databaseUser.value.meditationHistory);
+    } catch (e) {
+      logError("Failed to save meditation history: " + e.toString());
+    }
+    try {
+      await saveLocalValue(UserProperty.eggs, databaseUser.value.eggs);
+    } catch (e) {
+      logError("Failed to save eggs: " + e.toString());
+    }
+    try {
+      await saveLocalValue(
+          UserProperty.totalEggs, databaseUser.value.totalEggs);
+    } catch (e) {
+      logError("Failed to save total eggs: " + e.toString());
+    }
+    try {
+      await saveLocalValue(UserProperty.eggTypes, databaseUser.value.eggTypes);
+    } catch (e) {
+      logError("Failed to save egg types: " + e.toString());
+    }
+    try {
+      await saveLocalValue(
+          UserProperty.unlockedTurtles, databaseUser.value.unlockedTurtles);
+    } catch (e) {
+      logError("Failed to save unlocked turtles: " + e.toString());
+    }
+    try {
+      await saveLocalValue(UserProperty.unlockedTurtleColors,
+          databaseUser.value.unlockedTurtleColors);
+    } catch (e) {
+      logError("Failed to save unlocked turtle colors: " + e.toString());
+    }
+    logInfo("Completed syncLocalStorageToMatchDatabase");
   }
 
   /// Triggered when user goes offline to online
@@ -423,7 +537,7 @@ class UserController extends GetxController {
         storage.write(
             "LAST_UPDATED_AT", DateTime.now().toUtc().toIso8601String());
 
-        syncDatabasetoMatchLocalStorage();
+        await syncDatabasetoMatchLocalStorage();
       } else {
         // If lastUpdatedAt in localStorage, compare it to databaseUser's lastUpdatedAt
         DateTime lastUpdatedAtLocalStorage =
@@ -438,7 +552,7 @@ class UserController extends GetxController {
                   " vs " +
                   lastUpdatedAtDatabase.toIso8601String() +
                   " in the database");
-          syncDatabasetoMatchLocalStorage();
+          await syncDatabasetoMatchLocalStorage();
         } else {
           // If lastUpdatedAt in database is more recent, sync localStorageUser to match databaseUser
           logWarning(
@@ -447,7 +561,7 @@ class UserController extends GetxController {
                   " vs " +
                   lastUpdatedAtDatabase.toIso8601String() +
                   " in the database");
-          syncLocalStorageToMatchDatabase();
+          await syncLocalStorageToMatchDatabase();
         }
       }
       update();
@@ -456,7 +570,7 @@ class UserController extends GetxController {
 
   /// On Success: set user, isAuthenticated to true and go to main page.
   /// On fail: user is not logged in - do nothing
-  void loginFromCookiesRequest() async {
+  Future<void> loginFromCookiesRequest() async {
     try {
       isLoading.value = true;
       update();
@@ -464,8 +578,7 @@ class UserController extends GetxController {
       String cookies = cookie.getCookies();
       api.setCookies(cookies);
       databaseUser.value = await api.user.me();
-      await syncData(); //TODO: adding await, lets see if this fixes it
-      loadStreak();
+      // await syncData();
     } catch (e, stackTrace) {
       logError(e.toString());
       logError(stackTrace.toString());
@@ -510,6 +623,7 @@ class UserController extends GetxController {
   }
 
   void loadStreak() {
+    logSuccess("Loading Streak, currently " + user.value.streak.toString());
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
     if (user.value.lastMeditated.isBefore(DateTime(2019))) {
@@ -526,10 +640,9 @@ class UserController extends GetxController {
         if (numDays < 1) {
           hasDoneStreakToday.value = true;
           update();
-        } else {
-          logInfo("Parsing streak...");
         }
         //Don't change the streak value
+        logSuccess("Not changing the streak value.");
       } else {
         //If you lose your streak
 
@@ -542,9 +655,10 @@ class UserController extends GetxController {
               UserProperty.lastMeditated, yesterday.toIso8601String());
           updateProperty(
               UserProperty.streakFreezes, user.value.streakFreezes - 1);
-          logInfo("Streak freeze has been used. Returning streak.");
+          logSuccess("Streak freeze has been used. Returning streak.");
           updateProperty(UserProperty.streak, user.value.streak);
         } else {
+          logSuccess("Lost streak! Setting to 0.");
           updateProperty(UserProperty.streak, 0);
         }
       }

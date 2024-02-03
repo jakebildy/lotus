@@ -152,10 +152,8 @@ class User {
       createdAt: DateTime.parse(map["createdAt"] ?? "2011-10-05T14:48:00.000Z"),
       updatedAt: DateTime.parse(map["updatedAt"] ?? "2011-10-05T14:48:00.000Z"),
       avatar: map["avatar"] ?? defaultProfilePicture,
-      streak: numDays > 1
-          ? 0
-          : map["streak"] ??
-              0, // Logic to update the streak on app load in UserController
+      streak: map["streak"] ??
+          0, // Logic to update the streak on app load in UserController
       totalMinutes: map["totalMinutes"] ?? 0,
       gems: map["gems"] ?? 0,
       eggs: map["eggs"] ?? 0,

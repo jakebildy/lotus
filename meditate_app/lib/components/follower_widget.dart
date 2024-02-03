@@ -101,7 +101,7 @@ class FollowerWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "${user.streak}",
+                                    "${getUserStreak(user)}",
                                     style: const TextStyle(
                                         color: Colors.grey, fontSize: 14),
                                   ),

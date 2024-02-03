@@ -600,7 +600,9 @@ class _ProfilePageState extends State<ProfilePage>
                               height: 20,
                             ),
                             //Only showing people with active streaks to make the app feel more engaging/active
-                            ...(followController.usersNotFollowing
+                            ...(followController
+                                .getActiveAndNewUsers(
+                                    followController.usersNotFollowing)
                                 .where((p0) => p0.streak > 0)
                                 .map((user) => FollowerWidget(
                                     user: user,

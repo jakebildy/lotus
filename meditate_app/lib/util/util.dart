@@ -113,7 +113,7 @@ double userStreakAverage(User user) {
 }
 
 String userStreakIconURL(User user) {
-  return user.streak != 0
+  return getUserStreak(user) != 0
       ? userStreakTier(user) == Tier.ORANGE
           ? "assets/streak_icon.png"
           : userStreakTier(user) == Tier.YELLOW
@@ -138,4 +138,35 @@ bool isSameDay(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
       date1.month == date2.month &&
       date1.day == date2.day;
+}
+
+int getUserStreak(User user) {
+  DateTime now = DateTime.now();
+  // TODAY in the local time zone
+  DateTime today = DateTime(now.year, now.month, now.day);
+  DateTime lastMeditatedAdjusted = DateTime(user.lastMeditated.year,
+      user.lastMeditated.month, user.lastMeditated.day);
+  if (user.streakFreezes == 0) {
+    if (lastMeditatedAdjusted
+            .isAfter(today.subtract(const Duration(days: 1))) ||
+        lastMeditatedAdjusted
+            .isAtSameMomentAs(today.subtract(const Duration(days: 1)))) {
+      return user.streak;
+    }
+  } else if (user.streakFreezes == 1) {
+    if (lastMeditatedAdjusted
+            .isAfter(today.subtract(const Duration(days: 2))) ||
+        lastMeditatedAdjusted
+            .isAtSameMomentAs(today.subtract(const Duration(days: 2)))) {
+      return user.streak;
+    }
+  } else if (user.streakFreezes == 2) {
+    if (lastMeditatedAdjusted
+            .isAfter(today.subtract(const Duration(days: 3))) ||
+        lastMeditatedAdjusted
+            .isAtSameMomentAs(today.subtract(const Duration(days: 3)))) {
+      return user.streak;
+    }
+  }
+  return 0;
 }
