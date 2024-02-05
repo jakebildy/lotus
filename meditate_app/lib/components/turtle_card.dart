@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TurtleCard extends StatelessWidget {
   final int id;
@@ -49,7 +51,8 @@ class TurtleCard extends StatelessWidget {
         }
       },
       child: Card(
-          color: unlocked ? null : Colors.white10,
+          color: unlocked ? null : Colors.transparent,
+          // elevation: unlocked ? null : 0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -77,21 +80,22 @@ class TurtleCard extends StatelessWidget {
                                   "assets/images/turtles/10_overlay.png"),
                         ],
                       ))
-                  : Opacity(
-                      opacity: 0.2,
-                      child: Stack(
-                        children: [
-                          Image.asset("assets/images/turtles/swim/swim1.png"),
-                          id >= 0 && id < TURTLES.length
-                              ? Image.asset("assets/images/turtles/locked.png")
-                              : Container(),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(Icons.lock),
-                          ),
-                        ],
+                  : Stack(children: [
+                      LockedTurtle(
+                        id: id,
+                        colorId: color,
                       ),
-                    )
+                      TURTLES[id].tier == Tier.RAINBOW
+                          ? Shimmer.fromColors(
+                              baseColor: Colors.white12,
+                              highlightColor: Colors.white30,
+                              child: LockedTurtle(
+                                id: id,
+                                colorId: color,
+                              ),
+                            )
+                          : Container()
+                    ]),
 
               // SizedBox(
               //   width: 10,

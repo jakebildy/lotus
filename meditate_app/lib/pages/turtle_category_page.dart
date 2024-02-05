@@ -4,6 +4,8 @@ import 'package:meditate_app/components/turtle_card.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/turtles.dart';
 
+import '../util/util.dart';
+
 class TurtleCategoryPage extends StatelessWidget {
   final int id;
   const TurtleCategoryPage({super.key, required this.id});
@@ -14,7 +16,17 @@ class TurtleCategoryPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(TURTLES[id].name + "s"),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(TURTLES[id].name + "s"),
+            Text(
+              tierReadable(TURTLES[id].tier),
+              style:
+                  TextStyle(color: tierColor(TURTLES[id].tier), fontSize: 14),
+            )
+          ],
+        ),
       ),
       body: GridView.count(
           crossAxisCount: 3,
@@ -24,7 +36,7 @@ class TurtleCategoryPage extends StatelessWidget {
           children: List.generate(TURTLE_COLORS.length, (index) {
             return Center(
               child: TurtleCard(
-                  unlocked:
+                  unlocked: user.user.value.unlockedTurtles[id] != 0 &&
                       user.user.value.unlockedTurtleColors[id].contains(index),
                   // set quantity equal to the length of unlockedTurleColors[id] filtered to only the ones that contain the index
                   quantity: user.user.value.unlockedTurtleColors[id]

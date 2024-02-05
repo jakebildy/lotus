@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,8 @@ import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/util/util.dart';
+import 'dart:math' as math;
 
 class TurtleDetailsPage extends StatefulWidget {
   final int id;
@@ -18,7 +22,73 @@ class TurtleDetailsPage extends StatefulWidget {
   State<TurtleDetailsPage> createState() => _TurtleDetailsPageState();
 }
 
-class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
+class _TurtleDetailsPageState extends State<TurtleDetailsPage>
+    with SingleTickerProviderStateMixin {
+  // Every 3 seconds, change a value swimState from 1 to 2
+  int swimState = 1;
+  Timer? _timer; // Declare a Timer
+  late AnimationController _animationController;
+  late Animation<double> _angleAnimation;
+  final _random = math.Random();
+
+  @override
+  void initState() {
+    super.initState();
+    _scheduleRandomTimer();
+
+    // Initialize the AnimationController
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 3), // Duration of the smooth transition
+      vsync: this,
+    );
+
+    // Initialize the angleAnimation
+    _angleAnimation = Tween<double>(begin: -10, end: 10).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
+    );
+
+    // Randomly change the angle every few seconds smoothly
+    _animationController.forward();
+    _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        double newEnd = _random.nextDouble() * 20 -
+            10; // Generate a random target between -10 and 10
+        _angleAnimation = Tween<double>(
+          begin: _angleAnimation.value, // Start from the current value
+          end: newEnd,
+        ).animate(CurvedAnimation(
+            parent: _animationController, curve: Curves.linear));
+
+        _animationController
+          ..reset() // Reset the controller
+          ..forward(); // Start the animation towards the new value
+      }
+    });
+  }
+
+  void _scheduleRandomTimer() {
+    // Cancel the existing timer if it exists
+    _timer?.cancel();
+
+    // Schedule a new timer with a random interval
+    _timer = Timer(Duration(milliseconds: _random.nextInt(2500) + 500), () {
+      setState(() {
+        // Toggle swimState between 1 and 2
+        swimState = swimState == 1 ? 2 : 1;
+      });
+
+      // Schedule the next timer with a new random interval
+      _scheduleRandomTimer();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer when the widget is disposed of
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     GameController gameController = Get.find();
@@ -45,6 +115,15 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
         )),
         child: Stack(
           children: [
+            Opacity(
+              opacity: 0.3,
+              child: Image.asset(
+                "assets/images/game/water_2.gif",
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.cover,
+              ),
+            ),
             Positioned.fill(
                 child: FloatingBubbles.alwaysRepeating(
               noOfBubbles: 20,
@@ -77,191 +156,191 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage> {
                     },
                     child: Hero(
                         tag: "turtle-${widget.id}",
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset("assets/images/turtles/swim/swim1.png"),
-                            widget.id != 21
-                                ? Container()
-                                : Image.asset(
-                                    "assets/images/turtles/21_underlay.png"),
-                            widget.id >= 0 && widget.id < TURTLES.length
-                                ? ColorFiltered(
-                                    colorFilter: ColorFilter.mode(
-                                        TURTLE_COLORS[widget.color]
-                                            .withOpacity(0.5),
-                                        BlendMode.srcATop),
-                                    child: Image.asset(
-                                        "assets/images/turtles/${widget.id}.png"))
-                                : Container(),
-                            widget.id != 10
-                                ? Container()
-                                : Image.asset(
-                                    "assets/images/turtles/10_overlay.png"),
-                          ],
-                        )),
+                        child: AnimatedBuilder(
+                            animation: _angleAnimation,
+                            builder: (context, child) {
+                              return (Transform.rotate(
+                                angle: _angleAnimation.value * math.pi / 180,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Image.asset(
+                                        "assets/images/turtles/swim/swim" +
+                                            swimState.toString() +
+                                            ".png"),
+                                    widget.id != 21
+                                        ? Container()
+                                        : Image.asset(
+                                            "assets/images/turtles/21_underlay.png"),
+                                    widget.id >= 0 && widget.id < TURTLES.length
+                                        ? ColorFiltered(
+                                            colorFilter: ColorFilter.mode(
+                                                TURTLE_COLORS[widget.color]
+                                                    .withOpacity(0.5),
+                                                BlendMode.srcATop),
+                                            child: Image.asset(
+                                                "assets/images/turtles/${widget.id}.png"))
+                                        : Container(),
+                                    widget.id != 10
+                                        ? Container()
+                                        : Image.asset(
+                                            "assets/images/turtles/10_overlay.png"),
+                                  ],
+                                ),
+                              ));
+                            })),
                   ),
                 ),
                 const SizedBox(
                   height: 40,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(0.0),
-                  child: Container(
-                      color: Colors.grey[850],
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
+                Container(
+                    color: Colors.grey[850],
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            TURTLE_COLORS_NAME[widget.color] +
+                                " " +
+                                TURTLES[widget.id].name,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              TURTLE_COLORS_NAME[widget.color] +
-                                  " " +
-                                  TURTLES[widget.id].name,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    TURTLES[widget.id].rarity == Rarity.COMMON
+                                        ? "Common"
+                                        : TURTLES[widget.id].rarity ==
+                                                Rarity.RARE
+                                            ? "Rare"
+                                            : "Legendary",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.white),
+                                  ),
+                                  const Text(
+                                    "Rarity",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          const Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      TURTLES[widget.id].rarity == Rarity.COMMON
-                                          ? "Common"
-                                          : TURTLES[widget.id].rarity ==
-                                                  Rarity.RARE
-                                              ? "Rare"
-                                              : "Legendary",
-                                      style: TextStyle(
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "${userController.user.value.unlockedTurtles[widget.id]}",
+                                    style: const TextStyle(
+                                        fontSize: 20, color: Colors.white),
+                                  ),
+                                  const Text(
+                                    "Number Found",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    TURTLES[widget.id].tier == Tier.ORANGE
+                                        ? "Hatchling"
+                                        : TURTLES[widget.id].tier == Tier.YELLOW
+                                            ? "Champion"
+                                            : TURTLES[widget.id].tier ==
+                                                    Tier.BLUE
+                                                ? "Expert"
+                                                : "Turtlemaster",
+                                    style: TextStyle(
                                         fontSize: 20,
-                                        color: TURTLES[widget.id].rarity ==
-                                                Rarity.COMMON
-                                            ? Colors.greenAccent
-                                            : TURTLES[widget.id].rarity ==
-                                                    Rarity.RARE
-                                                ? Colors.cyan
-                                                : Colors.yellow,
-                                      ),
-                                    ),
-                                    const Text(
-                                      "Rarity",
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
-                                    )
-                                  ],
-                                ),
+                                        color:
+                                            tierColor(TURTLES[widget.id].tier)),
+                                  ),
+                                  const Text(
+                                    "Level",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
+                                  )
+                                ],
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "${userController.user.value.unlockedTurtles[widget.id]}",
-                                      style: const TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    ),
-                                    const Text(
-                                      "Number Found",
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      TURTLES[widget.id].tier == Tier.ORANGE
-                                          ? "Hatchling"
-                                          : TURTLES[widget.id].tier ==
-                                                  Tier.YELLOW
-                                              ? "Champion"
-                                              : TURTLES[widget.id].tier ==
-                                                      Tier.BLUE
-                                                  ? "Expert"
-                                                  : "Turtlemaster",
-                                      style: const TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    ),
-                                    const Text(
-                                      "Level",
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "${TURTLES[widget.id].name + "s"} are ${TURTLES[widget.id].rarity == Rarity.COMMON ? "commonly" : TURTLES[widget.id].rarity == Rarity.RARE ? "rarely" : "extremely rarely"} found in the Shallows. \n\nTheir eggs can be found by those at the ${TURTLES[widget.id].tier == Tier.ORANGE ? "Hatchling" : TURTLES[widget.id].tier == Tier.YELLOW ? "Champion" : TURTLES[widget.id].tier == Tier.BLUE ? "Expert" : "Turtlemaster"} level or higher.",
-                              textAlign: TextAlign.center,
                             ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "${TURTLES[widget.id].name + "s"} are ${TURTLES[widget.id].rarity == Rarity.COMMON ? "commonly" : TURTLES[widget.id].rarity == Rarity.RARE ? "rarely" : "extremely rarely"} found in the Shallows. \n\nTheir eggs can be found by those at the ${TURTLES[widget.id].tier == Tier.ORANGE ? "Hatchling" : TURTLES[widget.id].tier == Tier.YELLOW ? "Champion" : TURTLES[widget.id].tier == Tier.BLUE ? "Expert" : "Turtlemaster"} level or higher.",
+                            textAlign: TextAlign.center,
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                side: const BorderSide(
-                                    width: 1.0, color: Colors.teal),
-                                backgroundColor: Colors.tealAccent,
-                                shape: const StadiumBorder(),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                                  width: 1.0, color: Colors.teal),
+                              backgroundColor: Colors.tealAccent,
+                              shape: const StadiumBorder(),
+                            ),
+                            onPressed: () {
+                              //Log the event to AppsFlyer
+                              HeapService appsflyer = Get.find();
+                              appsflyer.logEvent("GAME_STARTED", {});
+                              gameController.startGame(
+                                  widget.id, widget.color, context);
+                              HapticFeedback.lightImpact();
+                              Get.to(const TurtleGamePage(),
+                                  transition: Transition.circularReveal);
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: Text(
+                                "Go to Shallows",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Colors.black),
+                                textAlign: TextAlign.center,
                               ),
-                              onPressed: () {
-                                //Log the event to AppsFlyer
-                                HeapService appsflyer = Get.find();
-                                appsflyer.logEvent("GAME_STARTED", {});
-                                gameController.startGame(
-                                    widget.id, widget.color, context);
-                                HapticFeedback.lightImpact();
-                                Get.to(const TurtleGamePage(),
-                                    transition: Transition.circularReveal);
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: Text(
-                                  "Go to Shallows",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      color: Colors.black),
-                                  textAlign: TextAlign.center,
-                                ),
-                              )),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height - 400,
-                          )
-                        ],
-                      )),
-                ),
+                            )),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height - 400,
+                        )
+                      ],
+                    )),
               ],
             ),
           ],

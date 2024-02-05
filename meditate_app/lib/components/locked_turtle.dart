@@ -9,7 +9,7 @@ class LockedTurtle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Opacity(
-      opacity: 0.2,
+      opacity: 0.3,
       child: Stack(
         children: [
           Image.asset("assets/images/turtles/swim/swim1.png"),

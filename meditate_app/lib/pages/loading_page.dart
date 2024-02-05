@@ -61,6 +61,15 @@ class _LoadingPageState extends State<LoadingPage> {
               ],
             )),
             child: Stack(children: [
+              Opacity(
+                opacity: 0.3,
+                child: Image.asset(
+                  "assets/images/game/water_2.gif",
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.cover,
+                ),
+              ),
               Positioned.fill(
                   child: FloatingBubbles.alwaysRepeating(
                 noOfBubbles: 20,

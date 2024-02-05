@@ -359,6 +359,14 @@ class UserController extends GetxController {
             MapEntry('meditation-${key.day}-${key.month}-${key.year}', value));
         break;
 
+      case UserProperty.unlockedTurtleColors:
+        logWarning("updating DATABASE: " + value.toString());
+        break;
+
+      case UserProperty.unlockedTurtles:
+        logWarning("updating DATABASE: " + value.toString());
+        break;
+
       default:
         break;
     }

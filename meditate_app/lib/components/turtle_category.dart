@@ -27,28 +27,30 @@ class TurtleCategory extends StatelessWidget {
     return Bounce(
       duration: const Duration(milliseconds: 110),
       onPressed: () {
-        if (unlocked) {
-          HapticFeedback.lightImpact();
-          Get.to(TurtleCategoryPage(id: id), transition: Transition.downToUp);
-        } else {
-          HapticFeedback.lightImpact();
-          ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              key: UniqueKey(),
-              backgroundColor: TURTLES[id].name == "Litback Turtle"
-                  ? Colors.deepPurpleAccent
-                  : TURTLES[id].foundIn != null
-                      ? Colors.tealAccent
-                      : tierColor(TURTLES[id].tier),
-              content: Text(
-                TURTLES[id].name == "Litback Turtle"
-                    ? "This social turtle can be found once you add at least one friend on Shellevate!"
-                    : TURTLES[id].foundIn != null
-                        ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
-                        : "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              )));
-        }
+        HapticFeedback.lightImpact();
+        Get.to(TurtleCategoryPage(id: id), transition: Transition.downToUp);
+        // if (unlocked) {
+        //   HapticFeedback.lightImpact();
+        //   Get.to(TurtleCategoryPage(id: id), transition: Transition.downToUp);
+        // } else {
+        //   HapticFeedback.lightImpact();
+        //   ScaffoldMessenger.of(context).clearSnackBars();
+        //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //       key: UniqueKey(),
+        //       backgroundColor: TURTLES[id].name == "Litback Turtle"
+        //           ? Colors.deepPurpleAccent
+        //           : TURTLES[id].foundIn != null
+        //               ? Colors.tealAccent
+        //               : tierColor(TURTLES[id].tier),
+        //       content: Text(
+        //         TURTLES[id].name == "Litback Turtle"
+        //             ? "This social turtle can be found once you add at least one friend on Shellevate!"
+        //             : TURTLES[id].foundIn != null
+        //                 ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
+        //                 : "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
+        //         style: const TextStyle(fontWeight: FontWeight.bold),
+        //       )));
+        // }
       },
       child: Card(
           color: unlocked ? null : Colors.white10,
