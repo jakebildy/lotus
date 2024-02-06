@@ -37,7 +37,7 @@ class SaveController extends GetxController {
   }
 
   void updateHasReviewed() {
-    hasReviewed.value = !hasReviewed.value;
+    hasReviewed.value = true;
     saveValue("has_reviewed", hasReviewed.value.toString());
     update();
   }
