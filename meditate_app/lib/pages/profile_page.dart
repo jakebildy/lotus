@@ -603,7 +603,7 @@ class _ProfilePageState extends State<ProfilePage>
                             ...(followController
                                 .getActiveAndNewUsers(
                                     followController.usersNotFollowing)
-                                .where((p0) => p0.streak > 0)
+                                // .where((p0) => p0.streak > 0)
                                 .map((user) => FollowerWidget(
                                     user: user,
                                     color: const Color.fromARGB(
