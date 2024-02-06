@@ -594,17 +594,16 @@ class _CountdownPageState extends State<CountdownPage>
                                         Navigator.of(context).pop();
                                       },
                                       child: Container(
-                                          color: const Color.fromARGB(
-                                              255, 16, 77, 127),
-                                          child: Padding(
+                                          decoration: const BoxDecoration(
+                                              color: Color.fromARGB(
+                                                  255, 16, 77, 127),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          child: const Padding(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .width -
-                                                        280,
-                                                vertical: 10),
-                                            child: const Text(
+                                                vertical: 12.0,
+                                                horizontal: 100),
+                                            child: Text(
                                               "End Session",
                                               style: TextStyle(
                                                   color: Colors.white,

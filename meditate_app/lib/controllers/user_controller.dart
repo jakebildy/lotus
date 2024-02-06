@@ -143,30 +143,38 @@ class UserController extends GetxController {
       case UserProperty.unlockedTurtleColors:
         localStorageUser.value.unlockedTurtleColors = value;
         for (int i = 0; i < TURTLES.length; i++) {
-          logWarning("turtle-$i-color storage value: " +
-              localStorageUser.value.unlockedTurtleColors[i]
-                  .toString()
-                  .replaceAll("[", "")
-                  .replaceAll("]", ""));
-          storage.write(
-              "turtle-$i-color",
-              localStorageUser.value.unlockedTurtleColors[i]
-                  .toString()
-                  .replaceAll("[", "")
-                  .replaceAll("]", ""));
+          if (localStorageUser.value.unlockedTurtleColors.length <= i) {
+            localStorageUser.value.unlockedTurtleColors.add([]);
+          } else {
+            logWarning("turtle-$i-color storage value: " +
+                localStorageUser.value.unlockedTurtleColors[i]
+                    .toString()
+                    .replaceAll("[", "")
+                    .replaceAll("]", ""));
+            storage.write(
+                "turtle-$i-color",
+                localStorageUser.value.unlockedTurtleColors[i]
+                    .toString()
+                    .replaceAll("[", "")
+                    .replaceAll("]", ""));
+          }
         }
 
         break;
       case UserProperty.unlockedTurtles:
         localStorageUser.value.unlockedTurtles = value;
         for (int i = 0; i < TURTLES.length; i++) {
-          logWarning("turtle-$i: " + storage.read("turtle-$i").toString());
+          if (localStorageUser.value.unlockedTurtles.length <= i) {
+            localStorageUser.value.unlockedTurtles.add(0);
+          } else {
+            logWarning("turtle-$i: " + storage.read("turtle-$i").toString());
 
-          logWarning("turtle-$i storage value: " +
-              localStorageUser.value.unlockedTurtles[i].toString());
+            logWarning("turtle-$i storage value: " +
+                localStorageUser.value.unlockedTurtles[i].toString());
 
-          storage.write("turtle-$i",
-              localStorageUser.value.unlockedTurtles[i].toString());
+            storage.write("turtle-$i",
+                localStorageUser.value.unlockedTurtles[i].toString());
+          }
         }
 
         break;
@@ -205,7 +213,7 @@ class UserController extends GetxController {
           storage.write(key, value[key].toString());
         }
         localStorageUser.value.meditationHistory = RxMap<DateTime, int>.from(
-            (value as Map<String, int>).map((key, value) => MapEntry(
+            (value as Map<dynamic, dynamic>).map((key, value) => MapEntry(
                 DateTime(int.parse(key.split("-")[3]),
                     int.parse(key.split("-")[2]), int.parse(key.split("-")[1])),
                 value)));
@@ -412,7 +420,8 @@ class UserController extends GetxController {
         databaseUser.value.eggTypes = RxList<String>.from(value);
         break;
       case UserProperty.meditationHistory:
-        // Not doing anything here right now
+        // Something weird goes on here when I try to log or parse the meditationHistory value.
+        // What I'm doing to get around it is that I do an api.user.me() to get the new meditationHistory solely when meditationHistory updates.
         break;
       default:
         logError("Unknown key: $value");
@@ -424,7 +433,10 @@ class UserController extends GetxController {
           "UPDATING DATABASE => " + property.name + ":" + value.toString());
       try {
         await api.user.updateUserAttribute(property.name, value);
-        databaseUser.value = await api.user.me();
+        if (property == UserProperty.meditationHistory) {
+          User newUser = await api.user.me();
+          databaseUser.value.meditationHistory = newUser.meditationHistory;
+        }
       } catch (e) {
         logError("Failed to update database");
       }
@@ -435,7 +447,7 @@ class UserController extends GetxController {
 
   Future<void> syncDatabasetoMatchLocalStorage() async {
     logInfo("Starting syncDatabaseToMatchLocalStorage...");
-    databaseUser.value = localStorageUser.value;
+    // databaseUser.value = localStorageUser.value;
 
     // Collecting all update operations in a list of Futures
     var updateOperations = [
