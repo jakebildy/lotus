@@ -88,14 +88,15 @@ class UserController extends GetxController {
       case UserProperty.streak: //Completed
         storage.write("streak", value.toString());
 
-        logWarning("streak storage value: " + storage.read("streak"));
+        logWarning(
+            "streak storage value: " + storage.read("streak").toString());
         logInfo("streak: " + value.toString());
         localStorageUser.value.streak = value as int;
         break;
       case UserProperty.gems: //Completed
         storage.write("gems", value.toString());
 
-        logWarning("gems storage value: " + storage.read("gems"));
+        logWarning("gems storage value: " + storage.read("gems").toString());
         logInfo("gems: " + value.toString());
         localStorageUser.value.gems = value as int;
         break;
@@ -111,14 +112,15 @@ class UserController extends GetxController {
       case UserProperty.eggs: //Completed
         storage.write("eggs", value.toString());
 
-        logWarning("eggs storage value: " + storage.read("eggs"));
+        logWarning("eggs storage value: " + storage.read("eggs").toString());
         logInfo("eggs: " + value.toString());
         localStorageUser.value.eggs = value as int;
         break;
       case UserProperty.totalEggs: //Completed
         storage.write("total_eggs", value.toString());
 
-        logWarning("total_eggs storage value: " + storage.read("total_eggs"));
+        logWarning("total_eggs storage value: " +
+            storage.read("total_eggs").toString());
         logInfo("total_eggs: " + value.toString());
         localStorageUser.value.totalEggs = value as int;
         break;
@@ -171,13 +173,14 @@ class UserController extends GetxController {
       case UserProperty.lastMeditated: //Completed
         storage.write("last_meditated", value);
 
-        logWarning(
-            "last_meditated storage value: " + storage.read("last_meditated"));
+        logWarning("last_meditated storage value: " +
+            storage.read("last_meditated").toString());
         logInfo("last_meditated: " + value.toString());
         localStorageUser.value.lastMeditated = DateTime.parse(value);
         break;
       case UserProperty.eggTypes:
-        logWarning("egg_types storage value: " + storage.read("egg_types"));
+        logWarning(
+            "egg_types storage value: " + storage.read("egg_types").toString());
         // Convert List<String> to a comma-separated string to store
         String eggTypesString =
             value.join(",").replaceAll("[", "").replaceAll("]", "");
@@ -357,6 +360,9 @@ class UserController extends GetxController {
       case UserProperty.meditationHistory:
         value = value.map((key, value) =>
             MapEntry('meditation-${key.day}-${key.month}-${key.year}', value));
+
+        logError("THIS IS WHAT WE SEE:");
+        logError(value.toString());
         break;
 
       case UserProperty.unlockedTurtleColors:
@@ -370,6 +376,49 @@ class UserController extends GetxController {
       default:
         break;
     }
+
+    switch (property) {
+      case UserProperty.streak:
+        databaseUser.value.streak = value as int;
+        break;
+      case UserProperty.gems:
+        databaseUser.value.gems = value as int;
+        break;
+      case UserProperty.hatchProgressEggOne:
+        databaseUser.value.hatchProgressEggOne = value as int;
+        break;
+      case UserProperty.eggs:
+        databaseUser.value.eggs = value as int;
+        break;
+      case UserProperty.totalEggs:
+        databaseUser.value.totalEggs = value as int;
+        break;
+      case UserProperty.totalMinutes:
+        databaseUser.value.totalMinutes = value as int;
+        break;
+      case UserProperty.streakFreezes:
+        databaseUser.value.streakFreezes = value as int;
+        break;
+      case UserProperty.unlockedTurtleColors:
+        databaseUser.value.unlockedTurtleColors = value;
+        break;
+      case UserProperty.unlockedTurtles:
+        databaseUser.value.unlockedTurtles = value;
+        break;
+      case UserProperty.lastMeditated:
+        databaseUser.value.lastMeditated = DateTime.parse(value);
+        break;
+      case UserProperty.eggTypes:
+        databaseUser.value.eggTypes = RxList<String>.from(value);
+        break;
+      case UserProperty.meditationHistory:
+        // Not doing anything here right now
+        break;
+      default:
+        logError("Unknown key: $value");
+    }
+    update();
+
     if (!networkStatusController.offline.value) {
       logSuccess(
           "UPDATING DATABASE => " + property.name + ":" + value.toString());
@@ -677,10 +726,17 @@ class UserController extends GetxController {
     // // totalMinutes.value = newValue;
 
     DateTime today = DateTime.now();
-    today = DateTime(today.year, today.month, today.day);
+    today = DateTime.utc(today.year, today.month, today.day);
+
+    //TODO: additional meditations per day are not logging
 
     // Check if today exists in meditationHistory
+    logError("THIS ->");
+    logError(today.toIso8601String());
+    logError(user.value.meditationHistory.toString());
     if (user.value.meditationHistory[today] != null) {
+      logError("this was not null");
+      logError(user.value.meditationHistory[today].toString());
       updateProperty(UserProperty.meditationHistory, {
         ...user.value.meditationHistory,
         today: user.value.meditationHistory[today]! + amountNew,
@@ -688,6 +744,8 @@ class UserController extends GetxController {
       logInfo(
           "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
     } else {
+      logError("this was null!!");
+      logError(user.value.meditationHistory[today].toString());
       updateProperty(UserProperty.meditationHistory,
           {...user.value.meditationHistory, today: amountNew});
       logInfo(

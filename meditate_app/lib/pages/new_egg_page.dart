@@ -109,9 +109,12 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
               Get.offAll(const AppPages());
             },
             child: Container(
-                color: const Color.fromARGB(255, 16, 77, 127),
+                decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 16, 77, 127),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 100),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 100),
                   child: Text(
                     "Continue",
                     style: TextStyle(

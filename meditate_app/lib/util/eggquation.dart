@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/logger.dart';
 
+import 'DEBUG_MODE.dart';
+
 bool receiveEgg(int timeMeditated) {
   UserController user = Get.find();
 
@@ -17,10 +19,10 @@ bool receiveEgg(int timeMeditated) {
               : 0.1);
   //note (unrelated to this remove later) check if the guide appears on update, if it does, all data was wiped
 
-  // if (DEBUG_MODE) {
-  //   chanceOfEgg = 1;
-  // }
-  // chanceOfEgg = 1;
+  if (DEBUG_MODE) {
+    chanceOfEgg = 1;
+  }
+
   logInfo("Time meditated is $timeMeditated. Chance of egg:" +
       chanceOfEgg.toString());
 

@@ -788,13 +788,17 @@ class _CountdownPageState extends State<CountdownPage>
                                             }
                                           },
                                           child: Container(
-                                              color: const Color.fromARGB(
-                                                  255, 16, 77, 127),
+                                              decoration: const BoxDecoration(
+                                                  color: Color.fromARGB(
+                                                      255, 16, 77, 127),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        horizontal: 100.0,
-                                                        vertical: 10),
+                                                        vertical: 12.0,
+                                                        horizontal: 100),
                                                 child: Text(
                                                   loading
                                                       ? "Loading..."
