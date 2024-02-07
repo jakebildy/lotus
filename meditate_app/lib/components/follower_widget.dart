@@ -27,7 +27,7 @@ class FollowerWidget extends StatelessWidget {
     return Obx(
       () => GestureDetector(
         onTap: () {
-          Get.to(UserProfilePage(user: user));
+          Get.to(UserProfilePage(user: user), preventDuplicates: false);
         },
         child: Container(
           color: color,
