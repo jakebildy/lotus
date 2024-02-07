@@ -36,13 +36,16 @@ class TurtleCategoryPage extends StatelessWidget {
           children: List.generate(TURTLE_COLORS.length, (index) {
             return Center(
               child: TurtleCard(
-                  unlocked: user.user.value.unlockedTurtles[id] != 0 &&
+                  unlocked: user.user.value.unlockedTurtles.length >= id &&
+                      user.user.value.unlockedTurtles[id] != 0 &&
                       user.user.value.unlockedTurtleColors[id].contains(index),
                   // set quantity equal to the length of unlockedTurleColors[id] filtered to only the ones that contain the index
-                  quantity: user.user.value.unlockedTurtleColors[id]
-                      .where((element) => element == index)
-                      .toList()
-                      .length,
+                  quantity: user.user.value.unlockedTurtleColors.length <= id
+                      ? 0
+                      : user.user.value.unlockedTurtleColors[id]
+                          .where((element) => element == index)
+                          .toList()
+                          .length,
                   color: index,
                   id: id),
             );

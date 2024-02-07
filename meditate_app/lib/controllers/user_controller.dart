@@ -145,6 +145,13 @@ class UserController extends GetxController {
         for (int i = 0; i < TURTLES.length; i++) {
           if (localStorageUser.value.unlockedTurtleColors.length <= i) {
             localStorageUser.value.unlockedTurtleColors.add([]);
+            //TODO: note for tomorrow, this isnt right I dont think.
+            //this is lowkey the turtle issue as well.
+
+            //Here's what you have left:
+            // this bug
+            // confirm the egg type bug is gone
+            // the timer bug
           } else {
             logWarning("turtle-$i-color storage value: " +
                 localStorageUser.value.unlockedTurtleColors[i]

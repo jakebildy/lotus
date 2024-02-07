@@ -6,6 +6,8 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/countdown_timer.dart';
+import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
@@ -74,7 +76,8 @@ class _CountdownPageState extends State<CountdownPage>
     Wakelock.enable();
 
     startTime = DateTime.now();
-
+    CountdownController countdownController = Get.find();
+    countdownController.startCountdownTimer();
     super.initState();
   }
 
@@ -147,6 +150,7 @@ class _CountdownPageState extends State<CountdownPage>
 
   EggController eggController = Get.find();
   UserController userController = Get.find();
+  CountdownController countdownController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -411,34 +415,7 @@ class _CountdownPageState extends State<CountdownPage>
                                   child: Hero(
                                     tag: "TURTLE_TIMER",
                                     child: DefaultTextStyle(
-                                      style: TextStyle(
-                                        fontSize: widget.time >
-                                                const Duration(hours: 1)
-                                            ? 30
-                                            : 50.0,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      child: CircularCountDownTimer(
-                                        // Countdown duration in Seconds.
-                                        duration: widget.time.inSeconds,
-                                        initialDuration: 0,
-                                        controller: _controller,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                2,
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                2,
-                                        ringColor: Colors.black12,
-                                        ringGradient: null,
-                                        fillColor: Colors.white,
-                                        fillGradient: null,
-                                        backgroundColor: Colors.black38,
-                                        backgroundGradient: null,
-                                        strokeWidth: 10.0,
-                                        strokeCap: StrokeCap.round,
-                                        textStyle: TextStyle(
+                                        style: TextStyle(
                                           fontSize: widget.time >
                                                   const Duration(hours: 1)
                                               ? 30
@@ -446,54 +423,94 @@ class _CountdownPageState extends State<CountdownPage>
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
+                                        child: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              2,
+                                          child: CountdownTimer(
+                                            totalSeconds: widget.time.inSeconds,
+                                          ),
+                                        )
+                                        // child: CircularCountDownTimer(
+                                        //   // Countdown duration in Seconds.
+                                        //   duration: widget.time.inSeconds,
+                                        //   initialDuration: 0,
+                                        //   controller: _controller,
+                                        //   width:
+                                        //       MediaQuery.of(context).size.width /
+                                        //           2,
+                                        //   height:
+                                        //       MediaQuery.of(context).size.height /
+                                        //           2,
+                                        //   ringColor: Colors.black12,
+                                        //   ringGradient: null,
+                                        //   fillColor: Colors.white,
+                                        //   fillGradient: null,
+                                        //   backgroundColor: Colors.black38,
+                                        //   backgroundGradient: null,
+                                        //   strokeWidth: 10.0,
+                                        //   strokeCap: StrokeCap.round,
+                                        //   textStyle: TextStyle(
+                                        //     fontSize: widget.time >
+                                        //             const Duration(hours: 1)
+                                        //         ? 30
+                                        //         : 50.0,
+                                        //     color: Colors.white,
+                                        //     fontWeight: FontWeight.bold,
+                                        //   ),
 
-                                        // Format for the Countdown Text.
-                                        textFormat: widget.time >
-                                                const Duration(hours: 1)
-                                            ? CountdownTextFormat.HH_MM_SS
-                                            : CountdownTextFormat.MM_SS,
-                                        isReverse: true,
-                                        isReverseAnimation: true,
-                                        isTimerTextShown: true,
+                                        //   // Format for the Countdown Text.
+                                        //   textFormat: widget.time >
+                                        //           const Duration(hours: 1)
+                                        //       ? CountdownTextFormat.HH_MM_SS
+                                        //       : CountdownTextFormat.MM_SS,
+                                        //   isReverse: true,
+                                        //   isReverseAnimation: true,
+                                        //   isTimerTextShown: true,
 
-                                        // Handles the timer start.
-                                        autoStart: true,
+                                        //   // Handles the timer start.
+                                        //   autoStart: true,
 
-                                        // This Callback will execute when the Countdown Starts.
-                                        onStart: () {
-                                          // Here, do whatever you want
-                                          logInfo('Countdown Started');
-                                          isEnded = false;
-                                        },
+                                        //   // This Callback will execute when the Countdown Starts.
+                                        //   onStart: () {
+                                        //     // Here, do whatever you want
+                                        //     logInfo('Countdown Started');
+                                        //     isEnded = false;
+                                        //   },
 
-                                        // This Callback will execute when the Countdown Ends.
-                                        onComplete: () {
-                                          // Here, do whatever you want
-                                          isEnded = true;
-                                          logInfo('Countdown Ended');
-                                          if (widget.ambience != "None") {
-                                            player.dispose();
-                                          }
-                                          bell.dispose();
+                                        //   // This Callback will execute when the Countdown Ends.
+                                        //   onComplete: () {
+                                        //     // Here, do whatever you want
+                                        //     isEnded = true;
+                                        //     logInfo('Countdown Ended');
+                                        //     if (widget.ambience != "None") {
+                                        //       player.dispose();
+                                        //     }
+                                        //     bell.dispose();
 
-                                          AudioPlayer endingBell =
-                                              AudioPlayer();
-                                          endingBell.setVolume(5.0);
-                                          endingBell.play(AssetSource(
-                                              'audio/tibetan_chime.wav'));
-                                          startTimer();
-                                          setState(() {
-                                            meditationComplete = true;
-                                          });
-                                        },
+                                        //     AudioPlayer endingBell =
+                                        //         AudioPlayer();
+                                        //     endingBell.setVolume(5.0);
+                                        //     endingBell.play(AssetSource(
+                                        //         'audio/tibetan_chime.wav'));
+                                        //     startTimer();
+                                        //     setState(() {
+                                        //       meditationComplete = true;
+                                        //     });
+                                        //   },
 
-                                        // This Callback will execute when the Countdown Changes.
-                                        onChange: (String timeStamp) {
-                                          // Here, do whatever you want
-                                          // logInfo('Countdown Changed $timeStamp');
-                                        },
-                                      ),
-                                    ),
+                                        //   // This Callback will execute when the Countdown Changes.
+                                        //   onChange: (String timeStamp) {
+                                        //     // Here, do whatever you want
+                                        //     // logInfo('Countdown Changed $timeStamp');
+                                        //   },
+                                        // ),
+                                        ),
                                   ),
                                 ),
                           meditationComplete
@@ -540,11 +557,13 @@ class _CountdownPageState extends State<CountdownPage>
                                         logInfo("Restarting countdown...");
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.forward();
-                                        _controller.restart(
-                                            duration: widget.time.inSeconds);
+                                        // _controller.restart(
+                                        //     duration: widget.time.inSeconds);
                                       } else if (isPaused) {
                                         logInfo("Resuming countdown...");
-                                        _controller.resume();
+                                        // _controller.resume();
+                                        countdownController
+                                            .resumeCountdownTimer();
 
                                         if (widget.ambience != "None") {
                                           player.resume();
@@ -554,12 +573,15 @@ class _CountdownPageState extends State<CountdownPage>
                                         isPaused = false;
                                       } else {
                                         logInfo("Pausing countdown...");
-                                        _controller.pause();
+                                        // _controller.pause();
                                         if (widget.ambience != "None") {
                                           player.pause();
                                         }
                                         HapticFeedback.mediumImpact();
                                         _playPauseController.reverse();
+
+                                        countdownController
+                                            .pauseCountdownTimer();
                                         isPaused = true;
                                       }
                                       setState(() {});

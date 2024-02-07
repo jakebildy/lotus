@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/cookie_controller.dart';
+import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
@@ -35,6 +36,7 @@ Future<void> main() async {
   Get.put(HeapService());
   Get.put(GameController());
   Get.put(EggController());
+  Get.put(CountdownController());
 
   final AudioContext audioContext = AudioContext(
     iOS: AudioContextIOS(

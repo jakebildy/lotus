@@ -142,33 +142,25 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                             : const SizedBox(
                                 height: 30,
                               ),
-                        Container(
-                          // white outline
-                          // decoration: BoxDecoration(
-                          //     color: Colors.transparent,
-                          //     border:
-                          //         Border.all(color: Colors.white24, width: 2.0),
-                          //     borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Ambience: " +
-                                      saveController.selectedAmbience.value,
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.white70,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Icon(
-                                  saveController.selectedAmbience.value != "OFF"
-                                      ? Icons.music_note
-                                      : Icons.music_off,
-                                  size: 35,
-                                ),
-                              ],
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                "Ambience: " +
+                                    saveController.selectedAmbience.value,
+                                style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.white70,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(
+                                saveController.selectedAmbience.value != "OFF"
+                                    ? Icons.music_note
+                                    : Icons.music_off,
+                                size: 35,
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
