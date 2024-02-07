@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/login_controller.dart';
 
+import '../signup/signup.dart';
+
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -25,10 +27,22 @@ class Login extends StatelessWidget {
               ],
             )),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 45, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Center(
                 child: Stack(
                   children: [
+                    Hero(
+                      tag: "WaterAnimation",
+                      child: Opacity(
+                        opacity: 0.3,
+                        child: Image.asset(
+                          "assets/images/game/water_2.gif",
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                     Positioned.fill(
                         child: FloatingBubbles.alwaysRepeating(
                       noOfBubbles: 20,
@@ -119,31 +133,49 @@ class Login extends StatelessWidget {
                         const SizedBox(height: 80),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(0),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.tealAccent),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          side: const BorderSide(
-                                              color: Colors.tealAccent)))),
-                              onPressed: controller.login,
-                              child: const SizedBox(
-                                  width: 2000,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Text("Login",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold)),
-                                  ))),
+                          child: Hero(
+                            tag: "LoginButton",
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    elevation:
+                                        MaterialStateProperty.all<double>(0),
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.tealAccent),
+                                    shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            side: const BorderSide(
+                                                color: Colors.tealAccent)))),
+                                onPressed: controller.login,
+                                child: const SizedBox(
+                                    width: 2000,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(12.0),
+                                      child: Text("Login",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold)),
+                                    ))),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () {
+                            Get.offAll(const Signup());
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "I want to sign up instead",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),

@@ -21,6 +21,13 @@ class SignupController extends GetxController {
   final Rx<String> signupWarningMessage = "".obs;
   final Rx<bool> isLoading = false.obs;
 
+  //page 0
+  final RxString usernameText = "".obs;
+
+  //page 1
+  final RxString emailText = "".obs;
+  final RxString passwordText = "".obs;
+
   // Signup
   void signup() async {
     try {
@@ -28,7 +35,7 @@ class SignupController extends GetxController {
       final User user = await api.auth.signup(
         _email,
         password.text,
-        fullName.text,
+        username.text,
         username.text.toLowerCase().replaceAll(" ", "_"),
       );
       logSuccess("signing up user:" + user.email);

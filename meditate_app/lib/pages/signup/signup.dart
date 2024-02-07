@@ -5,13 +5,18 @@ import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/login/login.dart';
 
-class Signup extends StatelessWidget {
+class Signup extends StatefulWidget {
   final bool? noOptions;
   final bool? isPopup;
-  const Signup({Key? key, this.noOptions, this.isPopup})
-      : super(
-          key: key,
-        );
+
+  const Signup({super.key, this.noOptions, this.isPopup});
+
+  @override
+  State<Signup> createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
+  int page = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +41,18 @@ class Signup extends StatelessWidget {
               child: Center(
                 child: Stack(
                   children: [
+                    Hero(
+                      tag: "WaterAnimation",
+                      child: Opacity(
+                        opacity: 0.3,
+                        child: Image.asset(
+                          "assets/images/game/water_2.gif",
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                     Positioned.fill(
                         child: FloatingBubbles.alwaysRepeating(
                       noOfBubbles: 20,
@@ -53,179 +70,223 @@ class Signup extends StatelessWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         const SizedBox(height: 20),
-                        // Center(
-                        //     child: Container(
-                        //         height: 4,
-                        //         child: Hero(
-                        //             tag: "Logo",
-                        //             child: Image.asset("assets/logo.png")))),
-                        const Center(
+                        Center(
+                            child: SizedBox(
+                                height: 100,
+                                child: Hero(
+                                    tag: "Logo",
+                                    child: Image.asset("assets/logo.png")))),
+                        Center(
                           child: Text(
-                            "Sign Up",
-                            style: TextStyle(
+                            page == 0
+                                ? "What's your name?"
+                                : "Create your account",
+                            style: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: isPopup == true ? 0 : 50),
-                            // First Name
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              controller: controller.fullName,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
-                              decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 40),
-                                hintText: "Display Name",
-                                fillColor: Colors.white,
-                                hintStyle: const TextStyle(color: Colors.grey),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                              ),
-                            )),
                         const SizedBox(height: 30),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: isPopup == true ? 0 : 50),
-                            // User Name
-                            child: TextField(
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp("[a-zA-Z0-9_]")),
-                              ],
-                              textAlign: TextAlign.center,
-                              controller: controller.username,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
-                              decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 40),
-                                hintText: "Username",
-                                fillColor: Colors.white,
-                                hintStyle: const TextStyle(color: Colors.grey),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                              ),
-                            )),
+                        page == 1
+                            ? Container()
+                            : Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        widget.isPopup == true ? 0 : 50),
+                                // User Name
+                                child: TextField(
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp("[a-zA-Z0-9_]")),
+                                  ],
+                                  textAlign: TextAlign.center,
+                                  controller: controller.username,
+                                  onChanged: (value) {
+                                    controller.usernameText.value = value;
+                                    controller.update();
+                                  },
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
+                                  decoration: InputDecoration(
+                                    alignLabelWithHint: true,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 40),
+                                    hintText: "Type your username...",
+                                    fillColor: Colors.transparent,
+                                    hintStyle:
+                                        const TextStyle(color: Colors.white),
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.white,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.white),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                  ),
+                                )),
                         const SizedBox(height: 30),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: isPopup == true ? 0 : 50),
-                            // Email
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              controller: controller.email,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
-                              decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 40),
-                                hintText: "Email",
-                                fillColor: Colors.white,
-                                hintStyle: const TextStyle(color: Colors.grey),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                              ),
-                            )),
+                        page == 0
+                            ? Container()
+                            : Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        widget.isPopup == true ? 0 : 50),
+                                // Email
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  controller: controller.email,
+                                  onChanged: (value) {
+                                    controller.emailText.value = value;
+                                    controller.update();
+                                  },
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black),
+                                  decoration: InputDecoration(
+                                    alignLabelWithHint: true,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 40),
+                                    hintText: "Email",
+                                    fillColor: Colors.white,
+                                    hintStyle:
+                                        const TextStyle(color: Colors.grey),
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                  ),
+                                )),
                         const SizedBox(height: 30),
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: isPopup == true ? 0 : 50),
-                            // Password
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              controller: controller.password,
-                              obscureText: true,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black),
-                              decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 40),
-                                hintText: "Password",
-                                fillColor: Colors.white,
-                                hintStyle: const TextStyle(color: Colors.grey),
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0)),
-                              ),
-                            )),
+                        page == 0
+                            ? Container()
+                            : Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        widget.isPopup == true ? 0 : 50),
+                                // Password
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  controller: controller.password,
+                                  onChanged: (value) {
+                                    controller.passwordText.value = value;
+                                    controller.update();
+                                  },
+                                  obscureText: true,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black),
+                                  decoration: InputDecoration(
+                                    alignLabelWithHint: true,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 40),
+                                    hintText: "Password",
+                                    fillColor: Colors.white,
+                                    hintStyle:
+                                        const TextStyle(color: Colors.grey),
+                                    filled: true,
+                                    enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.grey),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                  ),
+                                )),
                         const SizedBox(height: 60),
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: isPopup == true ? 0 : 50),
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  elevation:
-                                      MaterialStateProperty.all<double>(0),
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          Colors.tealAccent),
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          side: const BorderSide(
-                                              color: Colors.tealAccent)))),
-                              onPressed: controller.signup,
-                              child: const SizedBox(
-                                  width: 2000,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Text("Sign Up",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold)),
-                                  ))),
+                              horizontal: widget.isPopup == true ? 0 : 50),
+                          child: Hero(
+                            tag: "LoginButton",
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    elevation:
+                                        MaterialStateProperty.all<double>(0),
+                                    backgroundColor: MaterialStateProperty.all<Color>(
+                                        page == 0 && controller.usernameText.value.isNotEmpty ||
+                                                page == 1 &&
+                                                    controller.emailText.value
+                                                        .isNotEmpty &&
+                                                    controller.passwordText
+                                                        .value.isNotEmpty
+                                            ? Colors.tealAccent
+                                            : Colors.white12),
+                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            side: BorderSide(color: page == 0 && controller.usernameText.value.isNotEmpty || page == 1 && controller.emailText.value.isNotEmpty && controller.passwordText.value.isNotEmpty ? Colors.tealAccent : Colors.white12)))),
+                                onPressed: () {
+                                  if (page == 0) {
+                                    setState(() {
+                                      page = 1;
+                                    });
+                                  } else {
+                                    controller.signup();
+                                  }
+                                },
+                                child: SizedBox(
+                                    width: 2000,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Text(
+                                          page == 0 ? "Continue" : "Sign Up",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: page == 0 &&
+                                                          controller
+                                                              .usernameText
+                                                              .value
+                                                              .isNotEmpty ||
+                                                      page == 1 &&
+                                                          controller
+                                                              .emailText
+                                                              .value
+                                                              .isNotEmpty &&
+                                                          controller
+                                                              .passwordText
+                                                              .value
+                                                              .isNotEmpty
+                                                  ? Colors.black
+                                                  : Colors.black12,
+                                              fontWeight: FontWeight.bold)),
+                                    ))),
+                          ),
                         ),
                         const SizedBox(height: 20),
                         GestureDetector(
                           onTap: () {
-                            Get.to(const Login());
+                            if (page == 0) {
+                              Get.to(const Login());
+                            } else {
+                              setState(() {
+                                page = 0;
+                              });
+                            }
                           },
-                          child: const Padding(
+                          child: Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              "I already have an account",
+                              page == 1
+                                  ? "Go Back"
+                                  : "I already have an account",
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
