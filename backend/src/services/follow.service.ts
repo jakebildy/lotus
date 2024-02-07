@@ -32,6 +32,11 @@ export async function getFollowers(stylist: UserOrId): Promise<FollowI[] | null>
   return followers;
 }
 
+export async function getEveryUserFollowers(): Promise<FollowI[] | null> {
+  const followers = await Follow.find().populate(POPULATE).exec();
+  return followers;
+}
+
 // Follow a stylist.
 export async function followStylist(user: UserOrId, stylist: UserOrId): Promise<FollowI | null> {
   const _follow = await Follow.findOne({ user, stylist }).populate(POPULATE).exec();

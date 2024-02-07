@@ -28,6 +28,17 @@ async function getFollowers(req: RequestI, res: Response) {
   }
 }
 
+async function getEveryUserFollowers(req: RequestI, res: Response) {
+  try {
+    if (!req.user) throw "Not logged in - unauthorized";
+    const follows = await FollowService.getEveryUserFollowers();
+    return res.json(follows);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+}
+
 async function getStylistFollowing(req: RequestI, res: Response) {
   try {
     // if (!req.user) throw "Not logged in - unauthorized";
@@ -98,6 +109,7 @@ async function unfollowStylist(req: RequestI, res: Response) {
 
 router.get("/follow/following", userAuth, getFollowing);
 router.get("/follow/followers/", userAuth, getFollowers);
+router.get("/follow/all-followers", userAuth, getEveryUserFollowers);
 
 router.get("/follow/stylist/following/:id", getStylistFollowing);
 router.get("/follow/stylist/not-following/:id", getStylistNotFollowing);

@@ -131,8 +131,8 @@ class FollowController extends GetxController {
       }
 
       for (Follow follow in _following) {
-        usersFollowing.add(follow.stylist!);
-        usersFollowingIDs.add(follow.stylist!.id!);
+        usersFollowing.add(follow.following!);
+        usersFollowingIDs.add(follow.following!.id!);
       }
 
       for (User follow in _notFollowing) {

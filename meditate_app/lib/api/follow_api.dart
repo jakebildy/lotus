@@ -27,6 +27,16 @@ class FollowApi {
     }
   }
 
+  Future<List<Follow>> getEveryUserFollowers() async {
+    final response = await http.get(api.https(url, "/api/follow/all-followers"),
+        headers: api.headers);
+    if (response.statusCode == 200) {
+      return Follow.listFromJson(json.decode(response.body));
+    } else {
+      throw (response.body);
+    }
+  }
+
   Future<List<Follow>> getFollowers() async {
     final response = await http.get(api.https(url, "/api/follow/followers"),
         headers: api.headers);

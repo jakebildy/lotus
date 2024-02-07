@@ -3,7 +3,7 @@ import 'package:meditate_app/models/user.dart';
 class Follow {
   final String? id;
   final String type;
-  final User? stylist;
+  final User? following;
   final User user;
   final DateTime? createdAt;
 
@@ -11,7 +11,7 @@ class Follow {
     this.id,
     required this.type,
     required this.user,
-    this.stylist,
+    this.following,
     this.createdAt,
   });
 
@@ -20,7 +20,7 @@ class Follow {
         id: map["_id"],
         type: map["type"],
         user: User.fromJson(map["user"]),
-        stylist:
+        following:
             map["type"] == "Stylist" ? User.fromJson(map["stylist"]) : null,
         createdAt: DateTime.parse(map["createdAt"]));
   }
