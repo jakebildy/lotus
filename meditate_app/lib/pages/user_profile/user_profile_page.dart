@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/components/user_streak_chart.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
@@ -336,6 +337,126 @@ class _UserProfilePageState extends State<UserProfilePage>
                     targetUserId: widget.user.id ?? "",
                   )
                 : Container(),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black12,
+                  border: Border.all(
+                    color: Colors.white24,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TabBar(
+                        controller: tabController,
+                        onTap: (int val) {
+                          setState(() {
+                            selectedTab = val;
+                          });
+                        },
+                        tabs: [
+                          Tab(
+                            text: "Following (" +
+                                followController
+                                    .getAllUsersFollowing(widget.user)
+                                    .length
+                                    .toString() +
+                                ")",
+                          ),
+                          Tab(
+                            text: "Followers (" +
+                                followController
+                                    .getAllUsersFollowedBy(widget.user)
+                                    .length
+                                    .toString() +
+                                ")",
+                          )
+                        ]),
+                    SizedBox(
+                      height: 40 +
+                          (selectedTab == 0
+                              ? followController
+                                      .getAllUsersFollowing(widget.user)
+                                      .length *
+                                  72
+                              : followController
+                                      .getAllUsersFollowedBy(widget.user)
+                                      .length *
+                                  72), //TODO: figure out exact
+                      child: TabBarView(
+                          controller: tabController,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            followController
+                                    .getAllUsersFollowing(widget.user)
+                                    .isEmpty
+                                ? Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        widget.user.fullName +
+                                            " isn't following anyone yet.",
+                                        style: const TextStyle(
+                                            fontSize: 14, color: Colors.grey),
+                                      ),
+                                    ],
+                                  )
+                                : Column(children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    ...(followController
+                                        .getAllUsersFollowing(widget.user)
+                                        .map((user) => FollowerWidget(
+                                            user: user,
+                                            color: const Color.fromARGB(
+                                                255, 42, 42, 42))))
+                                  ]),
+                            followController
+                                    .getAllUsersFollowedBy(widget.user)
+                                    .isEmpty
+                                ? Column(
+                                    children: [
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        widget.user.fullName +
+                                            " doesn't have any followers yet - be their first?",
+                                        style: const TextStyle(
+                                            fontSize: 14, color: Colors.grey),
+                                      ),
+                                    ],
+                                  )
+                                : Column(children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    ...(followController
+                                        .getAllUsersFollowedBy(widget.user)
+                                        .map((user) => FollowerWidget(
+                                            user: user,
+                                            color: const Color.fromARGB(
+                                                255, 42, 42, 42))))
+                                  ]),
+                          ]),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

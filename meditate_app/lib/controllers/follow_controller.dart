@@ -13,6 +13,7 @@ class FollowController extends GetxController {
   RxList<String> usersFollowingIDs = RxList();
   RxList<User> followers = RxList();
   RxList<Follow> following = RxList();
+  RxList<Follow> allUserFollowers = RxList();
 
   FollowController() {
     fetchFollows();
@@ -112,8 +113,31 @@ class FollowController extends GetxController {
     return _followers;
   }
 
+  List<User> getAllUsersFollowing(User user) {
+    List<User> _usersFollowing = [];
+    for (Follow follow in allUserFollowers) {
+      if (follow.user.id == user.id) {
+        _usersFollowing.add(follow.following!);
+      }
+    }
+    return _usersFollowing;
+  }
+
+  List<User> getAllUsersFollowedBy(User user) {
+    List<User> _usersFollowed = [];
+    for (Follow follow in allUserFollowers) {
+      if (follow.following?.id == user.id) {
+        _usersFollowed.add(follow.user!);
+      }
+    }
+    return _usersFollowed;
+  }
+
   Future<void> fetchFollows() async {
     try {
+      List<Follow> allFollowers = await api.follow.getEveryUserFollowers();
+      allUserFollowers.value = allFollowers;
+
       List<Follow> _followers = await api.follow.getFollowers();
       List<Follow> _following = await api.follow.getFollowing();
       UserController userController = Get.find();
