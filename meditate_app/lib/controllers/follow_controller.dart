@@ -136,8 +136,10 @@ class FollowController extends GetxController {
   }
 
   Future<void> fetchFollows() async {
-    loadingFollowers.value = true;
-    update();
+    if (allUserFollowers.isEmpty) {
+      loadingFollowers.value = true;
+      update();
+    }
     try {
       List<Follow> allFollowers = await api.follow.getEveryUserFollowers();
       allUserFollowers.value = allFollowers;
