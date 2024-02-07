@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/components/meditation_heatmap.dart';
@@ -455,54 +456,79 @@ class _ProfilePageState extends State<ProfilePage>
                                 controller: tabController,
                                 physics: const NeverScrollableScrollPhysics(),
                                 children: [
-                                  followController.usersFollowing.isEmpty
-                                      ? Column(
-                                          children: const [
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Text(
-                                              "You don't have any friends yet - add some!",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.grey),
-                                            ),
-                                          ],
+                                  followController.loadingFollowers.value
+                                      ? const SizedBox(
+                                          height: 200,
+                                          child: Center(
+                                              child: SpinKitCircle(
+                                            color: Colors.teal,
+                                          )),
                                         )
-                                      : Column(children: [
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ...(followController.usersFollowing
-                                              .map((user) => FollowerWidget(
-                                                  user: user,
-                                                  color: const Color.fromARGB(
-                                                      255, 42, 42, 42))))
-                                        ]),
-                                  followController.followers.isEmpty
-                                      ? Column(
-                                          children: const [
-                                            SizedBox(
-                                              height: 20,
-                                            ),
-                                            Text(
-                                              "You don't have any followers yet!",
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.grey),
-                                            ),
-                                          ],
+                                      : followController.usersFollowing.isEmpty
+                                          ? Column(
+                                              children: const [
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Text(
+                                                  "You don't have any friends yet - add some!",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.grey),
+                                                ),
+                                              ],
+                                            )
+                                          : Column(children: [
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              ...(followController
+                                                  .usersFollowing
+                                                  .map((user) => FollowerWidget(
+                                                      user: user,
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              42,
+                                                              42,
+                                                              42))))
+                                            ]),
+                                  followController.loadingFollowers.value
+                                      ? const SizedBox(
+                                          height: 200,
+                                          child: Center(
+                                              child: SpinKitCircle(
+                                            color: Colors.teal,
+                                          )),
                                         )
-                                      : Column(children: [
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          ...(followController.followers.map(
-                                              (user) => FollowerWidget(
-                                                  user: user,
-                                                  color: const Color.fromARGB(
-                                                      255, 42, 42, 42))))
-                                        ]),
+                                      : followController.followers.isEmpty
+                                          ? Column(
+                                              children: const [
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Text(
+                                                  "You don't have any followers yet!",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.grey),
+                                                ),
+                                              ],
+                                            )
+                                          : Column(children: [
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              ...(followController.followers
+                                                  .map((user) => FollowerWidget(
+                                                      user: user,
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              42,
+                                                              42,
+                                                              42))))
+                                            ]),
                                 ]),
                           ),
                           const SizedBox(
@@ -586,33 +612,46 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              "People you may know",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            //Only showing people with active streaks to make the app feel more engaging/active
-                            ...(followController
-                                .getActiveAndNewUsers(
-                                    followController.usersNotFollowing)
-                                // .where((p0) => p0.streak > 0)
-                                .map((user) => FollowerWidget(
-                                    user: user,
-                                    color: const Color.fromARGB(
-                                        255, 42, 42, 42)))),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
-                        ),
+                        child: followController.loadingFollowers.value
+                            ? const SizedBox(
+                                height: 200,
+                                child: Center(
+                                    child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: SpinKitCircle(
+                                    color: Colors.teal,
+                                  ),
+                                )),
+                              )
+                            : Column(
+                                children: [
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "People you may know",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+
+                                  //Only showing people with active streaks to make the app feel more engaging/active
+                                  ...(followController
+                                      .getActiveAndNewUsers(
+                                          followController.usersNotFollowing)
+                                      // .where((p0) => p0.streak > 0)
+                                      .map((user) => FollowerWidget(
+                                          user: user,
+                                          color: const Color.fromARGB(
+                                              255, 42, 42, 42)))),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              ),
                       )),
                 ),
                 const SizedBox(

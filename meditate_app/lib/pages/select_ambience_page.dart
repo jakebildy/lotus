@@ -4,12 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/premium_container.dart';
-import 'package:meditate_app/components/turtle_card.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/pages/begin_meditation_page.dart';
 import 'package:meditate_app/util/ambiences.dart';
-import 'package:meditate_app/util/turtles.dart';
 
 import '../app_pages.dart';
 

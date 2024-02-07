@@ -14,6 +14,7 @@ class FollowController extends GetxController {
   RxList<User> followers = RxList();
   RxList<Follow> following = RxList();
   RxList<Follow> allUserFollowers = RxList();
+  RxBool loadingFollowers = false.obs;
 
   FollowController() {
     fetchFollows();
@@ -123,6 +124,7 @@ class FollowController extends GetxController {
     return _usersFollowing;
   }
 
+  // TODO: this will start to slow down as the app gets more users. Need to optimize eventually
   List<User> getAllUsersFollowedBy(User user) {
     List<User> _usersFollowed = [];
     for (Follow follow in allUserFollowers) {
@@ -134,6 +136,8 @@ class FollowController extends GetxController {
   }
 
   Future<void> fetchFollows() async {
+    loadingFollowers.value = true;
+    update();
     try {
       List<Follow> allFollowers = await api.follow.getEveryUserFollowers();
       allUserFollowers.value = allFollowers;
@@ -170,6 +174,7 @@ class FollowController extends GetxController {
       logError(error.toString());
       logError(trace.toString());
     }
+    loadingFollowers.value = false;
     update();
   }
 
