@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/util/logger.dart';
 
 import 'ambiences.dart';
 
 enum Rarity { COMMON, RARE, LEGENDARY }
 
-enum Tier { ORANGE, YELLOW, BLUE, RAINBOW }
+enum Tier { ORANGE, LITBACK, YELLOW, BLUE, RAINBOW, AMBIENCE }
 
 class Turtle {
   final String name;
@@ -78,7 +79,7 @@ List<Turtle> TURTLES = [
   const Turtle(name: "Obsidian Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
   const Turtle(name: "Flora Turtle", rarity: Rarity.RARE, tier: Tier.RAINBOW),
   const Turtle(
-      name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+      name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.LITBACK),
   const Turtle(
       name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.YELLOW),
   const Turtle(name: "Swirl Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
@@ -95,27 +96,28 @@ List<Turtle> TURTLES = [
   const Turtle(
       name: "Honeyshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(name: "Citrus Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  const Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
   const Turtle(
       name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
   Turtle(
       name: "Luna Turtle",
       rarity: Rarity.RARE,
-      tier: Tier.ORANGE,
+      tier: Tier.AMBIENCE,
       foundIn: AMBIENCES[2]),
   const Turtle(name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.BLUE),
   Turtle(
       name: "Dino Turtle",
       rarity: Rarity.COMMON,
-      tier: Tier.ORANGE,
+      tier: Tier.AMBIENCE,
       foundIn: AMBIENCES[13]),
   Turtle(
       name: "Lightning Turtle",
       rarity: Rarity.COMMON,
-      tier: Tier.ORANGE,
+      tier: Tier.AMBIENCE,
       foundIn: AMBIENCES[10]),
 ];
 
+//TODO: verify this logic looks good
 int getTurtleToHatch(String ambience) {
   List<Turtle> possibleTurtles = TURTLES;
 
@@ -151,19 +153,27 @@ int getTurtleToHatch(String ambience) {
   UserController userController = Get.find();
   if (userController.streakTier() == Tier.ORANGE) {
     possibleTurtles = possibleTurtles
-        .where((element) => element.tier == Tier.ORANGE)
+        .where((element) =>
+            element.tier == Tier.ORANGE ||
+            element.tier == Tier.LITBACK ||
+            element.tier == Tier.AMBIENCE)
         .toList();
   } else if (userController.streakTier() == Tier.YELLOW) {
     possibleTurtles = possibleTurtles
         .where((element) =>
-            element.tier == Tier.ORANGE || element.tier == Tier.YELLOW)
+            element.tier == Tier.ORANGE ||
+            element.tier == Tier.YELLOW ||
+            element.tier == Tier.LITBACK ||
+            element.tier == Tier.AMBIENCE)
         .toList();
   } else if (userController.streakTier() == Tier.BLUE) {
     possibleTurtles = possibleTurtles
         .where((element) =>
             element.tier == Tier.ORANGE ||
             element.tier == Tier.YELLOW ||
-            element.tier == Tier.BLUE)
+            element.tier == Tier.BLUE ||
+            element.tier == Tier.LITBACK ||
+            element.tier == Tier.AMBIENCE)
         .toList();
   }
   int result = 0;
@@ -179,4 +189,43 @@ int getTurtleToHatch(String ambience) {
   }
 
   return result;
+}
+
+//This is for sorting the lockedTurtles
+List<int> listOfIndicesByTier(List<dynamic> unlockedTurtles) {
+  // returns a list of indices corresponding to the turtles sorted by tier
+  List<int> orangeTurtles = [];
+  List<int> litbackTurtles = [];
+  List<int> yellowTurtles = [];
+  List<int> blueTurtles = [];
+  List<int> rainbowTurtles = [];
+  List<int> ambienceTurtles = [];
+
+  for (int i = 0; i < TURTLES.length; i++) {
+    if (unlockedTurtles[i] <= 0) {
+      if (TURTLES[i].tier == Tier.ORANGE) {
+        orangeTurtles.add(i);
+      } else if (TURTLES[i].tier == Tier.LITBACK) {
+        litbackTurtles.add(i);
+      } else if (TURTLES[i].tier == Tier.YELLOW) {
+        yellowTurtles.add(i);
+      } else if (TURTLES[i].tier == Tier.BLUE) {
+        blueTurtles.add(i);
+      } else if (TURTLES[i].tier == Tier.RAINBOW) {
+        rainbowTurtles.add(i);
+      } else {
+        ambienceTurtles.add(i);
+      }
+    }
+  }
+
+  // combine all lists
+  orangeTurtles.addAll(litbackTurtles);
+  orangeTurtles.addAll(yellowTurtles);
+  orangeTurtles.addAll(blueTurtles);
+  orangeTurtles.addAll(rainbowTurtles);
+  orangeTurtles.addAll(ambienceTurtles);
+
+  logError(orangeTurtles.toString());
+  return orangeTurtles;
 }

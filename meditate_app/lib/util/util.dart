@@ -10,7 +10,11 @@ String tierReadable(Tier tier) {
           ? "Champion (Level 2)"
           : tier == Tier.BLUE
               ? "Expert (Level 3)"
-              : "Turtlemaster (Level 4)";
+              : tier == Tier.LITBACK
+                  ? "Add Friends to Find"
+                  : tier == Tier.AMBIENCE
+                      ? "Ambience Turtle"
+                      : "Turtlemaster (Level 4)";
 }
 
 String tierReadablePlural(Tier tier) {
@@ -20,7 +24,11 @@ String tierReadablePlural(Tier tier) {
           ? "Champions\n(Level 2)"
           : tier == Tier.BLUE
               ? "Experts\n(Level 3)"
-              : "Turtlemasters\n(Level 4)";
+              : tier == Tier.LITBACK
+                  ? "Add Friends to Find"
+                  : tier == Tier.AMBIENCE
+                      ? "Ambience Turtle"
+                      : "Turtlemasters\n(Level 4)";
 }
 
 Color tierColor(Tier tier) {
@@ -30,7 +38,11 @@ Color tierColor(Tier tier) {
           ? Colors.yellow
           : tier == Tier.BLUE
               ? Colors.lightBlueAccent
-              : Colors.redAccent;
+              : tier == Tier.LITBACK
+                  ? Colors.deepPurpleAccent
+                  : tier == Tier.AMBIENCE
+                      ? Colors.tealAccent
+                      : Colors.redAccent;
 }
 
 final Map<int, String> months = {
