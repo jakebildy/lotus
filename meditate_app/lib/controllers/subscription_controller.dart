@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:meditate_app/app_pages.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/logger.dart';
 
 /// SubscriptionController handles the subscription/purchases
@@ -62,6 +64,9 @@ class SubscriptionController extends GetxController {
           logError("Purchase errors");
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
+          isSubscribedToPremium.value = true;
+          update();
+
           // bool valid = await _verifyPurchase(purchaseDetails);
           // if (valid) {
           //   _deliverProduct(purchaseDetails);
@@ -75,6 +80,7 @@ class SubscriptionController extends GetxController {
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await InAppPurchase.instance.completePurchase(purchaseDetails);
+          Get.to(const AppPages());
         }
       }
     });
@@ -92,11 +98,15 @@ class SubscriptionController extends GetxController {
       getPremiumTapped.value = true;
       update();
 
-      final PurchaseParam purchaseParam = PurchaseParam(
-        productDetails: shellevatePremium!,
-        applicationUserName: null,
-      );
-      InAppPurchase.instance.buyNonConsumable(purchaseParam: purchaseParam);
+      UserController user = Get.find();
+
+      if (user.user.value.username != "null") {
+        final PurchaseParam purchaseParam = PurchaseParam(
+          productDetails: shellevatePremium!,
+          applicationUserName: user.user.value.username,
+        );
+        InAppPurchase.instance.buyNonConsumable(purchaseParam: purchaseParam);
+      }
     }
   }
 }
