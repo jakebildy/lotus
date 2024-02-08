@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/components/unlocked_turtle.dart';
+import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/pages/countdown_demo_page.dart';
 import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -221,7 +222,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                       child: const Padding(
                                         padding: EdgeInsets.all(8.0),
                                         child: Text(
-                                          "Just \$4 a month! Cancel anytime!",
+                                          "Just \$4 USD a month! Cancel anytime!",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20),
@@ -281,7 +282,10 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                       backgroundColor: Colors.tealAccent,
                     ),
                     onPressed: () {
-                      //TODO: actually buy subscription
+                      SubscriptionController subscriptionController =
+                          Get.find<SubscriptionController>();
+
+                      subscriptionController.buySubscription();
                     },
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),

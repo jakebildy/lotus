@@ -10,6 +10,7 @@ import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
+import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/shellevate.dart';
@@ -37,6 +38,7 @@ Future<void> main() async {
   Get.put(GameController());
   Get.put(EggController());
   Get.put(CountdownController());
+  Get.put(SubscriptionController());
 
   final AudioContext audioContext = AudioContext(
     iOS: AudioContextIOS(
