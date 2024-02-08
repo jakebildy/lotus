@@ -21,6 +21,7 @@ enum UserProperty {
   eggTypes,
   emojisSentAt,
   sentEmojis,
+  isPremium, //TODO: make sure it is everywhere it needs to be
 }
 
 class User {
@@ -47,6 +48,7 @@ class User {
   List<List<int>> unlockedTurtleColors;
   RxMap<DateTime, int> meditationHistory;
   List<String> eggTypes;
+  bool isPremium;
 
   /// Maps the User ID the emoji was sent to, to the DateTime of the last emoji sent to them
   RxMap<String, DateTime> emojisSentAt;
@@ -89,6 +91,7 @@ class User {
     this.unlockedTurtles = const [],
     this.unlockedTurtleColors = const [],
     this.eggTypes = const [],
+    this.isPremium = false,
   })  : meditationHistory = meditationHistory ?? <DateTime, int>{}.obs,
         emojisSentAt = emojisSentAt ?? <String, DateTime>{}.obs,
         sentEmojis = sentEmojis ?? <String, String>{}.obs;
@@ -168,6 +171,7 @@ class User {
       unlockedTurtles: unlockedTurtles,
       unlockedTurtleColors: unlockedTurtleColors,
       eggTypes: (map["eggTypes"] as List<dynamic>? ?? []).cast<String>(),
+      isPremium: map["isPremium"] ?? false,
       meditationHistory: _parseMeditationHistory(
               map["meditationHistory"] as Map<String, dynamic>?)
           .obs,

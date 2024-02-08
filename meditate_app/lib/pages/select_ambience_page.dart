@@ -5,6 +5,8 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/pages/get_subscription_page.dart';
 import 'package:meditate_app/util/ambiences.dart';
 
 import '../app_pages.dart';
@@ -36,6 +38,7 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
   @override
   Widget build(BuildContext context) {
     SaveController save = Get.find();
+    UserController user = Get.find();
 
     return Scaffold(
       appBar: AppBar(
@@ -52,8 +55,13 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                 duration: const Duration(milliseconds: 110),
                 onPressed: () {
                   HapticFeedback.mediumImpact();
-                  save.updateSelectedAmbience(AMBIENCES[index].name);
-                  Get.offAll(const AppPages());
+
+                  if (AMBIENCES[index].premium && user.user.value.isPremium) {
+                    save.updateSelectedAmbience(AMBIENCES[index].name);
+                    Get.offAll(const AppPages());
+                  } else {
+                    Get.to(const GetSubscriptionPage());
+                  }
                 },
                 child: Card(
                     child: ClipRRect(
