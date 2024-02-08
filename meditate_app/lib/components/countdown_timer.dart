@@ -27,7 +27,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
           children: [
             // CustomPaint to draw the rings
             CustomPaint(
-              size: Size(200, 200),
+              size: const Size(200, 200),
               painter: RingPainter(
                   percentage: (countdownController.totalSeconds.value -
                           (countdownController.tenthsOfSecondsPassed.value /

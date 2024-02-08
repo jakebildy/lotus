@@ -282,12 +282,12 @@ class _SignupState extends State<Signup> {
                             }
                           },
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
                               page == 1
                                   ? "Go Back"
                                   : "I already have an account",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),

@@ -228,7 +228,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                                 Rarity.RARE
                                             ? "Rare"
                                             : "Legendary",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 20, color: Colors.white),
                                   ),
                                   const Text(

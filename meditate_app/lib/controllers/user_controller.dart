@@ -633,6 +633,8 @@ class UserController extends GetxController {
     update();
   }
 
+  //TODO: to solve the streak icon grayed out initially issue, have a new function loadHasMeditatedToday that sets a preliminary value based on the local storage
+
   void loadStreak() {
     logSuccess("Loading Streak, currently " + user.value.streak.toString());
     DateTime now = DateTime.now();
@@ -737,17 +739,11 @@ class UserController extends GetxController {
   void logMeditation(int amountNew, DateTime date) {
     logInfo("Saving last_meditated to ${date.toIso8601String()}");
     updateProperty(UserProperty.lastMeditated, date.toIso8601String());
-    // saveController.saveValue("last_meditated", date.toIso8601String());
-
     updateProperty(
         UserProperty.totalMinutes, user.value.totalMinutes + amountNew);
-    // saveValue("total_minutes", newValue.toString());
-    // // totalMinutes.value = newValue;
 
     DateTime today = DateTime.now();
     today = DateTime.utc(today.year, today.month, today.day);
-
-    //TODO: additional meditations per day are not logging
 
     // Check if today exists in meditationHistory
     logError("THIS ->");

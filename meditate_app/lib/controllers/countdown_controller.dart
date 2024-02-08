@@ -202,37 +202,55 @@ class CountdownController extends GetxController {
   }
 
   void submitMeditation() {
+    // Update the button to a loading state so you can't press it again
     loading.value = true;
     update();
+
+    //Initialize the controllers
     UserController userController = Get.find();
     SaveController save = Get.find();
     EggController eggController = Get.find();
 
+    // Initialize the egg variables (only matter if an egg is found)
     int turtleToHatch = -1;
     int turtleColorToHatch = -1;
 
+    // Calculate the time in minutes
     int timeInMinutes = totalSeconds.value ~/ 60;
+
+    // Add the bonus time if the user selected it
     if (addExtraTime.value) {
       timeInMinutes += bonusTime.value ~/ 60;
     }
     logInfo("Time in Minutes to add: $timeInMinutes");
 
-    //Save the streak day
+    //The meditationHistory date
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
 
+    // The number of gems to give
     int gemsToGive = 0;
+
+    // Check if the user has already meditated today
     bool alreadyMeditatedToday = false;
 
     int numDays =
         userController.user.value.lastMeditated.difference(date).inDays.abs();
+
+    // This section updates the streak, alreadyMeditatedToday
+    // and allocates bonus gems (sand dollars)
+
+    // If you meditated yesterday (or used a streak freeze for yesterday)
     if (numDays == 1) {
       userController.updateStreak(userController.user.value.streak + 1);
       logInfo(
-          "Streak value is updated to ${userController.user.value.streak} + 1}.");
+          "Streak value is updated to ${userController.user.value.streak} + 1.");
+
+      //Bonus five sand dollars for first time meditating today
       userController.updateProperty(
           UserProperty.gems, userController.user.value.gems + 5);
       gemsToGive += 5;
+      // If it's been longer than a day since the last meditation and no streak freeze was used for yesterday
     } else if (numDays > 1) {
       userController.updateStreak(1);
       userController.updateProperty(
@@ -244,12 +262,15 @@ class CountdownController extends GetxController {
       alreadyMeditatedToday = true;
     }
 
+    // Logs the meditation (updates lastMeditated, totalMinutes, and meditationHistory)
     userController.logMeditation(timeInMinutes, date);
 
+    // Adds however many minutes you meditated as sand dollars
     userController.updateProperty(
         UserProperty.gems, userController.user.value.gems + timeInMinutes);
     gemsToGive += timeInMinutes;
 
+    // If this is the first meditation of the day or you're in debug mode
     if (!alreadyMeditatedToday || DEBUG_MODE) {
       //Updating the egg progress if haven't already meditated today
       logInfo("First time meditating today");

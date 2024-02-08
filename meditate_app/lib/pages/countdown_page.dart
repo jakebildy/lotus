@@ -1,7 +1,3 @@
-import 'dart:async';
-import 'dart:math';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,22 +5,14 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/countdown_timer.dart';
 import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/ambiences.dart';
-import 'package:meditate_app/util/debug_mode.dart';
-import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/logger.dart';
-import 'package:meditate_app/util/turtles.dart';
-import 'package:ocarina/ocarina.dart';
 import 'package:wakelock/wakelock.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
 import '../components/bubbles/bubbles.dart';
-import '../models/user.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key, required this.time, required this.ambience})
