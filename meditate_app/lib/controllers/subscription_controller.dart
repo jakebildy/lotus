@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:meditate_app/util/logger.dart';
@@ -7,9 +10,21 @@ import 'package:meditate_app/util/logger.dart';
 class SubscriptionController extends GetxController {
   late ProductDetails? shellevatePremium;
   bool isAvailable = false;
+  late StreamSubscription<List<PurchaseDetails>> _streamSubscription;
+
+  RxBool isSubscribedToPremium = false.obs;
+  RxBool getPremiumTapped = false.obs;
 
   SubscriptionController() {
     initialize();
+    final Stream purchaseUpdated = InAppPurchase.instance.purchaseStream;
+    _streamSubscription = purchaseUpdated.listen((purchaseDetailsList) {
+      _listenToPurchaseUpdated(purchaseDetailsList);
+    }, onDone: () {
+      _streamSubscription.cancel();
+    }, onError: (error) {
+      // handle error here.
+    }) as StreamSubscription<List<PurchaseDetails>>;
   }
 
   Future<void> initialize() async {
@@ -36,12 +51,47 @@ class SubscriptionController extends GetxController {
     }
   }
 
+  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
+    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
+      if (purchaseDetails.status == PurchaseStatus.pending) {
+        // _showPendingUI();
+        logInfo("Pending purchase...");
+      } else {
+        if (purchaseDetails.status == PurchaseStatus.error) {
+          // _handleError(purchaseDetails.error!);
+          logError("Purchase errors");
+        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
+            purchaseDetails.status == PurchaseStatus.restored) {
+          // bool valid = await _verifyPurchase(purchaseDetails);
+          // if (valid) {
+          //   _deliverProduct(purchaseDetails);
+          // } else {
+          //   _handleInvalidPurchase(purchaseDetails);
+          // }
+        }
+        if (purchaseDetails.status == PurchaseStatus.canceled) {
+          getPremiumTapped.value = false;
+          update();
+        }
+        if (purchaseDetails.pendingCompletePurchase) {
+          await InAppPurchase.instance.completePurchase(purchaseDetails);
+        }
+      }
+    });
+  }
+
   Future<void> buySubscription() async {
+    // check if a subscription is already being purchased
+
     if (isAvailable == false) {
       logError("InAppPurchase is not available");
       return;
     }
+
     if (shellevatePremium != null) {
+      getPremiumTapped.value = true;
+      update();
+
       final PurchaseParam purchaseParam = PurchaseParam(
         productDetails: shellevatePremium!,
         applicationUserName: null,
