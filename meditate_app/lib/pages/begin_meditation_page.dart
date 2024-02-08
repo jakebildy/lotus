@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
+import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
@@ -192,6 +193,12 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                     heap.logEvent("MEDITATION_TAPPED", {
                                       "time": _duration.inMinutes.toString()
                                     });
+
+                                    CountdownController countdownController =
+                                        Get.find();
+                                    countdownController.totalSeconds.value =
+                                        _duration.inSeconds;
+                                    countdownController.update();
 
                                     if (_duration.inMinutes >= 5) {
                                       saveController

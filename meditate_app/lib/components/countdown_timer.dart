@@ -29,10 +29,10 @@ class _CountdownTimerState extends State<CountdownTimer> {
             CustomPaint(
               size: Size(200, 200),
               painter: RingPainter(
-                  percentage: (widget.totalSeconds -
+                  percentage: (countdownController.totalSeconds.value -
                           (countdownController.tenthsOfSecondsPassed.value /
                               10)) /
-                      widget.totalSeconds),
+                      countdownController.totalSeconds.value),
             ),
             // Inner black circle with padding
             Stack(
@@ -43,11 +43,11 @@ class _CountdownTimerState extends State<CountdownTimer> {
                   height: 184, // 200 - 8*2 for padding
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.black26,
+                    color: Colors.black38,
                   ),
                 ),
                 Text(
-                  '${(widget.totalSeconds - (countdownController.tenthsOfSecondsPassed.value ~/ 10)) ~/ 60}:${((widget.totalSeconds - (countdownController.tenthsOfSecondsPassed.value ~/ 10)) % 60).toString().padLeft(2, '0')}',
+                  '${(countdownController.totalSeconds.value - (countdownController.tenthsOfSecondsPassed.value ~/ 10)) ~/ 60}:${((countdownController.totalSeconds.value - (countdownController.tenthsOfSecondsPassed.value ~/ 10)) % 60).toString().padLeft(2, '0')}',
                 ),
                 //This is to make sure the state updates correctly
                 Opacity(

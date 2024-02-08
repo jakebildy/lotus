@@ -62,11 +62,13 @@ Future<void> main() async {
     switch (msg) {
       case 'AppLifecycleState.paused':
         {
+          Get.find<CountdownController>().pauseApp();
           logInfo(msg.toString());
         }
         break;
       case 'AppLifecycleState.resumed':
         {
+          Get.find<CountdownController>().resumeApp();
           logInfo(msg.toString());
           SaveController save = Get.find();
           save.loadData();
