@@ -201,7 +201,8 @@ class CountdownController extends GetxController {
     );
   }
 
-  void submitMeditation() {
+  //This does not appear to have any bugs...
+  Future<void> submitMeditation() async {
     // Update the button to a loading state so you can't press it again
     loading.value = true;
     update();
@@ -290,7 +291,7 @@ class CountdownController extends GetxController {
             turtleColorToHatch = int.parse(eggTypeNew.split("-")[1]);
           }
 
-          eggController.hatchTurtle(turtleToHatch, turtleColorToHatch);
+          await eggController.hatchTurtle(turtleToHatch, turtleColorToHatch);
         } else {
           logInfo("Updating hatch process");
 
@@ -306,9 +307,8 @@ class CountdownController extends GetxController {
       int tHatch = getTurtleToHatch(save.selectedAmbience.string);
       int tColor = Random().nextInt(TURTLE_COLORS.length);
 
-      eggController.addEgg(tColor, tHatch);
+      await eggController.addEgg(tColor, tHatch);
     }
-
     //Log the event to AppsFlyer
     HeapService heap = Get.find();
     heap.logEvent("MEDITATION_COMPLETE", {"time": timeInMinutes.toString()});

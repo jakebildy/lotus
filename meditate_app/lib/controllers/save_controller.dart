@@ -148,28 +148,6 @@ class SaveController extends GetxController {
     //   totalMinutes.value = int.parse(getValue('total_minutes'));
     // }
 
-    // Initialize lists for the last seven days of meditation and unlocked turtles
-    // lastSevenDays = RxList.empty();
-    // unlockedTurtles = RxList.empty();
-
-    // Load meditation data for the last seven days
-    // DateTime today = DateTime.now();
-    // for (int i = 0; i < 7; i++) {
-    //   String meditationKey =
-    //       'meditation-${today.day}-${today.month}-${today.year}';
-    //   if (getValue(meditationKey) != "") {
-    //     lastSevenDays.add(double.parse(getValue(meditationKey)));
-    //   } else {
-    //     lastSevenDays.add(0.0);
-    //   }
-    //   today = today.subtract(const Duration(days: 1));
-    // }
-
-    // Load streak freeze value
-    // if (getValue('streak_freezes') != "") {
-    //   streakFreezes.value = int.parse(getValue('streak_freezes'));
-    // }
-
     // Load unlocked turtle data
     // for (int i = 0; i < TURTLES.length; i++) {
     //   if (getValue('turtle-$i') != "") {
@@ -226,21 +204,6 @@ class SaveController extends GetxController {
       requestNotifications.value =
           getValue('request_notifications').toLowerCase() == 'true';
     }
-
-    // Load the entire meditation history for the past year
-    // If gems does not exist, neither does meditation history yet
-    // if (getValue('gems') == "") {
-    //   DateTime rn = DateTime.now();
-    //   today = DateTime.now();
-    //   while (rn.difference(today).abs().inDays <= 365) {
-    //     DateTime simpleDate = DateTime(today.year, today.month, today.day);
-    //     meditationHistory[simpleDate] = (double.tryParse(getValue(
-    //                 'meditation-${today.day}-${today.month}-${today.year}')) ??
-    //             0.0)
-    //         .round();
-    //     today = today.subtract(const Duration(days: 1));
-    //   }
-    // }
 
     // Handle potential issue with a vast number of egg types
 
