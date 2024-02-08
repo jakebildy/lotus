@@ -1,18 +1,11 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
-import 'package:meditate_app/components/locked_turtle.dart';
-import 'package:meditate_app/components/premium_container.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/components/unlocked_turtle.dart';
 import 'package:meditate_app/pages/countdown_demo_page.dart';
 import 'package:meditate_app/pages/select_ambience_page.dart';
-import 'package:meditate_app/util/ambiences.dart';
-
-import '../app_pages.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class GetSubscriptionPage extends StatefulWidget {
   const GetSubscriptionPage({super.key});
@@ -39,9 +32,6 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
 
   @override
   Widget build(BuildContext context) {
-    SaveController save = Get.find();
-    UserController user = Get.find();
-
     return Scaffold(
         body: Container(
             decoration: const BoxDecoration(
@@ -109,7 +99,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                         decoration: BoxDecoration(
                                           color: Colors.black12,
                                           border: Border.all(
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 64, 255, 255, 255),
                                             width: 2,
                                           ),
@@ -128,30 +118,47 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                 textAlign: TextAlign.center,
                                               ),
                                               const SizedBox(height: 20),
-                                              Container(
-                                                  height: 400,
-                                                  child: OverflowBox(
-                                                    maxWidth: 300,
-                                                    maxHeight: 690,
-                                                    child: Transform.scale(
-                                                        scale: 0.5,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                          child: Container(
-                                                            height:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height,
+                                              CarouselSlider(
+                                                options: CarouselOptions(
+                                                    autoPlay: true,
+                                                    viewportFraction: 0.5,
+                                                    height: 400.0),
+                                                items: [
+                                                  "Rain",
+                                                  "Jungle",
+                                                  "Prehistoric Sea",
+                                                ].map((i) {
+                                                  return Builder(
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return Container(
+                                                          height: 400,
+                                                          child: OverflowBox(
+                                                            maxWidth: 300,
+                                                            maxHeight: 690,
                                                             child:
-                                                                const CountdownDemoPage(
-                                                                    ambience:
-                                                                        "Rain"),
-                                                          ),
-                                                        )),
-                                                  )),
+                                                                Transform.scale(
+                                                                    scale: 0.5,
+                                                                    child:
+                                                                        ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                      child:
+                                                                          Container(
+                                                                        height: MediaQuery.of(context)
+                                                                            .size
+                                                                            .height,
+                                                                        child: CountdownDemoPage(
+                                                                            ambience:
+                                                                                i),
+                                                                      ),
+                                                                    )),
+                                                          ));
+                                                    },
+                                                  );
+                                                }).toList(),
+                                              ),
                                             ],
                                           ),
                                         ))),
@@ -162,8 +169,8 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                     decoration: BoxDecoration(
                                       color: Colors.black12,
                                       border: Border.all(
-                                        color:
-                                            Color.fromARGB(64, 255, 255, 255),
+                                        color: const Color.fromARGB(
+                                            64, 255, 255, 255),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(20),
@@ -185,11 +192,11 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
-                                                children: [
-                                                  LockedTurtle(
-                                                      id: 21, colorId: 1),
-                                                  LockedTurtle(
-                                                      id: 22, colorId: 4),
+                                                children: const [
+                                                  UnlockedTurtle(
+                                                      id: 21, color: 1),
+                                                  UnlockedTurtle(
+                                                      id: 22, color: 4),
                                                 ],
                                               )),
                                         ],
@@ -205,15 +212,15 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                       decoration: BoxDecoration(
                                         color: Colors.black12,
                                         border: Border.all(
-                                          color:
-                                              Color.fromARGB(64, 255, 255, 255),
+                                          color: const Color.fromARGB(
+                                              64, 255, 255, 255),
                                           width: 2,
                                         ),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: const Text(
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text(
                                           "Just \$4 a month! Cancel anytime!",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -236,15 +243,15 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                       decoration: BoxDecoration(
                                         color: Colors.black12,
                                         border: Border.all(
-                                          color:
-                                              Color.fromARGB(64, 255, 255, 255),
+                                          color: const Color.fromARGB(
+                                              64, 255, 255, 255),
                                           width: 2,
                                         ),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: const Text(
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text(
                                           "I'm one person developing this entire app. \n\n I think gameified meditation has the potential to bring peace and balance to so many people who might not otherwise get into meditation. \n\n That's why I made Shellevate! This app has helped me get through my own dark times. I hope it can be there for you as well.\n\n  I believe in Shellevate and I hope you do too. If you love this app, I'm counting on your support to keep it going! ❤️",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
@@ -261,11 +268,11 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                       ),
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 4,
                     height: 2,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   ElevatedButton(
@@ -276,9 +283,9 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                     onPressed: () {
                       //TODO: actually buy subscription
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: const Text("Get Shellevate Premium",
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Get Premium",
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.black,
@@ -287,13 +294,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                   ),
                   const SizedBox(height: 20),
                   GestureDetector(
-                      onTap: () => {Get.offAll(SelectAmbiencePage())},
-                      child: Text("No Thanks",
+                      onTap: () => {Get.offAll(const AppPages())},
+                      child: const Text("No Thanks",
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 14))),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   )
                 ],
