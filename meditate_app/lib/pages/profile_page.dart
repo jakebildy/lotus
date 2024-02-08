@@ -3,10 +3,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/components/meditation_heatmap.dart';
+import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
+import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
@@ -40,6 +42,8 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     UserController userController = Get.find();
     FollowController followController;
+    SubscriptionController subscription = Get.find();
+
     if (Get.isRegistered<FollowController>()) {
       followController = Get.find();
     } else {
@@ -138,6 +142,14 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                   ],
                 ),
+                subscription.isSubscribedToPremium.value
+                    ? const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Center(
+                            child:
+                                SizedBox(width: 80, child: PremiumContainer())),
+                      )
+                    : Container(),
                 const SizedBox(
                   height: 5,
                 ),
