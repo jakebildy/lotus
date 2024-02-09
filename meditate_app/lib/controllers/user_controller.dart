@@ -673,6 +673,8 @@ class UserController extends GetxController {
         } else {
           logSuccess("Lost streak! Setting to 0.");
           updateProperty(UserProperty.streak, 0);
+
+          // If you want to have a Streak Restore, have a value equal to streak except when this happens. And then check if within 24hours
         }
       }
     }

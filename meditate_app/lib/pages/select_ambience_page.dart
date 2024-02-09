@@ -58,7 +58,7 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                   onPressed: () {
                     HapticFeedback.mediumImpact();
 
-                    if (AMBIENCES[index].premium &&
+                    if (!AMBIENCES[index].premium ||
                         subscription.isSubscribedToPremium.value) {
                       save.updateSelectedAmbience(AMBIENCES[index].name);
                       Get.offAll(const AppPages());

@@ -19,6 +19,7 @@ class SubscriptionController extends GetxController {
 
   SubscriptionController() {
     initialize();
+
     final Stream purchaseUpdated = InAppPurchase.instance.purchaseStream;
     _streamSubscription = purchaseUpdated.listen((purchaseDetailsList) {
       _listenToPurchaseUpdated(purchaseDetailsList);
@@ -48,6 +49,13 @@ class SubscriptionController extends GetxController {
       logSuccess(
           "Subscription loaded: ${products[0].title.toString()} with price ${products[0].price.toString()}");
       shellevatePremium = products[0];
+
+      // Check for past purchases
+      UserController user = Get.find();
+      if (user.user.value.username != "null") {
+        InAppPurchase.instance
+            .restorePurchases(applicationUserName: user.user.value.username);
+      }
     } else {
       logError("InAppPurchase is not available");
     }
@@ -80,7 +88,7 @@ class SubscriptionController extends GetxController {
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await InAppPurchase.instance.completePurchase(purchaseDetails);
-          Get.to(const AppPages());
+          Get.offAll(const AppPages());
         }
       }
     });
