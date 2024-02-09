@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/premium_container.dart';
+import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/pages/get_subscription_page.dart';
@@ -39,18 +40,43 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
   Widget build(BuildContext context) {
     SaveController save = Get.find();
     SubscriptionController subscription = Get.find();
+    NetworkStatusController network = Get.find();
 
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: const Text("Select Ambience"),
+          title: Column(
+            children: [
+              const Text("Select Ambience"),
+              network.offline.value
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.cloud_off_outlined,
+                          size: 12,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          "Premium ambiences are not available offline",
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )
+                  : Container(),
+            ],
+          ),
         ),
         body: GridView.count(
             crossAxisCount: 2,
             childAspectRatio: 1,
             crossAxisSpacing: 4.0,
             mainAxisSpacing: 8.0,
-            children: List.generate(AMBIENCES.length, (index) {
+            children: List.generate(
+                network.offline.value ? 3 : AMBIENCES.length, (index) {
               return Center(
                 child: Bounce(
                   duration: const Duration(milliseconds: 110),
@@ -126,11 +152,19 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
 
                                         // play the audio for 10 seconds
                                         audioPlayer.setVolume(5);
-                                        audioPlayer.play(
-                                          AssetSource(AMBIENCES[index]
-                                              .audio
-                                              .replaceAll("assets/", "")),
-                                        );
+
+                                        if (AMBIENCES[index]
+                                            .audio
+                                            .startsWith("https")) {
+                                          audioPlayer.play(UrlSource(
+                                              AMBIENCES[index].audio));
+                                        } else {
+                                          audioPlayer.play(
+                                            AssetSource(AMBIENCES[index]
+                                                .audio
+                                                .replaceAll("assets/", "")),
+                                          );
+                                        }
                                         setState(() {
                                           currentAudioSource = index;
                                         });

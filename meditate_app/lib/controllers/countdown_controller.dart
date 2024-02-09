@@ -46,20 +46,33 @@ class CountdownController extends GetxController {
   }
 
   late OcarinaPlayer player;
+  late AudioPlayer networkAudioPlayer;
+
   Future<void> playAmbience() async {
     SaveController save = Get.find();
     if (save.selectedAmbience.value != "None") {
-      player = OcarinaPlayer(
-        asset: AMBIENCES
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.play(UrlSource(AMBIENCES
             .where((element) => element.name == save.selectedAmbience.value)
             .first
-            .audio,
-        loop: true,
-        volume: 0.8,
-      );
-
-      await player.load();
-      await player.play();
+            .audio));
+        networkAudioPlayer.setReleaseMode(ReleaseMode.loop);
+      } else {
+        player = OcarinaPlayer(
+          asset: AMBIENCES
+              .where((element) => element.name == save.selectedAmbience.value)
+              .first
+              .audio,
+          loop: true,
+          volume: 0.8,
+        );
+        await player.load();
+        await player.play();
+      }
     }
   }
 
@@ -92,7 +105,15 @@ class CountdownController extends GetxController {
     logSuccess("Pausing countdown");
 
     if (save.selectedAmbience.value != "None") {
-      player.pause();
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.pause();
+      } else {
+        player.pause();
+      }
     }
 
     countdownTimer.cancel();
@@ -104,7 +125,15 @@ class CountdownController extends GetxController {
     logSuccess("Resuming countdown");
     SaveController save = Get.find();
     if (save.selectedAmbience.value != "None") {
-      player.resume();
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.resume();
+      } else {
+        player.resume();
+      }
     }
 
     const hundredMilliseconds = Duration(seconds: 0, milliseconds: 100);
@@ -127,7 +156,15 @@ class CountdownController extends GetxController {
   void disposeTimer() {
     SaveController save = Get.find();
     if (save.selectedAmbience.value != "None") {
-      player.dispose();
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.dispose();
+      } else {
+        player.dispose();
+      }
     }
     bonusTimer.cancel();
     countdownTimer.cancel();
@@ -169,7 +206,15 @@ class CountdownController extends GetxController {
     // isEnded = true;
     logInfo('Countdown Ended');
     if (save.selectedAmbience.value != "None") {
-      player.dispose();
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.dispose();
+      } else {
+        player.dispose();
+      }
     }
     bell.dispose();
 
