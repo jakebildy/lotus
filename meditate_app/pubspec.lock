@@ -121,14 +121,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  circular_countdown_timer:
-    dependency: "direct main"
-    description:
-      name: circular_countdown_timer
-      sha256: "69d0c3abc8c22a8314b20358cd5935e495fe58580cd7ab8b61dd7e9fa4aa7473"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.2"
   cli_util:
     dependency: transitive
     description:

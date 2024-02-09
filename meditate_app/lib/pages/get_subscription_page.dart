@@ -5,7 +5,6 @@ import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/components/unlocked_turtle.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/pages/countdown_demo_page.dart';
-import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class GetSubscriptionPage extends StatefulWidget {
@@ -137,7 +136,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                     return Builder(
                                                       builder: (BuildContext
                                                           context) {
-                                                        return Container(
+                                                        return SizedBox(
                                                             height: 400,
                                                             child: OverflowBox(
                                                               maxWidth: 300,
@@ -151,7 +150,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                                         borderRadius:
                                                                             BorderRadius.circular(20),
                                                                         child:
-                                                                            Container(
+                                                                            SizedBox(
                                                                           height: MediaQuery.of(context)
                                                                               .size
                                                                               .height,
@@ -192,7 +191,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                               textAlign: TextAlign.center,
                                             ),
                                             const SizedBox(height: 20),
-                                            Container(
+                                            SizedBox(
                                                 height: 160,
                                                 child: Row(
                                                   mainAxisAlignment:

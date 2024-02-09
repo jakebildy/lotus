@@ -1,14 +1,10 @@
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/countdown_timer.dart';
 import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/ambiences.dart';
-import 'package:meditate_app/util/logger.dart';
-import 'package:wakelock/wakelock.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
@@ -273,15 +269,15 @@ class _CountdownDemoPageState extends State<CountdownDemoPage>
                                         MediaQuery.of(context).size.height *
                                             0.7),
                                     child: Column(
-                                      children: [
-                                        const Text(
+                                      children: const [
+                                        Text(
                                           "Meditation Complete!",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 23,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           height: 20,
                                         ),
                                         // Text(
@@ -310,7 +306,7 @@ class _CountdownDemoPageState extends State<CountdownDemoPage>
                                     child: Hero(
                                       tag: "TURTLE_TIMER",
                                       child: DefaultTextStyle(
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 50,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -324,7 +320,7 @@ class _CountdownDemoPageState extends State<CountdownDemoPage>
                                                     .size
                                                     .height /
                                                 2,
-                                            child: CountdownTimer(
+                                            child: const CountdownTimer(
                                                 totalSeconds: 300),
                                           )),
                                     ),

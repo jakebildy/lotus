@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
-import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/get_subscription_page.dart';
 import 'package:meditate_app/util/ambiences.dart';
 

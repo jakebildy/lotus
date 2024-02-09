@@ -1,4 +1,3 @@
-import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -27,8 +26,6 @@ class CountdownPage extends StatefulWidget {
 
 class _CountdownPageState extends State<CountdownPage>
     with TickerProviderStateMixin {
-  final CountDownController _controller = CountDownController();
-
   bool isPaused = false;
   bool isEnded = false;
 
