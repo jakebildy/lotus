@@ -49,22 +49,10 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
             children: [
               const Text("Select Ambience"),
               network.offline.value
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.cloud_off_outlined,
-                          size: 12,
-                        ),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Text(
-                          "Premium ambiences are not available offline",
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                  ? const Text(
+                      "Premium ambiences are not available offline",
+                      style:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                     )
                   : Container(),
             ],
