@@ -7,6 +7,7 @@ import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
@@ -42,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage>
   Widget build(BuildContext context) {
     UserController userController = Get.find();
     FollowController followController;
-    SubscriptionController subscription = Get.find();
+    SaveController save = Get.find();
 
     if (Get.isRegistered<FollowController>()) {
       followController = Get.find();
@@ -142,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                   ],
                 ),
-                subscription.isSubscribedToPremium.value
+                save.isSubscribedToPremium.value
                     ? const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Center(

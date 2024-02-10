@@ -13,6 +13,7 @@ class SaveController extends GetxController {
   RxBool hasReviewed = false.obs;
   RxBool requestNotifications = false.obs;
   RxString selectedAmbience = "Water Sounds".obs;
+  RxBool isSubscribedToPremium = false.obs;
 
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
@@ -45,6 +46,12 @@ class SaveController extends GetxController {
   void updateRequestNotifications() {
     requestNotifications.value = !requestNotifications.value;
     saveValue("request_notifications", requestNotifications.value.toString());
+    update();
+  }
+
+  void updateIsSubscribedToPremium(bool newVal) {
+    isSubscribedToPremium.value = newVal;
+    saveValue("subscribed_to_premium", isSubscribedToPremium.value.toString());
     update();
   }
 
@@ -203,6 +210,12 @@ class SaveController extends GetxController {
     if (getValue('request_notifications') != "") {
       requestNotifications.value =
           getValue('request_notifications').toLowerCase() == 'true';
+    }
+
+    // Load if the user is subscribed to premium
+    if (getValue('subscribed_to_premium') != "") {
+      isSubscribedToPremium.value =
+          getValue('subscribed_to_premium').toLowerCase() == 'true';
     }
 
     // Handle potential issue with a vast number of egg types

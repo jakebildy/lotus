@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:meditate_app/app_pages.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/logger.dart';
 
@@ -13,6 +14,7 @@ class SubscriptionController extends GetxController {
   bool isAvailable = false;
   late StreamSubscription<List<PurchaseDetails>> _streamSubscription;
 
+  //Don't use this value to check if subscribed, use the one in SaveController
   RxBool isSubscribedToPremium = false.obs;
   RxBool getPremiumTapped = false.obs;
 
@@ -61,6 +63,15 @@ class SubscriptionController extends GetxController {
   }
 
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
+    if (purchaseDetailsList.isEmpty) {
+      logInfo("No active subscription found.");
+      SaveController save = Get.find();
+      save.updateIsSubscribedToPremium(false);
+      isSubscribedToPremium.value = false;
+      update();
+      return;
+    }
+
     purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
       if (purchaseDetails.status == PurchaseStatus.pending) {
         // _showPendingUI();
@@ -81,13 +92,18 @@ class SubscriptionController extends GetxController {
           //   _handleInvalidPurchase(purchaseDetails);
           // }
         }
+
         if (purchaseDetails.status == PurchaseStatus.canceled) {
           getPremiumTapped.value = false;
           update();
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await InAppPurchase.instance.completePurchase(purchaseDetails);
-          Get.offAll(const AppPages());
+          SaveController save = Get.find();
+          if (save.isSubscribedToPremium.value == false) {
+            save.updateIsSubscribedToPremium(true);
+            Get.offAll(const AppPages());
+          }
         }
       }
     });

@@ -42,7 +42,8 @@ class CountdownController extends GetxController {
 
   CountdownController() {
     bell = AudioPlayer();
-    bell.setVolume(5.0);
+    networkAudioPlayer = AudioPlayer();
+    bell.setVolume(2.0);
   }
 
   late OcarinaPlayer player;
@@ -56,10 +57,11 @@ class CountdownController extends GetxController {
           .first
           .audio
           .startsWith("https")) {
-        networkAudioPlayer.play(UrlSource(AMBIENCES
+        Source audioUrl = UrlSource(AMBIENCES
             .where((element) => element.name == save.selectedAmbience.value)
             .first
-            .audio));
+            .audio);
+        networkAudioPlayer.play(audioUrl);
         networkAudioPlayer.setReleaseMode(ReleaseMode.loop);
       } else {
         player = OcarinaPlayer(
