@@ -12,7 +12,7 @@ class EggController extends GetxController {
     logInfo(
         'Add future turtle called, adding $futureType-$futureColor to egg_types');
 
-    var newEggTypes = user.user.value.eggTypes;
+    var newEggTypes = List.from(user.user.value.eggTypes);
     newEggTypes.add("$futureType-$futureColor");
     await user.updateProperty(UserProperty.eggTypes, newEggTypes);
 
@@ -26,7 +26,7 @@ class EggController extends GetxController {
 
   Future<void> popEgg() async {
     //create eggTypesNew and remove eggTypesNew[0]
-    var newEggTypes = user.user.value.eggTypes;
+    var newEggTypes = List.from(user.user.value.eggTypes);
     newEggTypes.removeAt(0);
 
     await user.updateProperty(
@@ -56,11 +56,12 @@ class EggController extends GetxController {
     logInfo("Number of turtles to add: " + addAmount.toString());
 
     // saveValue("turtle-${i}", (unlockedTurtles[i] + addAmount).toString());
-    var newUnlockedTurtles = user.user.value.unlockedTurtles;
+    var newUnlockedTurtles = List.from(user.user.value.unlockedTurtles);
     newUnlockedTurtles[i] += addAmount;
     await user.updateProperty(UserProperty.unlockedTurtles, newUnlockedTurtles);
 
-    var newUnlockedTurtleColors = user.user.value.unlockedTurtleColors;
+    var newUnlockedTurtleColors =
+        List.from(user.user.value.unlockedTurtleColors);
     newUnlockedTurtleColors[i].add(turtleColorToHatch);
     await user.updateProperty(
         UserProperty.unlockedTurtleColors, newUnlockedTurtleColors);

@@ -121,13 +121,21 @@ List<Turtle> TURTLES = [
 int getTurtleToHatch(String ambience) {
   List<Turtle> possibleTurtles = TURTLES;
 
-  //If the user doesn't have at least one friend, filter the Litback turtle
-  FollowController followController = Get.find();
+  //If the user doesn't have at least one friend OR follow controller doesnt exist, filter the Litback turtle
 
-  if (followController.following.isEmpty) {
+  bool isControllerRegistered = Get.isRegistered<FollowController>();
+  if (!isControllerRegistered) {
     possibleTurtles = possibleTurtles
         .where((element) => element.name != "Litback Turtle")
         .toList();
+  } else {
+    FollowController followController = Get.find();
+
+    if (followController.following.isEmpty) {
+      possibleTurtles = possibleTurtles
+          .where((element) => element.name != "Litback Turtle")
+          .toList();
+    }
   }
 
   // Only show ambience turtles if the user meditated with that ambience
