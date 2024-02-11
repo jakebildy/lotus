@@ -398,37 +398,69 @@ class UserController extends GetxController {
 
     switch (property) {
       case UserProperty.streak:
-        databaseUser.value.streak = value as int;
+        // databaseUser.value.streak = value as int;
+        databaseUser.update((val) {
+          val?.streak = value;
+        });
         break;
       case UserProperty.gems:
-        databaseUser.value.gems = value as int;
+        databaseUser.update((val) {
+          val?.gems = value;
+        });
         break;
       case UserProperty.hatchProgressEggOne:
-        databaseUser.value.hatchProgressEggOne = value as int;
+        // databaseUser.value.hatchProgressEggOne = value as int;
+        databaseUser.update((val) {
+          val?.hatchProgressEggOne = value;
+        });
         break;
       case UserProperty.eggs:
-        databaseUser.value.eggs = value as int;
+        // databaseUser.value.eggs = value as int;
+        databaseUser.update((val) {
+          val?.eggs = value;
+        });
         break;
       case UserProperty.totalEggs:
-        databaseUser.value.totalEggs = value as int;
+        // databaseUser.value.totalEggs = value as int;
+        databaseUser.update((val) {
+          val?.totalEggs = value;
+        });
         break;
       case UserProperty.totalMinutes:
-        databaseUser.value.totalMinutes = value as int;
+        // databaseUser.value.totalMinutes = value as int;
+        databaseUser.update((val) {
+          val?.totalMinutes = value;
+        });
         break;
       case UserProperty.streakFreezes:
-        databaseUser.value.streakFreezes = value as int;
+        // databaseUser.value.streakFreezes = value as int;
+        databaseUser.update((val) {
+          val?.streakFreezes = value;
+        });
         break;
       case UserProperty.unlockedTurtleColors:
-        databaseUser.value.unlockedTurtleColors = value;
+        // databaseUser.value.unlockedTurtleColors = value;
+        databaseUser.update((val) {
+          val?.unlockedTurtleColors = value;
+        });
         break;
       case UserProperty.unlockedTurtles:
-        databaseUser.value.unlockedTurtles = value;
+        // databaseUser.value.unlockedTurtles = value;
+        databaseUser.update((val) {
+          val?.unlockedTurtles = value;
+        });
         break;
       case UserProperty.lastMeditated:
-        databaseUser.value.lastMeditated = DateTime.parse(value);
+        // databaseUser.value.lastMeditated = DateTime.parse(value);
+        databaseUser.update((val) {
+          val?.lastMeditated = DateTime.parse(value);
+        });
         break;
       case UserProperty.eggTypes:
-        databaseUser.value.eggTypes = RxList<String>.from(value);
+        // databaseUser.value.eggTypes = RxList<String>.from(value);
+        databaseUser.update((val) {
+          val?.eggTypes = RxList<String>.from(value);
+        });
         break;
       case UserProperty.meditationHistory:
         // Something weird goes on here when I try to log or parse the meditationHistory value.
