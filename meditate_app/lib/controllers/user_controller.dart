@@ -91,14 +91,20 @@ class UserController extends GetxController {
         logWarning(
             "streak storage value: " + storage.read("streak").toString());
         logInfo("streak: " + value.toString());
-        localStorageUser.value.streak = value as int;
+        // localStorageUser.value.streak = value as int;
+        localStorageUser.update((val) {
+          val?.streak = value;
+        });
         break;
       case UserProperty.gems: //Completed
         storage.write("gems", value.toString());
 
         logWarning("gems storage value: " + storage.read("gems").toString());
         logInfo("gems: " + value.toString());
-        localStorageUser.value.gems = value as int;
+        // localStorageUser.value.gems = value as int;
+        localStorageUser.update((val) {
+          val?.gems = value;
+        });
         break;
       case UserProperty.hatchProgressEggOne: //Completed
         storage.write("egg_progress_one", value.toString());
@@ -106,7 +112,10 @@ class UserController extends GetxController {
         logWarning("egg_progress_one storage value: " +
             storage.read("egg_progress_one"));
         logInfo("egg_progress_one: " + value.toString());
-        localStorageUser.value.hatchProgressEggOne = value as int;
+        // localStorageUser.value.hatchProgressEggOne = value as int;
+        localStorageUser.update((val) {
+          val?.hatchProgressEggOne = value;
+        });
         break;
 
       case UserProperty.eggs: //Completed
@@ -114,7 +123,10 @@ class UserController extends GetxController {
 
         logWarning("eggs storage value: " + storage.read("eggs").toString());
         logInfo("eggs: " + value.toString());
-        localStorageUser.value.eggs = value as int;
+        // localStorageUser.value.eggs = value as int;
+        localStorageUser.update((val) {
+          val?.eggs = value;
+        });
         break;
       case UserProperty.totalEggs: //Completed
         storage.write("total_eggs", value.toString());
@@ -122,7 +134,10 @@ class UserController extends GetxController {
         logWarning("total_eggs storage value: " +
             storage.read("total_eggs").toString());
         logInfo("total_eggs: " + value.toString());
-        localStorageUser.value.totalEggs = value as int;
+        // localStorageUser.value.totalEggs = value as int;
+        localStorageUser.update((val) {
+          val?.totalEggs = value;
+        });
         break;
       case UserProperty.totalMinutes: //Completed
         storage.write("total_minutes", value.toString());
@@ -130,7 +145,10 @@ class UserController extends GetxController {
         logWarning(
             "total_minutes storage value: " + storage.read("total_minutes"));
         logInfo("total_minutes: " + value.toString());
-        localStorageUser.value.totalMinutes = value as int;
+        // localStorageUser.value.totalMinutes = value as int;
+        localStorageUser.update((val) {
+          val?.totalMinutes = value;
+        });
         break;
       case UserProperty.streakFreezes:
         storage.write("streak_freezes", value.toString());
@@ -138,13 +156,20 @@ class UserController extends GetxController {
         logWarning(
             "streak_freezes storage value: " + storage.read("streak_freezes"));
         logInfo("streak_freezes: " + value.toString());
-        localStorageUser.value.streakFreezes = value as int;
+        // localStorageUser.value.streakFreezes = value as int;
+        localStorageUser.update((val) {
+          val?.streakFreezes = value;
+        });
         break;
       case UserProperty.unlockedTurtleColors:
         localStorageUser.value.unlockedTurtleColors = value;
         for (int i = 0; i < TURTLES.length; i++) {
           if (localStorageUser.value.unlockedTurtleColors.length <= i) {
-            localStorageUser.value.unlockedTurtleColors.add([]);
+            // localStorageUser.value.unlockedTurtleColors.add([]);
+            localStorageUser.update((val) {
+              val?.unlockedTurtleColors.add([]);
+            });
+
             //TODO: note for tomorrow, this isnt right I dont think.
             //this is lowkey the turtle issue as well.
 
@@ -172,7 +197,10 @@ class UserController extends GetxController {
         localStorageUser.value.unlockedTurtles = value;
         for (int i = 0; i < TURTLES.length; i++) {
           if (localStorageUser.value.unlockedTurtles.length <= i) {
-            localStorageUser.value.unlockedTurtles.add(0);
+            // localStorageUser.value.unlockedTurtles.add(0);
+            localStorageUser.update((val) {
+              val?.unlockedTurtles.add(0);
+            });
           } else {
             logWarning("turtle-$i: " + storage.read("turtle-$i").toString());
 
@@ -191,7 +219,10 @@ class UserController extends GetxController {
         logWarning("last_meditated storage value: " +
             storage.read("last_meditated").toString());
         logInfo("last_meditated: " + value.toString());
-        localStorageUser.value.lastMeditated = DateTime.parse(value);
+        // localStorageUser.value.lastMeditated = DateTime.parse(value);
+        localStorageUser.update((val) {
+          val?.lastMeditated = DateTime.parse(value);
+        });
         break;
       case UserProperty.eggTypes:
         logWarning(
@@ -201,7 +232,10 @@ class UserController extends GetxController {
             value.join(",").replaceAll("[", "").replaceAll("]", "");
         logInfo("egg_types: " + eggTypesString);
         storage.write("egg_types", eggTypesString);
-        localStorageUser.value.eggTypes = RxList<String>.from(value);
+        // localStorageUser.value.eggTypes = RxList<String>.from(value);
+        localStorageUser.update((val) {
+          val?.eggTypes = RxList<String>.from(value);
+        });
         break;
       case UserProperty.meditationHistory:
         logWarning("meditation_history storage value: " +
@@ -219,11 +253,20 @@ class UserController extends GetxController {
           // logInfo("Saving meditation history: $key:" + value[key].toString());
           storage.write(key, value[key].toString());
         }
-        localStorageUser.value.meditationHistory = RxMap<DateTime, int>.from(
-            (value as Map<dynamic, dynamic>).map((key, value) => MapEntry(
-                DateTime(int.parse(key.split("-")[3]),
-                    int.parse(key.split("-")[2]), int.parse(key.split("-")[1])),
-                value)));
+        localStorageUser.update((val) {
+          val?.meditationHistory = RxMap<DateTime, int>.from(
+              (value as Map<dynamic, dynamic>).map((key, value) => MapEntry(
+                  DateTime(
+                      int.parse(key.split("-")[3]),
+                      int.parse(key.split("-")[2]),
+                      int.parse(key.split("-")[1])),
+                  value)));
+        });
+        // localStorageUser.value.meditationHistory = RxMap<DateTime, int>.from(
+        //     (value as Map<dynamic, dynamic>).map((key, value) => MapEntry(
+        //         DateTime(int.parse(key.split("-")[3]),
+        //             int.parse(key.split("-")[2]), int.parse(key.split("-")[1])),
+        //         value)));
         break;
 
       default:
@@ -253,6 +296,7 @@ class UserController extends GetxController {
   Future<void> getLocalStorageUser() async {
     logInfo("Getting Local Storage User");
     if (getValue('streak') != "") {
+      //TODO: change these to the new way
       localStorageUser.value.streak = int.parse(getValue("streak"));
       logSuccess("Loaded streak: ${localStorageUser.value.streak}");
     }
