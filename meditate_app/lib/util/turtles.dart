@@ -72,8 +72,8 @@ const List<String> TURTLE_COLORS_NAME = [
 List<Turtle> TURTLES = [
   const Turtle(name: "Swamp Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(
-      name: "Rockshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  const Turtle(name: "Hexagon Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
+      name: "Rockshell Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
+  const Turtle(name: "Hexagon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
   const Turtle(
       name: "Smoothback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(name: "Obsidian Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
@@ -90,15 +90,14 @@ List<Turtle> TURTLES = [
   const Turtle(
       name: "Poseidon Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(
-      name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+      name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
   const Turtle(
       name: "Watermelon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
   const Turtle(
       name: "Honeyshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(name: "Citrus Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
-  const Turtle(
-      name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
+  const Turtle(name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.BLUE),
   Turtle(
       name: "Luna Turtle",
       rarity: Rarity.RARE,

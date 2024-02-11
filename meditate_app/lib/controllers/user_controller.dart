@@ -18,7 +18,7 @@ User noUser = User(
   username: "null",
   createdAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
   updatedAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
-  lastMeditated: DateTime.now(),
+  lastMeditated: DateTime.parse("2011-10-05T14:48:00.000Z"),
   meditationTimesAsOf: DateTime.now(),
   meditationHistory: <DateTime, int>{}.obs,
 );
@@ -237,6 +237,7 @@ class UserController extends GetxController {
 
     logSuccess(
         "UPDATING LOCAL STORAGE => " + key.name + ":" + value.toString());
+    update();
   }
 
   /// This gets the local storage value.
@@ -328,6 +329,9 @@ class UserController extends GetxController {
           // localStorageUser.value.unlockedTurtleColors[i].add(-1);
         } else {
           logError("No turtle color found for turtle $i");
+          localStorageUser.value.unlockedTurtleColors =
+              List<List<int>>.from(localStorageUser.value.unlockedTurtleColors)
+                ..add([-1]);
         }
       } else {
         localStorageUser.value.unlockedTurtles =

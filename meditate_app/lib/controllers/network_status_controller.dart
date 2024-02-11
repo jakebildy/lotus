@@ -29,6 +29,7 @@ class NetworkStatusController extends GetxController {
       }
     } else {
       offline.value = true;
+      await Get.find<UserController>().syncData();
     }
     Get.find<UserController>().loadStreak();
     update();
