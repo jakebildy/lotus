@@ -9,7 +9,7 @@ import 'package:meditate_app/pages/profile_page.dart';
 import 'package:meditate_app/pages/signup/signup.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/turtles_page.dart';
-
+import 'package:badges/badges.dart' as badges;
 import 'pages/shop_page.dart';
 
 class AppPages extends StatefulWidget {
@@ -192,10 +192,41 @@ class _AppPagesState extends State<AppPages> {
                                     height: 30,
                                     child: Image.asset(
                                         "assets/store_selected.png"))
-                                : SizedBox(
-                                    height: 30,
-                                    child: Image.asset(
-                                        "assets/store_unselected.png")),
+                                : badges.Badge(
+                                    showBadge: userController
+                                                    .user.value.streakFreezes <=
+                                                1 &&
+                                            userController.user.value.gems ~/
+                                                    80 >=
+                                                1
+                                        ? true
+                                        : false,
+                                    badgeContent: Text(
+                                      (userController.user.value
+                                                      .streakFreezes ==
+                                                  0
+                                              ? userController.user.value
+                                                              .gems ~/
+                                                          80 >
+                                                      2
+                                                  ? 2
+                                                  : userController
+                                                          .user.value.gems ~/
+                                                      80
+                                              : 1)
+                                          .toString(),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    position: badges.BadgePosition.bottomEnd(
+                                        bottom: -4, end: -4),
+                                    child: SizedBox(
+                                        height: 30,
+                                        child: Image.asset(
+                                            "assets/store_unselected.png")),
+                                  ),
                             label: "Shop"),
                         BottomNavigationBarItem(
                             icon: _page == 2
