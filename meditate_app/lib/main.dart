@@ -72,8 +72,8 @@ Future<void> main() async {
         {
           Get.find<CountdownController>().resumeApp();
           logInfo(msg.toString());
-          SaveController save = Get.find();
-          save.loadData();
+          // SaveController save = Get.find();
+          // save.loadData();
           FollowController follow = Get.find();
           follow.fetchFollows();
 

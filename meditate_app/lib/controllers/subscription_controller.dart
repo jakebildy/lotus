@@ -100,7 +100,9 @@ class SubscriptionController extends GetxController {
         if (purchaseDetails.pendingCompletePurchase) {
           await InAppPurchase.instance.completePurchase(purchaseDetails);
           SaveController save = Get.find();
-          if (save.isSubscribedToPremium.value == false) {
+          //TODO: also wait for loading to be finished
+          if (save.isSubscribedToPremium.value == false &&
+              save.loadingSaveController.value == false) {
             save.updateIsSubscribedToPremium(true);
             Get.offAll(const AppPages());
           }

@@ -15,6 +15,7 @@ class SaveController extends GetxController {
   RxString selectedAmbience = "Water Sounds".obs;
   RxBool isSubscribedToPremium = false.obs;
 
+  RxBool loadingSaveController = true.obs;
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
 
@@ -63,12 +64,9 @@ class SaveController extends GetxController {
   //   update();
   // }
 
-  // SaveController() {
-  //   loadData();
-  //   //Add the default brown swamp turtle: note, currently disabled
-  //   // unlockedTurtles[0] += 1;
-  //   // unlockedTurtleColors[0].add(0);
-  // }
+  SaveController() {
+    loadData();
+  }
 
   // Future<void> uploadLocalData() async {
   //   // Upload simple attributes
@@ -150,11 +148,6 @@ class SaveController extends GetxController {
     // Print loading message
     logInfo("Loading Data!");
 
-    // Load total meditation minutes if available
-    // if (getValue('total_minutes') != "") {
-    //   totalMinutes.value = int.parse(getValue('total_minutes'));
-    // }
-
     // Load unlocked turtle data
     // for (int i = 0; i < TURTLES.length; i++) {
     //   if (getValue('turtle-$i') != "") {
@@ -217,6 +210,8 @@ class SaveController extends GetxController {
       isSubscribedToPremium.value =
           getValue('subscribed_to_premium').toLowerCase() == 'true';
     }
+
+    loadingSaveController.value = false;
 
     // Handle potential issue with a vast number of egg types
 
