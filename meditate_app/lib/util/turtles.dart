@@ -116,7 +116,6 @@ List<Turtle> TURTLES = [
       foundIn: AMBIENCES[10]),
 ];
 
-//TODO: verify this logic looks good
 int getTurtleToHatch(String ambience) {
   List<Turtle> possibleTurtles = TURTLES;
 
@@ -139,18 +138,17 @@ int getTurtleToHatch(String ambience) {
 
   // Only show ambience turtles if the user meditated with that ambience
   possibleTurtles = possibleTurtles
-      // TODO: test to ensure this doesnt break anything
       .where((element) =>
           element.foundIn == null || element.foundIn!.name == ambience)
       .toList();
 
   int checkRarity = Random().nextInt(10);
 
-  if (checkRarity < 7) {
+  if (checkRarity < 6) {
     possibleTurtles = possibleTurtles
         .where((element) => element.rarity == Rarity.COMMON)
         .toList();
-  } else if (checkRarity == 7 || checkRarity == 8) {
+  } else if (checkRarity == 6 || checkRarity == 7 || checkRarity == 8) {
     possibleTurtles = possibleTurtles
         .where((element) => element.rarity != Rarity.LEGENDARY)
         .toList();

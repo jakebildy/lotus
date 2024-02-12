@@ -715,6 +715,8 @@ class UserController extends GetxController {
 
   //TODO: to solve the streak icon grayed out initially issue, have a new function loadHasMeditatedToday that sets a preliminary value based on the local storage
 
+  void loadHasMeditatedToday() {}
+
   void loadStreak() {
     logSuccess("Loading Streak, currently " + user.value.streak.toString());
     DateTime now = DateTime.now();

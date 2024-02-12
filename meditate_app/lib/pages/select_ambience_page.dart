@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/pages/get_subscription_page.dart';
 import 'package:meditate_app/util/ambiences.dart';
 
@@ -39,7 +38,6 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
   @override
   Widget build(BuildContext context) {
     SaveController save = Get.find();
-    SubscriptionController subscription = Get.find();
     NetworkStatusController network = Get.find();
 
     return Obx(

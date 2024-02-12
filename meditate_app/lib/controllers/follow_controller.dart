@@ -128,7 +128,7 @@ class FollowController extends GetxController {
     List<User> _usersFollowed = [];
     for (Follow follow in allUserFollowers) {
       if (follow.following?.id == user.id) {
-        _usersFollowed.add(follow.user!);
+        _usersFollowed.add(follow.user);
       }
     }
     return _usersFollowed;
