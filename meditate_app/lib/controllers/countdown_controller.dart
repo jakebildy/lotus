@@ -13,6 +13,7 @@ import 'package:meditate_app/util/ambiences.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:ocarina/ocarina.dart';
+import 'package:just_audio/just_audio.dart' as just_audio;
 
 import '../util/DEBUG_MODE.dart';
 import '../util/logger.dart';
@@ -40,14 +41,14 @@ class CountdownController extends GetxController {
   /// Whether the Continue button is loading after being pressed
   RxBool loading = false.obs;
 
+  late OcarinaPlayer player;
+  late just_audio.AudioPlayer networkAudioPlayer;
+
   CountdownController() {
     bell = AudioPlayer();
-    networkAudioPlayer = AudioPlayer();
+    networkAudioPlayer = just_audio.AudioPlayer();
     bell.setVolume(2.0);
   }
-
-  late OcarinaPlayer player;
-  late AudioPlayer networkAudioPlayer;
 
   Future<void> playAmbience() async {
     SaveController save = Get.find();
@@ -57,12 +58,14 @@ class CountdownController extends GetxController {
           .first
           .audio
           .startsWith("https")) {
-        Source audioUrl = UrlSource(AMBIENCES
+        await networkAudioPlayer.setUrl(AMBIENCES
             .where((element) => element.name == save.selectedAmbience.value)
             .first
-            .audio);
-        networkAudioPlayer.play(audioUrl);
-        networkAudioPlayer.setReleaseMode(ReleaseMode.loop);
+            .audio); // Schemes: (https: | file: | asset: )
+        await networkAudioPlayer.play();
+        networkAudioPlayer.setLoopMode(just_audio.LoopMode.all);
+        // networkAudioPlayer.play(audioUrl);
+        // networkAudioPlayer.setReleaseMode(ReleaseMode.loop);
       } else {
         player = OcarinaPlayer(
           asset: AMBIENCES
@@ -132,7 +135,7 @@ class CountdownController extends GetxController {
           .first
           .audio
           .startsWith("https")) {
-        networkAudioPlayer.resume();
+        networkAudioPlayer.play();
       } else {
         player.resume();
       }

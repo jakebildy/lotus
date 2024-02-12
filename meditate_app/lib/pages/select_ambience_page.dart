@@ -132,8 +132,6 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                                           currentAudioSource = -1;
                                         });
                                       } else {
-                                        // pause any audio already playing
-                                        // TODO: debug
                                         audioPlayer.stop();
 
                                         // play the audio for 10 seconds
