@@ -71,9 +71,9 @@ const List<Ambience> AMBIENCES = [
       premium: true),
   Ambience(
       name: "Jungle",
-      //TODO: from the one in your downloads, crop sound
       image: 'assets/ambiences/jungle.jpg',
-      audio: 'assets/audio/jungle.wav',
+      audio:
+          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/jungle.wav',
       setting: 'Jungle',
       premium: true),
   Ambience(
