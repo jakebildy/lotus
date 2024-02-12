@@ -68,8 +68,6 @@ class FollowerWidget extends StatelessWidget {
                                               fit: BoxFit.cover,
                                             ))),
                             ),
-                            //TODO: hide after 24 hours ?? i think this should work
-
                             Text(
                               user.sentEmojis[userController.user.value.id]
                                           .toString() !=

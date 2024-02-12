@@ -9,7 +9,6 @@ import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
-import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';

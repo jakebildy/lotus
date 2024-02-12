@@ -64,7 +64,6 @@ class FollowController extends GetxController {
     return activeUsers;
   }
 
-  // TODO: GetActiveUsers PLUS New Users (last 3 days) createdAt <= 3 days ago. Ensure no duplicates
   List<User> getActiveAndNewUsers(List<User> users) {
     List<User> activeUsers = getActiveUsers(users);
     DateTime now = DateTime.now();
