@@ -168,7 +168,12 @@ class CountdownController extends GetxController {
         player.dispose();
       }
     }
-    bonusTimer.cancel();
+    try {
+      bonusTimer.cancel();
+    } catch (e) {
+      logError("Error disposing bonusTimer: $e");
+    }
+
     countdownTimer.cancel();
     bell.dispose();
   }

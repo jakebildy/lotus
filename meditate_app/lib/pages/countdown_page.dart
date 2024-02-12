@@ -478,6 +478,7 @@ class _CountdownPageState extends State<CountdownPage>
                                       child: GestureDetector(
                                         onTap: () {
                                           Navigator.of(context).pop();
+                                          countdownController.disposeTimer();
                                         },
                                         child: Container(
                                             decoration: const BoxDecoration(
