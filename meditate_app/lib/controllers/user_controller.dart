@@ -57,6 +57,7 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    loadHasMeditatedToday();
     loginFromCookiesRequest();
 
     databaseUser.listen((User user) {
@@ -715,7 +716,22 @@ class UserController extends GetxController {
 
   //TODO: to solve the streak icon grayed out initially issue, have a new function loadHasMeditatedToday that sets a preliminary value based on the local storage
 
-  void loadHasMeditatedToday() {}
+  void loadHasMeditatedToday() {
+    // get last meditated from local storage
+    if (storage.read("last_meditated") != "") {
+      DateTime lastMeditated =
+          DateTime.parse(storage.read("last_meditated").toString());
+      DateTime now = DateTime.now();
+      DateTime date = DateTime(now.year, now.month, now.day);
+
+      int numDays = lastMeditated.difference(date).inDays.abs();
+
+      if (numDays < 1) {
+        hasDoneStreakToday.value = true;
+        update();
+      }
+    }
+  }
 
   void loadStreak() {
     logSuccess("Loading Streak, currently " + user.value.streak.toString());
