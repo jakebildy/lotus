@@ -523,7 +523,9 @@ class UserController extends GetxController {
         await api.user.updateUserAttribute(property.name, value);
         if (property == UserProperty.meditationHistory) {
           User newUser = await api.user.me();
-          databaseUser.value.meditationHistory = newUser.meditationHistory;
+          databaseUser.update((val) {
+            val?.meditationHistory = newUser.meditationHistory;
+          });
         }
       } catch (e) {
         logError("Failed to update database");
