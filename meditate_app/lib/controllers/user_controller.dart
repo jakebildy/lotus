@@ -849,20 +849,36 @@ class UserController extends GetxController {
     logError("THIS ->");
     logError(today.toIso8601String());
     logError(user.value.meditationHistory.toString());
-    if (user.value.meditationHistory[today] != null) {
+
+    DateTime? currentDate;
+
+    user.value.meditationHistory.keys.forEach((key) {
+      // make the key in UTC
+      DateTime keyUtc = DateTime.utc(key.year, key.month, key.day);
+      if (keyUtc.isAtSameMomentAs(today)) {
+        logInfo('Match found: $key');
+        currentDate = key;
+      }
+    });
+    if (currentDate != null) {
       logError("this was not null");
-      logError(user.value.meditationHistory[today].toString());
+      logError(user.value.meditationHistory[currentDate].toString());
       updateProperty(UserProperty.meditationHistory, {
         ...user.value.meditationHistory,
-        today: user.value.meditationHistory[today]! + amountNew,
+        today: user.value.meditationHistory[currentDate]! + amountNew,
       });
       logInfo(
           "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
     } else {
       logError("this was null!!");
-      logError(user.value.meditationHistory[today].toString());
+      logSuccess("more info, here is currentDate:");
+      logError(currentDate.toString());
+      logSuccess("more info, here is the meditation history:");
+      logError(user.value.meditationHistory.toString());
+
+      logError(user.value.meditationHistory[currentDate].toString());
       updateProperty(UserProperty.meditationHistory,
-          {...user.value.meditationHistory, today: amountNew});
+          {...user.value.meditationHistory, currentDate: amountNew});
       logInfo(
           "Updating meditationHistory for today! First time meditating for today, so a new key/value was added.");
     }
