@@ -33,7 +33,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  circular_countdown_timer: ^0.2.2
   duration_picker: ^1.1.0+1
   get: ^4.6.5
   audioplayers: ^1.0.1
@@ -66,6 +65,9 @@ dependencies:
   url_launcher: ^6.1.11
   in_app_review: ^2.0.8
   in_app_purchase: ^3.1.11
+  carousel_slider: ^4.2.1
+  badges: ^2.0.3
+  just_audio: ^0.9.36
 
 dev_dependencies:
   flutter_test:
@@ -213,31 +215,20 @@ flutter:
     - assets/blank_profile.png
     - assets/ambiences/water_sounds.jpg
     - assets/ambiences/mourning_doves.jpg
-    - assets/audio/mourning_doves.wav
     - assets/stars.jpg
     - assets/audio/night.wav
     - assets/ambiences/forest.jpg
-    - assets/audio/forest.mp3
     - assets/ambiences/random.jpg
     - assets/ambiences/wind.jpg
-    - assets/audio/wind.wav
-    - assets/audio/rain.wav
     - assets/ambiences/rain.jpg
     - assets/images/rainy_overlay.gif
     - assets/ambiences/extradimensional.jpg
-    - assets/audio/extradimensional.wav
     - assets/ambiences/jungle.jpg
-    - assets/audio/jungle.wav
     - assets/ambiences/lostcivilization.jpg
-    - assets/audio/lostcivilization.wav
     - assets/ambiences/prehistoricsea.jpg
-    - assets/audio/prehistoricsea.wav
     - assets/ambiences/underwater.jpg
-    - assets/audio/underwater.wav
     - assets/ambiences/beach.jpg
-    - assets/audio/beach.wav
     - assets/ambiences/thunderstorm.jpg
-    - assets/audio/thunderstorm.wav
     - assets/jungle_top.png
     - assets/jungle_bottom.png
     - assets/images/game/water_2.gif

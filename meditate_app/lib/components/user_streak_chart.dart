@@ -10,10 +10,6 @@ class UserStreakChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day);
-    int daysShifted = user.meditationTimesAsOf.difference(date).inDays.abs();
-
     return ClipRRect(
       child: Container(
         padding: const EdgeInsets.all(10),

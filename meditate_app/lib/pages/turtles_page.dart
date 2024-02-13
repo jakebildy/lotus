@@ -120,44 +120,27 @@ class _TurtlesPageState extends State<TurtlesPage> {
                 ListView(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  children: List.generate(TURTLES.length, (index) {
+                  children: List.generate(
+                      listOfIndicesByTier(
+                              userController.user.value.unlockedTurtles)
+                          .length, (index) {
                     // Check if index is within the bounds of unlockedTurtles
-                    if (index <
-                        userController.user.value.unlockedTurtles.length) {
-                      return userController.user.value.unlockedTurtles[index] >
-                              0
-                          ? Container()
-                          : Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: SizedBox(
-                                height: 100,
-                                child: Center(
-                                  child: TurtleCategory(
-                                    unlocked: false,
-                                    id: index,
-                                    uniqueQuantity: 0,
-                                    displayColor: 0,
-                                  ),
-                                ),
-                              ),
-                            );
-                    } else {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                        child: SizedBox(
-                          height: 100,
-                          child: Center(
-                            child: TurtleCategory(
-                              unlocked: false,
-                              id: index,
-                              uniqueQuantity: 0,
-                              displayColor: 0,
-                            ),
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4.0),
+                      child: SizedBox(
+                        height: 100,
+                        child: Center(
+                          child: TurtleCategory(
+                            unlocked: false,
+                            id: listOfIndicesByTier(userController
+                                .user.value.unlockedTurtles)[index],
+                            uniqueQuantity: 0,
+                            displayColor: 0,
                           ),
                         ),
-                      );
-                    }
+                      ),
+                    );
                   }),
                 ),
               ]),

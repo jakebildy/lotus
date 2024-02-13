@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:meditate_app/util/turtles.dart';
 
-class TurtleImage extends StatelessWidget {
+class UnlockedTurtle extends StatelessWidget {
   final int id;
   final int color;
-  const TurtleImage({super.key, required this.id, required this.color});
+  const UnlockedTurtle({super.key, required this.id, required this.color});
 
   @override
   Widget build(BuildContext context) {

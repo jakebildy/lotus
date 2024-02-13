@@ -1,5 +1,6 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 
 /// NetworkStatusController checks if the user is online. It logs in if the connection is restored.
@@ -29,6 +30,8 @@ class NetworkStatusController extends GetxController {
       }
     } else {
       offline.value = true;
+      Get.find<SaveController>().updateSelectedAmbience("Water Sounds");
+      await Get.find<UserController>().syncData();
     }
     Get.find<UserController>().loadStreak();
     update();

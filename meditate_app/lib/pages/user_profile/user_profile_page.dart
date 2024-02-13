@@ -389,7 +389,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                               : followController
                                       .getAllUsersFollowedBy(widget.user)
                                       .length *
-                                  72), //TODO: figure out exact
+                                  72),
                       child: TabBarView(
                           controller: tabController,
                           physics: const NeverScrollableScrollPhysics(),

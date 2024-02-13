@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/util/logger.dart';
 
 import 'ambiences.dart';
 
 enum Rarity { COMMON, RARE, LEGENDARY }
 
-enum Tier { ORANGE, YELLOW, BLUE, RAINBOW }
+enum Tier { ORANGE, LITBACK, YELLOW, BLUE, RAINBOW, AMBIENCE }
 
 class Turtle {
   final String name;
@@ -71,14 +72,14 @@ const List<String> TURTLE_COLORS_NAME = [
 List<Turtle> TURTLES = [
   const Turtle(name: "Swamp Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(
-      name: "Rockshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  const Turtle(name: "Hexagon Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
+      name: "Rockshell Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
+  const Turtle(name: "Hexagon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
   const Turtle(
       name: "Smoothback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(name: "Obsidian Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
   const Turtle(name: "Flora Turtle", rarity: Rarity.RARE, tier: Tier.RAINBOW),
   const Turtle(
-      name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+      name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.LITBACK),
   const Turtle(
       name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.YELLOW),
   const Turtle(name: "Swirl Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
@@ -89,59 +90,65 @@ List<Turtle> TURTLES = [
   const Turtle(
       name: "Poseidon Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(
-      name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+      name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
   const Turtle(
       name: "Watermelon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
   const Turtle(
       name: "Honeyshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(name: "Citrus Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  const Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  const Turtle(
-      name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
+  const Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
+  const Turtle(name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.BLUE),
   Turtle(
       name: "Luna Turtle",
       rarity: Rarity.RARE,
-      tier: Tier.ORANGE,
+      tier: Tier.AMBIENCE,
       foundIn: AMBIENCES[2]),
   const Turtle(name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.BLUE),
-  // Turtle(
-  //     name: "Dino Turtle",
-  //     rarity: Rarity.COMMON,
-  //     tier: Tier.ORANGE,
-  //     foundIn: AMBIENCES[13]),
-  // Turtle(
-  //     name: "Lightning Turtle",
-  //     rarity: Rarity.COMMON,
-  //     tier: Tier.ORANGE,
-  //     foundIn: AMBIENCES[10]),
+  Turtle(
+      name: "Dino Turtle",
+      rarity: Rarity.COMMON,
+      tier: Tier.AMBIENCE,
+      foundIn: AMBIENCES[13]),
+  Turtle(
+      name: "Lightning Turtle",
+      rarity: Rarity.COMMON,
+      tier: Tier.AMBIENCE,
+      foundIn: AMBIENCES[10]),
 ];
 
 int getTurtleToHatch(String ambience) {
   List<Turtle> possibleTurtles = TURTLES;
 
-  //If the user doesn't have at least one friend, filter the Litback turtle
-  FollowController followController = Get.find();
+  //If the user doesn't have at least one friend OR follow controller doesnt exist, filter the Litback turtle
 
-  if (followController.following.isEmpty) {
+  bool isControllerRegistered = Get.isRegistered<FollowController>();
+  if (!isControllerRegistered) {
     possibleTurtles = possibleTurtles
         .where((element) => element.name != "Litback Turtle")
         .toList();
+  } else {
+    FollowController followController = Get.find();
+
+    if (followController.following.isEmpty) {
+      possibleTurtles = possibleTurtles
+          .where((element) => element.name != "Litback Turtle")
+          .toList();
+    }
   }
 
   // Only show ambience turtles if the user meditated with that ambience
   possibleTurtles = possibleTurtles
-      // TODO: test to ensure this doesnt break anything
       .where((element) =>
           element.foundIn == null || element.foundIn!.name == ambience)
       .toList();
 
   int checkRarity = Random().nextInt(10);
 
-  if (checkRarity < 7) {
+  if (checkRarity < 6) {
     possibleTurtles = possibleTurtles
         .where((element) => element.rarity == Rarity.COMMON)
         .toList();
-  } else if (checkRarity == 7 || checkRarity == 8) {
+  } else if (checkRarity == 6 || checkRarity == 7 || checkRarity == 8) {
     possibleTurtles = possibleTurtles
         .where((element) => element.rarity != Rarity.LEGENDARY)
         .toList();
@@ -151,19 +158,27 @@ int getTurtleToHatch(String ambience) {
   UserController userController = Get.find();
   if (userController.streakTier() == Tier.ORANGE) {
     possibleTurtles = possibleTurtles
-        .where((element) => element.tier == Tier.ORANGE)
+        .where((element) =>
+            element.tier == Tier.ORANGE ||
+            element.tier == Tier.LITBACK ||
+            element.tier == Tier.AMBIENCE)
         .toList();
   } else if (userController.streakTier() == Tier.YELLOW) {
     possibleTurtles = possibleTurtles
         .where((element) =>
-            element.tier == Tier.ORANGE || element.tier == Tier.YELLOW)
+            element.tier == Tier.ORANGE ||
+            element.tier == Tier.YELLOW ||
+            element.tier == Tier.LITBACK ||
+            element.tier == Tier.AMBIENCE)
         .toList();
   } else if (userController.streakTier() == Tier.BLUE) {
     possibleTurtles = possibleTurtles
         .where((element) =>
             element.tier == Tier.ORANGE ||
             element.tier == Tier.YELLOW ||
-            element.tier == Tier.BLUE)
+            element.tier == Tier.BLUE ||
+            element.tier == Tier.LITBACK ||
+            element.tier == Tier.AMBIENCE)
         .toList();
   }
   int result = 0;
@@ -179,4 +194,43 @@ int getTurtleToHatch(String ambience) {
   }
 
   return result;
+}
+
+//This is for sorting the lockedTurtles
+List<int> listOfIndicesByTier(List<dynamic> unlockedTurtles) {
+  // returns a list of indices corresponding to the turtles sorted by tier
+  List<int> orangeTurtles = [];
+  List<int> litbackTurtles = [];
+  List<int> yellowTurtles = [];
+  List<int> blueTurtles = [];
+  List<int> rainbowTurtles = [];
+  List<int> ambienceTurtles = [];
+
+  for (int i = 0; i < TURTLES.length; i++) {
+    if (unlockedTurtles[i] <= 0) {
+      if (TURTLES[i].tier == Tier.ORANGE) {
+        orangeTurtles.add(i);
+      } else if (TURTLES[i].tier == Tier.LITBACK) {
+        litbackTurtles.add(i);
+      } else if (TURTLES[i].tier == Tier.YELLOW) {
+        yellowTurtles.add(i);
+      } else if (TURTLES[i].tier == Tier.BLUE) {
+        blueTurtles.add(i);
+      } else if (TURTLES[i].tier == Tier.RAINBOW) {
+        rainbowTurtles.add(i);
+      } else {
+        ambienceTurtles.add(i);
+      }
+    }
+  }
+
+  // combine all lists
+  orangeTurtles.addAll(litbackTurtles);
+  orangeTurtles.addAll(yellowTurtles);
+  orangeTurtles.addAll(blueTurtles);
+  orangeTurtles.addAll(rainbowTurtles);
+  orangeTurtles.addAll(ambienceTurtles);
+
+  logError(orangeTurtles.toString());
+  return orangeTurtles;
 }

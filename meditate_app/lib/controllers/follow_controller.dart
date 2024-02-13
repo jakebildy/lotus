@@ -64,7 +64,6 @@ class FollowController extends GetxController {
     return activeUsers;
   }
 
-  // TODO: GetActiveUsers PLUS New Users (last 3 days) createdAt <= 3 days ago. Ensure no duplicates
   List<User> getActiveAndNewUsers(List<User> users) {
     List<User> activeUsers = getActiveUsers(users);
     DateTime now = DateTime.now();
@@ -129,7 +128,7 @@ class FollowController extends GetxController {
     List<User> _usersFollowed = [];
     for (Follow follow in allUserFollowers) {
       if (follow.following?.id == user.id) {
-        _usersFollowed.add(follow.user!);
+        _usersFollowed.add(follow.user);
       }
     }
     return _usersFollowed;

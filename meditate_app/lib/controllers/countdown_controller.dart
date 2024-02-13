@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
@@ -14,6 +13,7 @@ import 'package:meditate_app/util/ambiences.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:ocarina/ocarina.dart';
+import 'package:just_audio/just_audio.dart' as just_audio;
 
 import '../util/DEBUG_MODE.dart';
 import '../util/logger.dart';
@@ -41,26 +41,43 @@ class CountdownController extends GetxController {
   /// Whether the Continue button is loading after being pressed
   RxBool loading = false.obs;
 
+  late OcarinaPlayer player;
+  late just_audio.AudioPlayer networkAudioPlayer;
+
   CountdownController() {
     bell = AudioPlayer();
-    bell.setVolume(5.0);
+    networkAudioPlayer = just_audio.AudioPlayer();
+    bell.setVolume(2.0);
   }
 
-  late OcarinaPlayer player;
   Future<void> playAmbience() async {
     SaveController save = Get.find();
     if (save.selectedAmbience.value != "None") {
-      player = OcarinaPlayer(
-        asset: AMBIENCES
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        await networkAudioPlayer.setUrl(AMBIENCES
             .where((element) => element.name == save.selectedAmbience.value)
             .first
-            .audio,
-        loop: true,
-        volume: 0.8,
-      );
-
-      await player.load();
-      await player.play();
+            .audio); // Schemes: (https: | file: | asset: )
+        await networkAudioPlayer.play();
+        networkAudioPlayer.setLoopMode(just_audio.LoopMode.all);
+        // networkAudioPlayer.play(audioUrl);
+        // networkAudioPlayer.setReleaseMode(ReleaseMode.loop);
+      } else {
+        player = OcarinaPlayer(
+          asset: AMBIENCES
+              .where((element) => element.name == save.selectedAmbience.value)
+              .first
+              .audio,
+          loop: true,
+          volume: 0.8,
+        );
+        await player.load();
+        await player.play();
+      }
     }
   }
 
@@ -93,7 +110,15 @@ class CountdownController extends GetxController {
     logSuccess("Pausing countdown");
 
     if (save.selectedAmbience.value != "None") {
-      player.pause();
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.pause();
+      } else {
+        player.pause();
+      }
     }
 
     countdownTimer.cancel();
@@ -105,7 +130,15 @@ class CountdownController extends GetxController {
     logSuccess("Resuming countdown");
     SaveController save = Get.find();
     if (save.selectedAmbience.value != "None") {
-      player.resume();
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.play();
+      } else {
+        player.resume();
+      }
     }
 
     const hundredMilliseconds = Duration(seconds: 0, milliseconds: 100);
@@ -128,9 +161,22 @@ class CountdownController extends GetxController {
   void disposeTimer() {
     SaveController save = Get.find();
     if (save.selectedAmbience.value != "None") {
-      player.dispose();
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.dispose();
+      } else {
+        player.dispose();
+      }
     }
-    bonusTimer.cancel();
+    try {
+      bonusTimer.cancel();
+    } catch (e) {
+      logError("Error disposing bonusTimer: $e");
+    }
+
     countdownTimer.cancel();
     bell.dispose();
   }
@@ -170,7 +216,15 @@ class CountdownController extends GetxController {
     // isEnded = true;
     logInfo('Countdown Ended');
     if (save.selectedAmbience.value != "None") {
-      player.dispose();
+      if (AMBIENCES
+          .where((element) => element.name == save.selectedAmbience.value)
+          .first
+          .audio
+          .startsWith("https")) {
+        networkAudioPlayer.dispose();
+      } else {
+        player.dispose();
+      }
     }
     bell.dispose();
 

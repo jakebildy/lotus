@@ -116,14 +116,6 @@ class User {
 
   // Method to create a User object from a JSON map
   static User fromJson(Map<String, dynamic> map) {
-    DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day);
-    int numDays =
-        DateTime.parse(map["lastMeditated"] ?? "2011-10-05T14:48:00.000Z")
-            .difference(date)
-            .inDays
-            .abs();
-
     var unlockedTurtles = map["unlockedTurtles"] as List<dynamic>? ?? [];
     var unlockedTurtleColors =
         (map["unlockedTurtleColors"] as List<dynamic>? ?? []).map((item) {
