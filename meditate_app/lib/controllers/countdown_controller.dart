@@ -166,7 +166,8 @@ class CountdownController extends GetxController {
           .first
           .audio
           .startsWith("https")) {
-        networkAudioPlayer.dispose();
+        networkAudioPlayer.stop();
+        // networkAudioPlayer.dispose();
       } else {
         player.dispose();
       }
@@ -221,7 +222,8 @@ class CountdownController extends GetxController {
           .first
           .audio
           .startsWith("https")) {
-        networkAudioPlayer.dispose();
+        networkAudioPlayer.stop();
+        // networkAudioPlayer.dispose();
       } else {
         player.dispose();
       }
@@ -367,7 +369,11 @@ class CountdownController extends GetxController {
     HeapService heap = Get.find();
     heap.logEvent("MEDITATION_COMPLETE", {"time": timeInMinutes.toString()});
 
-    bonusTimer.cancel();
+    try {
+      bonusTimer.cancel();
+    } catch (e) {
+      logError(e.toString());
+    }
 
     loading.value = false;
     bonusTime.value = 0;
