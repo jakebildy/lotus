@@ -193,13 +193,15 @@ class CountdownController extends GetxController {
     if (!isPaused.value) {
       logSuccess("App resumed, calculating time passed");
       DateTime now = DateTime.now();
+      logInfo("Last time: $lastCountdownTimerTime");
       int timePassed = now.difference(lastCountdownTimerTime).inSeconds;
+      logInfo("Time passed: $timePassed seconds");
       tenthsOfSecondsPassed.value += timePassed * 10;
       lastCountdownTimerTime = now;
 
       // if tenthsOfSecondsPassed is greater than totalSeconds, then add to bonusTime
       if (tenthsOfSecondsPassed.value ~/ 10 > totalSeconds.value) {
-        bonusTime.value +=
+        bonusTime.value =
             (tenthsOfSecondsPassed.value ~/ 10) - totalSeconds.value;
         tenthsOfSecondsPassed.value = totalSeconds.value * 10;
       }
