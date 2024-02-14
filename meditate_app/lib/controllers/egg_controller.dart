@@ -61,7 +61,7 @@ class EggController extends GetxController {
     await user.updateProperty(UserProperty.unlockedTurtles, newUnlockedTurtles);
 
     var newUnlockedTurtleColors =
-        List.from(user.user.value.unlockedTurtleColors);
+        List<List<int>>.from(user.user.value.unlockedTurtleColors);
     newUnlockedTurtleColors[i].add(turtleColorToHatch);
     await user.updateProperty(
         UserProperty.unlockedTurtleColors, newUnlockedTurtleColors);
