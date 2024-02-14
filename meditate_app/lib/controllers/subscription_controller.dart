@@ -19,7 +19,7 @@ class SubscriptionController extends GetxController {
   RxBool getPremiumTapped = false.obs;
 
   SubscriptionController() {
-    initialize();
+    // initialize();
 
     final Stream purchaseUpdated = InAppPurchase.instance.purchaseStream;
     _streamSubscription = purchaseUpdated.listen((purchaseDetailsList) {
@@ -54,24 +54,33 @@ class SubscriptionController extends GetxController {
       // Check for past purchases
       UserController user = Get.find();
       if (user.user.value.username != "null") {
-        InAppPurchase.instance
-            .restorePurchases(applicationUserName: user.user.value.username);
+        logWarning("Checking for past purchases...");
+        try {
+          await InAppPurchase.instance
+              .restorePurchases(
+                applicationUserName: user.user.value.username,
+              )
+              .timeout(const Duration(seconds: 10));
+        } on TimeoutException catch (_) {
+          logInfo("No active subscription found.");
+          SaveController save = Get.find();
+          save.updateIsSubscribedToPremium(false);
+          isSubscribedToPremium.value = false;
+          update();
+        } catch (e) {
+          // Handle any other errors that might occur.
+          logError(e.toString());
+          logError('An error occurred while restoring purchases: $e');
+        }
       }
     } else {
       logError("InAppPurchase is not available");
     }
   }
 
-  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
-    if (purchaseDetailsList.isEmpty) {
-      logInfo("No active subscription found.");
-      SaveController save = Get.find();
-      save.updateIsSubscribedToPremium(false);
-      isSubscribedToPremium.value = false;
-      update();
-      return;
-    }
+  RxBool listeningToPurchaseUpdated = false.obs;
 
+  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
     purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
       if (purchaseDetails.status == PurchaseStatus.pending) {
         // _showPendingUI();

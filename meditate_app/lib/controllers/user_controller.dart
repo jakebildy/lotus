@@ -4,6 +4,7 @@ import 'package:meditate_app/controllers/cookie_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
+import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/services/push_notification_service.dart';
@@ -65,6 +66,8 @@ class UserController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
+      SubscriptionController subscriptionController = Get.find();
+      subscriptionController.initialize();
     });
   }
 
