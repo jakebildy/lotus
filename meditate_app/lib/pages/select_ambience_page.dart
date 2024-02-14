@@ -38,21 +38,21 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
   @override
   Widget build(BuildContext context) {
     SaveController save = Get.find();
-    NetworkStatusController network = Get.find();
+    // NetworkStatusController network = Get.find();
 
     return Obx(
       () => Scaffold(
         appBar: AppBar(
           title: Column(
-            children: [
-              const Text("Select Ambience"),
-              network.offline.value
-                  ? const Text(
-                      "Premium ambiences are not available offline",
-                      style:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                    )
-                  : Container(),
+            children: const [
+              Text("Select Ambience"),
+              // network.offline.value
+              //     ? const Text(
+              //         "Premium ambiences are not available offline",
+              //         style:
+              //             TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              //       )
+              //     : Container(),
             ],
           ),
         ),
@@ -61,8 +61,7 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
             childAspectRatio: 1,
             crossAxisSpacing: 4.0,
             mainAxisSpacing: 8.0,
-            children: List.generate(
-                network.offline.value ? 3 : AMBIENCES.length, (index) {
+            children: List.generate(AMBIENCES.length, (index) {
               return Center(
                 child: Bounce(
                   duration: const Duration(milliseconds: 110),

@@ -873,12 +873,6 @@ class UserController extends GetxController {
           "Updating meditationHistory for today! There was already a value here but the new meditation amount has been appended.");
     } else {
       logError("this was null!!");
-      logSuccess("more info, here is currentDate:");
-      logError(currentDate.toString());
-      logSuccess("more info, here is the meditation history:");
-      logError(user.value.meditationHistory.toString());
-
-      logError(user.value.meditationHistory[currentDate].toString());
       updateProperty(UserProperty.meditationHistory,
           {...user.value.meditationHistory, currentDate: amountNew});
       logInfo(

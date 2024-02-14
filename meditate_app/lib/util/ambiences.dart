@@ -25,96 +25,85 @@ const List<Ambience> AMBIENCES = [
   Ambience(
       name: "Water Sounds",
       image: 'assets/ambiences/water_sounds.jpg',
-      audio: 'assets/audio/water_sounds.wav',
+      audio: 'assets/audio/water_sounds.mp3',
       setting: 'Default',
       premium: false),
   Ambience(
       name: "Night",
       image: 'assets/stars.jpg',
-      audio: 'assets/ambiences/night.wav',
+      audio: 'assets/audio/night.mp3',
       setting: 'Night',
       premium: false),
   Ambience(
       name: "Rain",
       image: 'assets/ambiences/rain.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/rain.wav',
+      audio: 'assets/audio/rain.mp3',
       setting: 'Rain',
       premium: true),
   Ambience(
       name: "Mourning Doves",
       image: 'assets/ambiences/mourning_doves.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/mourning_doves.wav',
+      audio: 'assets/audio/mourning_doves.mp3',
       setting: 'Default',
       premium: true),
   Ambience(
       name: "Forest",
       image: 'assets/ambiences/forest.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/forest.mp3',
+      audio: 'assets/audio/forest.mp3',
       setting: 'Forest',
       premium: true),
   Ambience(
       name: "Wind",
       image: 'assets/ambiences/wind.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/wind.wav',
+      audio: 'assets/audio/wind.mp3',
       setting: 'Default',
       premium: true),
   Ambience(
       name: "Underwater",
       image: 'assets/ambiences/underwater.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/underwater.wav',
+      audio: 'assets/audio/underwater.mp3',
       setting: 'Underwater',
       premium: true),
   Ambience(
       name: "Jungle",
       image: 'assets/ambiences/jungle.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/jungle.wav',
+      audio: 'assets/audio/jungle.mp3',
       setting: 'Jungle',
       premium: true),
   Ambience(
       name: "Beach",
       image: 'assets/ambiences/beach.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/beach.wav',
+      audio: 'assets/audio/beach.mp3',
       setting: 'Default',
       premium: true),
   Ambience(
       name: "Thunderstorm",
       image: 'assets/ambiences/thunderstorm.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/thunderstorm.wav',
+      audio: 'assets/audio/thunderstorm.mp3',
       setting: 'Rain',
       premium: true),
   Ambience(
       name: "Extradimensional",
       image: 'assets/ambiences/extradimensional.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/extradimensional.wav',
+      audio: 'assets/audio/extradimensional.mp3',
       setting: 'Extradimensional',
       premium: true),
   Ambience(
       name: "Lost Civilization",
       image: 'assets/ambiences/lostcivilization.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/lostcivilization.wav',
+      audio: 'assets/audio/lostcivilization.mp3',
       setting: 'Jungle',
       premium: true),
   Ambience(
       name: "Prehistoric Sea",
       image: 'assets/ambiences/prehistoricsea.jpg',
-      audio:
-          'https://shellevate-audio.s3.us-east-2.amazonaws.com/audio/prehistoricsea.wav',
+      audio: 'assets/audio/prehistoricsea.mp3',
       setting: 'Underwater',
       premium: true),
   Ambience(
       name: "Random",
       image: 'assets/ambiences/random.jpg',
-      audio: 'assets/audio/water_sounds.wav',
+      audio: 'assets/audio/water_sounds.mp3',
       setting: 'Default',
       premium: true),
 ];

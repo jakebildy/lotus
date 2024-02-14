@@ -47,6 +47,7 @@ class CountdownController extends GetxController {
   CountdownController() {
     bell = AudioPlayer();
     networkAudioPlayer = just_audio.AudioPlayer();
+    networkAudioPlayer.setLoopMode(just_audio.LoopMode.all);
     bell.setVolume(2.0);
   }
 
@@ -63,7 +64,7 @@ class CountdownController extends GetxController {
             .first
             .audio); // Schemes: (https: | file: | asset: )
         await networkAudioPlayer.play();
-        networkAudioPlayer.setLoopMode(just_audio.LoopMode.all);
+
         // networkAudioPlayer.play(audioUrl);
         // networkAudioPlayer.setReleaseMode(ReleaseMode.loop);
       } else {
@@ -90,6 +91,7 @@ class CountdownController extends GetxController {
     }
 
     tenthsOfSecondsPassed.value = 0;
+    bonusTime.value = 0;
     meditationComplete.value = false;
     const hundredMilliseconds = Duration(seconds: 0, milliseconds: 100);
     logSuccess("Starting countdown");

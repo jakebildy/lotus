@@ -141,7 +141,7 @@ flutter:
     - assets/turtle_unselected.png
     - assets/images/turtles/locked.png
     - assets/gems_chest.png
-    - assets/audio/water_sounds.wav
+    - assets/audio/water_sounds.mp3
     - assets/streak_icon_yellow.png
     - assets/streak_icon_rainbow.png
     - assets/streak_icon_blue.png
@@ -215,20 +215,31 @@ flutter:
     - assets/blank_profile.png
     - assets/ambiences/water_sounds.jpg
     - assets/ambiences/mourning_doves.jpg
+    - assets/audio/mourning_doves.mp3
     - assets/stars.jpg
-    - assets/audio/night.wav
+    - assets/audio/night.mp3
     - assets/ambiences/forest.jpg
+    - assets/audio/forest.mp3
     - assets/ambiences/random.jpg
     - assets/ambiences/wind.jpg
+    - assets/audio/wind.mp3
     - assets/ambiences/rain.jpg
+    - assets/audio/rain.mp3
     - assets/images/rainy_overlay.gif
     - assets/ambiences/extradimensional.jpg
+    - assets/audio/extradimensional.mp3
     - assets/ambiences/jungle.jpg
+    - assets/audio/jungle.mp3
     - assets/ambiences/lostcivilization.jpg
+    - assets/audio/lostcivilization.mp3
     - assets/ambiences/prehistoricsea.jpg
+    - assets/audio/prehistoricsea.mp3
     - assets/ambiences/underwater.jpg
+    - assets/audio/underwater.mp3
     - assets/ambiences/beach.jpg
+    - assets/audio/beach.mp3
     - assets/ambiences/thunderstorm.jpg
+    - assets/audio/thunderstorm.mp3
     - assets/jungle_top.png
     - assets/jungle_bottom.png
     - assets/images/game/water_2.gif
