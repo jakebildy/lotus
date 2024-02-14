@@ -209,20 +209,19 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                     if (saveController
                                             .getValue("GUIDE_SHOWN") ==
                                         "TRUE") {
+                                      if (saveController
+                                              .selectedAmbience.value ==
+                                          "Random") {
+                                        saveController.updateSelectedAmbience(
+                                            AMBIENCES[Random()
+                                                    .nextInt(AMBIENCES.length)]
+                                                .name);
+                                      }
                                       Get.to(
                                           CountdownPage(
                                               time: _duration,
                                               ambience: saveController
-                                                          .selectedAmbience
-                                                          .value ==
-                                                      "Random"
-                                                  ?
-                                                  // Random one of AMBIENCES
-                                                  AMBIENCES[Random().nextInt(
-                                                          AMBIENCES.length)]
-                                                      .name
-                                                  : saveController
-                                                      .selectedAmbience.value),
+                                                  .selectedAmbience.value),
                                           transition: Transition.circularReveal,
                                           duration: const Duration(seconds: 1));
                                     } else {
