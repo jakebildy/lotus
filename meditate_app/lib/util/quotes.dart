@@ -4,6 +4,9 @@ List<String> quotes = [
   '"All we have to decide is what to do with the time that is given us." \n- Gandalf',
   "“If you look for the light, you can often find it. But if you look for the dark, that is all you will ever see.” \n– Uncle Iroh",
   "“Hope is something you give yourself. That is the meaning of inner strength.” \n– Uncle Iroh",
+  "“It is important to draw wisdom from many sources, otherwise it becomes rigid and stale.” \n– Uncle Iroh",
+  "“Pride is not the opposite of shame, but it's source. True humility is the only antidote to shame.” \n– Uncle Iroh",
+  "“You can’t always see the light at the end of the tunnel, but if you just keep moving, you will come to a better place.” \n– Uncle Iroh",
   "“True wisdom begins when we accept things as they are.” \n– Tenzin",
   "“I sit in silence and find whenever I meditate, my fears alleviate, my tears evaporate” \n- J. Cole",
   "“Anything’s possible, you gotta dream like you never seen obstacles.” \n- J. Cole",
@@ -50,6 +53,12 @@ List<String> quotes = [
   "“Your focus determines your reality.” \n- Qui-Gon Jinn",
   "“What I advise you to do is, not to be unhappy before the crisis comes.” \n- Seneca",
   "“I've had a lot of worries in my life, most of which never happened.” \n- Mark Twain",
+  "“Oh yes, the past can hurt. But, you can either run from it or, learn from it.” \n- Rafiki",
+  "“Discovering the truth about ourselves is a lifetime’s work, but it’s worth the effort.” \n- Fred Rogers",
+  "“Often when you think you're at the end of something, you're at the beginning of something else.” \n- Fred Rogers",
+  "“The greatest gift you ever give is your honest self.” \n- Fred Rogers",
+  "“The only thing evil can’t stand is forgiveness.” \n- Fred Rogers",
+  "“It's good to be curious about many things.” \n- Fred Rogers",
 ];
 
 String randomQuote() {
