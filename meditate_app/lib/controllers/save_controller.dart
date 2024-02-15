@@ -52,7 +52,7 @@ class SaveController extends GetxController {
 
   void updateIsSubscribedToPremium(bool newVal) {
     isSubscribedToPremium.value = newVal;
-    saveValue("subscribed_to_premium", isSubscribedToPremium.value.toString());
+    saveValue("SHELLEVATE_PREMIUM", isSubscribedToPremium.value.toString());
     update();
   }
 
@@ -206,9 +206,9 @@ class SaveController extends GetxController {
     }
 
     // Load if the user is subscribed to premium
-    if (getValue('subscribed_to_premium') != "") {
+    if (getValue('SHELLEVATE_PREMIUM') != "") {
       isSubscribedToPremium.value =
-          getValue('subscribed_to_premium').toLowerCase() == 'true';
+          getValue('SHELLEVATE_PREMIUM').toLowerCase() == 'true';
     }
 
     loadingSaveController.value = false;

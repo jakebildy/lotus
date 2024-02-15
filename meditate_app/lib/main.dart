@@ -38,7 +38,7 @@ Future<void> main() async {
   Get.put(GameController());
   Get.put(EggController());
   Get.put(CountdownController());
-  Get.put(SubscriptionController());
+  // Get.put(SubscriptionController());
 
   final AudioContext audioContext = AudioContext(
     iOS: AudioContextIOS(

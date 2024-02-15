@@ -66,8 +66,9 @@ class UserController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
-      SubscriptionController subscriptionController = Get.find();
-      subscriptionController.initialize();
+      Get.put(SubscriptionController());
+      // SubscriptionController
+      // subscriptionController.initialize();
     });
   }
 
@@ -723,9 +724,10 @@ class UserController extends GetxController {
 
   void loadHasMeditatedToday() {
     // get last meditated from local storage
-    if (storage.read("last_meditated") != "") {
+
+    if (getValue("last_meditated") != "") {
       DateTime lastMeditated =
-          DateTime.parse(storage.read("last_meditated").toString());
+          DateTime.parse(getValue("last_meditated").toString());
       DateTime now = DateTime.now();
       DateTime date = DateTime(now.year, now.month, now.day);
 
