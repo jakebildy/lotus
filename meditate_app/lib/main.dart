@@ -54,7 +54,7 @@ Future<void> main() async {
       stayAwake: true,
       contentType: AndroidContentType.sonification,
       usageType: AndroidUsageType.assistanceSonification,
-      audioFocus: AndroidAudioFocus.none,
+      audioFocus: AndroidAudioFocus.gain,
     ),
   );
   AudioPlayer.global.setGlobalAudioContext(audioContext);
