@@ -15,7 +15,6 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 class SubscriptionController extends GetxController {
   late ProductDetails? shellevatePremium;
   bool isAvailable = false;
-  late StreamSubscription<List<PurchaseDetails>> _streamSubscription;
 
   //Don't use this value to check if subscribed, use the one in SaveController
   RxBool isSubscribedToPremium = false.obs;
@@ -24,102 +23,6 @@ class SubscriptionController extends GetxController {
   SubscriptionController() {
     initPlatformState();
   }
-
-  // Future<void> initialize() async {
-  //   final bool available = await InAppPurchase.instance.isAvailable();
-  //   if (available) {
-  //     logSuccess("InAppPurchase is available");
-  //     isAvailable = true;
-
-  //     // Load available products
-  //     const Set<String> _kIds = <String>{
-  //       'shellevate_premium_01',
-  //     };
-  //     final ProductDetailsResponse response =
-  //         await InAppPurchase.instance.queryProductDetails(_kIds);
-  //     if (response.notFoundIDs.isNotEmpty) {
-  //       logError("Subscription not found!");
-  //     }
-  //     List<ProductDetails> products = response.productDetails;
-  //     logSuccess(
-  //         "Subscription loaded: ${products[0].title.toString()} with price ${products[0].price.toString()}");
-  //     shellevatePremium = products[0];
-
-  //     // Check for past purchases
-  //     UserController user = Get.find();
-  //     if (user.user.value.username != "null") {
-  //       InAppPurchase.instance
-  //           .restorePurchases(applicationUserName: user.user.value.username);
-  //     }
-  //   } else {
-  //     logError("InAppPurchase is not available");
-  //   }
-  // }
-
-  // void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
-  //   purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
-  //     if (purchaseDetails.status == PurchaseStatus.pending) {
-  //       // _showPendingUI();
-  //       logInfo("Pending purchase...");
-  //     } else {
-  //       if (purchaseDetails.status == PurchaseStatus.error) {
-  //         // _handleError(purchaseDetails.error!);
-  //         logError("Purchase errors");
-  //       } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-  //           purchaseDetails.status == PurchaseStatus.restored) {
-  //         isSubscribedToPremium.value = true;
-  //         update();
-
-  //         // bool valid = await _verifyPurchase(purchaseDetails);
-  //         // if (valid) {
-  //         //   _deliverProduct(purchaseDetails);
-  //         // } else {
-  //         //   _handleInvalidPurchase(purchaseDetails);
-  //         // }
-  //       }
-
-  //       if (purchaseDetails.status == PurchaseStatus.canceled) {
-  //         getPremiumTapped.value = false;
-  //         update();
-  //       }
-  //       if (purchaseDetails.pendingCompletePurchase) {
-  //         await InAppPurchase.instance.completePurchase(purchaseDetails);
-  //         SaveController save = Get.find();
-  //         //TODO: also wait for loading to be finished
-  //         if (save.isSubscribedToPremium.value == false &&
-  //             save.loadingSaveController.value == false) {
-  //           save.updateIsSubscribedToPremium(true);
-  //           Get.offAll(const AppPages());
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
-
-//   Future<void> buySubscription() async {
-//     // check if a subscription is already being purchased
-
-//     if (isAvailable == false) {
-//       logError("InAppPurchase is not available");
-//       return;
-//     }
-
-//     if (shellevatePremium != null) {
-//       getPremiumTapped.value = true;
-//       update();
-
-//       UserController user = Get.find();
-
-//       if (user.user.value.username != "null") {
-//         final PurchaseParam purchaseParam = PurchaseParam(
-//           productDetails: shellevatePremium!,
-//           applicationUserName: user.user.value.username,
-//         );
-//         InAppPurchase.instance.buyNonConsumable(purchaseParam: purchaseParam);
-//       }
-//     }
-//   }
-// }
 
   Package? subscriptionPackage;
 
@@ -194,6 +97,7 @@ class SubscriptionController extends GetxController {
         save.updateIsSubscribedToPremium(false);
       }
     } on PlatformException catch (e) {
+      logError(e.toString());
       // Error fetching customer info
     }
   }

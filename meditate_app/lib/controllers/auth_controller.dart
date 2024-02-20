@@ -96,9 +96,10 @@ class AuthController extends GetxController {
     logInfo("Changing profile pic!");
     // check permission
     try {
-      bool _hasPermission = await Permission.photos.request().isGranted;
+      var status = await Permission.photos.request();
       // && await Permission.camera.request().isGranted;
-      if (_hasPermission) {
+      logWarning(status.toString());
+      if (status.isGranted || status.isLimited) {
         logInfo("We have permissions!");
         ImagePicker()
             .pickImage(
@@ -115,7 +116,8 @@ class AuthController extends GetxController {
           logError(error.toString());
         });
       } else {
-        logError("No permission to change photo");
+        logError("No permission to change photo, opening app settings");
+        await openAppSettings();
       }
     } catch (error, trace) {
       logError(error.toString());
