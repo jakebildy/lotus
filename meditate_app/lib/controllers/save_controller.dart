@@ -206,9 +206,9 @@ class SaveController extends GetxController {
     }
 
     // Load if the user is subscribed to premium
-    if (getValue('SHELLEVATE_PREMIUM') != "") {
+    if (getValue('SHELLEVATE_PREMIUM_RC') != "") {
       isSubscribedToPremium.value =
-          getValue('SHELLEVATE_PREMIUM').toLowerCase() == 'true';
+          getValue('SHELLEVATE_PREMIUM_RC').toLowerCase() == 'true';
     }
 
     loadingSaveController.value = false;

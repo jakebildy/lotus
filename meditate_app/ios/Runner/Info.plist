@@ -30,8 +30,12 @@
 	<string>https://appsflyer-skadnetwork.com/</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Shellevate needs access to your photo library so you can upload a profile picture.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>A library Shellevate depends on needs access to your microphone to work properly.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Shellevate needs access to your photo library so you can upload a profile picture.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -55,7 +59,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
 </dict>
 </plist>

@@ -96,6 +96,12 @@ PODS:
   - permission_handler_apple (9.0.4):
     - Flutter
   - PromisesObjC (2.3.1)
+  - purchases_flutter (6.21.0):
+    - Flutter
+    - PurchasesHybridCommon (= 9.7.1)
+  - PurchasesHybridCommon (9.7.1):
+    - RevenueCat (= 4.36.2)
+  - RevenueCat (4.36.2)
   - SwiftProtobuf (1.25.2)
   - TOCropViewController (2.6.1)
   - url_launcher_ios (0.0.1):
@@ -119,6 +125,7 @@ DEPENDENCIES:
   - ocarina (from `.symlinks/plugins/ocarina/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
@@ -136,6 +143,8 @@ SPEC REPOS:
     - HeapSwiftCoreInterfaces
     - nanopb
     - PromisesObjC
+    - PurchasesHybridCommon
+    - RevenueCat
     - SwiftProtobuf
     - TOCropViewController
 
@@ -170,6 +179,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  purchases_flutter:
+    :path: ".symlinks/plugins/purchases_flutter/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   wakelock:
@@ -203,6 +214,9 @@ SPEC CHECKSUMS:
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  purchases_flutter: becb61c2ca37cd944aeaae688119e1f485158fee
+  PurchasesHybridCommon: 76ea82671cfb30f921c5697362b56d86b341da04
+  RevenueCat: 991b09e19835c2e7344f3cdda6921c2a5f2da47a
   SwiftProtobuf: 407a385e97fd206c4fbe880cc84123989167e0d1
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
