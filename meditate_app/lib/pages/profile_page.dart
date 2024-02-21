@@ -690,7 +690,48 @@ class _ProfilePageState extends State<ProfilePage>
                         child: Text(
                       "Sign Out",
                       style: TextStyle(fontWeight: FontWeight.bold),
-                    )))
+                    ))),
+                SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                    onTap: () async {
+                      final Uri url =
+                          Uri.parse('https://pastebin.com/raw/zePD0M1S');
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                    child: const Center(
+                        child: Text(
+                      "Privacy Policy",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.grey),
+                    ))),
+                const SizedBox(
+                  height: 30,
+                ),
+                GestureDetector(
+                    onTap: () async {
+                      final Uri url = Uri.parse(
+                          'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/');
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                    child: const Center(
+                        child: Text(
+                      "Terms of Service",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.grey),
+                    ))),
+                SizedBox(
+                  height: 30,
+                ),
               ],
             ),
     );
