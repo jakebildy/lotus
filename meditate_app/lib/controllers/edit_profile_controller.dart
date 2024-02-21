@@ -24,8 +24,8 @@ class EditProfileController extends GetxController {
     uC.setUser(user);
   }
 
-  Future<void> changeProfilePhoto() async {
+  Future<void> changeProfilePhoto(BuildContext context) async {
     AuthController authController = Get.find();
-    await authController.changeProfilePic();
+    await authController.changeProfilePic(context);
   }
 }

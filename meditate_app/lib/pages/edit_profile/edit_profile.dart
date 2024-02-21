@@ -62,7 +62,7 @@ class ProfileInfo extends StatelessWidget {
               )),
           // Change Profile Picture
           GestureDetector(
-            onTap: editProfileController.changeProfilePhoto,
+            onTap: () => editProfileController.changeProfilePhoto(context),
             child: const Text("Change Profile Picture",
                 style: TextStyle(fontSize: 16, color: Colors.tealAccent)),
           ),

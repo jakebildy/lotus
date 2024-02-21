@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -92,7 +93,7 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> changeProfilePic() async {
+  Future<void> changeProfilePic(BuildContext context) async {
     logInfo("Changing profile pic!");
     // check permission
     try {
@@ -101,6 +102,7 @@ class AuthController extends GetxController {
       logWarning(status.toString());
       if (status.isGranted || status.isLimited) {
         logInfo("We have permissions!");
+        HapticFeedback.lightImpact();
         ImagePicker()
             .pickImage(
                 source: ImageSource.gallery, maxHeight: 500, maxWidth: 500)
@@ -116,8 +118,19 @@ class AuthController extends GetxController {
           logError(error.toString());
         });
       } else {
-        logError("No permission to change photo, opening app settings");
-        await openAppSettings();
+        HapticFeedback.lightImpact();
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            key: UniqueKey(),
+            backgroundColor: Colors.black,
+            content: const Text(
+              "No permission to access photos! Go into your settings if you want to change this.",
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            )));
+        logError(
+            "No permission to access photos! Go into your settings if you want to change this.");
+        // await openAppSettings();
       }
     } catch (error, trace) {
       logError(error.toString());
