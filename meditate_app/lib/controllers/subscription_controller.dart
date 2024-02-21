@@ -33,12 +33,15 @@ class SubscriptionController extends GetxController {
       try {
         CustomerInfo customerInfo =
             await Purchases.purchasePackage(subscriptionPackage!);
-
-        if (customerInfo.entitlements.all["shellevate_premium"] != null &&
-            customerInfo.entitlements.all["shellevate_premium"]!.isActive) {
+        logSuccess("Purchased!");
+        if (customerInfo.entitlements.all["Premium"] != null &&
+            customerInfo.entitlements.all["Premium"]!.isActive) {
           // Unlock that great "pro" content
+          logInfo('Unlocking premium content');
           SaveController save = Get.find();
           save.updateIsSubscribedToPremium(true);
+
+          Get.offAll(const AppPages());
         }
       } on PlatformException catch (e) {
         var errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -87,8 +90,8 @@ class SubscriptionController extends GetxController {
     try {
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
       // access latest customerInfo
-      if (customerInfo.entitlements.all["shellevate_premium"] != null &&
-          customerInfo.entitlements.all["shellevate_premium"]!.isActive) {
+      if (customerInfo.entitlements.all["Premium"] != null &&
+          customerInfo.entitlements.all["Premium"]!.isActive) {
         // Grant user "pro" access
         SaveController save = Get.find();
         save.updateIsSubscribedToPremium(true);

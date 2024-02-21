@@ -52,7 +52,7 @@ class SaveController extends GetxController {
 
   void updateIsSubscribedToPremium(bool newVal) {
     isSubscribedToPremium.value = newVal;
-    saveValue("SHELLEVATE_PREMIUM", isSubscribedToPremium.value.toString());
+    saveValue("SHELLEVATE_PREMIUM_RC", isSubscribedToPremium.value.toString());
     update();
   }
 
