@@ -43,9 +43,15 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.keyboard_arrow_down),
+            onPressed: () {
+              Get.offAll(const AppPages(), transition: Transition.topLevel);
+            },
+          ),
           title: Column(
             children: const [
-              Text("Select Ambience"),
+              Text("Choose Soundscape"),
               // network.offline.value
               //     ? const Text(
               //         "Premium ambiences are not available offline",
@@ -71,7 +77,8 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                     if (!AMBIENCES[index].premium ||
                         save.isSubscribedToPremium.value) {
                       save.updateSelectedAmbience(AMBIENCES[index].name);
-                      Get.offAll(const AppPages());
+                      Get.offAll(const AppPages(),
+                          transition: Transition.topLevel);
                     } else {
                       Get.to(const GetSubscriptionPage());
                     }

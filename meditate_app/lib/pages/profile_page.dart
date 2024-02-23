@@ -670,12 +670,17 @@ class _ProfilePageState extends State<ProfilePage>
                   height: 10,
                 ),
                 GestureDetector(
-                    onTap: () {
-                      Get.to(const MeditationGuide(time: null, ambience: ""));
+                    onTap: () async {
+                      final Uri url = Uri.parse('https://shellevate.app');
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
                     },
                     child: const Center(
                         child: Text(
-                      "How to Meditate",
+                      "Guide to this App",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ))),
                 const SizedBox(

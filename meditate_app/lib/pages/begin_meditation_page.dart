@@ -46,18 +46,42 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
         body: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(0),
-              //  padding: const EdgeInsets.fromLTRB(20,20,20,38),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(0),
-                child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.asset(
-                      "assets/ocean_background.jpeg",
-                      fit: BoxFit.fill,
-                    )),
+            Container(
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 33, 135, 175),
+                Color.fromARGB(255, 65, 113, 142),
+                Color.fromARGB(255, 21, 115, 155),
+                Color.fromARGB(255, 1, 126, 137),
+              ],
+            ))),
+            Opacity(
+              opacity: 0.5,
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                //  padding: const EdgeInsets.fromLTRB(20,20,20,38),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(0),
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.asset(
+                        "assets/ocean_background.jpeg",
+                        fit: BoxFit.fill,
+                      )),
+                ),
+              ),
+            ),
+            Opacity(
+              opacity: 0.3,
+              child: Image.asset(
+                "assets/images/game/water_2.gif",
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.cover,
               ),
             ),
             Positioned.fill(
@@ -73,6 +97,20 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
               shape: BubbleShape
                   .circle, // circle is the default. No need to explicitly mention if its a circle.
             )),
+            Padding(
+              padding: const EdgeInsets.all(0),
+              //  padding: const EdgeInsets.fromLTRB(20,20,20,38),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset(
+                      "assets/ocean_foreground.png",
+                      fit: BoxFit.fill,
+                    )),
+              ),
+            ),
             Center(
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
@@ -134,7 +172,8 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                   ),
                   GestureDetector(
                     onTap: (() {
-                      Get.to(const SelectAmbiencePage());
+                      Get.to(const SelectAmbiencePage(),
+                          transition: Transition.downToUp);
                     }),
                     child: Column(
                       children: [
@@ -143,25 +182,44 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                             : const SizedBox(
                                 height: 30,
                               ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Text(
-                                "Ambience: " +
-                                    saveController.selectedAmbience.value,
-                                style: const TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white70,
-                                    fontWeight: FontWeight.bold),
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white54,
+                                width: 2,
                               ),
-                              Icon(
-                                saveController.selectedAmbience.value != "OFF"
-                                    ? Icons.music_note
-                                    : Icons.music_off,
-                                size: 35,
-                              ),
-                            ],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                              color: Colors.grey[850],
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  saveController.selectedAmbience.value != "OFF"
+                                      ? Icons.music_note
+                                      : Icons.music_off,
+                                  size: 30,
+                                ),
+                                Text(
+                                  "Soundscape: " +
+                                      saveController.selectedAmbience.value,
+                                  style: const TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(Icons.arrow_drop_down, color: Colors.white)
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
@@ -238,6 +296,17 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                   }),
                                   child: Container(
                                     decoration: BoxDecoration(
+                                        // border: Border.all(
+                                        //     color: Colors.cyan),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            spreadRadius: 1,
+                                            blurRadius: 5,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
                                         color: Colors.cyan,
                                         borderRadius:
                                             BorderRadius.circular(60)),
