@@ -38,7 +38,7 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
   @override
   Widget build(BuildContext context) {
     SaveController save = Get.find();
-    // NetworkStatusController network = Get.find();
+    NetworkStatusController network = Get.find();
 
     return Obx(
       () => Scaffold(
@@ -80,7 +80,20 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                       Get.offAll(const AppPages(),
                           transition: Transition.topLevel);
                     } else {
-                      Get.to(const GetSubscriptionPage());
+                      if (network.offline.value) {
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            key: UniqueKey(),
+                            backgroundColor: Colors.black,
+                            content: const Text(
+                              "Go online to unlock premium content!",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )));
+                      } else {
+                        Get.to(const GetSubscriptionPage());
+                      }
                     }
                   },
                   child: Card(

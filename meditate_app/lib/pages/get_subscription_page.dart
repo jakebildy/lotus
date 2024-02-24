@@ -288,7 +288,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                         backgroundColor: Colors.tealAccent,
                       ),
                       onPressed: () {
-                        subscriptionController.buySubscription();
+                        subscriptionController.buySubscription(context);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),

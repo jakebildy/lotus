@@ -568,6 +568,8 @@ class UserController extends GetxController {
 
     // Waiting for all update operations to complete
     await Future.wait(updateOperations);
+    databaseUser.value = await api.user.me();
+    update();
 
     logInfo("Completed syncDatabasetoMatchLocalStorage");
   }

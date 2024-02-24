@@ -149,7 +149,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
-                          "The longer you meditate, the higher your chance of finding an egg 🥚",
+                          "The longer you meditate, the higher your chance of finding an egg 🥚 \n\n Eggs will hatch into turtles when you meditate consecutively!",
                           textAlign: TextAlign.center,
                         ),
                       ),

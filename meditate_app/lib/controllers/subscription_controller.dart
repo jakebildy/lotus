@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -26,7 +27,7 @@ class SubscriptionController extends GetxController {
 
   Package? subscriptionPackage;
 
-  Future<void> buySubscription() async {
+  Future<void> buySubscription(BuildContext context) async {
     getPremiumTapped.value = true;
     update();
     if (subscriptionPackage != null) {
@@ -47,12 +48,29 @@ class SubscriptionController extends GetxController {
         var errorCode = PurchasesErrorHelper.getErrorCode(e);
         if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
           logError(e.toString());
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              key: UniqueKey(),
+              backgroundColor: Colors.black,
+              content: Text(
+                e.toString(),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.white),
+              )));
         }
         getPremiumTapped.value = false;
         update();
       }
     } else {
       logError("subscriptionPackage is null!");
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          key: UniqueKey(),
+          backgroundColor: Colors.black,
+          content: const Text(
+            "Subscription does not exist!",
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          )));
     }
 
     getPremiumTapped.value = false;
@@ -71,11 +89,13 @@ class SubscriptionController extends GetxController {
       configuration =
           PurchasesConfiguration("appl_HEBWkEyqgTkiujTorPxIamHrVjW");
     }
-    await Purchases.configure(configuration..appUserID = user.user.value.id);
+    configuration.appUserID = user.user.value.id;
+    await Purchases.configure(configuration);
 
     // Fetch offerings
     try {
       Offerings offerings = await Purchases.getOfferings();
+
       if (offerings.current != null &&
           offerings.current!.availablePackages.isNotEmpty) {
         // Display packages for sale
@@ -84,6 +104,7 @@ class SubscriptionController extends GetxController {
       }
     } on PlatformException catch (e) {
       // optional error handling
+      logError("🎃" + e.toString());
     }
 
     // Fetch subscription status
