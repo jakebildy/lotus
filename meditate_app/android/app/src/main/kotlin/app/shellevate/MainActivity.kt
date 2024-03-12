@@ -1,4 +1,4 @@
-package com.example.meditate_app
+package app.shellevate
 
 import io.flutter.embedding.android.FlutterActivity
 

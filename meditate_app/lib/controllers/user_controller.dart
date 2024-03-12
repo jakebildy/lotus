@@ -652,6 +652,7 @@ class UserController extends GetxController {
                   " vs " +
                   lastUpdatedAtDatabase.toIso8601String() +
                   " in the database");
+
           await syncDatabasetoMatchLocalStorage();
         } else {
           // If lastUpdatedAt in database is more recent, sync localStorageUser to match databaseUser

@@ -54,9 +54,9 @@ class StreakChart extends StatelessWidget {
                             (userController.user.value.meditationHistory.map(
                                         (key, value) =>
                                             MapEntry(
-                                                DateTime(key.year, key.month,
-                                                    key.day),
-                                                value))[DateTime(
+                                                DateTime.utc(key.year,
+                                                    key.month, key.day),
+                                                value))[DateTime.utc(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
@@ -68,9 +68,9 @@ class StreakChart extends StatelessWidget {
                             (userController.user.value.meditationHistory.map(
                                         (key, value) =>
                                             MapEntry(
-                                                DateTime(key.year, key.month,
-                                                    key.day),
-                                                value))[DateTime(
+                                                DateTime.utc(key.year,
+                                                    key.month, key.day),
+                                                value))[DateTime.utc(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
@@ -82,9 +82,9 @@ class StreakChart extends StatelessWidget {
                             (userController.user.value.meditationHistory.map(
                                         (key, value) =>
                                             MapEntry(
-                                                DateTime(key.year, key.month,
-                                                    key.day),
-                                                value))[DateTime(
+                                                DateTime.utc(key.year,
+                                                    key.month, key.day),
+                                                value))[DateTime.utc(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
@@ -96,9 +96,9 @@ class StreakChart extends StatelessWidget {
                             (userController.user.value.meditationHistory.map(
                                         (key, value) =>
                                             MapEntry(
-                                                DateTime(key.year, key.month,
-                                                    key.day),
-                                                value))[DateTime(
+                                                DateTime.utc(key.year,
+                                                    key.month, key.day),
+                                                value))[DateTime.utc(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
@@ -110,9 +110,9 @@ class StreakChart extends StatelessWidget {
                             (userController.user.value.meditationHistory.map(
                                         (key, value) =>
                                             MapEntry(
-                                                DateTime(key.year, key.month,
-                                                    key.day),
-                                                value))[DateTime(
+                                                DateTime.utc(key.year,
+                                                    key.month, key.day),
+                                                value))[DateTime.utc(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
@@ -124,9 +124,9 @@ class StreakChart extends StatelessWidget {
                             (userController.user.value.meditationHistory.map(
                                         (key, value) =>
                                             MapEntry(
-                                                DateTime(key.year, key.month,
-                                                    key.day),
-                                                value))[DateTime(
+                                                DateTime.utc(key.year,
+                                                    key.month, key.day),
+                                                value))[DateTime.utc(
                                             DateTime.now().year,
                                             DateTime.now().month,
                                             DateTime.now().day)
@@ -137,9 +137,9 @@ class StreakChart extends StatelessWidget {
                             7,
                             (userController.user.value.meditationHistory.map(
                                         (key, value) => MapEntry(
-                                            DateTime(
+                                            DateTime.utc(
                                                 key.year, key.month, key.day),
-                                            value))[DateTime(
+                                            value))[DateTime.utc(
                                         DateTime.now().year,
                                         DateTime.now().month,
                                         DateTime.now().day)] ??
