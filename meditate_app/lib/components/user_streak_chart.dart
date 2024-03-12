@@ -50,8 +50,9 @@ class UserStreakChart extends StatelessWidget {
                       FlSpot(
                           1,
                           (user.meditationHistory.map((key, value) => MapEntry(
-                                      DateTime(key.year, key.month, key.day),
-                                      value))[DateTime(
+                                      DateTime.utc(
+                                          key.year, key.month, key.day),
+                                      value))[DateTime.utc(
                                           DateTime.now().year,
                                           DateTime.now().month,
                                           DateTime.now().day)
@@ -61,8 +62,9 @@ class UserStreakChart extends StatelessWidget {
                       FlSpot(
                           2,
                           (user.meditationHistory.map((key, value) => MapEntry(
-                                      DateTime(key.year, key.month, key.day),
-                                      value))[DateTime(
+                                      DateTime.utc(
+                                          key.year, key.month, key.day),
+                                      value))[DateTime.utc(
                                           DateTime.now().year,
                                           DateTime.now().month,
                                           DateTime.now().day)
@@ -72,8 +74,9 @@ class UserStreakChart extends StatelessWidget {
                       FlSpot(
                           3,
                           (user.meditationHistory.map((key, value) => MapEntry(
-                                      DateTime(key.year, key.month, key.day),
-                                      value))[DateTime(
+                                      DateTime.utc(
+                                          key.year, key.month, key.day),
+                                      value))[DateTime.utc(
                                           DateTime.now().year,
                                           DateTime.now().month,
                                           DateTime.now().day)
@@ -83,8 +86,9 @@ class UserStreakChart extends StatelessWidget {
                       FlSpot(
                           4,
                           (user.meditationHistory.map((key, value) => MapEntry(
-                                      DateTime(key.year, key.month, key.day),
-                                      value))[DateTime(
+                                      DateTime.utc(
+                                          key.year, key.month, key.day),
+                                      value))[DateTime.utc(
                                           DateTime.now().year,
                                           DateTime.now().month,
                                           DateTime.now().day)
@@ -94,8 +98,9 @@ class UserStreakChart extends StatelessWidget {
                       FlSpot(
                           5,
                           (user.meditationHistory.map((key, value) => MapEntry(
-                                      DateTime(key.year, key.month, key.day),
-                                      value))[DateTime(
+                                      DateTime.utc(
+                                          key.year, key.month, key.day),
+                                      value))[DateTime.utc(
                                           DateTime.now().year,
                                           DateTime.now().month,
                                           DateTime.now().day)
@@ -105,8 +110,9 @@ class UserStreakChart extends StatelessWidget {
                       FlSpot(
                           6,
                           (user.meditationHistory.map((key, value) => MapEntry(
-                                      DateTime(key.year, key.month, key.day),
-                                      value))[DateTime(
+                                      DateTime.utc(
+                                          key.year, key.month, key.day),
+                                      value))[DateTime.utc(
                                           DateTime.now().year,
                                           DateTime.now().month,
                                           DateTime.now().day)
@@ -115,14 +121,14 @@ class UserStreakChart extends StatelessWidget {
                               .toDouble()),
                       FlSpot(
                           7,
-                          (user.meditationHistory.map((key, value) =>
-                                      MapEntry(
-                                          DateTime(
+                          (user.meditationHistory.map((key, value) => MapEntry(
+                                          DateTime.utc(
                                               key.year, key.month, key.day),
-                                          value))[DateTime(
-                                      DateTime.now().year,
-                                      DateTime.now().month,
-                                      DateTime.now().day)] ??
+                                          value))[
+                                      DateTime.utc(
+                                          DateTime.now().year,
+                                          DateTime.now().month,
+                                          DateTime.now().day)] ??
                                   0)
                               .toDouble()),
                     ])
