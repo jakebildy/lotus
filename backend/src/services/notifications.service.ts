@@ -50,7 +50,8 @@ export function sendPushNotification(devices: any, title: any, body: any, data: 
                 response.responses.forEach((resp, idx) => {
                     if (!resp.success) {
                         // failedTokens.push(registrationTokens[idx]);
-                        console.log("failed to send push notification");
+                        console.log("failed to send push notification :(");
+                        console.log(resp.error);
                     } else {
                         console.log("succesfully sent push notification");
                     }
