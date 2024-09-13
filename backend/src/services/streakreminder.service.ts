@@ -10,7 +10,7 @@ function getRandomItem<T>(items: T[]): T {
 const notificationTitles = [
     'Time to meditate!',
     'Meditation time!',
-    'Let’s meditate together!',
+    'Let’s meditate!',
     'Take a moment to meditate',
     'Step back and meditate'
 ];
