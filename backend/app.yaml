@@ -1,5 +1,5 @@
 service: default
-runtime: nodejs17
+runtime: nodejs16
 
 handlers:
   - url: /.*
