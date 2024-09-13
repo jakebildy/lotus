@@ -11,15 +11,17 @@ const notificationTitles = [
     'Time to meditate!',
     'Meditation time!',
     'Let’s meditate together!',
-    'Take a moment to breathe',
-    'Step back and relax'
+    'Take a moment to meditate',
+    'Step back and meditate'
 ];
 
 const notificationMessages = [
-    'You definitely have 5 minutes to spare',
+    'Take some time to just be',
     'Your mind deserves a break',
     'You will enjoy today more if you meditate',
-    'No excuses!'
+    'Reconnect with yourself',
+    'Give yourself permission to pause',
+    'It will make your day better',
 ];
 
 
