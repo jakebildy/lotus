@@ -8,7 +8,7 @@ export async function sendStreakReminder() {
 
     for (const user of _users) {
         //   console.log(user.fullName);
-        if (user.fullName !== "" && user.deviceToken !== undefined) {
+        if (user.username === "jacob" && user.deviceToken !== undefined) { //switch back to user.fullName !== ""
             if (user.streak === undefined || user.streak == 0) {
                 //console.log("\nSending notification to " + user.fullName + "\n");
                 // sendPushNotification(
@@ -20,6 +20,13 @@ export async function sendStreakReminder() {
                 // console.log(`Hi ${user.fullName.split(" ")[0]}! Try meditating for just 5 minutes!`);
                 //console.log(`Start a new habit (and collect turtles too 🐢)`);
             }
+            console.log("\nSending notification to " + user.fullName + "\n");
+                sendPushNotification(
+                    [user.deviceToken],
+                    `Time to meditate!`,
+                    `You definitely have 5 minutes to spare`,
+                    {}, true, null
+                );
 
             //First day after meditating
             // if (user.streak == 0) {
