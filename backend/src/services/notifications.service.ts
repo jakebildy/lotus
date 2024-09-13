@@ -40,7 +40,7 @@ export function sendPushNotification(devices: any, title: any, body: any, data: 
 
     //https://fcm.googleapis.com/fcm/send
     //add to headers: "Authorization: key=<FCM SERVER KEY>"
-    admin.messaging().sendMulticast(notification)
+    admin.messaging().sendEachForMulticast(notification)
         .then((response) => {
 
             // TODO fix notification failure because old tokens.
