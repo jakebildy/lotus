@@ -1,8 +1,8 @@
 steps:
-  - name: node:16.0.0
+  - name: node:17.0.0
     entrypoint: npm
     args: ["install"]
-  - name: node:16.0.0
+  - name: node:17.0.0
     dir: backend/
     entrypoint: npm
     args: ["run", "create-env"]
