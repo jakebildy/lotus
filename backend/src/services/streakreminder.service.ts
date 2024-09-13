@@ -2,6 +2,11 @@ import { User } from "../models/user.model";
 import { sendPushNotification } from "./notifications.service";
 
 
+// Function to get a random item from an array
+function getRandomItem<T>(items: T[]): T {
+    return items[Math.floor(Math.random() * items.length)];
+}
+
 const notificationTitles = [
     'Time to meditate!',
     'Meditation time!',
