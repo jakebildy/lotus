@@ -1,21 +1,21 @@
 steps:
-- name: node:14.15.0
-  entrypoint: npm
-  args: ["install"]
-- name: node:14.15.0
-  dir: backend/
-  entrypoint: npm
-  args: ["run", "create-env"]
-  env:
-  - 'MONGO_URL=${_MONGO_URL}'
-  - 'OAUTH_CLIENT_ID=${_OAUTH_CLIENT_ID}'
-  - 'OAUTH_CLIENT_SECRET=${_OAUTH_CLIENT_SECRET}'
-  - 'JWT_PRIVATE_KEY=${_JWT_PRIVATE_KEY}'
-  - 'STRIPE_PRIVATE_KEY=${_STRIPE_PRIVATE_KEY}'
-  - 'STRIPE_ENDPOINT=${_STRIPE_ENDPOINT}'
-  - 'REVERY_PRIVATE_KEY=${_REVERY_PRIVATE_KEY}'
-  - 'REVERY_PUBLIC_KEY=${_REVERY_PUBLIC_KEY}'
-- name: "gcr.io/cloud-builders/gcloud"
-  dir: backend/
-  args: ["app", "deploy", "app.yaml"]
-timeout: '1600s'
+  - name: node:15.0.0
+    entrypoint: npm
+    args: ["install"]
+  - name: node:15.0.0
+    dir: backend/
+    entrypoint: npm
+    args: ["run", "create-env"]
+    env:
+      - "MONGO_URL=${_MONGO_URL}"
+      - "OAUTH_CLIENT_ID=${_OAUTH_CLIENT_ID}"
+      - "OAUTH_CLIENT_SECRET=${_OAUTH_CLIENT_SECRET}"
+      - "JWT_PRIVATE_KEY=${_JWT_PRIVATE_KEY}"
+      - "STRIPE_PRIVATE_KEY=${_STRIPE_PRIVATE_KEY}"
+      - "STRIPE_ENDPOINT=${_STRIPE_ENDPOINT}"
+      - "REVERY_PRIVATE_KEY=${_REVERY_PRIVATE_KEY}"
+      - "REVERY_PUBLIC_KEY=${_REVERY_PUBLIC_KEY}"
+  - name: "gcr.io/cloud-builders/gcloud"
+    dir: backend/
+    args: ["app", "deploy", "app.yaml"]
+timeout: "1600s"
