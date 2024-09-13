@@ -1,5 +1,6 @@
 steps:
   - name: node:17.0.0
+    dir: backend/
     entrypoint: npm
     args: ["install"]
   - name: node:17.0.0
