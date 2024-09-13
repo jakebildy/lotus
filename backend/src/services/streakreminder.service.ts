@@ -21,7 +21,7 @@ export async function sendStreakReminder() {
                 //console.log(`Start a new habit (and collect turtles too 🐢)`);
             }
             console.log("\nSending notification to " + user.fullName + "\n");
-                sendPushNotification(
+            sendPushNotification(
                     [user.deviceToken],
                     `Time to meditate!`,
                     `You definitely have 5 minutes to spare`,
