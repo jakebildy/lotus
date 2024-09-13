@@ -1,6 +1,23 @@
 import { User } from "../models/user.model";
 import { sendPushNotification } from "./notifications.service";
 
+
+const notificationTitles = [
+    'Time to meditate!',
+    'Meditation time!',
+    'Let’s meditate together!',
+    'Take a moment to breathe',
+    'Step back and relax'
+];
+
+const notificationMessages = [
+    'You definitely have 5 minutes to spare',
+    'Your mind deserves a break',
+    'You will enjoy today more if you meditate',
+    'No excuses!'
+];
+
+
 export async function sendStreakReminder() {
     console.log("\nSENDING STREAK REMINDER NOTIFICATION\n");
     const _users = await User.find();
@@ -21,10 +38,13 @@ export async function sendStreakReminder() {
                 //console.log(`Start a new habit (and collect turtles too 🐢)`);
             }
             console.log("\nSending notification to " + user.fullName + "\n");
+            const title = getRandomItem(notificationTitles);
+            const message = getRandomItem(notificationMessages);
+
             sendPushNotification(
                     [user.deviceToken],
-                    `Time to meditate!`,
-                    `You definitely have 5 minutes to spare`,
+                    title,
+                    message,
                     {}, true, null
                 );
 
