@@ -242,6 +242,8 @@ flutter:
     - assets/audio/beach.mp3
     - assets/ambiences/thunderstorm.jpg
     - assets/audio/thunderstorm.mp3
+    - assets/ambiences/at_chapters_end.png
+    - assets/audio/at_chapters_end.mp3
     - assets/jungle_top.png
     - assets/jungle_bottom.png
     - assets/images/game/water_2.gif

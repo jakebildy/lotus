@@ -29,6 +29,12 @@ const List<Ambience> AMBIENCES = [
       setting: 'Default',
       premium: false),
   Ambience(
+      name: "At Chapter's End",
+      image: 'assets/ambiences/at_chapters_end.png',
+      audio: 'assets/audio/at_chapters_end.mp3',
+      setting: 'Default',
+      premium: false),
+  Ambience(
       name: "Night",
       image: 'assets/stars.jpg',
       audio: 'assets/audio/night.mp3',
