@@ -232,6 +232,104 @@ class _ShopPageState extends State<ShopPage> {
             ),
           ),
 
+          // Buy Sand Dollars
+          GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 100,
+                decoration: BoxDecoration(
+                  color: user.user.value.streakFreezes > 0
+                      ? const Color.fromARGB(255, 46, 48, 59)
+                      : Colors.black12,
+                  border: Border.all(
+                    color: user.user.value.streakFreezes > 0
+                        ? const Color.fromARGB(255, 81, 80, 107)
+                        : Colors.white24,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 15.0,
+                            horizontal: MediaQuery.of(context).size.width / 70),
+                        child: SizedBox(
+                            width: 70,
+                            child: Stack(
+                              children: [
+                                SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height / 3,
+                                    child: Image.asset(
+                                        "assets/sand_dollar_chest.png")),
+                                Opacity(
+                                  opacity: 0.8,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.white12,
+                                    highlightColor: Colors.white70,
+                                    child: SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                3,
+                                        child: Image.asset(
+                                            "assets/sand_dollar_chest.png")),
+                                  ),
+                                ),
+                              ],
+                            ))),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 15, 15, 15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          const Text(
+                            "800 Sand Dollars",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          // const SizedBox(
+                          //     width: 200,
+                          //     child: Text(
+                          //         "Save your streak if you miss a day of meditation.")),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                "\$4.99",
+                                style: TextStyle(
+                                    color: Colors.lightBlueAccent,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+
           //Lure
         ],
       ),

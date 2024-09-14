@@ -32,7 +32,7 @@ export async function sendStreakReminder() {
 
     for (const user of _users) {
         //   console.log(user.fullName);
-        if (user.username === "jacob" && user.deviceToken !== undefined) { //switch back to user.fullName !== ""
+        if (user.fullName !== "" && user.deviceToken !== undefined) { //switch back to user.fullName !== ""
             if (user.streak === undefined || user.streak == 0) {
                 //console.log("\nSending notification to " + user.fullName + "\n");
                 // sendPushNotification(
