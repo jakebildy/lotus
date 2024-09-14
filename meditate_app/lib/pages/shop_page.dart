@@ -234,7 +234,9 @@ class _ShopPageState extends State<ShopPage> {
 
           // Buy Sand Dollars
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              // RevenueCat purchase 'sand_dollar_purchase' item
+            },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(

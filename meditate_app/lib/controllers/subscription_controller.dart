@@ -126,3 +126,5 @@ class SubscriptionController extends GetxController {
     }
   }
 }
+
+Future<void> purchaseSandDollars() async {}

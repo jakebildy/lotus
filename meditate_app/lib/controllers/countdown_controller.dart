@@ -308,15 +308,17 @@ class CountdownController extends GetxController {
           "Streak value is updated to ${userController.user.value.streak} + 1.");
 
       //Bonus five sand dollars for first time meditating today
-      userController.updateProperty(
-          UserProperty.gems, userController.user.value.gems + 5);
+      userController.updateProperty(UserProperty.gems,
+          (userController.user.value.gems + 5 + timeInMinutes));
       gemsToGive += 5;
+      gemsToGive += timeInMinutes;
       // If it's been longer than a day since the last meditation and no streak freeze was used for yesterday
     } else if (numDays > 1) {
       userController.updateStreak(1);
-      userController.updateProperty(
-          UserProperty.gems, userController.user.value.gems + 5);
+      userController.updateProperty(UserProperty.gems,
+          (userController.user.value.gems + 5 + timeInMinutes));
       gemsToGive += 5;
+      gemsToGive += timeInMinutes;
       logInfo("Streak value is set to 1. NumDays was > 1.");
     } else {
       logInfo("You already meditated today. Not updating streak!");
@@ -325,11 +327,6 @@ class CountdownController extends GetxController {
 
     // Logs the meditation (updates lastMeditated, totalMinutes, and meditationHistory)
     userController.logMeditation(timeInMinutes, date);
-
-    // Adds however many minutes you meditated as sand dollars
-    userController.updateProperty(
-        UserProperty.gems, userController.user.value.gems + timeInMinutes);
-    gemsToGive += timeInMinutes;
 
     // If this is the first meditation of the day or you're in debug mode
     if (!alreadyMeditatedToday || DEBUG_MODE) {
