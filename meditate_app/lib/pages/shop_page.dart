@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/services/heap_service.dart';
@@ -22,6 +23,7 @@ class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     UserController user = Get.find();
+    SubscriptionController subscriptionController = Get.find();
 
     return Obx(
       () => ListView(
@@ -236,19 +238,18 @@ class _ShopPageState extends State<ShopPage> {
           GestureDetector(
             onTap: () {
               // RevenueCat purchase 'sand_dollar_purchase' item
+              if (!subscriptionController.purchasingSandDollars.value) {
+                subscriptionController.purchaseSandDollars();
+              }
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 height: 100,
                 decoration: BoxDecoration(
-                  color: user.user.value.streakFreezes > 0
-                      ? const Color.fromARGB(255, 46, 48, 59)
-                      : Colors.black12,
+                  color: Colors.black12,
                   border: Border.all(
-                    color: user.user.value.streakFreezes > 0
-                        ? const Color.fromARGB(255, 81, 80, 107)
-                        : Colors.white24,
+                    color: Colors.white24,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(20),
@@ -310,15 +311,20 @@ class _ShopPageState extends State<ShopPage> {
                           const SizedBox(
                             height: 5,
                           ),
-                          Row(
-                            children: [
-                              const Text(
-                                "\$4.99",
-                                style: TextStyle(
-                                    color: Colors.lightBlueAccent,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                          Obx(
+                            () => Row(
+                              children: [
+                                Text(
+                                  subscriptionController
+                                          .purchasingSandDollars.value
+                                      ? "Purchasing..."
+                                      : "\$4.99",
+                                  style: const TextStyle(
+                                      color: Colors.lightBlueAccent,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
                             height: 10,

@@ -8,6 +8,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -15,6 +16,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 /// {@category Controllers}
 class SubscriptionController extends GetxController {
   late ProductDetails? shellevatePremium;
+
   bool isAvailable = false;
 
   //Don't use this value to check if subscribed, use the one in SaveController
@@ -26,6 +28,9 @@ class SubscriptionController extends GetxController {
   }
 
   Package? subscriptionPackage;
+  Package? sandDollarPackage;
+
+  RxBool purchasingSandDollars = false.obs;
 
   Future<void> buySubscription(BuildContext context) async {
     getPremiumTapped.value = true;
@@ -95,12 +100,16 @@ class SubscriptionController extends GetxController {
     // Fetch offerings
     try {
       Offerings offerings = await Purchases.getOfferings();
-
+      print("OFFERINGS :" + offerings.toString());
       if (offerings.current != null &&
           offerings.current!.availablePackages.isNotEmpty) {
         // Display packages for sale
         subscriptionPackage = offerings.current!.availablePackages[0];
         logWarning(offerings.current!.availablePackages.toString());
+
+        // Get the sand dollars product
+        sandDollarPackage =
+            offerings.all["sand_dollar_purchase"]!.availablePackages[0];
       }
     } on PlatformException catch (e) {
       // optional error handling
@@ -125,6 +134,28 @@ class SubscriptionController extends GetxController {
       // Error fetching customer info
     }
   }
-}
 
-Future<void> purchaseSandDollars() async {}
+  Future<void> purchaseSandDollars() async {
+    SubscriptionController subscriptionController = Get.find();
+    if (subscriptionController.sandDollarPackage != null) {
+      try {
+        purchasingSandDollars.value = true;
+        CustomerInfo customerInfo = await Purchases.purchasePackage(
+            subscriptionController.sandDollarPackage!);
+        logSuccess("Purchased!");
+        UserController user = Get.find();
+        await user.updateProperty(
+            UserProperty.gems, user.user.value.gems + 800);
+        purchasingSandDollars.value = false;
+      } on PlatformException catch (e) {
+        var errorCode = PurchasesErrorHelper.getErrorCode(e);
+        if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
+          logError(e.toString());
+        }
+        purchasingSandDollars.value = false;
+      }
+    } else {
+      logError("sandDollarPackage is null!");
+    }
+  }
+}
