@@ -20,6 +20,7 @@ User noUser = User(
   createdAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
   updatedAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
   lastMeditated: DateTime.parse("2011-10-05T14:48:00.000Z"),
+  streakLostAndSeenAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
   meditationTimesAsOf: DateTime.now(),
   meditationHistory: <DateTime, int>{}.obs,
 );
@@ -99,6 +100,17 @@ class UserController extends GetxController {
         // localStorageUser.value.streak = value as int;
         localStorageUser.update((val) {
           val?.streak = value;
+        });
+        break;
+      case UserProperty.streakValueNeverReset: //Completed
+        storage.write("streakValueNeverReset", value.toString());
+
+        logWarning("streak storage value: " +
+            storage.read("streakValueNeverReset").toString());
+        logInfo("streak: " + value.toString());
+        // localStorageUser.value.streak = value as int;
+        localStorageUser.update((val) {
+          val?.streakValueNeverReset = value;
         });
         break;
       case UserProperty.gems: //Completed
@@ -227,6 +239,17 @@ class UserController extends GetxController {
         // localStorageUser.value.lastMeditated = DateTime.parse(value);
         localStorageUser.update((val) {
           val?.lastMeditated = DateTime.parse(value);
+        });
+        break;
+      case UserProperty.streakLostAndSeenAt: //Completed
+        storage.write("streakLostAndSeenAt", value);
+
+        logWarning("streakLostAndSeenAt storage value: " +
+            storage.read("streakLostAndSeenAt").toString());
+        logInfo("streakLostAndSeenAt: " + value.toString());
+        // localStorageUser.value.lastMeditated = DateTime.parse(value);
+        localStorageUser.update((val) {
+          val?.streakLostAndSeenAt = DateTime.parse(value);
         });
         break;
       case UserProperty.eggTypes:
@@ -452,6 +475,18 @@ class UserController extends GetxController {
           val?.streak = value;
         });
         break;
+      case UserProperty.streakValueNeverReset:
+        // databaseUser.value.streakValueNeverReset = value as int;
+        databaseUser.update((val) {
+          val?.streakValueNeverReset = value;
+        });
+        break;
+      case UserProperty.streakLostAndSeenAt:
+        // databaseUser.value.streakLostAndSeenAt = DateTime.parse(value);
+        databaseUser.update((val) {
+          val?.streakLostAndSeenAt = DateTime.parse(value);
+        });
+        break;
       case UserProperty.gems:
         databaseUser.update((val) {
           val?.gems = value;
@@ -546,6 +581,10 @@ class UserController extends GetxController {
     // Collecting all update operations in a list of Futures
     var updateOperations = [
       updatePropertySafe(UserProperty.streak, localStorageUser.value.streak),
+      updatePropertySafe(UserProperty.streakValueNeverReset,
+          localStorageUser.value.streakValueNeverReset),
+      updatePropertySafe(UserProperty.streakLostAndSeenAt,
+          localStorageUser.value.streakLostAndSeenAt),
       updatePropertySafe(UserProperty.gems, localStorageUser.value.gems),
       updatePropertySafe(
           UserProperty.totalMinutes, localStorageUser.value.totalMinutes),
@@ -588,6 +627,10 @@ class UserController extends GetxController {
 
     var saveOperations = [
       saveLocalValueSafe(UserProperty.streak, databaseUser.value.streak),
+      saveLocalValueSafe(UserProperty.streakValueNeverReset,
+          databaseUser.value.streakValueNeverReset),
+      saveLocalValueSafe(UserProperty.streakLostAndSeenAt,
+          databaseUser.value.streakLostAndSeenAt.toIso8601String()),
       saveLocalValueSafe(UserProperty.gems, databaseUser.value.gems),
       saveLocalValueSafe(
           UserProperty.totalMinutes, databaseUser.value.totalMinutes),
@@ -782,6 +825,8 @@ class UserController extends GetxController {
         } else {
           logSuccess("Lost streak! Setting to 0.");
           updateProperty(UserProperty.streak, 0);
+          updateProperty(UserProperty.streakLostAndSeenAt,
+              DateTime.now().toIso8601String());
 
           // If you want to have a Streak Restore, have a value equal to streak except when this happens. And then check if within 24hours
         }
@@ -844,6 +889,18 @@ class UserController extends GetxController {
   void updateStreak(int newValue) {
     hasDoneStreakToday.value = true;
     updateProperty(UserProperty.streak, newValue);
+    if (newValue != 0) {
+      updateProperty(UserProperty.streakValueNeverReset, newValue);
+    }
+    update();
+  }
+
+  void reviveStreak() {
+    updateProperty(UserProperty.streak, user.value.streakValueNeverReset);
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime yesterday = today.subtract(const Duration(days: 1));
+    updateProperty(UserProperty.lastMeditated, yesterday.toIso8601String());
     update();
   }
 

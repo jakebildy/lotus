@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -19,7 +21,29 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   final int STREAK_FREEZE_PRICE = 80;
+  final int STREAK_REVIVE_PRICE = 400;
   final int LURE_PRICE = 90;
+
+  // every second, update
+  int secondsTillStreakReviveExpires = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    UserController user = Get.find();
+    DateTime dayExpires =
+        user.user.value.streakLostAndSeenAt.add(const Duration(days: 1));
+
+    secondsTillStreakReviveExpires =
+        dayExpires.difference(DateTime.now()).inSeconds;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        secondsTillStreakReviveExpires =
+            dayExpires.difference(DateTime.now()).inSeconds;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     UserController user = Get.find();
@@ -78,6 +102,151 @@ class _ShopPageState extends State<ShopPage> {
           const SizedBox(
             height: 20,
           ),
+
+          // Streak Revive
+          secondsTillStreakReviveExpires < 0
+              ? Container()
+              : GestureDetector(
+                  onTap: () {
+                    if (user.user.value.gems >= STREAK_REVIVE_PRICE) {
+                      HapticFeedback.lightImpact();
+
+                      user.updateProperty(UserProperty.gems,
+                          user.user.value.gems - STREAK_REVIVE_PRICE);
+                      // Restore the user's streak
+                      user.reviveStreak();
+                    } else {
+                      //Log the event to AppsFlyer
+                      HeapService appsflyer = Get.find();
+                      appsflyer.logEvent(
+                          "STREAK_REVIVE_TAPPED", {"purchased": "false"});
+
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.greenAccent,
+                        key: UniqueKey(),
+                        content: const Text(
+                            "Earn more sand dollars to purchase this!"),
+                      ));
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        border: Border.all(
+                          color: user.user.value.streakFreezes > 0
+                              ? const Color.fromARGB(255, 107, 80, 80)
+                              : Colors.white24,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 15.0,
+                                  horizontal:
+                                      MediaQuery.of(context).size.width / 70),
+                              child: SizedBox(
+                                  width: 60,
+                                  child: Stack(
+                                    children: [
+                                      SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              4,
+                                          child: Image.asset(
+                                              "assets/streak_revive.png")),
+                                      Opacity(
+                                        opacity: 0.8,
+                                        child: Shimmer.fromColors(
+                                          baseColor: Colors.white12,
+                                          highlightColor: Colors.white70,
+                                          child: SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  4,
+                                              child: Image.asset(
+                                                  "assets/streak_revive.png")),
+                                        ),
+                                      ),
+                                    ],
+                                  ))),
+                          // SizedBox(
+                          //   width: 10,
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Streak Revive",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                SizedBox(
+                                    width: 200,
+                                    child: Text(
+                                        "Restore your ${user.user.value.streakValueNeverReset} day streak!")),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      "Buy for ",
+                                      style: TextStyle(
+                                          color: Colors.lightBlueAccent,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                        height: 20,
+                                        child: Image.asset(
+                                            "assets/sand_dollar.png")),
+                                    const SizedBox(
+                                      width: 2,
+                                    ),
+                                    Text(
+                                      "$STREAK_REVIVE_PRICE",
+                                      style: const TextStyle(
+                                          color: Colors.lightBlueAccent,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "${secondsTillStreakReviveExpires ~/ (60 * 24)}:${(((secondsTillStreakReviveExpires - secondsTillStreakReviveExpires % 60) / 60) % 24).toStringAsFixed(0).padLeft(2, '0')}:${(secondsTillStreakReviveExpires % 60).toString().padLeft(2, '0')} LEFT TO BUY",
+                                  style: TextStyle(
+                                      color: user.user.value.streakFreezes > 0
+                                          ? Colors.red
+                                          : Colors.grey,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+          //Streak Freeze
           GestureDetector(
             onTap: () {
               if (user.user.value.gems >= STREAK_FREEZE_PRICE) {
@@ -239,6 +408,7 @@ class _ShopPageState extends State<ShopPage> {
             onTap: () {
               // RevenueCat purchase 'sand_dollar_purchase' item
               if (!subscriptionController.purchasingSandDollars.value) {
+                HapticFeedback.lightImpact();
                 subscriptionController.purchaseSandDollars();
               }
             },

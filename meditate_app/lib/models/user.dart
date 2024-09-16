@@ -6,6 +6,9 @@ const String defaultProfilePicture = "https://i.imgur.com/BIRdTgg.png";
 
 enum UserProperty {
   streak,
+  //For Streak Revives, same as Streak but never set to 0
+  streakValueNeverReset,
+  streakLostAndSeenAt,
   totalMinutes,
   gems,
   eggs,
@@ -33,6 +36,7 @@ class User {
   final DateTime updatedAt;
 
   int streak;
+  int streakValueNeverReset;
   int totalMinutes;
   int gems;
   int eggs;
@@ -40,6 +44,7 @@ class User {
   int hatchProgressEggOne;
   int streakFreezes;
   DateTime lastMeditated;
+  DateTime streakLostAndSeenAt;
   List<dynamic> meditationTimes;
   DateTime meditationTimesAsOf;
 
@@ -63,6 +68,7 @@ class User {
     meditationTimesAsOf: DateTime.now(),
     createdAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
     updatedAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
+    streakLostAndSeenAt: DateTime.parse("2011-10-05T14:48:00.000Z"),
   );
 
   User({
@@ -73,6 +79,7 @@ class User {
     required this.createdAt,
     required this.updatedAt,
     required this.lastMeditated,
+    required this.streakLostAndSeenAt,
     RxMap<DateTime, int>? meditationHistory,
     RxMap<String, DateTime>? emojisSentAt,
     RxMap<String, String>? sentEmojis,
@@ -80,6 +87,7 @@ class User {
     required this.meditationTimesAsOf,
     this.avatar = defaultProfilePicture,
     this.streak = 0,
+    this.streakValueNeverReset = 0,
     this.totalMinutes = 0,
     this.gems = 0,
     this.eggs = 0,
@@ -146,6 +154,9 @@ class User {
       avatar: map["avatar"] ?? defaultProfilePicture,
       streak: map["streak"] ??
           0, // Logic to update the streak on app load in UserController
+      streakValueNeverReset: map["streakValueNeverReset"] ?? 0,
+      streakLostAndSeenAt: DateTime.parse(
+          map["streakLostAndSeenAt"] ?? "2011-10-05T14:48:00.000Z"),
       totalMinutes: map["totalMinutes"] ?? 0,
       gems: map["gems"] ?? 0,
       eggs: map["eggs"] ?? 0,

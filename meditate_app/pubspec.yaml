@@ -248,6 +248,7 @@ flutter:
     - assets/jungle_bottom.png
     - assets/images/game/water_2.gif
     - assets/ambiences/none.jpg
+    - assets/streak_revive.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
