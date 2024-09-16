@@ -159,7 +159,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
               child: ListBody(
                 children: const <Widget>[
                   Text(
-                      'You need to add at least one friend on Shellevate to find this turtle!'),
+                      'You need to add at least one friend on Shellevate to breed this turtle!'),
                 ],
               ),
             ),
