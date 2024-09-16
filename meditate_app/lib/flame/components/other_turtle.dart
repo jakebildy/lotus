@@ -114,12 +114,12 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   }
 }
 
+//TODO: validate changes
 Future<void> _showMyDialog(int turtleColor, int turtleType) async {
   UserController userController = Get.find();
   GameController game = Get.find();
   EggController egg = Get.find();
-
-  if (TURTLES[turtleType].tier.index > userController.streakTier().index) {
+  if (TURTLES[turtleType].foundIn != null) {
     return showDialog<void>(
         context: game.localContext!,
         barrierDismissible: false, // user must tap button!
@@ -129,9 +129,9 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text(
-                      'You need to be a ${tierReadable(TURTLES[turtleType].tier)} to breed with this turtle!'),
-                  const Text('\nIncrease your level by meditating more.'),
+                  Text('You need to meditate with the ' +
+                      TURTLES[turtleType].foundIn!.name +
+                      ' ambience to find this turtle!'),
                 ],
               ),
             ),
@@ -148,7 +148,36 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
             ],
           );
         });
-  } else if (TURTLES[turtleType].foundIn != null) {
+  } else if (TURTLES[turtleType].tier.index == Tier.LITBACK.index) {
+    return showDialog<void>(
+        context: game.localContext!,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            //  title: const Text('AlertDialog Title'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text(
+                      'You need to add at least one friend on Shellevate to find this turtle!'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text(
+                  'Okay',
+                  style: TextStyle(color: Colors.tealAccent),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  } else if (TURTLES[turtleType].tier.index >
+      userController.streakTier().index) {
     return showDialog<void>(
         context: game.localContext!,
         barrierDismissible: false, // user must tap button!
@@ -158,9 +187,9 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('You need to meditate with the ' +
-                      TURTLES[turtleType].foundIn!.name +
-                      ' ambience to find this turtle!'),
+                  Text(
+                      'You need to be a ${tierReadable(TURTLES[turtleType].tier)} to breed with this turtle!'),
+                  const Text('\nIncrease your level by meditating more.'),
                 ],
               ),
             ),

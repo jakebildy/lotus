@@ -743,6 +743,7 @@ class UserController extends GetxController {
     }
   }
 
+  //TODO: check if this runs twice
   void loadStreak() {
     logSuccess("Loading Streak, currently " + user.value.streak.toString());
     DateTime now = DateTime.now();

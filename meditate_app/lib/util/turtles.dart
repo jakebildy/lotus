@@ -108,12 +108,12 @@ List<Turtle> TURTLES = [
       name: "Dino Turtle",
       rarity: Rarity.COMMON,
       tier: Tier.AMBIENCE,
-      foundIn: AMBIENCES[13]),
+      foundIn: AMBIENCES[14]),
   Turtle(
       name: "Lightning Turtle",
       rarity: Rarity.COMMON,
       tier: Tier.AMBIENCE,
-      foundIn: AMBIENCES[10]),
+      foundIn: AMBIENCES[11]),
 ];
 
 int getTurtleToHatch(String ambience) {
