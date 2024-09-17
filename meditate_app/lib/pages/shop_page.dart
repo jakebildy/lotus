@@ -104,7 +104,8 @@ class _ShopPageState extends State<ShopPage> {
           ),
 
           // Streak Revive
-          secondsTillStreakReviveExpires < 0
+          secondsTillStreakReviveExpires < 0 ||
+                  user.user.value.streakValueNeverReset == 0
               ? Container()
               : GestureDetector(
                   onTap: () {
@@ -137,9 +138,7 @@ class _ShopPageState extends State<ShopPage> {
                       decoration: BoxDecoration(
                         color: Colors.black12,
                         border: Border.all(
-                          color: user.user.value.streakFreezes > 0
-                              ? const Color.fromARGB(255, 107, 80, 80)
-                              : Colors.white24,
+                          color: const Color.fromARGB(255, 107, 80, 80),
                           width: 2,
                         ),
                         borderRadius: BorderRadius.circular(20),
@@ -230,11 +229,9 @@ class _ShopPageState extends State<ShopPage> {
                                   height: 10,
                                 ),
                                 Text(
-                                  "${secondsTillStreakReviveExpires ~/ (60 * 24)}:${(((secondsTillStreakReviveExpires - secondsTillStreakReviveExpires % 60) / 60) % 24).toStringAsFixed(0).padLeft(2, '0')}:${(secondsTillStreakReviveExpires % 60).toString().padLeft(2, '0')} LEFT TO BUY",
-                                  style: TextStyle(
-                                      color: user.user.value.streakFreezes > 0
-                                          ? Colors.red
-                                          : Colors.grey,
+                                  "${secondsTillStreakReviveExpires ~/ (60 * 60)}:${((secondsTillStreakReviveExpires ~/ 60) % 60).toStringAsFixed(0).padLeft(2, '0')}:${(secondsTillStreakReviveExpires % 60).toString().padLeft(2, '0')} LEFT TO BUY",
+                                  style: const TextStyle(
+                                      color: Colors.red,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],

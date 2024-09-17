@@ -100,7 +100,7 @@ class SubscriptionController extends GetxController {
     // Fetch offerings
     try {
       Offerings offerings = await Purchases.getOfferings();
-      print("OFFERINGS :" + offerings.toString());
+      // print("OFFERINGS :" + offerings.toString());
       if (offerings.current != null &&
           offerings.current!.availablePackages.isNotEmpty) {
         // Display packages for sale
