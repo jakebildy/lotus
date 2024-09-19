@@ -13,12 +13,14 @@ export interface UserI {
   deviceToken?: string,
 
   streak?: number,
+  streakValueNeverReset?: number,
   totalMinutes?: number,
   gems?: number,
   totalEggs?: number,
   hatchProgressEggOne?: number,
 
   lastMeditated?: Date,
+  streakLostAndSeenAt?: Date,
   meditationTimes?: Array<number>,
   meditationTimesAsOf?: Date,
 
@@ -45,12 +47,14 @@ const UserSchema = new mongoose.Schema<UserI>(
     deviceToken: { type: String, required: false },
 
     streak: { type: Number, required: false },
+    streakValueNeverReset: { type: Number, required: false },
     totalMinutes: { type: Number, required: false },
     gems: { type: Number, required: false },
     totalEggs: { type: Number, required: false },
     hatchProgressEggOne: { type: Number, required: false },
 
     lastMeditated: { type: Date, required: false },
+    streakLostAndSeenAt: { type: Date, required: false },
     meditationTimes: { type: Array, required: false },
     meditationTimesAsOf: { type: Date, required: false },
     
