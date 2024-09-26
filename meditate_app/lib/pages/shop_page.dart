@@ -34,12 +34,26 @@ class _ShopPageState extends State<ShopPage> {
     DateTime dayExpires =
         user.user.value.streakLostAndSeenAt.add(const Duration(days: 1));
 
-    secondsTillStreakReviveExpires =
-        dayExpires.difference(DateTime.now()).inSeconds;
+    secondsTillStreakReviveExpires = dayExpires
+        .difference(DateTime.utc(
+            DateTime.now().year,
+            DateTime.now().month,
+            DateTime.now().day,
+            DateTime.now().hour,
+            DateTime.now().minute,
+            DateTime.now().second))
+        .inSeconds;
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        secondsTillStreakReviveExpires =
-            dayExpires.difference(DateTime.now()).inSeconds;
+        secondsTillStreakReviveExpires = dayExpires
+            .difference(DateTime.utc(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                DateTime.now().hour,
+                DateTime.now().minute,
+                DateTime.now().second))
+            .inSeconds;
       });
     });
   }
