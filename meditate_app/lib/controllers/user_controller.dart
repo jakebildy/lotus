@@ -105,9 +105,9 @@ class UserController extends GetxController {
       case UserProperty.streakValueNeverReset: //Completed
         storage.write("streakValueNeverReset", value.toString());
 
-        logWarning("streak storage value: " +
+        logWarning("streakValueNeverReset storage value: " +
             storage.read("streakValueNeverReset").toString());
-        logInfo("streak: " + value.toString());
+        logInfo("streakValueNeverReset: " + value.toString());
         // localStorageUser.value.streak = value as int;
         localStorageUser.update((val) {
           val?.streakValueNeverReset = value;
@@ -329,6 +329,13 @@ class UserController extends GetxController {
       logSuccess("Loaded streak: ${localStorageUser.value.streak}");
     }
 
+    if (getValue('streakValueNeverReset') != "") {
+      localStorageUser.value.streakValueNeverReset =
+          int.parse(getValue("streakValueNeverReset"));
+      logSuccess(
+          "Loaded streakValueNeverReset: ${localStorageUser.value.streakValueNeverReset}");
+    }
+
     if (getValue('total_minutes') != "") {
       localStorageUser.value.totalMinutes =
           int.parse(getValue("total_minutes"));
@@ -352,6 +359,13 @@ class UserController extends GetxController {
           DateTime.parse(getValue("last_meditated"));
       logSuccess(
           "Loaded lastMeditated: ${localStorageUser.value.lastMeditated}");
+    }
+
+    if (getValue('streakLostAndSeenAt') != "") {
+      localStorageUser.value.streakLostAndSeenAt =
+          DateTime.parse(getValue("streakLostAndSeenAt"));
+      logSuccess(
+          "Loaded streakLostAndSeenAt: ${localStorageUser.value.streakLostAndSeenAt}");
     }
 
     if (getValue('egg_progress_one') != "") {
@@ -891,6 +905,10 @@ class UserController extends GetxController {
     updateProperty(UserProperty.streak, newValue);
     if (newValue != 0) {
       updateProperty(UserProperty.streakValueNeverReset, newValue);
+
+      //You don't want to be able to revive a streak once you meditated that day
+      updateProperty(UserProperty.streakLostAndSeenAt,
+          DateTime.parse("2011-10-05T14:48:00.000Z").toIso8601String());
     }
     update();
   }

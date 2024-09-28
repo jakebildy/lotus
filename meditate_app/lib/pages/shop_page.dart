@@ -105,7 +105,8 @@ class _ShopPageState extends State<ShopPage> {
 
           // Streak Revive
           secondsTillStreakReviveExpires < 0 ||
-                  user.user.value.streakValueNeverReset == 0
+                  user.user.value.streakValueNeverReset == 0 ||
+                  user.user.value.streak != 0
               ? Container()
               : GestureDetector(
                   onTap: () {
