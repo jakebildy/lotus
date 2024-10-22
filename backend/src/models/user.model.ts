@@ -62,7 +62,7 @@ const UserSchema = new mongoose.Schema<UserI>(
     unlockedTurtles: { type: Array, required: false },
     unlockedTurtleColors: { type: [[Number]], required: false },
     eggs: { type: Number, required: false },
-    streakFreezes: { type: Number, required: false },
+    streakFreezes: { type: Number, required: false, default: 3 },
     eggTypes: {type: Array, required: false},
 
     emojisSentAt: { type: Map, of: Date, required: false },

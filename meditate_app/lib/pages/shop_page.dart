@@ -262,7 +262,7 @@ class _ShopPageState extends State<ShopPage> {
           GestureDetector(
             onTap: () {
               if (user.user.value.gems >= STREAK_FREEZE_PRICE) {
-                if (user.user.value.streakFreezes < 2) {
+                if (user.user.value.streakFreezes < 3) {
                   //Log the event to AppsFlyer
                   HeapService heap = Get.find();
                   heap.logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
@@ -278,14 +278,14 @@ class _ShopPageState extends State<ShopPage> {
                   //Log the event to AppsFlyer
                   HeapService heap = Get.find();
                   heap.logEvent(
-                      "STREAK_FREEZE_TAPPED", {"purchased": "false, >2"});
+                      "STREAK_FREEZE_TAPPED", {"purchased": "false, >3"});
 
                   ScaffoldMessenger.of(context).clearSnackBars();
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     backgroundColor: Colors.greenAccent,
                     key: UniqueKey(),
                     content: const Text(
-                        "You can only equip two Streak Freezes at a time!"),
+                        "You can only equip three Streak Freezes at a time!"),
                   ));
                 }
               } else {
@@ -399,7 +399,7 @@ class _ShopPageState extends State<ShopPage> {
                             height: 10,
                           ),
                           Text(
-                            "${user.user.value.streakFreezes} OUT OF 2 ACTIVE",
+                            "${user.user.value.streakFreezes} OUT OF 3 ACTIVE",
                             style: TextStyle(
                                 color: user.user.value.streakFreezes > 0
                                     ? Colors.lightBlue
