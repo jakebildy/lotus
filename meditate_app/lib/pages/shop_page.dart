@@ -20,7 +20,7 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
-  final int STREAK_FREEZE_PRICE = 80;
+  final int STREAK_FREEZE_PRICE = 75;
   final int STREAK_REVIVE_PRICE = 400;
   final int LURE_PRICE = 90;
 
