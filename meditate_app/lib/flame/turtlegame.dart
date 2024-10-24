@@ -13,6 +13,7 @@ import 'package:meditate_app/flame/components/butterfly.dart';
 import 'package:meditate_app/flame/components/fish.dart';
 import 'package:meditate_app/flame/components/lilypad.dart';
 import 'package:meditate_app/flame/components/other_turtle.dart';
+import 'package:meditate_app/flame/components/rainbow_lilypad.dart';
 import 'package:meditate_app/flame/components/seafloor_object.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -75,8 +76,15 @@ class TurtleGame extends FlameGame with HasTappables {
 
     add(cameraPoint);
 
-    for (int i = 0; i < 1600; i++) {
+    for (int i = 0; i < 600; i++) {
       add(Lilypad(
+          Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+              math.Random().nextInt(20000).toDouble() - 10000),
+          (70 + math.Random().nextInt(30)).toDouble()));
+    }
+
+    for (int i = 0; i < 1000; i++) {
+      add(RainbowLilypad(
           Vector2(math.Random().nextInt(20000).toDouble() - 10000,
               math.Random().nextInt(20000).toDouble() - 10000),
           (70 + math.Random().nextInt(30)).toDouble()));

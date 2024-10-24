@@ -18,19 +18,13 @@ class Lilypad extends SpriteComponent with HasGameRef {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    int variant = Random().nextInt(5);
+    int variant = Random().nextInt(2);
     if (variant == 0) {
       sprite = await gameRef.loadSprite('game/lilypad.png');
     } else if (variant == 1) {
       sprite = await gameRef.loadSprite('game/lilypad2.png');
-    } else if (variant == 2) {
-      sprite = await gameRef.loadSprite('game/lilypad3.png');
-    } else if (variant == 3) {
-      sprite = await gameRef.loadSprite('game/lilypad4.png');
-    } else {
-      sprite = await gameRef.loadSprite('game/lilypad5.png');
     }
-    size.setValues(lilypadSize, lilypadSize);
+    size.setValues(lilypadSize, lilypadSize * 7 / 8);
     anchor = Anchor.center;
   }
 

@@ -249,6 +249,7 @@ flutter:
     - assets/images/game/water_2.gif
     - assets/ambiences/none.jpg
     - assets/streak_revive.png
+    - assets/images/game/lilypad_flower.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
