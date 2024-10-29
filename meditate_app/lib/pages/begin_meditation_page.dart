@@ -228,14 +228,14 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                   _duration <
                                       (DEBUG_MODE == true
                                           ? const Duration(minutes: 1)
-                                          : const Duration(minutes: 5))
+                                          : const Duration(minutes: 1))
                               ? const SizedBox(
                                   height: 50,
                                   child: Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 30.0),
                                     child: Text(
-                                      "Meditate for at least five minutes to build a habit!",
+                                      "Meditate for at least one minute to build a habit!",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15),
