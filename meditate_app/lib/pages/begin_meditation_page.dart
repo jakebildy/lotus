@@ -84,6 +84,13 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                 fit: BoxFit.cover,
               ),
             ),
+            Opacity(
+                opacity: 0.3,
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Color.fromARGB(255, 0, 33, 59),
+                )),
             Positioned.fill(
                 child: FloatingBubbles.alwaysRepeating(
               noOfBubbles: 20,
@@ -190,14 +197,14 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.5),
+                                  color: Colors.black.withOpacity(0.2),
                                   spreadRadius: 1,
                                   blurRadius: 5,
                                   offset: const Offset(0, 3),
                                 ),
                               ],
-                              color: Colors.grey[850],
-                              borderRadius: BorderRadius.circular(20)),
+                              color: Color.fromARGB(0, 48, 48, 48),
+                              borderRadius: BorderRadius.circular(100)),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
@@ -308,6 +315,8 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                           ),
                                         ],
                                         color: Colors.cyan,
+                                        border: Border.all(
+                                            color: Colors.white, width: 2),
                                         borderRadius:
                                             BorderRadius.circular(60)),
                                     child: const Padding(

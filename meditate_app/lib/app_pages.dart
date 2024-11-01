@@ -33,12 +33,14 @@ class _AppPagesState extends State<AppPages> {
           userController.user.value == noUser && network.offline.value == false
               ? const Signup()
               : Scaffold(
+                  extendBodyBehindAppBar: true,
                   appBar: PreferredSize(
                     preferredSize:
                         Size.fromHeight(network.offline.value ? 66 : 56),
                     child: AppBar(
-                        elevation: 1,
-                        backgroundColor: Colors.grey[850],
+                        elevation: _page == 0 ? 0 : 1,
+                        backgroundColor:
+                            _page == 0 ? Colors.transparent : Colors.grey[850],
                         centerTitle: true,
                         title: Column(
                           children: [
@@ -105,7 +107,9 @@ class _AppPagesState extends State<AppPages> {
                                                                       .streak >
                                                                   0
                                                           ? Colors.red
-                                                          : Colors.grey
+                                                          : _page == 0
+                                                              ? Colors.grey
+                                                              : Colors.grey
                                                       : Colors.white),
                                             ),
                                           ),

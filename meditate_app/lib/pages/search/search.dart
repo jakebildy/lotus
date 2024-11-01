@@ -3,6 +3,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
@@ -20,6 +22,15 @@ class Search extends StatelessWidget {
           centerTitle: false,
           elevation: 0,
           title: SearchBox(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.ios_share_outlined),
+          onPressed: () {
+            UserController userController = Get.find();
+            Share.share("Add me on Shellevate! My username is @" +
+                userController.user.value.username +
+                "\n\n https://shellevate.app/get");
+          },
         ),
         //Search - scafold body
         body: Container(

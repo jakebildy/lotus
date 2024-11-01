@@ -18,6 +18,7 @@ import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -445,17 +446,16 @@ class _ProfilePageState extends State<ProfilePage>
                               },
                               tabs: [
                                 Tab(
-                                  text: "Following (" +
-                                      followController.usersFollowing.length
+                                  text: followController.usersFollowing.length
                                           .toString() +
-                                      ")",
+                                      " Following",
                                 ),
                                 Tab(
-                                  text: "Followers (" +
-                                      followController.followers.length
-                                          .toString() +
-                                      ")",
-                                )
+                                    text: followController.followers.length
+                                            .toString() +
+                                        (followController.followers.length == 1
+                                            ? " Follower"
+                                            : " Followers"))
                               ]),
                           SizedBox(
                             height: 40 +
@@ -555,56 +555,75 @@ class _ProfilePageState extends State<ProfilePage>
                               Get.to(const Search());
                             },
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
                               children: [
-                                SizedBox(
-                                  width: 180,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                        height: 50,
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                    2 -
-                                                20,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black12,
-                                          border: Border.all(
-                                            color: Colors.white24,
-                                            width: 2,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      height: 50,
+                                      width: MediaQuery.of(context).size.width -
+                                          100,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        border: Border.all(
+                                          color: Colors.white24,
+                                          width: 2,
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: const [
-                                            Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    0, 0, 5, 5.0),
-                                                child: SizedBox(
-                                                    height: 17,
-                                                    child: Icon(
-                                                      Icons.person_add,
-                                                      color: Colors.tealAccent,
-                                                      size: 20,
-                                                    ))),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              "ADD FRIENDS",
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        )),
-                                  ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: const [
+                                          Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 0, 5, 5.0),
+                                              child: SizedBox(
+                                                  height: 17,
+                                                  child: Icon(
+                                                    Icons.person_add,
+                                                    color: Colors.tealAccent,
+                                                    size: 20,
+                                                  ))),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "ADD FRIENDS",
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.tealAccent,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
                                 ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Share.share(
+                                        "Add me on Shellevate! My username is @" +
+                                            userController.user.value.username +
+                                            "\n\n https://shellevate.app/get");
+                                  },
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        border: Border.all(
+                                          color: Colors.white24,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Icon(
+                                          Icons.ios_share_outlined,
+                                          color: Colors.tealAccent,
+                                        ),
+                                      )),
+                                )
                               ],
                             ),
                           ),
