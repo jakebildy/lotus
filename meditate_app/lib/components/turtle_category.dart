@@ -6,7 +6,6 @@ import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/components/piechart_painter.dart';
 import 'package:meditate_app/pages/turtle_category_page.dart';
 import 'package:meditate_app/util/turtles.dart';
-import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TurtleCategory extends StatelessWidget {
@@ -152,7 +151,7 @@ class TurtleCategory extends StatelessWidget {
                                             ? Colors.blue
                                             : Colors.purpleAccent,
                               )),
-                          Text(" • "),
+                          const Text(" • "),
                           Text(
                               TURTLES[id].name == "Litback Turtle"
                                   ? "Add Friends to Find"

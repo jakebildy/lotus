@@ -11,7 +11,6 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
-import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
@@ -197,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage>
                             decoration: BoxDecoration(
                               color: Colors.black12,
                               borderRadius: BorderRadius.circular(20),
-                              border: Border.fromBorderSide(
+                              border: const Border.fromBorderSide(
                                   BorderSide(color: Colors.white24, width: 2)),
                             ),
                           ),
@@ -478,7 +477,7 @@ class _ProfilePageState extends State<ProfilePage>
                               userController.streakTier() == Tier.RAINBOW
                                   ? ShaderMask(
                                       shaderCallback: (Rect bounds) {
-                                        return LinearGradient(
+                                        return const LinearGradient(
                                           colors: <Color>[
                                             Colors.red,
                                             Colors.orange,

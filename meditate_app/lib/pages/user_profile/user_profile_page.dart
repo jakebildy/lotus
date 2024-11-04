@@ -124,7 +124,8 @@ class _UserProfilePageState extends State<UserProfilePage>
                                     widget.user.totalMinutes)
                                 .toString() +
                             "%)",
-                        style: TextStyle(color: Colors.white70, fontSize: 16),
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 16),
                       )
               ],
             ),

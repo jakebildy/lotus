@@ -73,6 +73,7 @@ const List<String> TURTLE_COLORS_NAME = [
   "Rainbow"
 ];
 
+//ignore: non_constant_identifier_names
 List<Turtle> TURTLES = [
   const Turtle(name: "Swamp Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(
