@@ -190,11 +190,11 @@ int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
   // Sort the meditation times in descending order
   meditationTimes.sort((a, b) => b.compareTo(a));
 
-  // Find the user's rank (position in the sorted list)
-  int rank = meditationTimes.indexOf(totalMinutes) + 1;
+  // Count how many users have meditation times greater than or equal to totalMinutes
+  int rank = meditationTimes.where((time) => time > totalMinutes).length + 1;
 
   // Calculate percentile
   double percentile = (rank / meditationTimes.length) * 100;
 
-  return percentile.toInt(); // Convert to integer if you want a whole number
+  return percentile.toInt(); // Convert to integer for whole number
 }

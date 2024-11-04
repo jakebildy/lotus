@@ -103,11 +103,32 @@ class _UserProfilePageState extends State<UserProfilePage>
             const SizedBox(
               height: 5,
             ),
-            Text(
-              tierReadable(userStreakTier(widget.user)),
-              style: TextStyle(
-                  color: tierColor(userStreakTier(widget.user)), fontSize: 17),
-              textAlign: TextAlign.center,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  tierReadable(userStreakTier(widget.user)),
+                  style: TextStyle(
+                      color: tierColor(userStreakTier(widget.user)),
+                      fontSize: 17),
+                  textAlign: TextAlign.center,
+                ),
+                followController.meditationAmounts.isEmpty ||
+                        calculateTopPercentile(
+                                followController.meditationAmounts.toList(),
+                                widget.user.totalMinutes) >
+                            50
+                    ? Container()
+                    : Text(
+                        " (Top " +
+                            calculateTopPercentile(
+                                    followController.meditationAmounts.toList(),
+                                    widget.user.totalMinutes)
+                                .toString() +
+                            "%)",
+                        style: TextStyle(color: Colors.white70, fontSize: 16),
+                      )
+              ],
             ),
             const SizedBox(
               height: 5,
