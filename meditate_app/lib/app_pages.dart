@@ -38,7 +38,7 @@ class _AppPagesState extends State<AppPages> {
                     preferredSize:
                         Size.fromHeight(network.offline.value ? 66 : 56),
                     child: AppBar(
-                        elevation: _page == 0 ? 0 : 1,
+                        elevation: 0,
                         backgroundColor:
                             _page == 0 ? Colors.transparent : Colors.grey[850],
                         centerTitle: true,

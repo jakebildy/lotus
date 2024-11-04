@@ -107,10 +107,8 @@ class _UserProfilePageState extends State<UserProfilePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  tierReadable(userStreakTier(widget.user)),
-                  style: TextStyle(
-                      color: tierColor(userStreakTier(widget.user)),
-                      fontSize: 17),
+                  "Level " + calculateLevel(widget.user.levelPoints).toString(),
+                  style: const TextStyle(color: Colors.green, fontSize: 17),
                   textAlign: TextAlign.center,
                 ),
                 followController.meditationAmounts.isEmpty ||

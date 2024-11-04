@@ -198,3 +198,50 @@ int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
 
   return percentile.toInt(); // Convert to integer for whole number
 }
+
+int calculateLevel(int levelPoints) {
+  // Define an array for the first 10 levels with their specific point requirements
+  List<int> initialThresholds = [
+    20,
+    50,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ];
+
+  int cumulativePoints = 0;
+  int level = 0;
+
+  // Calculate the level within the first 10 levels
+  for (int i = 0; i < initialThresholds.length; i++) {
+    cumulativePoints += initialThresholds[i];
+    if (levelPoints < cumulativePoints) {
+      return level + 1; // Return the level starting from 1
+    }
+    level++;
+  }
+
+  // Calculate levels beyond level 10
+  int levelIncrement =
+      100; // Starting increment for points required beyond level 10
+  int levelsPerIncrement =
+      10; // Every 10 levels, the points required increases by 100
+
+  while (levelPoints >= cumulativePoints) {
+    int pointsForNextLevel =
+        levelIncrement * ((level - 10) ~/ levelsPerIncrement + 1);
+    cumulativePoints += pointsForNextLevel;
+    level++;
+
+    if (levelPoints < cumulativePoints) {
+      return level;
+    }
+  }
+
+  return level;
+}

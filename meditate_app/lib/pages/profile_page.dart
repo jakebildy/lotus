@@ -158,10 +158,10 @@ class _ProfilePageState extends State<ProfilePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      tierReadable(userController.streakTier()),
-                      style: TextStyle(
-                          color: tierColor(userController.streakTier()),
-                          fontSize: 17),
+                      "Level " +
+                          calculateLevel(userController.user.value.levelPoints)
+                              .toString(),
+                      style: const TextStyle(color: Colors.green, fontSize: 17),
                       textAlign: TextAlign.center,
                     ),
                     followController.meditationAmounts.isEmpty ||
@@ -182,6 +182,49 @@ class _ProfilePageState extends State<ProfilePage>
                                 TextStyle(color: Colors.white70, fontSize: 16),
                           )
                   ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            height: 25,
+                            width: MediaQuery.of(context).size.width - 40,
+                            decoration: BoxDecoration(
+                              color: Colors.black26,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          40 > 100
+                              ? Container()
+                              : Container(
+                                  width: 40 * 2,
+                                  height: 25,
+                                  decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Colors.blue,
+                                        Colors.cyan,
+                                        Colors.green
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20),
+                                      topRight: Radius.circular(0),
+                                      bottomRight: Radius.circular(0),
+                                    ),
+                                  ),
+                                ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 5,
