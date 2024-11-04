@@ -154,12 +154,34 @@ class _ProfilePageState extends State<ProfilePage>
                 const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  tierReadable(userController.streakTier()),
-                  style: TextStyle(
-                      color: tierColor(userController.streakTier()),
-                      fontSize: 17),
-                  textAlign: TextAlign.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      tierReadable(userController.streakTier()),
+                      style: TextStyle(
+                          color: tierColor(userController.streakTier()),
+                          fontSize: 17),
+                      textAlign: TextAlign.center,
+                    ),
+                    followController.meditationAmounts.isEmpty ||
+                            calculateTopPercentile(
+                                    followController.meditationAmounts.toList(),
+                                    userController.user.value.totalMinutes) >
+                                50
+                        ? Container()
+                        : Text(
+                            " (Top " +
+                                calculateTopPercentile(
+                                        followController.meditationAmounts
+                                            .toList(),
+                                        userController.user.value.totalMinutes)
+                                    .toString() +
+                                "%)",
+                            style:
+                                TextStyle(color: Colors.white70, fontSize: 16),
+                          )
+                  ],
                 ),
                 const SizedBox(
                   height: 5,

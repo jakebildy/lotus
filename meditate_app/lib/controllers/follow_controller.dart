@@ -16,6 +16,8 @@ class FollowController extends GetxController {
   RxList<Follow> allUserFollowers = RxList();
   RxBool loadingFollowers = false.obs;
 
+  RxList<int> meditationAmounts = RxList();
+
   FollowController() {
     fetchFollows();
   }
@@ -28,6 +30,9 @@ class FollowController extends GetxController {
     DateTime today = DateTime(now.year, now.month, now.day);
     logWarning(today.toIso8601String());
     for (User user in users) {
+      // this also calculates the topPercent of totalMinutes of the user vs the other user. So if they're in the top 20% of users, for instance.
+      meditationAmounts.add(user.totalMinutes);
+
       DateTime lastMeditatedAdjusted = DateTime(user.lastMeditated.year,
           user.lastMeditated.month, user.lastMeditated.day);
       logWarning(lastMeditatedAdjusted.toIso8601String());
