@@ -167,6 +167,12 @@ class UserController extends GetxController {
           val?.totalMinutes = value;
         });
         break;
+      case UserProperty.levelPoints:
+        storage.write("level_points", value.toString());
+        localStorageUser.update((val) {
+          val?.levelPoints = value;
+        });
+        break;
       case UserProperty.streakFreezes:
         storage.write("streak_freezes", value.toString());
 
@@ -345,6 +351,11 @@ class UserController extends GetxController {
     if (getValue('gems') != "") {
       localStorageUser.value.gems = int.parse(getValue("gems"));
       logSuccess("Loaded gems: ${localStorageUser.value.gems}");
+    }
+
+    if (getValue('level_points') != "") {
+      localStorageUser.value.levelPoints = int.parse(getValue("level_points"));
+      logSuccess("Loaded levelPoints: ${localStorageUser.value.levelPoints}");
     }
 
     if (getValue('streak_freezes') != "") {
@@ -530,6 +541,12 @@ class UserController extends GetxController {
           val?.totalMinutes = value;
         });
         break;
+      case UserProperty.levelPoints:
+        // databaseUser.value.levelPoints = value as int;
+        databaseUser.update((val) {
+          val?.levelPoints = value;
+        });
+        break;
       case UserProperty.streakFreezes:
         // databaseUser.value.streakFreezes = value as int;
         databaseUser.update((val) {
@@ -603,6 +620,8 @@ class UserController extends GetxController {
       updatePropertySafe(
           UserProperty.totalMinutes, localStorageUser.value.totalMinutes),
       updatePropertySafe(
+          UserProperty.levelPoints, localStorageUser.value.levelPoints),
+      updatePropertySafe(
           UserProperty.streakFreezes, localStorageUser.value.streakFreezes),
       updatePropertySafe(UserProperty.lastMeditated,
           localStorageUser.value.lastMeditated.toIso8601String()),
@@ -648,6 +667,8 @@ class UserController extends GetxController {
       saveLocalValueSafe(UserProperty.gems, databaseUser.value.gems),
       saveLocalValueSafe(
           UserProperty.totalMinutes, databaseUser.value.totalMinutes),
+      saveLocalValueSafe(
+          UserProperty.levelPoints, databaseUser.value.levelPoints),
       saveLocalValueSafe(
           UserProperty.streakFreezes, databaseUser.value.streakFreezes),
       saveLocalValueSafe(UserProperty.lastMeditated,

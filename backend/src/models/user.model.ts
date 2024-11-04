@@ -29,6 +29,7 @@ export interface UserI {
   unlockedTurtleColors?: Array<Array<number>>;
   eggs?: number;
   streakFreezes?: number;
+  levelPoints?: number;
   eggTypes?: Array<string>;
 
   emojisSentAt?: { [key: string]: Date };
@@ -63,6 +64,7 @@ const UserSchema = new mongoose.Schema<UserI>(
     unlockedTurtleColors: { type: [[Number]], required: false },
     eggs: { type: Number, required: false },
     streakFreezes: { type: Number, required: false, default: 3 },
+    levelPoints: { type: Number, required: false, default: 0 },
     eggTypes: {type: Array, required: false},
 
     emojisSentAt: { type: Map, of: Date, required: false },

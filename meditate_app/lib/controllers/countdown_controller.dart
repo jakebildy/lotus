@@ -338,6 +338,8 @@ class CountdownController extends GetxController {
 
           logInfo("HATCHING A TURTLE!");
           turtleToHatch = getTurtleToHatch(save.selectedAmbience.value);
+
+          // TODO: make this only hatch rainbow if a rainbow flame
           turtleColorToHatch = Random().nextInt(TURTLE_COLORS.length);
 
           //if future turtles exist, this will be the one that displays on the

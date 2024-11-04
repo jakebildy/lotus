@@ -10,6 +10,7 @@ enum UserProperty {
   streakValueNeverReset,
   streakLostAndSeenAt,
   totalMinutes,
+  levelPoints,
   gems,
   eggs,
   totalEggs,
@@ -38,6 +39,7 @@ class User {
   int streak;
   int streakValueNeverReset;
   int totalMinutes;
+  int levelPoints;
   int gems;
   int eggs;
   int totalEggs;
@@ -89,6 +91,7 @@ class User {
     this.streak = 0,
     this.streakValueNeverReset = 0,
     this.totalMinutes = 0,
+    this.levelPoints = 0,
     this.gems = 0,
     this.eggs = 0,
     this.totalEggs = 0,
@@ -158,6 +161,7 @@ class User {
       streakLostAndSeenAt: DateTime.parse(
           map["streakLostAndSeenAt"] ?? "2011-10-05T14:48:00.000Z"),
       totalMinutes: map["totalMinutes"] ?? 0,
+      levelPoints: map["levelPoints"] ?? 0,
       gems: map["gems"] ?? 0,
       eggs: map["eggs"] ?? 0,
       totalEggs: map["totalEggs"] ?? 0,
