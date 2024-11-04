@@ -5,35 +5,35 @@ import 'package:meditate_app/util/turtles.dart';
 
 String tierReadable(Tier tier) {
   return tier == Tier.ORANGE
-      ? "Hatchling (Level 1)"
+      ? "Orange Flame"
       : tier == Tier.YELLOW
-          ? "Champion (Level 2)"
+          ? "Yellow Flame"
           : tier == Tier.BLUE
-              ? "Expert (Level 3)"
+              ? "Blue Flame"
               : tier == Tier.LITBACK
                   ? "Add Friends to Find"
                   : tier == Tier.AMBIENCE
                       ? "Ambience Turtle"
-                      : "Turtlemaster (Level 4)";
+                      : "Rainbow Flame";
 }
 
 String tierReadablePlural(Tier tier) {
   return tier == Tier.ORANGE
-      ? "Hatchlings\n(Level 1)"
+      ? "Orange Flame Users"
       : tier == Tier.YELLOW
-          ? "Champions\n(Level 2)"
+          ? "Yellow Flame Users"
           : tier == Tier.BLUE
-              ? "Experts\n(Level 3)"
+              ? "Blue Flame Users"
               : tier == Tier.LITBACK
                   ? "Add Friends to Find"
                   : tier == Tier.AMBIENCE
                       ? "Ambience Turtle"
-                      : "Turtlemasters\n(Level 4)";
+                      : "Rainbow Flame Users";
 }
 
 Color tierColor(Tier tier) {
   return tier == Tier.ORANGE
-      ? Colors.green
+      ? Colors.orange
       : tier == Tier.YELLOW
           ? Colors.yellow
           : tier == Tier.BLUE

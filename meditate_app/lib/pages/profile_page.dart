@@ -371,51 +371,150 @@ class _ProfilePageState extends State<ProfilePage>
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                (userController.streakTier() == Tier.ORANGE
-                                    ? "Level 1: Hatchling"
-                                    : userController.streakTier() == Tier.YELLOW
-                                        ? "Level 2: Champion"
-                                        : userController.streakTier() ==
-                                                Tier.BLUE
-                                            ? "Level 3: Expert"
-                                            : "Level 4: Turtlemaster"),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color:
-                                        tierColor(userController.streakTier())),
-                              ),
+                              userController.streakTier() == Tier.RAINBOW
+                                  ? ShaderMask(
+                                      shaderCallback: (Rect bounds) {
+                                        return LinearGradient(
+                                          colors: <Color>[
+                                            Colors.red,
+                                            Colors.orange,
+                                            Colors.yellow,
+                                            Colors.green,
+                                            Colors.blue,
+                                            Colors.indigo,
+                                            Colors.purple,
+                                          ],
+                                          tileMode: TileMode.mirror,
+                                        ).createShader(bounds);
+                                      },
+                                      child: const Text(
+                                        "Rainbow Flame",
+                                        style: TextStyle(
+                                          color: Colors
+                                              .white, // Set the base color for text
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              16, // Optional: adjust the font size
+                                        ),
+                                      ),
+                                    )
+                                  : Text(
+                                      (userController.streakTier() ==
+                                              Tier.ORANGE
+                                          ? "Orange Flame"
+                                          : userController.streakTier() ==
+                                                  Tier.YELLOW
+                                              ? "Yellow Flame"
+                                              : userController.streakTier() ==
+                                                      Tier.BLUE
+                                                  ? "Blue Flame"
+                                                  : "Rainbow Flame"),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color: tierColor(
+                                              userController.streakTier())),
+                                    ),
                               const SizedBox(
                                 height: 5,
                               ),
                               const Text(
-                                "Higher levels can find rarer turtles.\n\nReach new levels by increasing your average meditation length for a week.\n",
+                                "The hotter your flame, the rarer turtles you can find.\n\nBoost your flame by increasing your average meditation length for a week.\n",
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(
                                 height: 5,
                               ),
-                              const Text(
-                                "Hatchling: 0-10 Minutes/Day",
-                                style: TextStyle(color: Colors.green),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                      height: 15,
+                                      child: Image.asset(
+                                          "assets/streak_icon.png")),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Text(
+                                    "Orange Flame: 0-10 Minutes/Day",
+                                    style: TextStyle(color: Colors.orange),
+                                  ),
+                                ],
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text("Champion: 10-20 Minutes/Day",
-                                  style: TextStyle(color: Colors.yellow)),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        height: 15,
+                                        child: Image.asset(
+                                            "assets/streak_icon_yellow.png")),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    const Text(
+                                        "Yellow Flame: 10-20 Minutes/Day",
+                                        style: TextStyle(color: Colors.yellow)),
+                                  ]),
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text("Expert: 20-40 Minutes/Day",
-                                  style:
-                                      TextStyle(color: Colors.lightBlueAccent)),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        height: 15,
+                                        child: Image.asset(
+                                            "assets/streak_icon_blue.png")),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    const Text("Blue Flame: 20-40 Minutes/Day",
+                                        style: TextStyle(
+                                            color: Colors.lightBlueAccent)),
+                                  ]),
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text("Turtlemaster: 40+ Minutes/Day",
-                                  style: TextStyle(color: Colors.pink)),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        height: 15,
+                                        child: Image.asset(
+                                            "assets/streak_icon_rainbow.png")),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    ShaderMask(
+                                      shaderCallback: (Rect bounds) {
+                                        return LinearGradient(
+                                          colors: <Color>[
+                                            Colors.red,
+                                            Colors.redAccent,
+                                            Colors.orange,
+                                            Colors.yellow,
+                                            Colors.green,
+                                            Colors.blue,
+                                            Colors.indigo,
+                                            Colors.purple,
+                                          ],
+                                          tileMode: TileMode.mirror,
+                                        ).createShader(bounds);
+                                      },
+                                      child: const Text(
+                                        "Rainbow Flame: 40+ Minutes/Day",
+                                        style: TextStyle(
+                                          color: Colors
+                                              .white, // Set the base color for text
+                                          fontSize:
+                                              14, // Optional: adjust the font size
+                                        ),
+                                      ),
+                                    ),
+                                  ])
                             ],
                           ),
                         ],
