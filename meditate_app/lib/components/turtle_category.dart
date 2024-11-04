@@ -111,20 +111,36 @@ class TurtleCategory extends StatelessWidget {
                       Text((TURTLES[id].name.split(" ")[0] + " Turtles"),
                           style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
-                      Text(
-                          TURTLES[id].name == "Litback Turtle"
-                              ? "Add Friends to Find"
-                              : TURTLES[id].foundIn != null
-                                  ? "${TURTLES[id].foundIn!.name} Ambience"
-                                  : tierReadable(TURTLES[id].tier),
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: TURTLES[id].name == "Litback Turtle"
-                                  ? Colors.deepPurpleAccent
-                                  : (TURTLES[id].foundIn != null
-                                      ? Colors.tealAccent
-                                      : tierColor(TURTLES[id].tier)))),
+                      Row(
+                        children: [
+                          Text(
+                              TURTLES[id].rarity == Rarity.COMMON
+                                  ? "Common"
+                                  : TURTLES[id].rarity == Rarity.RARE
+                                      ? "Rare "
+                                      : "Legendary",
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: TURTLES[id].rarity == Rarity.COMMON
+                                    ? Colors.green
+                                    : TURTLES[id].rarity == Rarity.RARE
+                                        ? Colors.blue
+                                        : Colors.yellow,
+                              )),
+                          Text(" • "),
+                          Text(
+                              TURTLES[id].name == "Litback Turtle"
+                                  ? "Add Friends to Find"
+                                  : TURTLES[id].foundIn != null
+                                      ? "${TURTLES[id].foundIn!.name}"
+                                      : tierReadable(TURTLES[id].tier),
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey)),
+                        ],
+                      ),
                       const SizedBox(height: 20),
                       Text(
                           "${unlocked ? uniqueQuantity : '0'} of ${TURTLE_COLORS.length}",

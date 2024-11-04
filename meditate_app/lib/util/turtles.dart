@@ -234,3 +234,29 @@ List<int> listOfIndicesByTier(List<dynamic> unlockedTurtles) {
   logError(orangeTurtles.toString());
   return orangeTurtles;
 }
+
+//This is for sorting
+List<int> listOfIndicesByRarity(List<dynamic> unlockedTurtles) {
+  // returns a list of indices corresponding to the turtles sorted by tier
+  List<int> commonTurtles = [];
+  List<int> rareTurtles = [];
+  List<int> legendaryTurtles = [];
+
+  for (int i = 0; i < TURTLES.length; i++) {
+    if (unlockedTurtles[i] <= 0) {
+      if (TURTLES[i].rarity == Rarity.COMMON) {
+        commonTurtles.add(i);
+      } else if (TURTLES[i].rarity == Rarity.RARE) {
+        rareTurtles.add(i);
+      } else {
+        legendaryTurtles.add(i);
+      }
+    }
+  }
+
+  // combine all lists
+  commonTurtles.addAll(rareTurtles);
+  commonTurtles.addAll(legendaryTurtles);
+
+  return commonTurtles;
+}
