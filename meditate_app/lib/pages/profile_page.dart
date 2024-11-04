@@ -522,7 +522,7 @@ class _ProfilePageState extends State<ProfilePage>
                                 height: 5,
                               ),
                               const Text(
-                                "The hotter your flame, the rarer turtles you can find.\n\nBoost your flame by increasing your average meditation length for a week.\n",
+                                "The color of your streak flame shows your average meditation length for the last week.\n\nReach Rainbow to find Rainbow Turtles.\n",
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(
