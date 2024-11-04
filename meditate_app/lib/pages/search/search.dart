@@ -24,7 +24,7 @@ class Search extends StatelessWidget {
           title: SearchBox(),
         ),
         floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.ios_share_outlined),
+          child: const Icon(Icons.ios_share_outlined),
           onPressed: () {
             UserController userController = Get.find();
             Share.share("Add me on Shellevate! My username is @" +

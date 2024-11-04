@@ -17,6 +17,7 @@ import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -191,33 +192,71 @@ class _ProfilePageState extends State<ProfilePage>
                       Stack(
                         children: [
                           Container(
-                            height: 25,
+                            height: 29,
                             width: MediaQuery.of(context).size.width - 40,
                             decoration: BoxDecoration(
-                              color: Colors.black26,
+                              color: Colors.black12,
                               borderRadius: BorderRadius.circular(20),
+                              border: Border.fromBorderSide(
+                                  BorderSide(color: Colors.white24, width: 2)),
                             ),
                           ),
                           40 > 100
                               ? Container()
-                              : Container(
-                                  width: 40 * 2,
-                                  height: 25,
-                                  decoration: const BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Colors.blue,
-                                        Colors.cyan,
-                                        Colors.green
-                                      ],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
+                              : Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Container(
+                                    width: 40 * 2,
+                                    height: 25,
+                                    decoration: const BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          // Colors.blue,
+                                          // Colors.cyan,
+                                          Colors.teal,
+                                          Colors.green
+                                        ],
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                      ),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20),
+                                        topRight: Radius.circular(2),
+                                        bottomRight: Radius.circular(2),
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20),
-                                      topRight: Radius.circular(0),
-                                      bottomRight: Radius.circular(0),
+                                  ),
+                                ),
+                          40 > 100
+                              ? Container()
+                              : Shimmer.fromColors(
+                                  baseColor: Colors.white12,
+                                  highlightColor: Colors.white24,
+                                  period: const Duration(milliseconds: 3000),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Container(
+                                      width: 40 * 2,
+                                      height: 25,
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            // Colors.blue,
+                                            // Colors.cyan,
+                                            Colors.green,
+                                            Colors.lightGreen
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ),
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          bottomLeft: Radius.circular(20),
+                                          topRight: Radius.circular(2),
+                                          bottomRight: Radius.circular(2),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -565,7 +604,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     ),
                                     ShaderMask(
                                       shaderCallback: (Rect bounds) {
-                                        return LinearGradient(
+                                        return const LinearGradient(
                                           colors: <Color>[
                                             Colors.red,
                                             Colors.redAccent,
@@ -793,7 +832,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         ),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Padding(
+                                      child: const Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Icon(
                                           Icons.ios_share_outlined,
@@ -892,7 +931,7 @@ class _ProfilePageState extends State<ProfilePage>
                       "Sign Out",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ))),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 GestureDetector(
@@ -930,7 +969,7 @@ class _ProfilePageState extends State<ProfilePage>
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.grey),
                     ))),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
               ],

@@ -158,7 +158,7 @@ class TurtleCategory extends StatelessWidget {
                                   ? "Add Friends to Find"
                                   : TURTLES[id].foundIn != null
                                       ? "${TURTLES[id].foundIn!.name}"
-                                      : tierReadable(TURTLES[id].tier),
+                                      : "Level " + TURTLES[id].level.toString(),
                               style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
