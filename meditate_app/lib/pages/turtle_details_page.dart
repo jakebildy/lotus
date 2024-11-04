@@ -173,13 +173,42 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                         : Image.asset(
                                             "assets/images/turtles/21_underlay.png"),
                                     widget.id >= 0 && widget.id < TURTLES.length
-                                        ? ColorFiltered(
-                                            colorFilter: ColorFilter.mode(
-                                                TURTLE_COLORS[widget.color]
-                                                    .withOpacity(0.5),
-                                                BlendMode.srcATop),
-                                            child: Image.asset(
-                                                "assets/images/turtles/${widget.id}.png"))
+                                        ? (widget.color == 18
+                                            ? ShaderMask(
+                                                shaderCallback: (Rect bounds) {
+                                                  return LinearGradient(
+                                                    colors: [
+                                                      Colors.red
+                                                          .withOpacity(0.5),
+                                                      Colors.orange
+                                                          .withOpacity(0.5),
+                                                      Colors.yellow
+                                                          .withOpacity(0.5),
+                                                      Colors.green
+                                                          .withOpacity(0.5),
+                                                      Colors.blue
+                                                          .withOpacity(0.5),
+                                                      Colors.indigo
+                                                          .withOpacity(0.5),
+                                                      Colors.purple
+                                                          .withOpacity(0.5),
+                                                    ],
+                                                    begin: Alignment.centerLeft,
+                                                    end: Alignment.centerRight,
+                                                  ).createShader(bounds);
+                                                },
+                                                blendMode: BlendMode.srcATop,
+                                                child: Image.asset(
+                                                    "assets/images/turtles/${widget.id}.png"),
+                                              )
+                                            : ColorFiltered(
+                                                colorFilter: ColorFilter.mode(
+                                                    TURTLE_COLORS[widget.color]
+                                                        .withOpacity(0.5),
+                                                    BlendMode.srcATop),
+                                                child: Image.asset(
+                                                    "assets/images/turtles/${widget.id}.png"),
+                                              ))
                                         : Container(),
                                     widget.id != 10
                                         ? Container()
@@ -225,9 +254,12 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                     TURTLES[widget.id].rarity == Rarity.COMMON
                                         ? "Common"
                                         : TURTLES[widget.id].rarity ==
-                                                Rarity.RARE
-                                            ? "Rare"
-                                            : "Legendary",
+                                                Rarity.UNCOMMON
+                                            ? "Uncommon"
+                                            : TURTLES[widget.id].rarity ==
+                                                    Rarity.RARE
+                                                ? "Rare"
+                                                : "Legendary",
                                     style: const TextStyle(
                                         fontSize: 20, color: Colors.white),
                                   ),

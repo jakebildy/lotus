@@ -34,8 +34,8 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
             colorsets: const {
               // 5: Color.fromARGB(255, 173, 105, 2),
               // 10: Color.fromARGB(255, 219, 131, 0),
-              1: Color.fromARGB(114, 152, 0, 1),
-              5: Color.fromRGBO(255, 152, 0, 1),
+              1: Color.fromARGB(92, 76, 175, 79),
+              5: Colors.green,
               // 10: Color.fromARGB(255, 255, 187, 0),
               10: Colors.yellow,
               20: Colors.blue,

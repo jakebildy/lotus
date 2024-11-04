@@ -423,7 +423,7 @@ class _ProfilePageState extends State<ProfilePage>
                                   : Text(
                                       (userController.streakTier() ==
                                               Tier.ORANGE
-                                          ? "Orange Flame"
+                                          ? "Beginner Flame"
                                           : userController.streakTier() ==
                                                   Tier.YELLOW
                                               ? "Yellow Flame"
@@ -458,9 +458,13 @@ class _ProfilePageState extends State<ProfilePage>
                                     width: 3,
                                   ),
                                   const Text(
-                                    "Orange Flame: 0-10 Minutes/Day",
-                                    style: TextStyle(color: Colors.orange),
+                                    "Beginner Flame",
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold),
                                   ),
+                                  const Text(": 0-10 Minutes/Day",
+                                      style: TextStyle(color: Colors.grey)),
                                 ],
                               ),
                               const SizedBox(
@@ -476,9 +480,12 @@ class _ProfilePageState extends State<ProfilePage>
                                     const SizedBox(
                                       width: 3,
                                     ),
-                                    const Text(
-                                        "Yellow Flame: 10-20 Minutes/Day",
-                                        style: TextStyle(color: Colors.yellow)),
+                                    const Text("Yellow Flame",
+                                        style: TextStyle(
+                                            color: Colors.yellow,
+                                            fontWeight: FontWeight.bold)),
+                                    const Text(": 10-20 Minutes/Day",
+                                        style: TextStyle(color: Colors.grey)),
                                   ]),
                               const SizedBox(
                                 height: 10,
@@ -493,9 +500,12 @@ class _ProfilePageState extends State<ProfilePage>
                                     const SizedBox(
                                       width: 3,
                                     ),
-                                    const Text("Blue Flame: 20-40 Minutes/Day",
+                                    const Text("Blue Flame",
                                         style: TextStyle(
-                                            color: Colors.lightBlueAccent)),
+                                            color: Colors.lightBlueAccent,
+                                            fontWeight: FontWeight.bold)),
+                                    const Text(": 20-40 Minutes/Day",
+                                        style: TextStyle(color: Colors.grey)),
                                   ]),
                               const SizedBox(
                                 height: 10,
@@ -527,15 +537,18 @@ class _ProfilePageState extends State<ProfilePage>
                                         ).createShader(bounds);
                                       },
                                       child: const Text(
-                                        "Rainbow Flame: 40+ Minutes/Day",
+                                        "Rainbow Flame",
                                         style: TextStyle(
                                           color: Colors
                                               .white, // Set the base color for text
+                                          fontWeight: FontWeight.bold,
                                           fontSize:
                                               14, // Optional: adjust the font size
                                         ),
                                       ),
                                     ),
+                                    const Text(": 40+ Minutes/Day",
+                                        style: TextStyle(color: Colors.grey)),
                                   ])
                             ],
                           ),

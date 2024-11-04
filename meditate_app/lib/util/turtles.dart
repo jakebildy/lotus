@@ -10,7 +10,7 @@ import 'package:meditate_app/util/logger.dart';
 
 import 'ambiences.dart';
 
-enum Rarity { COMMON, RARE, LEGENDARY }
+enum Rarity { COMMON, UNCOMMON, RARE, ULTRARARE, LEGENDARY }
 
 enum Tier { ORANGE, LITBACK, YELLOW, BLUE, RAINBOW, AMBIENCE }
 
@@ -47,6 +47,7 @@ const List<Color> TURTLE_COLORS = [
   Colors.black,
   Colors.grey,
   Colors.white,
+  Colors.transparent, //Rainbow
 ];
 const List<String> TURTLE_COLORS_NAME = [
   "Brown",
@@ -67,6 +68,7 @@ const List<String> TURTLE_COLORS_NAME = [
   "Black",
   "Gray",
   "White",
+  "Rainbow"
 ];
 
 List<Turtle> TURTLES = [
@@ -82,7 +84,8 @@ List<Turtle> TURTLES = [
       name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.LITBACK),
   const Turtle(
       name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.YELLOW),
-  const Turtle(name: "Swirl Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+  const Turtle(
+      name: "Swirl Turtle", rarity: Rarity.UNCOMMON, tier: Tier.ORANGE),
   const Turtle(name: "Sun Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW),
   const Turtle(
       name: "Crystal Turtle", rarity: Rarity.LEGENDARY, tier: Tier.RAINBOW),
@@ -144,9 +147,16 @@ int getTurtleToHatch(String ambience) {
 
   int checkRarity = Random().nextInt(10);
 
-  if (checkRarity < 6) {
+  //TODO: improve rarity equation
+  if (checkRarity < 4) {
     possibleTurtles = possibleTurtles
         .where((element) => element.rarity == Rarity.COMMON)
+        .toList();
+  } else if (checkRarity < 6) {
+    possibleTurtles = possibleTurtles
+        .where((element) =>
+            element.rarity == Rarity.COMMON ||
+            element.rarity == Rarity.UNCOMMON)
         .toList();
   } else if (checkRarity == 6 || checkRarity == 7 || checkRarity == 8) {
     possibleTurtles = possibleTurtles
@@ -239,6 +249,7 @@ List<int> listOfIndicesByTier(List<dynamic> unlockedTurtles) {
 List<int> listOfIndicesByRarity(List<dynamic> unlockedTurtles) {
   // returns a list of indices corresponding to the turtles sorted by tier
   List<int> commonTurtles = [];
+  List<int> uncommonTurtles = [];
   List<int> rareTurtles = [];
   List<int> legendaryTurtles = [];
 
@@ -246,6 +257,8 @@ List<int> listOfIndicesByRarity(List<dynamic> unlockedTurtles) {
     if (unlockedTurtles[i] <= 0) {
       if (TURTLES[i].rarity == Rarity.COMMON) {
         commonTurtles.add(i);
+      } else if (TURTLES[i].rarity == Rarity.UNCOMMON) {
+        uncommonTurtles.add(i);
       } else if (TURTLES[i].rarity == Rarity.RARE) {
         rareTurtles.add(i);
       } else {
@@ -255,6 +268,7 @@ List<int> listOfIndicesByRarity(List<dynamic> unlockedTurtles) {
   }
 
   // combine all lists
+  commonTurtles.addAll(uncommonTurtles);
   commonTurtles.addAll(rareTurtles);
   commonTurtles.addAll(legendaryTurtles);
 

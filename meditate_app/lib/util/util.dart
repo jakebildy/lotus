@@ -5,7 +5,7 @@ import 'package:meditate_app/util/turtles.dart';
 
 String tierReadable(Tier tier) {
   return tier == Tier.ORANGE
-      ? "Orange Flame"
+      ? "Beginner Flame"
       : tier == Tier.YELLOW
           ? "Yellow Flame"
           : tier == Tier.BLUE
@@ -19,7 +19,7 @@ String tierReadable(Tier tier) {
 
 String tierReadablePlural(Tier tier) {
   return tier == Tier.ORANGE
-      ? "Orange Flame Users"
+      ? "All Users"
       : tier == Tier.YELLOW
           ? "Yellow Flame Users"
           : tier == Tier.BLUE
@@ -33,7 +33,7 @@ String tierReadablePlural(Tier tier) {
 
 Color tierColor(Tier tier) {
   return tier == Tier.ORANGE
-      ? Colors.orange
+      ? Colors.green
       : tier == Tier.YELLOW
           ? Colors.yellow
           : tier == Tier.BLUE
