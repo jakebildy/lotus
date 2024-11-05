@@ -45,6 +45,30 @@ Color tierColor(Tier tier) {
                       : Colors.redAccent;
 }
 
+String rarityReadable(Rarity rarity) {
+  return rarity == Rarity.COMMON
+      ? "Common"
+      : rarity == Rarity.UNCOMMON
+          ? "Uncommon"
+          : rarity == Rarity.RARE
+              ? "Rare"
+              : rarity == Rarity.ULTRARARE
+                  ? "Ultra Rare"
+                  : "Legendary";
+}
+
+Color rarityColor(Rarity rarity) {
+  return rarity == Rarity.COMMON
+      ? Colors.grey
+      : rarity == Rarity.UNCOMMON
+          ? Colors.green
+          : rarity == Rarity.RARE
+              ? Colors.blue
+              : rarity == Rarity.ULTRARARE
+                  ? Colors.orange
+                  : Colors.purpleAccent;
+}
+
 final Map<int, String> months = {
   1: "January",
   2: "February",

@@ -88,40 +88,56 @@ List<Turtle> TURTLES = [
       tier: Tier.ORANGE,
       level: 2),
   const Turtle(
-      name: "Obsidian Turtle", rarity: Rarity.RARE, tier: Tier.BLUE, level: 4),
+      name: "Obsidian Turtle",
+      rarity: Rarity.RARE,
+      tier: Tier.ORANGE,
+      level: 4),
   const Turtle(
-      name: "Flora Turtle", rarity: Rarity.RARE, tier: Tier.RAINBOW, level: 10),
+      name: "Flora Turtle",
+      rarity: Rarity.ULTRARARE,
+      tier: Tier.ORANGE,
+      level: 10),
   const Turtle(
       name: "Litback Turtle", rarity: Rarity.COMMON, tier: Tier.LITBACK),
   const Turtle(
-      name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.YELLOW),
+      name: "Nether Turtle", rarity: Rarity.LEGENDARY, tier: Tier.ORANGE),
   const Turtle(
-      name: "Swirl Turtle", rarity: Rarity.UNCOMMON, tier: Tier.ORANGE),
+      name: "Swirl Turtle",
+      rarity: Rarity.UNCOMMON,
+      tier: Tier.ORANGE,
+      level: 2),
   const Turtle(
-      name: "Sun Turtle", rarity: Rarity.RARE, tier: Tier.YELLOW, level: 5),
+      name: "Sun Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE, level: 5),
   const Turtle(
       name: "Crystal Turtle",
       rarity: Rarity.LEGENDARY,
-      tier: Tier.RAINBOW,
+      tier: Tier.ORANGE,
       level: 10),
-  const Turtle(name: "Balance Turtle", rarity: Rarity.RARE, tier: Tier.BLUE),
+  const Turtle(
+      name: "Balance Turtle",
+      rarity: Rarity.RARE,
+      tier: Tier.ORANGE,
+      level: 20),
   const Turtle(
       name: "Poseidon Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(
-      name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
+      name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(
       name: "Watermelon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
   const Turtle(
       name: "Honeyshell Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   const Turtle(name: "Citrus Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
-  const Turtle(name: "Magma Turtle", rarity: Rarity.COMMON, tier: Tier.YELLOW),
-  const Turtle(name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.BLUE),
+  const Turtle(
+      name: "Magma Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE, level: 5),
+  const Turtle(
+      name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
   Turtle(
       name: "Luna Turtle",
       rarity: Rarity.RARE,
       tier: Tier.AMBIENCE,
       foundIn: AMBIENCES[2]),
-  const Turtle(name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.BLUE),
+  const Turtle(
+      name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.ORANGE),
   Turtle(
       name: "Dino Turtle",
       rarity: Rarity.COMMON,

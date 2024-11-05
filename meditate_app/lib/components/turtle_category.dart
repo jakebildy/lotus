@@ -4,8 +4,10 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/components/piechart_painter.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/turtle_category_page.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TurtleCategory extends StatelessWidget {
@@ -23,6 +25,8 @@ class TurtleCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserController userController = Get.find<UserController>();
+
     return Bounce(
       duration: const Duration(milliseconds: 110),
       onPressed: () {
@@ -132,26 +136,18 @@ class TurtleCategory extends StatelessWidget {
                               fontSize: 15, fontWeight: FontWeight.w600)),
                       Row(
                         children: [
-                          Text(
-                              TURTLES[id].rarity == Rarity.COMMON
-                                  ? "Common"
-                                  : TURTLES[id].rarity == Rarity.RARE
-                                      ? "Rare"
-                                      : TURTLES[id].rarity == Rarity.UNCOMMON
-                                          ? "Uncommon"
-                                          : "Legendary",
+                          Text(rarityReadable(TURTLES[id].rarity),
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: TURTLES[id].rarity == Rarity.COMMON
-                                    ? Colors.grey
-                                    : TURTLES[id].rarity == Rarity.UNCOMMON
-                                        ? Colors.green
-                                        : TURTLES[id].rarity == Rarity.RARE
-                                            ? Colors.blue
-                                            : Colors.purpleAccent,
+                                color: rarityColor(TURTLES[id].rarity),
                               )),
                           const Text(" • "),
+                          TURTLES[id].level <=
+                                  calculateLevel(
+                                      userController.user.value.levelPoints)
+                              ? Container()
+                              : Icon(Icons.lock, color: Colors.grey, size: 15),
                           Text(
                               TURTLES[id].name == "Litback Turtle"
                                   ? "Add Friends to Find"

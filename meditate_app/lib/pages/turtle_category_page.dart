@@ -20,11 +20,32 @@ class TurtleCategoryPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(TURTLES[id].name + "s"),
-            Text(
-              tierReadable(TURTLES[id].tier),
-              style:
-                  TextStyle(color: tierColor(TURTLES[id].tier), fontSize: 14),
-            )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(rarityReadable(TURTLES[id].rarity),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: rarityColor(TURTLES[id].rarity),
+                    )),
+                const Text(" • "),
+                TURTLES[id].level <= calculateLevel(user.user.value.levelPoints)
+                    ? Container()
+                    : Icon(Icons.lock, color: Colors.grey, size: 15),
+                Text(
+                    TURTLES[id].name == "Litback Turtle"
+                        ? "Add Friends to Find"
+                        : TURTLES[id].foundIn != null
+                            ? "${TURTLES[id].foundIn!.name}"
+                            : "Level " + TURTLES[id].level.toString(),
+                    style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey)),
+              ],
+            ),
           ],
         ),
       ),
