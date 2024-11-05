@@ -33,7 +33,7 @@ class WaterAnimation extends SpriteAnimationComponent with HasGameRef {
     );
 
     animation = _animation;
-    opacity = 0.3;
+    opacity = 0.2;
 
     // You can add hitboxes or other components here if needed
   }

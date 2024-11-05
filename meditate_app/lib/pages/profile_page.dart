@@ -178,8 +178,8 @@ class _ProfilePageState extends State<ProfilePage>
                                         userController.user.value.totalMinutes)
                                     .toString() +
                                 "%)",
-                            style:
-                                TextStyle(color: Colors.white70, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.white70, fontSize: 16),
                           )
                   ],
                 ),

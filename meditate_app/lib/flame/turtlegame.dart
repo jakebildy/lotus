@@ -9,6 +9,7 @@ import 'package:flame/particles.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
@@ -45,7 +46,11 @@ class TurtleGame extends FlameGame with HasTappables {
   WaterAnimation waterAnimation = WaterAnimation(Vector2(400, 100), (700));
   WaterAnimation waterAnimation2 = WaterAnimation(Vector2(400, 800), (700));
   WaterAnimationAbove waterAnimation3 =
-      WaterAnimationAbove(Vector2(400, 800), (1000));
+      WaterAnimationAbove(Vector2(400, 800), (400), 300);
+  WaterAnimationAbove waterAnimation4 =
+      WaterAnimationAbove(Vector2(400, 800), (400), -100);
+  WaterAnimationAbove waterAnimation5 =
+      WaterAnimationAbove(Vector2(400, 800), (400), -500);
   @override
   Future<void> onLoad() async {
     // FlameAudio.loopLongAudio('water_sounds.wav', volume: 0.5);
@@ -83,6 +88,8 @@ class TurtleGame extends FlameGame with HasTappables {
     add(cameraPoint);
 
     add(waterAnimation3);
+    add(waterAnimation4);
+    add(waterAnimation5);
 
     for (int i = 0; i < 600; i++) {
       add(Lilypad(
@@ -123,7 +130,7 @@ class TurtleGame extends FlameGame with HasTappables {
     if (!info.handled && canMove) {
       debounceCanMove();
       FlameAudio.play('splash.wav');
-      // HapticFeedback.lightImpact();
+      HapticFeedback.lightImpact();
       final touchPoint = info.eventPosition.game;
 
       double borderX = touchPoint.x > 10000
@@ -242,6 +249,22 @@ class TurtleGame extends FlameGame with HasTappables {
       MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
           EffectController(duration: 0.6, curve: Curves.linear)),
     );
+
+    waterAnimation3.add(
+      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
+          EffectController(duration: 0.6, curve: Curves.linear)),
+    );
+
+    waterAnimation4.add(
+      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
+          EffectController(duration: 0.6, curve: Curves.linear)),
+    );
+
+    waterAnimation5.add(
+      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
+          EffectController(duration: 0.6, curve: Curves.linear)),
+    );
+
     await Future.delayed(const Duration(milliseconds: 600));
 
     _turtleWorld.parallax?.baseVelocity = Vector2(

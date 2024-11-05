@@ -288,6 +288,7 @@ class CountdownController extends GetxController {
     //The meditationHistory date
     DateTime now = DateTime.now();
     DateTime date = DateTime(now.year, now.month, now.day);
+    // TODO: this is where the bug is with streak count not updating
 
     // The number of gems to give
     int gemsToGive = 0;
@@ -323,6 +324,9 @@ class CountdownController extends GetxController {
     } else {
       logInfo("You already meditated today. Not updating streak!");
       alreadyMeditatedToday = true;
+      userController.updateProperty(
+          UserProperty.gems, (userController.user.value.gems + timeInMinutes));
+      gemsToGive += timeInMinutes;
     }
 
     // Logs the meditation (updates lastMeditated, totalMinutes, and meditationHistory)

@@ -209,6 +209,7 @@ flutter:
     - assets/images/game/water_spritesheet.png
     - assets/images/game/water_spritesheet2.png
     - assets/gems_overlay.png
+    - assets/images/game/blue.png
     - assets/offline.png
     - assets/lure.png
     - assets/audio/splash.wav

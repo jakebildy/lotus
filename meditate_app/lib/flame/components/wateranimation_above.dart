@@ -4,8 +4,9 @@ import 'package:flame/sprite.dart';
 class WaterAnimationAbove extends SpriteAnimationComponent with HasGameRef {
   final double lilypadSize;
   late SpriteAnimation _animation;
+  final double offset;
 
-  WaterAnimationAbove(Vector2 position, this.lilypadSize)
+  WaterAnimationAbove(Vector2 position, this.lilypadSize, this.offset)
       : super(
             position: position,
             size: Vector2.all(lilypadSize),
@@ -28,13 +29,20 @@ class WaterAnimationAbove extends SpriteAnimationComponent with HasGameRef {
 
     _animation = spriteSheetAnimation.createAnimation(
       row: 0,
-      stepTime: 0.1, // Adjust the frame switch time
+      stepTime: 0.12, // Adjust the frame switch time
 
       loop: true,
     );
 
     animation = _animation;
-    opacity = 0.5;
+    opacity = 0.3;
+
+    // add a blue box
+    add(SpriteComponent(
+      sprite: await Sprite.load('game/blue.png'),
+      size: Vector2(lilypadSize, lilypadSize),
+      position: Vector2(0, 0),
+    ));
 
     // You can add hitboxes or other components here if needed
   }
@@ -52,6 +60,7 @@ class WaterAnimationAbove extends SpriteAnimationComponent with HasGameRef {
     // Custom update logic
 
     // follow the player
-    position = gameRef.camera.position - Vector2(-200, -400);
+    position =
+        gameRef.camera.position - Vector2(-200, -400) + Vector2(0, offset);
   }
 }
