@@ -137,7 +137,10 @@ List<Turtle> TURTLES = [
       tier: Tier.AMBIENCE,
       foundIn: AMBIENCES[2]),
   const Turtle(
-      name: "World Turtle", rarity: Rarity.LEGENDARY, tier: Tier.ORANGE),
+      name: "World Turtle",
+      rarity: Rarity.LEGENDARY,
+      tier: Tier.ORANGE,
+      level: 6),
   Turtle(
       name: "Dino Turtle",
       rarity: Rarity.COMMON,

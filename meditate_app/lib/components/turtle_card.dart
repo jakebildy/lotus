@@ -26,7 +26,7 @@ class TurtleCard extends StatelessWidget {
     return Bounce(
       duration: const Duration(milliseconds: 110),
       onPressed: () {
-        if (unlocked) {
+        if (!unlocked) {
           HapticFeedback.lightImpact();
           Get.to(TurtleDetailsPage(id: id, color: color),
               transition: Transition.downToUp);
@@ -39,13 +39,15 @@ class TurtleCard extends StatelessWidget {
                   ? Colors.deepPurpleAccent
                   : TURTLES[id].foundIn != null
                       ? Colors.tealAccent
-                      : tierColor(TURTLES[id].tier),
+                      : rarityColor(TURTLES[id].rarity),
               content: Text(
                 TURTLES[id].name == "Litback Turtle"
                     ? "This social turtle can be found once you add at least one friend on Shellevate!"
                     : TURTLES[id].foundIn != null
                         ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
-                        : "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
+                        : "This " +
+                            rarityReadable(TURTLES[id].rarity) +
+                            " Turtle can be found by Level ${TURTLES[id].level} users and above!",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               )));
         }

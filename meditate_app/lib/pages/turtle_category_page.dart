@@ -21,31 +21,41 @@ class TurtleCategoryPage extends StatelessWidget {
           children: [
             Text(TURTLES[id].name + "s"),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(rarityReadable(TURTLES[id].rarity),
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: rarityColor(TURTLES[id].rarity),
-                    )),
-                const Text(" • "),
-                TURTLES[id].level <= calculateLevel(user.user.value.levelPoints)
-                    ? Container()
-                    : Icon(Icons.lock, color: Colors.grey, size: 15),
-                Text(
-                    TURTLES[id].name == "Litback Turtle"
-                        ? "Add Friends to Find"
-                        : TURTLES[id].foundIn != null
-                            ? "${TURTLES[id].foundIn!.name}"
-                            : "Level " + TURTLES[id].level.toString(),
-                    style: const TextStyle(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(rarityReadable(TURTLES[id].rarity),
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey)),
-              ],
-            ),
+                        color: rarityColor(TURTLES[id].rarity),
+                      )),
+                  TURTLES[id].level <=
+                              calculateLevel(user.user.value.levelPoints) &&
+                          TURTLES[id].foundIn == null &&
+                          TURTLES[id].tier != Tier.LITBACK
+                      ? Container()
+                      : const Text(" • "),
+                  TURTLES[id].level <=
+                          calculateLevel(user.user.value.levelPoints)
+                      ? Container()
+                      : const Icon(Icons.lock, color: Colors.grey, size: 15),
+                  TURTLES[id].level <=
+                              calculateLevel(user.user.value.levelPoints) &&
+                          TURTLES[id].foundIn == null &&
+                          TURTLES[id].tier != Tier.LITBACK
+                      ? Container()
+                      : Text(
+                          TURTLES[id].name == "Litback Turtle"
+                              ? "Add Friends to Find"
+                              : TURTLES[id].foundIn != null
+                                  ? "${TURTLES[id].foundIn!.name}"
+                                  : "Level " + TURTLES[id].level.toString(),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey)),
+                ]),
           ],
         ),
       ),

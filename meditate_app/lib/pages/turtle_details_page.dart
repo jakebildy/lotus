@@ -251,17 +251,11 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               child: Column(
                                 children: [
                                   Text(
-                                    TURTLES[widget.id].rarity == Rarity.COMMON
-                                        ? "Common"
-                                        : TURTLES[widget.id].rarity ==
-                                                Rarity.UNCOMMON
-                                            ? "Uncommon"
-                                            : TURTLES[widget.id].rarity ==
-                                                    Rarity.RARE
-                                                ? "Rare"
-                                                : "Legendary",
-                                    style: const TextStyle(
-                                        fontSize: 20, color: Colors.white),
+                                    rarityReadable(TURTLES[widget.id].rarity),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: rarityColor(
+                                            TURTLES[widget.id].rarity)),
                                   ),
                                   const Text(
                                     "Rarity",
@@ -300,23 +294,16 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Column(
                                 children: [
-                                  Text(
-                                    TURTLES[widget.id].tier == Tier.ORANGE
-                                        ? "Hatchling"
-                                        : TURTLES[widget.id].tier == Tier.YELLOW
-                                            ? "Champion"
-                                            : TURTLES[widget.id].tier ==
-                                                    Tier.BLUE
-                                                ? "Expert"
-                                                : "Turtlemaster",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color:
-                                            tierColor(TURTLES[widget.id].tier)),
-                                  ),
                                   const Text(
                                     "Level",
                                     style: TextStyle(fontSize: 12),
+                                  ),
+                                  Text(
+                                    TURTLES[widget.id].level.toString(),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: rarityColor(
+                                            TURTLES[widget.id].rarity)),
                                   ),
                                   SizedBox(
                                     width:
