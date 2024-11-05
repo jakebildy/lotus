@@ -1,11 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 
-class WaterAnimation extends SpriteAnimationComponent with HasGameRef {
+class WaterAnimationAbove extends SpriteAnimationComponent with HasGameRef {
   final double lilypadSize;
   late SpriteAnimation _animation;
 
-  WaterAnimation(Vector2 position, this.lilypadSize)
+  WaterAnimationAbove(Vector2 position, this.lilypadSize)
       : super(
             position: position,
             size: Vector2.all(lilypadSize),
@@ -14,6 +14,7 @@ class WaterAnimation extends SpriteAnimationComponent with HasGameRef {
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    priority = 2;
     final spriteSheet = await gameRef.images
         .load('game/water_spritesheet2.png'); // Your spritesheet file
     //        // 512px by 512px
@@ -33,7 +34,7 @@ class WaterAnimation extends SpriteAnimationComponent with HasGameRef {
     );
 
     animation = _animation;
-    opacity = 0.3;
+    opacity = 0.5;
 
     // You can add hitboxes or other components here if needed
   }
@@ -45,9 +46,12 @@ class WaterAnimation extends SpriteAnimationComponent with HasGameRef {
   // }
 
   // Add any additional logic you need in the update method
-  // @override
-  // void update(double dt) {
-  //   super.update(dt);
-  //   // Custom update logic
-  // }
+  @override
+  void update(double dt) {
+    super.update(dt);
+    // Custom update logic
+
+    // follow the player
+    position = gameRef.camera.position - Vector2(-200, -400);
+  }
 }
