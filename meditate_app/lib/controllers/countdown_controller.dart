@@ -287,7 +287,7 @@ class CountdownController extends GetxController {
 
     //The meditationHistory date
     DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day);
+    DateTime date = DateTime.utc(now.year, now.month, now.day);
     // TODO: this is where the bug is with streak count not updating
 
     // The number of gems to give
