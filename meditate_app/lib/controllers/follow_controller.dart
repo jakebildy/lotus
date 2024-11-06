@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/util/logger.dart';
+
+import '../util/util.dart';
 
 /// FollowController handles following and unfollowing other users. Still have a bit of refactoring left to do.
 /// {@category Controllers}
@@ -65,6 +68,15 @@ class FollowController extends GetxController {
           activeUsers.add(user);
         }
       }
+    }
+
+    try {
+      UserController user = Get.find();
+      SaveController save = Get.find();
+      save.updateTopPercentage(calculateTopPercentile(
+          meditationAmounts.toList(), user.user.value.totalMinutes));
+    } catch (e) {
+      logError("Failed to save top percentile");
     }
     return activeUsers;
   }

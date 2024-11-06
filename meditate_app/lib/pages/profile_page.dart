@@ -266,23 +266,13 @@ class _ProfilePageState extends State<ProfilePage>
                                         fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center,
                                   ),
-                                  followController.meditationAmounts.isEmpty ||
-                                          calculateTopPercentile(
-                                                  followController
-                                                      .meditationAmounts
-                                                      .toList(),
-                                                  userController.user.value
-                                                      .totalMinutes) >
-                                              50
+                                  (followController.meditationAmounts.isEmpty &&
+                                              save.topPercentage.value == -1) ||
+                                          save.topPercentage.value > 50
                                       ? Container()
                                       : Text(
                                           " (Top " +
-                                              calculateTopPercentile(
-                                                      followController
-                                                          .meditationAmounts
-                                                          .toList(),
-                                                      userController.user.value
-                                                          .totalMinutes)
+                                              save.topPercentage.value
                                                   .toString() +
                                               "%)",
                                           style: const TextStyle(
