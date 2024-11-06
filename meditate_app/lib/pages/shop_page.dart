@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
@@ -31,6 +32,7 @@ class _ShopPageState extends State<ShopPage> {
   void initState() {
     super.initState();
     UserController user = Get.find();
+
     DateTime dayExpires =
         user.user.value.streakLostAndSeenAt.add(const Duration(days: 1));
 
@@ -61,7 +63,18 @@ class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     UserController user = Get.find();
-    SubscriptionController subscriptionController = Get.find();
+    SubscriptionController? subscriptionController;
+    NetworkStatusController network = Get.find();
+
+    if (!network.offline.value) {
+      if (Get.isRegistered<SubscriptionController>()) {
+        // If the controller already exists, retrieve it
+        subscriptionController = Get.find<SubscriptionController>();
+      } else {
+        // If the controller does not exist, create and register it
+        subscriptionController = Get.put(SubscriptionController());
+      }
+    }
 
     return Obx(
       () => ListView(
@@ -416,109 +429,118 @@ class _ShopPageState extends State<ShopPage> {
           ),
 
           // Buy Sand Dollars
-          GestureDetector(
-            onTap: () {
-              // RevenueCat purchase 'sand_dollar_purchase' item
-              if (!subscriptionController.purchasingSandDollars.value) {
-                HapticFeedback.lightImpact();
-                subscriptionController.purchaseSandDollars();
-              }
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.black12,
-                  border: Border.all(
-                    color: Colors.white24,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 15.0,
-                            horizontal: MediaQuery.of(context).size.width / 70),
-                        child: SizedBox(
-                            width: 70,
-                            child: Stack(
-                              children: [
-                                SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height / 3,
-                                    child: Image.asset(
-                                        "assets/sand_dollar_chest.png")),
-                                Opacity(
-                                  opacity: 0.8,
-                                  child: Shimmer.fromColors(
-                                    baseColor: Colors.white12,
-                                    highlightColor: Colors.white70,
-                                    child: SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                3,
-                                        child: Image.asset(
-                                            "assets/sand_dollar_chest.png")),
-                                  ),
-                                ),
-                              ],
-                            ))),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 15, 15, 15.0),
-                      child: Column(
+          network.offline.value ||
+                  subscriptionController == null ||
+                  subscriptionController.sandDollarPackage == null
+              ? Container()
+              : GestureDetector(
+                  onTap: () {
+                    // RevenueCat purchase 'sand_dollar_purchase' item
+                    if (!subscriptionController!.purchasingSandDollars.value) {
+                      HapticFeedback.lightImpact();
+                      subscriptionController.purchaseSandDollars();
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        border: Border.all(
+                          color: Colors.white24,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          const Text(
-                            "800 Sand Dollars",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          // const SizedBox(
-                          //     width: 200,
-                          //     child: Text(
-                          //         "Save your streak if you miss a day of meditation.")),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Obx(
-                            () => Row(
+                          Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 15.0,
+                                  horizontal:
+                                      MediaQuery.of(context).size.width / 70),
+                              child: SizedBox(
+                                  width: 70,
+                                  child: Stack(
+                                    children: [
+                                      SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              3,
+                                          child: Image.asset(
+                                              "assets/sand_dollar_chest.png")),
+                                      Opacity(
+                                        opacity: 0.8,
+                                        child: Shimmer.fromColors(
+                                          baseColor: Colors.white12,
+                                          highlightColor: Colors.white70,
+                                          child: SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  3,
+                                              child: Image.asset(
+                                                  "assets/sand_dollar_chest.png")),
+                                        ),
+                                      ),
+                                    ],
+                                  ))),
+                          // SizedBox(
+                          //   width: 10,
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 15, 15, 15.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  subscriptionController
-                                          .purchasingSandDollars.value
-                                      ? "Purchasing..."
-                                      : "\$4.99",
-                                  style: const TextStyle(
-                                      color: Colors.lightBlueAccent,
-                                      fontWeight: FontWeight.bold),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                const Text(
+                                  "800 Sand Dollars",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                // const SizedBox(
+                                //     width: 200,
+                                //     child: Text(
+                                //         "Save your streak if you miss a day of meditation.")),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Obx(
+                                  () => Row(
+                                    children: [
+                                      Text(
+                                        subscriptionController!
+                                                .purchasingSandDollars.value
+                                            ? "Purchasing..."
+                                            : "\$4.99",
+                                        style: const TextStyle(
+                                            color: Colors.lightBlueAccent,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
                                 ),
                               ],
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                          )
                         ],
                       ),
-                    )
-                  ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
 
           //Lure
         ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
+import 'package:meditate_app/components/level_progress_bar.dart';
 import 'package:meditate_app/components/meditation_heatmap.dart';
 import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/components/streak_chart.dart';
@@ -154,116 +155,35 @@ class _ProfilePageState extends State<ProfilePage>
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Level " +
-                          calculateLevel(userController.user.value.levelPoints)
-                              .toString(),
-                      style: const TextStyle(color: Colors.green, fontSize: 17),
-                      textAlign: TextAlign.center,
-                    ),
-                    followController.meditationAmounts.isEmpty ||
-                            calculateTopPercentile(
-                                    followController.meditationAmounts.toList(),
-                                    userController.user.value.totalMinutes) >
-                                50
-                        ? Container()
-                        : Text(
-                            " (Top " +
-                                calculateTopPercentile(
-                                        followController.meditationAmounts
-                                            .toList(),
-                                        userController.user.value.totalMinutes)
-                                    .toString() +
-                                "%)",
-                            style: const TextStyle(
-                                color: Colors.white70, fontSize: 16),
-                          )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Stack(
-                        children: [
-                          Container(
-                            height: 29,
-                            width: MediaQuery.of(context).size.width - 40,
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(20),
-                              border: const Border.fromBorderSide(
-                                  BorderSide(color: Colors.white24, width: 2)),
-                            ),
-                          ),
-                          40 > 100
-                              ? Container()
-                              : Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Container(
-                                    width: 40 * 2,
-                                    height: 25,
-                                    decoration: const BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          // Colors.blue,
-                                          // Colors.cyan,
-                                          Colors.teal,
-                                          Colors.green
-                                        ],
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                      ),
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(20),
-                                        bottomLeft: Radius.circular(20),
-                                        topRight: Radius.circular(2),
-                                        bottomRight: Radius.circular(2),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                          40 > 100
-                              ? Container()
-                              : Shimmer.fromColors(
-                                  baseColor: Colors.white12,
-                                  highlightColor: Colors.white24,
-                                  period: const Duration(milliseconds: 3000),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Container(
-                                      width: 40 * 2,
-                                      height: 25,
-                                      decoration: const BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            // Colors.blue,
-                                            // Colors.cyan,
-                                            Colors.green,
-                                            Colors.lightGreen
-                                          ],
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight,
-                                        ),
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          bottomLeft: Radius.circular(20),
-                                          topRight: Radius.circular(2),
-                                          bottomRight: Radius.circular(2),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       "Level " +
+                //           calculateLevel(userController.user.value.levelPoints)
+                //               .toString(),
+                //       style: const TextStyle(color: Colors.green, fontSize: 17),
+                //       textAlign: TextAlign.center,
+                //     ),
+                //     followController.meditationAmounts.isEmpty ||
+                //             calculateTopPercentile(
+                //                     followController.meditationAmounts.toList(),
+                //                     userController.user.value.totalMinutes) >
+                //                 50
+                //         ? Container()
+                //         : Text(
+                //             " (Top " +
+                //                 calculateTopPercentile(
+                //                         followController.meditationAmounts
+                //                             .toList(),
+                //                         userController.user.value.totalMinutes)
+                //                     .toString() +
+                //                 "%)",
+                //             style: const TextStyle(
+                //                 color: Colors.white70, fontSize: 16),
+                //           )
+                //   ],
+                // ),
                 const SizedBox(
                   height: 5,
                 ),
@@ -317,6 +237,64 @@ class _ProfilePageState extends State<ProfilePage>
                 const SizedBox(
                   height: 10,
                 ),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          border: Border.all(
+                            color: Colors.white24,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Level " +
+                                        calculateLevel(userController
+                                                .user.value.levelPoints)
+                                            .toString(),
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  followController.meditationAmounts.isEmpty ||
+                                          calculateTopPercentile(
+                                                  followController
+                                                      .meditationAmounts
+                                                      .toList(),
+                                                  userController.user.value
+                                                      .totalMinutes) >
+                                              50
+                                      ? Container()
+                                      : Text(
+                                          " (Top " +
+                                              calculateTopPercentile(
+                                                      followController
+                                                          .meditationAmounts
+                                                          .toList(),
+                                                      userController.user.value
+                                                          .totalMinutes)
+                                                  .toString() +
+                                              "%)",
+                                          style: const TextStyle(
+                                              color: Colors.white70,
+                                              fontSize: 16),
+                                        )
+                                ],
+                              ),
+                              const LevelProgressBar(),
+                            ],
+                          ),
+                        ))),
                 GestureDetector(
                   onTap: () {
                     Get.to(const StatsPage());
@@ -412,6 +390,7 @@ class _ProfilePageState extends State<ProfilePage>
                     ],
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(

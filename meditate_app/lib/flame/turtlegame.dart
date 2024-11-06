@@ -191,7 +191,7 @@ class TurtleGame extends FlameGame with HasTappables {
               acceleration: randomVector2(),
               position: player.position.clone() + Vector2(-30, -40),
               child: CircleParticle(
-                paint: Paint()..color = Color.fromARGB(7, 255, 255, 255),
+                paint: Paint()..color = const Color.fromARGB(7, 255, 255, 255),
               ),
             ),
           ),
@@ -207,7 +207,7 @@ class TurtleGame extends FlameGame with HasTappables {
               acceleration: randomVector2(),
               position: player.position.clone() + Vector2(30, -40),
               child: CircleParticle(
-                paint: Paint()..color = Color.fromARGB(7, 255, 255, 255),
+                paint: Paint()..color = const Color.fromARGB(7, 255, 255, 255),
               ),
             ),
           ),

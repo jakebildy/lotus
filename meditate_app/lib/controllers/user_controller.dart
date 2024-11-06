@@ -67,7 +67,10 @@ class UserController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
-      Get.put(SubscriptionController());
+      if (!Get.isRegistered<SubscriptionController>()) {
+        // If the controller does not exist, create and register it
+        Get.put(SubscriptionController());
+      }
       // SubscriptionController
       // subscriptionController.initialize();
     });
