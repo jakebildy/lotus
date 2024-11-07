@@ -328,6 +328,17 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
+
+      if (game.turtleColor.value == 18) {
+        Sprite overlayRainbow = await gameRef.loadSprite(
+          'turtles/overlay_rainbow_default.png',
+        );
+
+        add(SpriteComponent(
+            sprite: overlayRainbow,
+            size: Vector2(squareSize, squareSize),
+            anchor: Anchor.center));
+      }
     } else {
       Sprite turtleBasic = await gameRef.loadSprite('turtle_basic.png');
       add(SpriteComponent(

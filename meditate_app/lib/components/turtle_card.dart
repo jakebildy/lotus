@@ -26,7 +26,7 @@ class TurtleCard extends StatelessWidget {
     return Bounce(
       duration: const Duration(milliseconds: 110),
       onPressed: () {
-        if (unlocked) {
+        if (!unlocked) {
           HapticFeedback.lightImpact();
           Get.to(TurtleDetailsPage(id: id, color: color),
               transition: Transition.downToUp);
@@ -75,11 +75,13 @@ class TurtleCard extends StatelessWidget {
                                         return LinearGradient(
                                           colors: [
                                             Colors.red.withOpacity(0.5),
+                                            Colors.red.withOpacity(0.5),
                                             Colors.orange.withOpacity(0.5),
                                             Colors.yellow.withOpacity(0.5),
                                             Colors.green.withOpacity(0.5),
                                             Colors.blue.withOpacity(0.5),
                                             Colors.indigo.withOpacity(0.5),
+                                            Colors.purple.withOpacity(0.5),
                                             Colors.purple.withOpacity(0.5),
                                           ],
                                           begin: Alignment.centerLeft,

@@ -71,7 +71,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
 
 // only turtles without a foundIn property can be found in the wild
     turtleType = Random().nextInt(TURTLES.length);
-    turtleColor = Random().nextInt(TURTLE_COLORS.length);
+    turtleColor = Random().nextInt(TURTLES.length);
     Sprite overlay = await gameRef.loadSprite(
       'turtles/$turtleType.png',
     );
@@ -99,6 +99,18 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
 
       add(SpriteComponent(sprite: overlay2, size: Vector2(200, 200)));
     }
+
+    if (turtleColor == 18) {
+      Sprite overlayRainbow = await gameRef.loadSprite(
+        'turtles/overlay_rainbow_default.png',
+      );
+
+      add(SpriteComponent(
+        sprite: overlayRainbow,
+        size: Vector2(200, 200),
+      ));
+    }
+
     anchor = Anchor.center;
   }
 

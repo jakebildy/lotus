@@ -23,11 +23,13 @@ class LockedTurtle extends StatelessWidget {
                         return LinearGradient(
                           colors: [
                             Colors.red.withOpacity(0.5),
+                            Colors.red.withOpacity(0.5),
                             Colors.orange.withOpacity(0.5),
                             Colors.yellow.withOpacity(0.5),
                             Colors.green.withOpacity(0.5),
                             Colors.blue.withOpacity(0.5),
                             Colors.indigo.withOpacity(0.5),
+                            Colors.purple.withOpacity(0.5),
                             Colors.purple.withOpacity(0.5),
                           ],
                           begin: Alignment.centerLeft,

@@ -180,6 +180,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                                     colors: [
                                                       Colors.red
                                                           .withOpacity(0.5),
+                                                      Colors.red
+                                                          .withOpacity(0.5),
                                                       Colors.orange
                                                           .withOpacity(0.5),
                                                       Colors.yellow
@@ -189,6 +191,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                                       Colors.blue
                                                           .withOpacity(0.5),
                                                       Colors.indigo
+                                                          .withOpacity(0.5),
+                                                      Colors.purple
                                                           .withOpacity(0.5),
                                                       Colors.purple
                                                           .withOpacity(0.5),
