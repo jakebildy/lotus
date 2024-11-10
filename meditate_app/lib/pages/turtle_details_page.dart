@@ -140,6 +140,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                   .circle, // circle is the default. No need to explicitly mention if its a circle.
             )),
             ListView(
+              // scrollable = false
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 const SizedBox(
                   height: 40,
@@ -158,12 +160,12 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                     },
                     child: Hero(
                         tag: "turtle-${widget.id}",
-                        child: XL(layers: [
+                        child: XL(sharesPointer: false, layers: [
                           XLayer(
                               xRotation: 0.4,
                               yRotation: 0.4,
-                              xOffset: 40,
-                              yOffset: 40,
+                              xOffset: 110,
+                              yOffset: 110,
                               child: AnimatedBuilder(
                                   animation: _angleAnimation,
                                   builder: (context, child) {
@@ -257,7 +259,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                   height: 40,
                 ),
                 Container(
-                    color: Colors.grey[850],
+                    color: Color.fromARGB(96, 48, 48, 48),
                     child: Column(
                       children: [
                         const SizedBox(
@@ -287,6 +289,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                     rarityReadable(TURTLES[widget.id].rarity),
                                     style: TextStyle(
                                         fontSize: 20,
+                                        fontWeight: FontWeight.bold,
                                         color: rarityColor(
                                             TURTLES[widget.id].rarity)),
                                   ),
@@ -309,7 +312,9 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                   Text(
                                     "${userController.user.value.unlockedTurtles[widget.id]}",
                                     style: const TextStyle(
-                                        fontSize: 20, color: Colors.white),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.white),
                                   ),
                                   const Text(
                                     "Number Found",
@@ -335,6 +340,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                     TURTLES[widget.id].level.toString(),
                                     style: TextStyle(
                                         fontSize: 20,
+                                        fontWeight: FontWeight.bold,
                                         color: rarityColor(
                                             TURTLES[widget.id].rarity)),
                                   ),
@@ -363,8 +369,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                         OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               side: const BorderSide(
-                                  width: 1.0, color: Colors.teal),
-                              backgroundColor: Colors.tealAccent,
+                                  width: 2.0, color: Colors.white),
+                              backgroundColor: Colors.cyan,
                               shape: const StadiumBorder(),
                             ),
                             onPressed: () {
@@ -384,7 +390,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
-                                    color: Colors.black),
+                                    color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
                             )),
