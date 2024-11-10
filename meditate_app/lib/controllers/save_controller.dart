@@ -8,7 +8,7 @@ class SaveController extends GetxController {
   final storage = GetStorage();
 
   //Saved Settings
-  RxInt defaultMeditationTime = 5.obs;
+  RxInt defaultMeditationTime = 2.obs;
   RxBool ambienceOn = true.obs;
   RxBool hasReviewed = false.obs;
   RxBool requestNotifications = false.obs;

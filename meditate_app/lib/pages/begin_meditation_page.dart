@@ -266,7 +266,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                         _duration.inSeconds;
                                     countdownController.update();
 
-                                    if (_duration.inMinutes >= 5) {
+                                    if (_duration.inMinutes >= 1) {
                                       saveController
                                           .updateDefaultMeditationTime(
                                               _duration.inMinutes);
