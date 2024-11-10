@@ -183,6 +183,7 @@ flutter:
     - assets/images/turtles/21_underlay.png
     - assets/images/turtles/22.png
     - assets/images/turtles/overlay_rainbow_default.png
+    - assets/images/turtles/overlay_rainbow_crystal.png
     - assets/logo.png
     - assets/audio/egg_crack.wav
     - assets/bubble.png

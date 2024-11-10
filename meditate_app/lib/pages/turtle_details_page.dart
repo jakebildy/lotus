@@ -324,7 +324,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "${TURTLES[widget.id].name + "s"} are ${TURTLES[widget.id].rarity == Rarity.COMMON ? "commonly" : TURTLES[widget.id].rarity == Rarity.RARE ? "rarely" : "extremely rarely"} found in the Shallows. \n\nTheir eggs can be found by those at the ${TURTLES[widget.id].tier == Tier.ORANGE ? "Hatchling" : TURTLES[widget.id].tier == Tier.YELLOW ? "Champion" : TURTLES[widget.id].tier == Tier.BLUE ? "Expert" : "Turtlemaster"} level or higher.",
+                            "${TURTLES[widget.id].name + "s"} are ${TURTLES[widget.id].rarity == Rarity.COMMON ? "commonly" : TURTLES[widget.id].rarity == Rarity.RARE ? "rarely" : "extremely rarely"} found in the Shallows. \n\nTheir eggs can be found by those at Level ${TURTLES[widget.id].level} or higher.",
                             textAlign: TextAlign.center,
                           ),
                         ),

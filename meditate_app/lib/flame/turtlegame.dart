@@ -304,7 +304,6 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
-
       Sprite sprite =
           await gameRef.loadSprite('turtles/${game.selectedTurtle}.png');
       paint = Paint()
@@ -318,6 +317,26 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
           size: Vector2(squareSize, squareSize),
           anchor: Anchor.center));
 
+      if (game.turtleColor.value == 18) {
+        if (game.selectedTurtle.value != 10) {
+          Sprite sprite =
+              await gameRef.loadSprite('turtles/overlay_rainbow_default.png');
+
+          add(SpriteComponent(
+              sprite: sprite,
+              size: Vector2(squareSize, squareSize),
+              anchor: Anchor.center));
+        } else {
+          Sprite sprite = await gameRef.loadSprite(
+            'turtles/overlay_rainbow_crystal.png',
+          );
+
+          add(SpriteComponent(
+              sprite: sprite,
+              size: Vector2(squareSize, squareSize),
+              anchor: Anchor.center));
+        }
+      }
       if (game.selectedTurtle.value == 10) {
         Sprite overlay = await gameRef.loadSprite(
           'turtles/10_overlay.png',
@@ -325,17 +344,6 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
         add(SpriteComponent(
             sprite: overlay,
-            size: Vector2(squareSize, squareSize),
-            anchor: Anchor.center));
-      }
-
-      if (game.turtleColor.value == 18) {
-        Sprite overlayRainbow = await gameRef.loadSprite(
-          'turtles/overlay_rainbow_default.png',
-        );
-
-        add(SpriteComponent(
-            sprite: overlayRainbow,
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
