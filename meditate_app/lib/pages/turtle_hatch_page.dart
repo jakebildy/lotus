@@ -8,6 +8,7 @@ import 'package:in_app_review/in_app_review.dart';
 class TurtleHatchPage extends StatefulWidget {
   final int gemsAmount;
   final bool foundEgg;
+  final bool levelUp;
   final int turtleToHatch;
   final int turtleColorToHatch;
 
@@ -15,6 +16,7 @@ class TurtleHatchPage extends StatefulWidget {
       {Key? key,
       required this.gemsAmount,
       required this.foundEgg,
+      required this.levelUp,
       required this.turtleToHatch,
       required this.turtleColorToHatch})
       : super(key: key);
@@ -103,6 +105,7 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
               Get.offAll(NewGemsPage(
                 gemsAmount: widget.gemsAmount,
                 foundEgg: widget.foundEgg,
+                levelUp: widget.levelUp,
               ));
             },
             child: Container(

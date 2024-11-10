@@ -70,6 +70,8 @@ dependencies:
   just_audio: ^0.9.36
   purchases_flutter: ^6.21.0
   share_plus: ^6.3.2
+  xl: ^0.9.1
+  foil: ^0.9.0+1
 
 dev_dependencies:
   flutter_test:

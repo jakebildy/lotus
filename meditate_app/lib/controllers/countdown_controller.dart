@@ -390,6 +390,7 @@ class CountdownController extends GetxController {
       gemsAmount: gemsToGive,
       alreadyMeditatedToday: alreadyMeditatedToday,
       foundEgg: foundEgg,
+      levelUp: true,
       turtleToHatch: turtleToHatch,
       turtleColorToHatch: turtleColorToHatch,
     ));
