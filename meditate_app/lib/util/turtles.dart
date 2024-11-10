@@ -119,9 +119,12 @@ List<Turtle> TURTLES = [
       tier: Tier.ORANGE,
       level: 20),
   const Turtle(
-      name: "Poseidon Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+      name: "Poseidon Turtle",
+      rarity: Rarity.COMMON,
+      tier: Tier.ORANGE,
+      level: 4),
   const Turtle(
-      name: "Evergreen Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+      name: "Evergreen Turtle", rarity: Rarity.UNCOMMON, tier: Tier.ORANGE),
   const Turtle(
       name: "Watermelon Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE),
   const Turtle(
@@ -130,7 +133,10 @@ List<Turtle> TURTLES = [
   const Turtle(
       name: "Magma Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE, level: 5),
   const Turtle(
-      name: "Silphium Turtle", rarity: Rarity.COMMON, tier: Tier.ORANGE),
+      name: "Silphium Turtle",
+      rarity: Rarity.COMMON,
+      tier: Tier.ORANGE,
+      level: 12),
   Turtle(
       name: "Luna Turtle",
       rarity: Rarity.RARE,

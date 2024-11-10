@@ -199,8 +199,8 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
             ],
           );
         });
-  } else if (TURTLES[turtleType].tier.index >
-      userController.streakTier().index) {
+  } else if (TURTLES[turtleType].level >
+      calculateLevel(userController.user.value.levelPoints)) {
     return showDialog<void>(
         context: game.localContext!,
         barrierDismissible: false, // user must tap button!
@@ -211,7 +211,7 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
               child: ListBody(
                 children: <Widget>[
                   Text(
-                      'You need to be a ${tierReadable(TURTLES[turtleType].tier)} to breed with this turtle!'),
+                      'You need to be Level ${TURTLES[turtleType].level.toString()} to breed with this turtle!'),
                   const Text('\nIncrease your level by meditating more.'),
                 ],
               ),
