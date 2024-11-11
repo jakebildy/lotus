@@ -12,6 +12,7 @@ import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/ambiences.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/util/util.dart';
 import 'package:ocarina/ocarina.dart';
 import 'package:just_audio/just_audio.dart' as just_audio;
 
@@ -329,6 +330,11 @@ class CountdownController extends GetxController {
       gemsToGive += timeInMinutes;
     }
 
+    bool levelUp = calculateLevel(userController.user.value.levelPoints) <
+        calculateLevel(userController.user.value.levelPoints + timeInMinutes);
+    userController.updateProperty(UserProperty.levelPoints,
+        (userController.user.value.levelPoints + timeInMinutes));
+
     // Logs the meditation (updates lastMeditated, totalMinutes, and meditationHistory)
     userController.logMeditation(timeInMinutes, date);
 
@@ -396,7 +402,7 @@ class CountdownController extends GetxController {
       gemsAmount: gemsToGive,
       alreadyMeditatedToday: alreadyMeditatedToday,
       foundEgg: foundEgg,
-      levelUp: true,
+      levelUp: levelUp,
       turtleToHatch: turtleToHatch,
       turtleColorToHatch: turtleColorToHatch,
     ));
