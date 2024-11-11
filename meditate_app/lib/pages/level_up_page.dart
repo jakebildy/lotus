@@ -73,8 +73,7 @@ class _LevelUpPageState extends State<LevelUpPage> {
                                         const EdgeInsets.fromLTRB(0, 4, 0, 0),
                                     child: Text(
                                       (calculateLevel(
-                                                  user.user.value.levelPoints) +
-                                              12)
+                                              user.user.value.levelPoints))
                                           .toString(),
                                       style: const TextStyle(
                                           fontSize: 50,
