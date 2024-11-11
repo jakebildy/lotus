@@ -185,20 +185,33 @@ int getTurtleToHatch(String ambience) {
           element.foundIn == null || element.foundIn!.name == ambience)
       .toList();
 
-  int checkRarity = Random().nextInt(10);
+  int checkRarity = Random().nextInt(11);
 
   //TODO: improve rarity equation
   if (checkRarity < 4) {
     possibleTurtles = possibleTurtles
         .where((element) => element.rarity == Rarity.COMMON)
         .toList();
-  } else if (checkRarity < 6) {
+  } else if (checkRarity < 5) {
     possibleTurtles = possibleTurtles
         .where((element) =>
             element.rarity == Rarity.COMMON ||
             element.rarity == Rarity.UNCOMMON)
         .toList();
+  } else if (checkRarity < 6) {
+    possibleTurtles = possibleTurtles
+        .where((element) =>
+            element.rarity == Rarity.COMMON ||
+            element.rarity == Rarity.UNCOMMON ||
+            element.rarity == Rarity.RARE)
+        .toList();
   } else if (checkRarity == 6 || checkRarity == 7 || checkRarity == 8) {
+    possibleTurtles = possibleTurtles
+        .where((element) =>
+            element.rarity != Rarity.LEGENDARY &&
+            element.rarity != Rarity.ULTRARARE)
+        .toList();
+  } else if (checkRarity == 9) {
     possibleTurtles = possibleTurtles
         .where((element) => element.rarity != Rarity.LEGENDARY)
         .toList();

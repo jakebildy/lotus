@@ -26,30 +26,41 @@ class TurtleCard extends StatelessWidget {
     return Bounce(
       duration: const Duration(milliseconds: 110),
       onPressed: () {
-        if (!unlocked) {
+        if (unlocked) {
           HapticFeedback.lightImpact();
           Get.to(TurtleDetailsPage(id: id, color: color),
               transition: Transition.downToUp);
         } else {
           HapticFeedback.lightImpact();
           ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              key: UniqueKey(),
-              backgroundColor: TURTLES[id].name == "Litback Turtle"
-                  ? Colors.deepPurpleAccent
-                  : TURTLES[id].foundIn != null
-                      ? Colors.tealAccent
-                      : rarityColor(TURTLES[id].rarity),
-              content: Text(
-                TURTLES[id].name == "Litback Turtle"
-                    ? "This social turtle can be found once you add at least one friend on Shellevate!"
+
+          if (this.color == 18) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                key: UniqueKey(),
+                backgroundColor: Colors.deepPurpleAccent,
+                content: const Text(
+                  "This turtle can be found once you reach Rainbow Flame (40+ minutes a day of meditation)!",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                key: UniqueKey(),
+                backgroundColor: TURTLES[id].name == "Litback Turtle"
+                    ? Colors.deepPurpleAccent
                     : TURTLES[id].foundIn != null
-                        ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
-                        : "This " +
-                            rarityReadable(TURTLES[id].rarity) +
-                            " Turtle can be found by Level ${TURTLES[id].level} users and above!",
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              )));
+                        ? Colors.tealAccent
+                        : rarityColor(TURTLES[id].rarity),
+                content: Text(
+                  TURTLES[id].name == "Litback Turtle"
+                      ? "This social turtle can be found once you add at least one friend on Shellevate!"
+                      : TURTLES[id].foundIn != null
+                          ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
+                          : "This " +
+                              rarityReadable(TURTLES[id].rarity) +
+                              " Turtle can be found by Level ${TURTLES[id].level} users and above!",
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                )));
+          }
         }
       },
       child: Card(

@@ -368,7 +368,13 @@ class CountdownController extends GetxController {
     bool foundEgg = receiveEgg(timeInMinutes);
     if (foundEgg) {
       int tHatch = getTurtleToHatch(save.selectedAmbience.string);
-      int tColor = Random().nextInt(TURTLE_COLORS.length);
+      int tColor;
+      // If the user tier is rainbow, the turtle can be rainbow
+      if (userController.streakTier() == Tier.RAINBOW) {
+        tColor = Random().nextInt(TURTLE_COLORS.length);
+      } else {
+        tColor = Random().nextInt(TURTLE_COLORS.length - 1);
+      }
 
       await eggController.addEgg(tColor, tHatch);
     }
