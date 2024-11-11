@@ -146,120 +146,154 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                 const SizedBox(
                   height: 40,
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  //color: Colors.white24,
-                  height: 300,
-                  child: GestureDetector(
-                    onTap: () {
-                      gameController.startGame(
-                          widget.id, widget.color, context);
-                      HapticFeedback.lightImpact();
-                      Get.to(const TurtleGamePage(),
-                          transition: Transition.circularReveal);
-                    },
-                    child: Hero(
-                        tag: "turtle-${widget.id}",
-                        child: XL(sharesPointer: false, layers: [
-                          XLayer(
-                              xRotation: 0.4,
-                              yRotation: 0.4,
-                              xOffset: 110,
-                              yOffset: 110,
-                              child: AnimatedBuilder(
-                                  animation: _angleAnimation,
-                                  builder: (context, child) {
-                                    return (Transform.rotate(
-                                      angle:
-                                          _angleAnimation.value * math.pi / 180,
-                                      child: Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Image.asset(
-                                              "assets/images/turtles/swim/swim" +
-                                                  swimState.toString() +
-                                                  ".png"),
-                                          widget.id != 21
-                                              ? Container()
-                                              : Image.asset(
-                                                  "assets/images/turtles/21_underlay.png"),
-                                          widget.id >= 0 &&
-                                                  widget.id < TURTLES.length
-                                              ? (widget.color == 18
-                                                  ? ShaderMask(
-                                                      shaderCallback:
-                                                          (Rect bounds) {
-                                                        return LinearGradient(
-                                                          colors: [
-                                                            Colors.red
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            Colors.red
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            Colors.orange
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            Colors.yellow
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            Colors.green
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            Colors.blue
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            Colors.indigo
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            Colors.purple
-                                                                .withOpacity(
-                                                                    0.5),
-                                                            Colors.purple
-                                                                .withOpacity(
-                                                                    0.5),
-                                                          ],
-                                                          begin: Alignment
-                                                              .centerLeft,
-                                                          end: Alignment
-                                                              .centerRight,
-                                                        ).createShader(bounds);
-                                                      },
-                                                      blendMode:
-                                                          BlendMode.srcATop,
-                                                      child: Image.asset(
-                                                          "assets/images/turtles/${widget.id}.png"),
-                                                    )
-                                                  : ColorFiltered(
-                                                      colorFilter:
-                                                          ColorFilter.mode(
-                                                              TURTLE_COLORS[
-                                                                      widget
-                                                                          .color]
-                                                                  .withOpacity(
-                                                                      0.5),
-                                                              BlendMode
-                                                                  .srcATop),
-                                                      child: Image.asset(
-                                                          "assets/images/turtles/${widget.id}.png"),
-                                                    ))
-                                              : Container(),
-                                          widget.id != 10
-                                              ? Container()
-                                              : Image.asset(
-                                                  "assets/images/turtles/10_overlay.png"),
-                                        ],
-                                      ),
-                                    ));
-                                  }))
-                        ])),
-                  ),
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      //color: Colors.white24,
+                      height: 300,
+                      child: GestureDetector(
+                        onTap: () {
+                          gameController.startGame(
+                              widget.id, widget.color, context);
+                          HapticFeedback.lightImpact();
+                          Get.to(const TurtleGamePage(),
+                              transition: Transition.circularReveal);
+                        },
+                        child: Hero(
+                            tag: "turtle-${widget.id}",
+                            child: XL(
+                                sharesPointer: false,
+                                // bypass the gesture detection to the parent
+
+                                layers: [
+                                  XLayer(
+                                      xRotation: 0.4,
+                                      yRotation: 0.4,
+                                      xOffset: 110,
+                                      yOffset: 110,
+                                      child: AnimatedBuilder(
+                                          animation: _angleAnimation,
+                                          builder: (context, child) {
+                                            return (Transform.rotate(
+                                              angle: _angleAnimation.value *
+                                                  math.pi /
+                                                  180,
+                                              child: Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                      "assets/images/turtles/swim/swim" +
+                                                          swimState.toString() +
+                                                          ".png"),
+                                                  widget.id != 21
+                                                      ? Container()
+                                                      : Image.asset(
+                                                          "assets/images/turtles/21_underlay.png"),
+                                                  widget.id >= 0 &&
+                                                          widget.id <
+                                                              TURTLES.length
+                                                      ? (widget.color == 18
+                                                          ? ShaderMask(
+                                                              shaderCallback:
+                                                                  (Rect
+                                                                      bounds) {
+                                                                return LinearGradient(
+                                                                  colors: [
+                                                                    Colors.red
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors.red
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .orange
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .yellow
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors.green
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors.blue
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .indigo
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .purple
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .purple
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                  ],
+                                                                  begin: Alignment
+                                                                      .centerLeft,
+                                                                  end: Alignment
+                                                                      .centerRight,
+                                                                ).createShader(
+                                                                    bounds);
+                                                              },
+                                                              blendMode:
+                                                                  BlendMode
+                                                                      .srcATop,
+                                                              child: Image.asset(
+                                                                  "assets/images/turtles/${widget.id}.png"),
+                                                            )
+                                                          : ColorFiltered(
+                                                              colorFilter: ColorFilter.mode(
+                                                                  TURTLE_COLORS[
+                                                                          widget
+                                                                              .color]
+                                                                      .withOpacity(
+                                                                          0.5),
+                                                                  BlendMode
+                                                                      .srcATop),
+                                                              child: Image.asset(
+                                                                  "assets/images/turtles/${widget.id}.png"),
+                                                            ))
+                                                      : Container(),
+                                                  widget.id != 10
+                                                      ? Container()
+                                                      : Image.asset(
+                                                          "assets/images/turtles/10_overlay.png"),
+                                                ],
+                                              ),
+                                            ));
+                                          }))
+                                ])),
+                      ),
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          //Log the event to AppsFlyer
+                          HeapService appsflyer = Get.find();
+                          appsflyer.logEvent("GAME_STARTED", {});
+                          gameController.startGame(
+                              widget.id, widget.color, context);
+                          HapticFeedback.lightImpact();
+                          Get.to(const TurtleGamePage(),
+                              transition: Transition.circularReveal);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          //color: Colors.white24,
+                          height: 300,
+                          child: const Text(""),
+                        ))
+                  ],
                 ),
                 const SizedBox(
                   height: 40,
                 ),
                 Container(
-                    color: Color.fromARGB(96, 48, 48, 48),
+                    color: const Color.fromARGB(96, 48, 48, 48),
                     child: Column(
                       children: [
                         const SizedBox(

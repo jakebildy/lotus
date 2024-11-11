@@ -26,7 +26,7 @@ class TurtleCard extends StatelessWidget {
     return Bounce(
       duration: const Duration(milliseconds: 110),
       onPressed: () {
-        if (unlocked) {
+        if (!unlocked) {
           HapticFeedback.lightImpact();
           Get.to(TurtleDetailsPage(id: id, color: color),
               transition: Transition.downToUp);

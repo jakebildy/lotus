@@ -48,8 +48,6 @@ class _LevelUpPageState extends State<LevelUpPage> {
                               child: Stack(
                                 alignment: Alignment.center,
                                 children: [
-                                  // hexagon
-
                                   Text(
                                     "⭐️",
                                     style: TextStyle(fontSize: 140),
@@ -102,7 +100,50 @@ class _LevelUpPageState extends State<LevelUpPage> {
                                     ),
                                   )
                                 ],
-                              ))
+                              )),
+                          XLayer(
+                              xRotation: 0.4,
+                              yRotation: 0.4,
+                              xOffset: 4,
+                              yOffset: 4,
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  // hexagon
+
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                                    child: Text(
+                                      (calculateLevel(
+                                                  user.user.value.levelPoints) +
+                                              12)
+                                          .toString(),
+                                      style: const TextStyle(
+                                          fontSize: 50,
+                                          shadows: [
+                                            Shadow(
+                                              blurRadius: 10.0,
+                                              color: Colors.black,
+                                              offset: Offset(0, 0.0),
+                                            ),
+                                            Shadow(
+                                              blurRadius: 10.0,
+                                              color: Colors.black,
+                                              offset: Offset(0, 0.0),
+                                            ),
+                                            Shadow(
+                                              blurRadius: 10.0,
+                                              color: Colors.black,
+                                              offset: Offset(0, 0.0),
+                                            ),
+                                          ],
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.lightBlueAccent),
+                                    ),
+                                  )
+                                ],
+                              )),
                         ]),
                       ),
                     )),
