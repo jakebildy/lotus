@@ -385,6 +385,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  foil:
+    dependency: "direct main"
+    description:
+      name: foil
+      sha256: "63c0c424235bfb6cf78131c7c2416e7243cf8511bcf664aad12ed1509de40a1a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.0+1"
   freezed_annotation:
     dependency: transitive
     description:
@@ -809,6 +817,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  sensors_plus:
+    dependency: transitive
+    description:
+      name: sensors_plus
+      sha256: "362c8f4f001838b90dd5206b898bbad941bc0142479eab9a3415f0f79e622908"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.1"
+  sensors_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: sensors_plus_platform_interface
+      sha256: "95f0cc08791b8bf0c41c5fa99c84be2a7d5bf60a811ddc17e1438b1e68caf0d3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.3"
+  sensors_plus_web:
+    dependency: transitive
+    description:
+      name: sensors_plus_web
+      sha256: fca8d7d9ab6233b2a059952666415508e252420be1ef54f092d07884da53ec5e
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   share_plus:
     dependency: "direct main"
     description:
@@ -1062,6 +1094,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0+2"
+  xl:
+    dependency: "direct main"
+    description:
+      name: xl
+      sha256: a4bdf899b452c26ebfbb4409b051edcb2b4e32a988136928685118fbe965b3fe
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.1"
   xml:
     dependency: transitive
     description:

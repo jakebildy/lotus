@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/follow.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/util/logger.dart';
+
+import '../util/util.dart';
 
 /// FollowController handles following and unfollowing other users. Still have a bit of refactoring left to do.
 /// {@category Controllers}
@@ -15,6 +18,8 @@ class FollowController extends GetxController {
   RxList<Follow> following = RxList();
   RxList<Follow> allUserFollowers = RxList();
   RxBool loadingFollowers = false.obs;
+
+  RxList<int> meditationAmounts = RxList();
 
   FollowController() {
     fetchFollows();
@@ -28,6 +33,9 @@ class FollowController extends GetxController {
     DateTime today = DateTime(now.year, now.month, now.day);
     logWarning(today.toIso8601String());
     for (User user in users) {
+      // this also calculates the topPercent of totalMinutes of the user vs the other user. So if they're in the top 20% of users, for instance.
+      meditationAmounts.add(user.totalMinutes);
+
       DateTime lastMeditatedAdjusted = DateTime(user.lastMeditated.year,
           user.lastMeditated.month, user.lastMeditated.day);
       logWarning(lastMeditatedAdjusted.toIso8601String());
@@ -60,6 +68,15 @@ class FollowController extends GetxController {
           activeUsers.add(user);
         }
       }
+    }
+
+    try {
+      UserController user = Get.find();
+      SaveController save = Get.find();
+      save.updateTopPercentage(calculateTopPercentile(
+          meditationAmounts.toList(), user.user.value.totalMinutes));
+    } catch (e) {
+      logError("Failed to save top percentile");
     }
     return activeUsers;
   }

@@ -33,21 +33,34 @@ class TurtleCard extends StatelessWidget {
         } else {
           HapticFeedback.lightImpact();
           ScaffoldMessenger.of(context).clearSnackBars();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              key: UniqueKey(),
-              backgroundColor: TURTLES[id].name == "Litback Turtle"
-                  ? Colors.deepPurpleAccent
-                  : TURTLES[id].foundIn != null
-                      ? Colors.tealAccent
-                      : tierColor(TURTLES[id].tier),
-              content: Text(
-                TURTLES[id].name == "Litback Turtle"
-                    ? "This social turtle can be found once you add at least one friend on Shellevate!"
+
+          if (this.color == 18) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                key: UniqueKey(),
+                backgroundColor: Colors.deepPurpleAccent,
+                content: const Text(
+                  "This turtle can be found once you reach Rainbow Flame (40+ minutes a day of meditation)!",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )));
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                key: UniqueKey(),
+                backgroundColor: TURTLES[id].name == "Litback Turtle"
+                    ? Colors.deepPurpleAccent
                     : TURTLES[id].foundIn != null
-                        ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
-                        : "This turtle can be found by ${tierReadablePlural(TURTLES[id].tier)}",
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              )));
+                        ? Colors.tealAccent
+                        : rarityColor(TURTLES[id].rarity),
+                content: Text(
+                  TURTLES[id].name == "Litback Turtle"
+                      ? "This social turtle can be found once you add at least one friend on Shellevate!"
+                      : TURTLES[id].foundIn != null
+                          ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
+                          : "This " +
+                              rarityReadable(TURTLES[id].rarity) +
+                              " Turtle can be found by Level ${TURTLES[id].level} users and above!",
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                )));
+          }
         }
       },
       child: Card(
@@ -67,12 +80,36 @@ class TurtleCard extends StatelessWidget {
                               : Image.asset(
                                   "assets/images/turtles/21_underlay.png"),
                           id >= 0 && id < TURTLES.length
-                              ? ColorFiltered(
-                                  colorFilter: ColorFilter.mode(
-                                      TURTLE_COLORS[color].withOpacity(0.5),
-                                      BlendMode.srcATop),
-                                  child: Image.asset(
-                                      "assets/images/turtles/$id.png"))
+                              ? (color == 18
+                                  ? ShaderMask(
+                                      shaderCallback: (Rect bounds) {
+                                        return LinearGradient(
+                                          colors: [
+                                            Colors.red.withOpacity(0.5),
+                                            Colors.red.withOpacity(0.5),
+                                            Colors.orange.withOpacity(0.5),
+                                            Colors.yellow.withOpacity(0.5),
+                                            Colors.green.withOpacity(0.5),
+                                            Colors.blue.withOpacity(0.5),
+                                            Colors.indigo.withOpacity(0.5),
+                                            Colors.purple.withOpacity(0.5),
+                                            Colors.purple.withOpacity(0.5),
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ).createShader(bounds);
+                                      },
+                                      blendMode: BlendMode.srcATop,
+                                      child: Image.asset(
+                                          "assets/images/turtles/$id.png"),
+                                    )
+                                  : ColorFiltered(
+                                      colorFilter: ColorFilter.mode(
+                                          TURTLE_COLORS[color].withOpacity(0.5),
+                                          BlendMode.srcATop),
+                                      child: Image.asset(
+                                          "assets/images/turtles/$id.png"),
+                                    ))
                               : Container(),
                           id != 10
                               ? Container()

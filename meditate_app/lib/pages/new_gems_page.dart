@@ -2,15 +2,20 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
+import 'package:meditate_app/pages/level_up_page.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 class NewGemsPage extends StatefulWidget {
   final int gemsAmount;
   final bool foundEgg;
+  final bool levelUp;
 
   const NewGemsPage(
-      {Key? key, required this.gemsAmount, required this.foundEgg})
+      {Key? key,
+      required this.gemsAmount,
+      required this.foundEgg,
+      required this.levelUp})
       : super(key: key);
 
   @override
@@ -81,10 +86,16 @@ class _NewGemsPageState extends State<NewGemsPage>
           ),
           GestureDetector(
             onTap: () {
-              if (widget.foundEgg) {
-                Get.offAll(const NewEggPage());
+              if (widget.levelUp) {
+                Get.offAll(LevelUpPage(
+                  foundEgg: widget.foundEgg,
+                ));
               } else {
-                Get.offAll(const AppPages());
+                if (widget.foundEgg) {
+                  Get.offAll(const NewEggPage());
+                } else {
+                  Get.offAll(const AppPages());
+                }
               }
             },
             child: Container(

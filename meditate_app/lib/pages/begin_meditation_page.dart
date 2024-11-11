@@ -89,7 +89,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                 child: Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  color: Color.fromARGB(255, 0, 33, 59),
+                  color: const Color.fromARGB(255, 0, 33, 59),
                 )),
             Positioned.fill(
                 child: FloatingBubbles.alwaysRepeating(
@@ -203,7 +203,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                   offset: const Offset(0, 3),
                                 ),
                               ],
-                              color: Color.fromARGB(0, 48, 48, 48),
+                              color: const Color.fromARGB(0, 48, 48, 48),
                               borderRadius: BorderRadius.circular(100)),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -224,7 +224,8 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Icon(Icons.arrow_drop_down, color: Colors.white)
+                                const Icon(Icons.arrow_drop_down,
+                                    color: Colors.white)
                               ],
                             ),
                           ),
@@ -265,7 +266,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                         _duration.inSeconds;
                                     countdownController.update();
 
-                                    if (_duration.inMinutes >= 5) {
+                                    if (_duration.inMinutes >= 1) {
                                       saveController
                                           .updateDefaultMeditationTime(
                                               _duration.inMinutes);

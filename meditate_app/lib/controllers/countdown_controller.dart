@@ -287,7 +287,8 @@ class CountdownController extends GetxController {
 
     //The meditationHistory date
     DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day);
+    DateTime date = DateTime.utc(now.year, now.month, now.day);
+    // TODO: this is where the bug is with streak count not updating
 
     // The number of gems to give
     int gemsToGive = 0;
@@ -323,6 +324,9 @@ class CountdownController extends GetxController {
     } else {
       logInfo("You already meditated today. Not updating streak!");
       alreadyMeditatedToday = true;
+      userController.updateProperty(
+          UserProperty.gems, (userController.user.value.gems + timeInMinutes));
+      gemsToGive += timeInMinutes;
     }
 
     // Logs the meditation (updates lastMeditated, totalMinutes, and meditationHistory)
@@ -338,6 +342,8 @@ class CountdownController extends GetxController {
 
           logInfo("HATCHING A TURTLE!");
           turtleToHatch = getTurtleToHatch(save.selectedAmbience.value);
+
+          // TODO: make this only hatch rainbow if a rainbow flame
           turtleColorToHatch = Random().nextInt(TURTLE_COLORS.length);
 
           //if future turtles exist, this will be the one that displays on the
@@ -362,7 +368,13 @@ class CountdownController extends GetxController {
     bool foundEgg = receiveEgg(timeInMinutes);
     if (foundEgg) {
       int tHatch = getTurtleToHatch(save.selectedAmbience.string);
-      int tColor = Random().nextInt(TURTLE_COLORS.length);
+      int tColor;
+      // If the user tier is rainbow, the turtle can be rainbow
+      if (userController.streakTier() == Tier.RAINBOW) {
+        tColor = Random().nextInt(TURTLE_COLORS.length);
+      } else {
+        tColor = Random().nextInt(TURTLE_COLORS.length - 1);
+      }
 
       await eggController.addEgg(tColor, tHatch);
     }
@@ -384,6 +396,7 @@ class CountdownController extends GetxController {
       gemsAmount: gemsToGive,
       alreadyMeditatedToday: alreadyMeditatedToday,
       foundEgg: foundEgg,
+      levelUp: true,
       turtleToHatch: turtleToHatch,
       turtleColorToHatch: turtleColorToHatch,
     ));

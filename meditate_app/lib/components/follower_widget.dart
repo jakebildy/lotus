@@ -108,9 +108,11 @@ class FollowerWidget extends StatelessWidget {
                                       child:
                                           Image.asset(userStreakIconURL(user))),
                                   Text(
-                                    " • ${user.totalMinutes} min total",
+                                    " • Level ${calculateLevel(user.levelPoints)}",
                                     style: const TextStyle(
-                                        color: Colors.grey, fontSize: 14),
+                                      color: Colors.grey,
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ],
                               ),

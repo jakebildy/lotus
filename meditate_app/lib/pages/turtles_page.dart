@@ -121,7 +121,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
                   children: List.generate(
-                      listOfIndicesByTier(
+                      listOfIndicesByRarity(
                               userController.user.value.unlockedTurtles)
                           .length, (index) {
                     // Check if index is within the bounds of unlockedTurtles
@@ -133,7 +133,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                         child: Center(
                           child: TurtleCategory(
                             unlocked: false,
-                            id: listOfIndicesByTier(userController
+                            id: listOfIndicesByRarity(userController
                                 .user.value.unlockedTurtles)[index],
                             uniqueQuantity: 0,
                             displayColor: 0,

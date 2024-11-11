@@ -67,7 +67,10 @@ class UserController extends GetxController {
       pushNotificationService.updateDeviceToken();
       Get.put(FollowController());
       Get.put(SearchController());
-      Get.put(SubscriptionController());
+      if (!Get.isRegistered<SubscriptionController>()) {
+        // If the controller does not exist, create and register it
+        Get.put(SubscriptionController());
+      }
       // SubscriptionController
       // subscriptionController.initialize();
     });
@@ -165,6 +168,12 @@ class UserController extends GetxController {
         // localStorageUser.value.totalMinutes = value as int;
         localStorageUser.update((val) {
           val?.totalMinutes = value;
+        });
+        break;
+      case UserProperty.levelPoints:
+        storage.write("level_points", value.toString());
+        localStorageUser.update((val) {
+          val?.levelPoints = value;
         });
         break;
       case UserProperty.streakFreezes:
@@ -345,6 +354,11 @@ class UserController extends GetxController {
     if (getValue('gems') != "") {
       localStorageUser.value.gems = int.parse(getValue("gems"));
       logSuccess("Loaded gems: ${localStorageUser.value.gems}");
+    }
+
+    if (getValue('level_points') != "") {
+      localStorageUser.value.levelPoints = int.parse(getValue("level_points"));
+      logSuccess("Loaded levelPoints: ${localStorageUser.value.levelPoints}");
     }
 
     if (getValue('streak_freezes') != "") {
@@ -530,6 +544,12 @@ class UserController extends GetxController {
           val?.totalMinutes = value;
         });
         break;
+      case UserProperty.levelPoints:
+        // databaseUser.value.levelPoints = value as int;
+        databaseUser.update((val) {
+          val?.levelPoints = value;
+        });
+        break;
       case UserProperty.streakFreezes:
         // databaseUser.value.streakFreezes = value as int;
         databaseUser.update((val) {
@@ -603,6 +623,8 @@ class UserController extends GetxController {
       updatePropertySafe(
           UserProperty.totalMinutes, localStorageUser.value.totalMinutes),
       updatePropertySafe(
+          UserProperty.levelPoints, localStorageUser.value.levelPoints),
+      updatePropertySafe(
           UserProperty.streakFreezes, localStorageUser.value.streakFreezes),
       updatePropertySafe(UserProperty.lastMeditated,
           localStorageUser.value.lastMeditated.toIso8601String()),
@@ -648,6 +670,8 @@ class UserController extends GetxController {
       saveLocalValueSafe(UserProperty.gems, databaseUser.value.gems),
       saveLocalValueSafe(
           UserProperty.totalMinutes, databaseUser.value.totalMinutes),
+      saveLocalValueSafe(
+          UserProperty.levelPoints, databaseUser.value.levelPoints),
       saveLocalValueSafe(
           UserProperty.streakFreezes, databaseUser.value.streakFreezes),
       saveLocalValueSafe(UserProperty.lastMeditated,
@@ -788,10 +812,11 @@ class UserController extends GetxController {
     if (getValue("last_meditated") != "") {
       DateTime lastMeditated =
           DateTime.parse(getValue("last_meditated").toString());
-      DateTime now = DateTime.now();
-      DateTime date = DateTime(now.year, now.month, now.day);
 
-      int numDays = lastMeditated.difference(date).inDays.abs();
+      DateTime today = DateTime.now();
+      today = DateTime.utc(today.year, today.month, today.day);
+
+      int numDays = lastMeditated.difference(today).inDays.abs();
 
       if (numDays < 1) {
         hasDoneStreakToday.value = true;
@@ -804,7 +829,7 @@ class UserController extends GetxController {
   void loadStreak() {
     logSuccess("Loading Streak, currently " + user.value.streak.toString());
     DateTime now = DateTime.now();
-    DateTime date = DateTime(now.year, now.month, now.day);
+    DateTime date = DateTime.utc(now.year, now.month, now.day);
     if (user.value.lastMeditated.isBefore(DateTime(2019))) {
       logInfo("last_meditated hasn't been set yet.");
       updateProperty(UserProperty.streak, 0);
@@ -828,7 +853,7 @@ class UserController extends GetxController {
         //Use a streak freeze if possible
         if (user.value.streakFreezes > 0) {
           DateTime now = DateTime.now();
-          DateTime today = DateTime(now.year, now.month, now.day);
+          DateTime today = DateTime.utc(now.year, now.month, now.day);
           DateTime yesterday = today.subtract(const Duration(days: 1));
           updateProperty(
               UserProperty.lastMeditated, yesterday.toIso8601String());
@@ -918,7 +943,7 @@ class UserController extends GetxController {
   void reviveStreak() {
     updateProperty(UserProperty.streak, user.value.streakValueNeverReset);
     DateTime now = DateTime.now();
-    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime today = DateTime.utc(now.year, now.month, now.day);
     DateTime yesterday = today.subtract(const Duration(days: 1));
     updateProperty(UserProperty.lastMeditated, yesterday.toIso8601String());
     update();

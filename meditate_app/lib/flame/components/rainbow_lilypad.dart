@@ -23,6 +23,7 @@ class RainbowLilypad extends SpriteComponent with HasGameRef {
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    priority = 5;
     sprite = await gameRef.loadSprite('game/lilypad3.png');
     size.setValues(lilypadSize, lilypadSize * 14 / 16);
     anchor = Anchor.center;

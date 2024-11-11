@@ -1,6 +1,7 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 
 /// NetworkStatusController checks if the user is online. It logs in if the connection is restored.
@@ -27,6 +28,7 @@ class NetworkStatusController extends GetxController {
       if (userController.user.value == noUser) {
         await userController.loginFromCookiesRequest();
         await Get.find<UserController>().syncData();
+        await Get.find<SubscriptionController>().initPlatformState();
       }
     } else {
       offline.value = true;

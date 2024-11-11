@@ -4,6 +4,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/components/piechart_painter.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/turtle_category_page.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
@@ -24,6 +25,8 @@ class TurtleCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserController userController = Get.find<UserController>();
+
     return Bounce(
       duration: const Duration(milliseconds: 110),
       onPressed: () {
@@ -68,13 +71,37 @@ class TurtleCategory extends StatelessWidget {
                               : Image.asset(
                                   "assets/images/turtles/21_underlay.png"),
                           id >= 0 && id < TURTLES.length
-                              ? ColorFiltered(
-                                  colorFilter: ColorFilter.mode(
-                                      TURTLE_COLORS[displayColor]
-                                          .withOpacity(0.5),
-                                      BlendMode.srcATop),
-                                  child: Image.asset(
-                                      "assets/images/turtles/$id.png"))
+                              ? (displayColor == 18
+                                  ? ShaderMask(
+                                      shaderCallback: (Rect bounds) {
+                                        return LinearGradient(
+                                          colors: [
+                                            Colors.red.withOpacity(0.5),
+                                            Colors.red.withOpacity(0.5),
+                                            Colors.orange.withOpacity(0.5),
+                                            Colors.yellow.withOpacity(0.5),
+                                            Colors.green.withOpacity(0.5),
+                                            Colors.blue.withOpacity(0.5),
+                                            Colors.indigo.withOpacity(0.5),
+                                            Colors.purple.withOpacity(0.5),
+                                            Colors.purple.withOpacity(0.5),
+                                          ],
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                        ).createShader(bounds);
+                                      },
+                                      blendMode: BlendMode.srcATop,
+                                      child: Image.asset(
+                                          "assets/images/turtles/$id.png"),
+                                    )
+                                  : ColorFiltered(
+                                      colorFilter: ColorFilter.mode(
+                                          TURTLE_COLORS[displayColor]
+                                              .withOpacity(0.5),
+                                          BlendMode.srcATop),
+                                      child: Image.asset(
+                                          "assets/images/turtles/$id.png"),
+                                    ))
                               : Container(),
                           id != 10
                               ? Container()
@@ -85,16 +112,14 @@ class TurtleCategory extends StatelessWidget {
                   : Stack(children: [
                       LockedTurtle(
                         id: id,
-                        colorId: -1,
+                        colorId:
+                            id % (TURTLE_COLORS.length - 1), //-1 bc rainbow
                       ),
                       TURTLES[id].tier == Tier.RAINBOW
                           ? Shimmer.fromColors(
                               baseColor: Colors.white12,
                               highlightColor: Colors.white30,
-                              child: LockedTurtle(
-                                id: id,
-                                colorId: -1,
-                              ),
+                              child: LockedTurtle(id: id, colorId: 18),
                             )
                           : Container()
                     ]),
@@ -111,20 +136,46 @@ class TurtleCategory extends StatelessWidget {
                       Text((TURTLES[id].name.split(" ")[0] + " Turtles"),
                           style: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600)),
-                      Text(
-                          TURTLES[id].name == "Litback Turtle"
-                              ? "Add Friends to Find"
-                              : TURTLES[id].foundIn != null
-                                  ? "${TURTLES[id].foundIn!.name} Ambience"
-                                  : tierReadable(TURTLES[id].tier),
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: TURTLES[id].name == "Litback Turtle"
-                                  ? Colors.deepPurpleAccent
-                                  : (TURTLES[id].foundIn != null
-                                      ? Colors.tealAccent
-                                      : tierColor(TURTLES[id].tier)))),
+                      Row(
+                        children: [
+                          Text(rarityReadable(TURTLES[id].rarity),
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: rarityColor(TURTLES[id].rarity),
+                              )),
+                          TURTLES[id].level <=
+                                      calculateLevel(userController
+                                          .user.value.levelPoints) &&
+                                  TURTLES[id].foundIn == null &&
+                                  TURTLES[id].tier != Tier.LITBACK
+                              ? Container()
+                              : const Text(" • "),
+                          TURTLES[id].level <=
+                                  calculateLevel(
+                                      userController.user.value.levelPoints)
+                              ? Container()
+                              : const Icon(Icons.lock,
+                                  color: Colors.grey, size: 15),
+                          TURTLES[id].level <=
+                                      calculateLevel(userController
+                                          .user.value.levelPoints) &&
+                                  TURTLES[id].foundIn == null &&
+                                  TURTLES[id].tier != Tier.LITBACK
+                              ? Container()
+                              : Text(
+                                  TURTLES[id].name == "Litback Turtle"
+                                      ? "Add Friends to Find"
+                                      : TURTLES[id].foundIn != null
+                                          ? "${TURTLES[id].foundIn!.name}"
+                                          : "Level " +
+                                              TURTLES[id].level.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey)),
+                        ],
+                      ),
                       const SizedBox(height: 20),
                       Text(
                           "${unlocked ? uniqueQuantity : '0'} of ${TURTLE_COLORS.length}",

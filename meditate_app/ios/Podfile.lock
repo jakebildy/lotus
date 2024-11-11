@@ -102,6 +102,8 @@ PODS:
   - PurchasesHybridCommon (9.7.1):
     - RevenueCat (= 4.36.2)
   - RevenueCat (4.36.2)
+  - sensors_plus (0.0.1):
+    - Flutter
   - share_plus (0.0.1):
     - Flutter
   - SwiftProtobuf (1.25.2)
@@ -128,6 +130,7 @@ DEPENDENCIES:
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
+  - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
@@ -184,6 +187,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
+  sensors_plus:
+    :path: ".symlinks/plugins/sensors_plus/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   url_launcher_ios:
@@ -222,6 +227,7 @@ SPEC CHECKSUMS:
   purchases_flutter: becb61c2ca37cd944aeaae688119e1f485158fee
   PurchasesHybridCommon: 76ea82671cfb30f921c5697362b56d86b341da04
   RevenueCat: 991b09e19835c2e7344f3cdda6921c2a5f2da47a
+  sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   SwiftProtobuf: 407a385e97fd206c4fbe880cc84123989167e0d1
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863

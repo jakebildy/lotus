@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
+import 'package:meditate_app/components/level_progress_bar.dart';
 import 'package:meditate_app/components/meditation_heatmap.dart';
 import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/components/streak_chart.dart';
@@ -11,12 +12,12 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
-import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -154,13 +155,35 @@ class _ProfilePageState extends State<ProfilePage>
                 const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  tierReadable(userController.streakTier()),
-                  style: TextStyle(
-                      color: tierColor(userController.streakTier()),
-                      fontSize: 17),
-                  textAlign: TextAlign.center,
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       "Level " +
+                //           calculateLevel(userController.user.value.levelPoints)
+                //               .toString(),
+                //       style: const TextStyle(color: Colors.green, fontSize: 17),
+                //       textAlign: TextAlign.center,
+                //     ),
+                //     followController.meditationAmounts.isEmpty ||
+                //             calculateTopPercentile(
+                //                     followController.meditationAmounts.toList(),
+                //                     userController.user.value.totalMinutes) >
+                //                 50
+                //         ? Container()
+                //         : Text(
+                //             " (Top " +
+                //                 calculateTopPercentile(
+                //                         followController.meditationAmounts
+                //                             .toList(),
+                //                         userController.user.value.totalMinutes)
+                //                     .toString() +
+                //                 "%)",
+                //             style: const TextStyle(
+                //                 color: Colors.white70, fontSize: 16),
+                //           )
+                //   ],
+                // ),
                 const SizedBox(
                   height: 5,
                 ),
@@ -214,6 +237,54 @@ class _ProfilePageState extends State<ProfilePage>
                 const SizedBox(
                   height: 10,
                 ),
+                Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          border: Border.all(
+                            color: Colors.white24,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Level " +
+                                        calculateLevel(userController
+                                                .user.value.levelPoints)
+                                            .toString(),
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  (followController.meditationAmounts.isEmpty &&
+                                              save.topPercentage.value == -1) ||
+                                          save.topPercentage.value > 50
+                                      ? Container()
+                                      : Text(
+                                          " (Top " +
+                                              save.topPercentage.value
+                                                  .toString() +
+                                              "%)",
+                                          style: const TextStyle(
+                                              color: Colors.white70,
+                                              fontSize: 16),
+                                        )
+                                ],
+                              ),
+                              const LevelProgressBar(),
+                            ],
+                          ),
+                        ))),
                 GestureDetector(
                   onTap: () {
                     Get.to(const StatsPage());
@@ -309,6 +380,7 @@ class _ProfilePageState extends State<ProfilePage>
                     ],
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -371,51 +443,163 @@ class _ProfilePageState extends State<ProfilePage>
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(
-                                (userController.streakTier() == Tier.ORANGE
-                                    ? "Level 1: Hatchling"
-                                    : userController.streakTier() == Tier.YELLOW
-                                        ? "Level 2: Champion"
-                                        : userController.streakTier() ==
-                                                Tier.BLUE
-                                            ? "Level 3: Expert"
-                                            : "Level 4: Turtlemaster"),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                    color:
-                                        tierColor(userController.streakTier())),
-                              ),
+                              userController.streakTier() == Tier.RAINBOW
+                                  ? ShaderMask(
+                                      shaderCallback: (Rect bounds) {
+                                        return const LinearGradient(
+                                          colors: <Color>[
+                                            Colors.red,
+                                            Colors.orange,
+                                            Colors.yellow,
+                                            Colors.green,
+                                            Colors.blue,
+                                            Colors.indigo,
+                                            Colors.purple,
+                                          ],
+                                          tileMode: TileMode.mirror,
+                                        ).createShader(bounds);
+                                      },
+                                      child: const Text(
+                                        "Rainbow Flame",
+                                        style: TextStyle(
+                                          color: Colors
+                                              .white, // Set the base color for text
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              16, // Optional: adjust the font size
+                                        ),
+                                      ),
+                                    )
+                                  : Text(
+                                      (userController.streakTier() ==
+                                              Tier.ORANGE
+                                          ? "Beginner Flame"
+                                          : userController.streakTier() ==
+                                                  Tier.YELLOW
+                                              ? "Yellow Flame"
+                                              : userController.streakTier() ==
+                                                      Tier.BLUE
+                                                  ? "Blue Flame"
+                                                  : "Rainbow Flame"),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                          color: tierColor(
+                                              userController.streakTier())),
+                                    ),
                               const SizedBox(
                                 height: 5,
                               ),
                               const Text(
-                                "Higher levels can find rarer turtles.\n\nReach new levels by increasing your average meditation length for a week.\n",
+                                "The color of your streak flame shows your average meditation length for the last week.\n\nReach Rainbow to find Rainbow Turtles.\n",
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(
                                 height: 5,
                               ),
-                              const Text(
-                                "Hatchling: 0-10 Minutes/Day",
-                                style: TextStyle(color: Colors.green),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                      height: 15,
+                                      child: Image.asset(
+                                          "assets/streak_icon.png")),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  const Text(
+                                    "Beginner Flame",
+                                    style: TextStyle(
+                                        color: Colors.green,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Text(": 0-10 Minutes/Day",
+                                      style: TextStyle(color: Colors.grey)),
+                                ],
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text("Champion: 10-20 Minutes/Day",
-                                  style: TextStyle(color: Colors.yellow)),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        height: 15,
+                                        child: Image.asset(
+                                            "assets/streak_icon_yellow.png")),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    const Text("Yellow Flame",
+                                        style: TextStyle(
+                                            color: Colors.yellow,
+                                            fontWeight: FontWeight.bold)),
+                                    const Text(": 10-20 Minutes/Day",
+                                        style: TextStyle(color: Colors.grey)),
+                                  ]),
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text("Expert: 20-40 Minutes/Day",
-                                  style:
-                                      TextStyle(color: Colors.lightBlueAccent)),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        height: 15,
+                                        child: Image.asset(
+                                            "assets/streak_icon_blue.png")),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    const Text("Blue Flame",
+                                        style: TextStyle(
+                                            color: Colors.lightBlueAccent,
+                                            fontWeight: FontWeight.bold)),
+                                    const Text(": 20-40 Minutes/Day",
+                                        style: TextStyle(color: Colors.grey)),
+                                  ]),
                               const SizedBox(
                                 height: 10,
                               ),
-                              const Text("Turtlemaster: 40+ Minutes/Day",
-                                  style: TextStyle(color: Colors.pink)),
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                        height: 15,
+                                        child: Image.asset(
+                                            "assets/streak_icon_rainbow.png")),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    ShaderMask(
+                                      shaderCallback: (Rect bounds) {
+                                        return const LinearGradient(
+                                          colors: <Color>[
+                                            Colors.red,
+                                            Colors.redAccent,
+                                            Colors.orange,
+                                            Colors.yellow,
+                                            Colors.green,
+                                            Colors.blue,
+                                            Colors.indigo,
+                                            Colors.purple,
+                                          ],
+                                          tileMode: TileMode.mirror,
+                                        ).createShader(bounds);
+                                      },
+                                      child: const Text(
+                                        "Rainbow Flame",
+                                        style: TextStyle(
+                                          color: Colors
+                                              .white, // Set the base color for text
+                                          fontWeight: FontWeight.bold,
+                                          fontSize:
+                                              14, // Optional: adjust the font size
+                                        ),
+                                      ),
+                                    ),
+                                    const Text(": 40+ Minutes/Day",
+                                        style: TextStyle(color: Colors.grey)),
+                                  ])
                             ],
                           ),
                         ],
@@ -616,7 +800,7 @@ class _ProfilePageState extends State<ProfilePage>
                                         ),
                                         borderRadius: BorderRadius.circular(20),
                                       ),
-                                      child: Padding(
+                                      child: const Padding(
                                         padding: EdgeInsets.all(10),
                                         child: Icon(
                                           Icons.ios_share_outlined,
@@ -715,7 +899,7 @@ class _ProfilePageState extends State<ProfilePage>
                       "Sign Out",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ))),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 GestureDetector(
@@ -753,7 +937,7 @@ class _ProfilePageState extends State<ProfilePage>
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.grey),
                     ))),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
               ],

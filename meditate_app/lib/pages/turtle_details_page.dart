@@ -12,6 +12,8 @@ import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'dart:math' as math;
 
+import 'package:xl/xl.dart';
+
 class TurtleDetailsPage extends StatefulWidget {
   final int id;
   final int color;
@@ -138,64 +140,160 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                   .circle, // circle is the default. No need to explicitly mention if its a circle.
             )),
             ListView(
+              // scrollable = false
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 const SizedBox(
                   height: 40,
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  //color: Colors.white24,
-                  height: 300,
-                  child: GestureDetector(
-                    onTap: () {
-                      gameController.startGame(
-                          widget.id, widget.color, context);
-                      HapticFeedback.lightImpact();
-                      Get.to(const TurtleGamePage(),
-                          transition: Transition.circularReveal);
-                    },
-                    child: Hero(
-                        tag: "turtle-${widget.id}",
-                        child: AnimatedBuilder(
-                            animation: _angleAnimation,
-                            builder: (context, child) {
-                              return (Transform.rotate(
-                                angle: _angleAnimation.value * math.pi / 180,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Image.asset(
-                                        "assets/images/turtles/swim/swim" +
-                                            swimState.toString() +
-                                            ".png"),
-                                    widget.id != 21
-                                        ? Container()
-                                        : Image.asset(
-                                            "assets/images/turtles/21_underlay.png"),
-                                    widget.id >= 0 && widget.id < TURTLES.length
-                                        ? ColorFiltered(
-                                            colorFilter: ColorFilter.mode(
-                                                TURTLE_COLORS[widget.color]
-                                                    .withOpacity(0.5),
-                                                BlendMode.srcATop),
-                                            child: Image.asset(
-                                                "assets/images/turtles/${widget.id}.png"))
-                                        : Container(),
-                                    widget.id != 10
-                                        ? Container()
-                                        : Image.asset(
-                                            "assets/images/turtles/10_overlay.png"),
-                                  ],
-                                ),
-                              ));
-                            })),
-                  ),
+                Stack(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      //color: Colors.white24,
+                      height: 300,
+                      child: GestureDetector(
+                        onTap: () {
+                          gameController.startGame(
+                              widget.id, widget.color, context);
+                          HapticFeedback.lightImpact();
+                          Get.to(const TurtleGamePage(),
+                              transition: Transition.circularReveal);
+                        },
+                        child: Hero(
+                            tag: "turtle-${widget.id}",
+                            child: XL(
+                                sharesPointer: false,
+                                // bypass the gesture detection to the parent
+
+                                layers: [
+                                  XLayer(
+                                      xRotation: 0.4,
+                                      yRotation: 0.4,
+                                      xOffset: 110,
+                                      yOffset: 110,
+                                      child: AnimatedBuilder(
+                                          animation: _angleAnimation,
+                                          builder: (context, child) {
+                                            return (Transform.rotate(
+                                              angle: _angleAnimation.value *
+                                                  math.pi /
+                                                  180,
+                                              child: Stack(
+                                                alignment: Alignment.center,
+                                                children: [
+                                                  Image.asset(
+                                                      "assets/images/turtles/swim/swim" +
+                                                          swimState.toString() +
+                                                          ".png"),
+                                                  widget.id != 21
+                                                      ? Container()
+                                                      : Image.asset(
+                                                          "assets/images/turtles/21_underlay.png"),
+                                                  widget.id >= 0 &&
+                                                          widget.id <
+                                                              TURTLES.length
+                                                      ? (widget.color == 18
+                                                          ? ShaderMask(
+                                                              shaderCallback:
+                                                                  (Rect
+                                                                      bounds) {
+                                                                return LinearGradient(
+                                                                  colors: [
+                                                                    Colors.red
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors.red
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .orange
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .yellow
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors.green
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors.blue
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .indigo
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .purple
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                    Colors
+                                                                        .purple
+                                                                        .withOpacity(
+                                                                            0.5),
+                                                                  ],
+                                                                  begin: Alignment
+                                                                      .centerLeft,
+                                                                  end: Alignment
+                                                                      .centerRight,
+                                                                ).createShader(
+                                                                    bounds);
+                                                              },
+                                                              blendMode:
+                                                                  BlendMode
+                                                                      .srcATop,
+                                                              child: Image.asset(
+                                                                  "assets/images/turtles/${widget.id}.png"),
+                                                            )
+                                                          : ColorFiltered(
+                                                              colorFilter: ColorFilter.mode(
+                                                                  TURTLE_COLORS[
+                                                                          widget
+                                                                              .color]
+                                                                      .withOpacity(
+                                                                          0.5),
+                                                                  BlendMode
+                                                                      .srcATop),
+                                                              child: Image.asset(
+                                                                  "assets/images/turtles/${widget.id}.png"),
+                                                            ))
+                                                      : Container(),
+                                                  widget.id != 10
+                                                      ? Container()
+                                                      : Image.asset(
+                                                          "assets/images/turtles/10_overlay.png"),
+                                                ],
+                                              ),
+                                            ));
+                                          }))
+                                ])),
+                      ),
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          //Log the event to AppsFlyer
+                          HeapService appsflyer = Get.find();
+                          appsflyer.logEvent("GAME_STARTED", {});
+                          gameController.startGame(
+                              widget.id, widget.color, context);
+                          HapticFeedback.lightImpact();
+                          Get.to(const TurtleGamePage(),
+                              transition: Transition.circularReveal);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          //color: Colors.white24,
+                          height: 300,
+                          child: const Text(""),
+                        ))
+                  ],
                 ),
                 const SizedBox(
                   height: 40,
                 ),
                 Container(
-                    color: Colors.grey[850],
+                    color: const Color.fromARGB(96, 48, 48, 48),
                     child: Column(
                       children: [
                         const SizedBox(
@@ -222,14 +320,12 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               child: Column(
                                 children: [
                                   Text(
-                                    TURTLES[widget.id].rarity == Rarity.COMMON
-                                        ? "Common"
-                                        : TURTLES[widget.id].rarity ==
-                                                Rarity.RARE
-                                            ? "Rare"
-                                            : "Legendary",
-                                    style: const TextStyle(
-                                        fontSize: 20, color: Colors.white),
+                                    rarityReadable(TURTLES[widget.id].rarity),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: rarityColor(
+                                            TURTLES[widget.id].rarity)),
                                   ),
                                   const Text(
                                     "Rarity",
@@ -250,7 +346,9 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                   Text(
                                     "${userController.user.value.unlockedTurtles[widget.id]}",
                                     style: const TextStyle(
-                                        fontSize: 20, color: Colors.white),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.white),
                                   ),
                                   const Text(
                                     "Number Found",
@@ -268,23 +366,17 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Column(
                                 children: [
-                                  Text(
-                                    TURTLES[widget.id].tier == Tier.ORANGE
-                                        ? "Hatchling"
-                                        : TURTLES[widget.id].tier == Tier.YELLOW
-                                            ? "Champion"
-                                            : TURTLES[widget.id].tier ==
-                                                    Tier.BLUE
-                                                ? "Expert"
-                                                : "Turtlemaster",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color:
-                                            tierColor(TURTLES[widget.id].tier)),
-                                  ),
                                   const Text(
                                     "Level",
                                     style: TextStyle(fontSize: 12),
+                                  ),
+                                  Text(
+                                    TURTLES[widget.id].level.toString(),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: rarityColor(
+                                            TURTLES[widget.id].rarity)),
                                   ),
                                   SizedBox(
                                     width:
@@ -301,7 +393,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "${TURTLES[widget.id].name + "s"} are ${TURTLES[widget.id].rarity == Rarity.COMMON ? "commonly" : TURTLES[widget.id].rarity == Rarity.RARE ? "rarely" : "extremely rarely"} found in the Shallows. \n\nTheir eggs can be found by those at the ${TURTLES[widget.id].tier == Tier.ORANGE ? "Hatchling" : TURTLES[widget.id].tier == Tier.YELLOW ? "Champion" : TURTLES[widget.id].tier == Tier.BLUE ? "Expert" : "Turtlemaster"} level or higher.",
+                            "${TURTLES[widget.id].name + "s"} are ${TURTLES[widget.id].rarity == Rarity.COMMON ? "commonly" : TURTLES[widget.id].rarity == Rarity.RARE ? "rarely" : "extremely rarely"} found in the Shallows. \n\nTheir eggs can be found by those at Level ${TURTLES[widget.id].level} or higher.",
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -311,8 +403,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                         OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               side: const BorderSide(
-                                  width: 1.0, color: Colors.teal),
-                              backgroundColor: Colors.tealAccent,
+                                  width: 2.0, color: Colors.white),
+                              backgroundColor: Colors.cyan,
                               shape: const StadiumBorder(),
                             ),
                             onPressed: () {
@@ -332,7 +424,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
-                                    color: Colors.black),
+                                    color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
                             )),

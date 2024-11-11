@@ -5,30 +5,30 @@ import 'package:meditate_app/util/turtles.dart';
 
 String tierReadable(Tier tier) {
   return tier == Tier.ORANGE
-      ? "Hatchling (Level 1)"
+      ? "Beginner Flame"
       : tier == Tier.YELLOW
-          ? "Champion (Level 2)"
+          ? "Yellow Flame"
           : tier == Tier.BLUE
-              ? "Expert (Level 3)"
+              ? "Blue Flame"
               : tier == Tier.LITBACK
                   ? "Add Friends to Find"
                   : tier == Tier.AMBIENCE
                       ? "Ambience Turtle"
-                      : "Turtlemaster (Level 4)";
+                      : "Rainbow Flame";
 }
 
 String tierReadablePlural(Tier tier) {
   return tier == Tier.ORANGE
-      ? "Hatchlings\n(Level 1)"
+      ? "All Users"
       : tier == Tier.YELLOW
-          ? "Champions\n(Level 2)"
+          ? "Yellow Flame Users"
           : tier == Tier.BLUE
-              ? "Experts\n(Level 3)"
+              ? "Blue Flame Users"
               : tier == Tier.LITBACK
                   ? "Add Friends to Find"
                   : tier == Tier.AMBIENCE
                       ? "Ambience Turtle"
-                      : "Turtlemasters\n(Level 4)";
+                      : "Rainbow Flame Users";
 }
 
 Color tierColor(Tier tier) {
@@ -43,6 +43,30 @@ Color tierColor(Tier tier) {
                   : tier == Tier.AMBIENCE
                       ? Colors.tealAccent
                       : Colors.redAccent;
+}
+
+String rarityReadable(Rarity rarity) {
+  return rarity == Rarity.COMMON
+      ? "Common"
+      : rarity == Rarity.UNCOMMON
+          ? "Uncommon"
+          : rarity == Rarity.RARE
+              ? "Rare"
+              : rarity == Rarity.ULTRARARE
+                  ? "Ultra Rare"
+                  : "Legendary";
+}
+
+Color rarityColor(Rarity rarity) {
+  return rarity == Rarity.COMMON
+      ? Colors.grey
+      : rarity == Rarity.UNCOMMON
+          ? Colors.green
+          : rarity == Rarity.RARE
+              ? Colors.blue
+              : rarity == Rarity.ULTRARARE
+                  ? Colors.orange
+                  : Colors.purpleAccent;
 }
 
 final Map<int, String> months = {
@@ -181,4 +205,67 @@ int getUserStreak(User user) {
     }
   }
   return 0;
+}
+
+int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
+  // Remove all 0 values
+  meditationTimes.removeWhere((element) => element == 0);
+
+  // Sort the meditation times in descending order
+  meditationTimes.sort((a, b) => b.compareTo(a));
+
+  // Count how many users have meditation times greater than or equal to totalMinutes
+  int rank = meditationTimes.where((time) => time > totalMinutes).length + 1;
+
+  // Calculate percentile
+  double percentile = (rank / meditationTimes.length) * 100;
+
+  return percentile.toInt(); // Convert to integer for whole number
+}
+
+int calculateLevel(int levelPoints) {
+  // Define an array for the first 10 levels with their specific point requirements
+  List<int> initialThresholds = [
+    20,
+    50,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ];
+
+  int cumulativePoints = 0;
+  int level = 0;
+
+  // Calculate the level within the first 10 levels
+  for (int i = 0; i < initialThresholds.length; i++) {
+    cumulativePoints += initialThresholds[i];
+    if (levelPoints < cumulativePoints) {
+      return level + 1; // Return the level starting from 1
+    }
+    level++;
+  }
+
+  // Calculate levels beyond level 10
+  int levelIncrement =
+      100; // Starting increment for points required beyond level 10
+  int levelsPerIncrement =
+      10; // Every 10 levels, the points required increases by 100
+
+  while (levelPoints >= cumulativePoints) {
+    int pointsForNextLevel =
+        levelIncrement * ((level - 10) ~/ levelsPerIncrement + 1);
+    cumulativePoints += pointsForNextLevel;
+    level++;
+
+    if (levelPoints < cumulativePoints) {
+      return level;
+    }
+  }
+
+  return level;
 }

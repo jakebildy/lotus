@@ -10,6 +10,7 @@ import '../controllers/save_controller.dart';
 class StreakCountPage extends StatefulWidget {
   final int gemsAmount;
   final bool foundEgg;
+  final bool levelUp;
   final bool alreadyMeditatedToday;
   final int turtleToHatch;
   final int turtleColorToHatch;
@@ -18,6 +19,7 @@ class StreakCountPage extends StatefulWidget {
       {Key? key,
       required this.gemsAmount,
       required this.foundEgg,
+      required this.levelUp,
       required this.alreadyMeditatedToday,
       required this.turtleToHatch,
       required this.turtleColorToHatch})
@@ -105,11 +107,13 @@ class _StreakCountPageState extends State<StreakCountPage>
                     foundEgg: widget.foundEgg,
                     turtleToHatch: widget.turtleToHatch,
                     turtleColorToHatch: widget.turtleColorToHatch,
+                    levelUp: widget.levelUp,
                   ));
                 } else {
                   Get.offAll(NewGemsPage(
                     gemsAmount: widget.gemsAmount,
                     foundEgg: widget.foundEgg,
+                    levelUp: widget.levelUp,
                   ));
                 }
               },

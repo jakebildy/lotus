@@ -8,12 +8,13 @@ class SaveController extends GetxController {
   final storage = GetStorage();
 
   //Saved Settings
-  RxInt defaultMeditationTime = 5.obs;
+  RxInt defaultMeditationTime = 2.obs;
   RxBool ambienceOn = true.obs;
   RxBool hasReviewed = false.obs;
   RxBool requestNotifications = false.obs;
   RxString selectedAmbience = "Water Sounds".obs;
   RxBool isSubscribedToPremium = false.obs;
+  RxInt topPercentage = (-1).obs;
 
   RxBool loadingSaveController = true.obs;
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
@@ -53,6 +54,12 @@ class SaveController extends GetxController {
   void updateIsSubscribedToPremium(bool newVal) {
     isSubscribedToPremium.value = newVal;
     saveValue("SHELLEVATE_PREMIUM_RC", isSubscribedToPremium.value.toString());
+    update();
+  }
+
+  void updateTopPercentage(int newVal) {
+    topPercentage.value = newVal;
+    saveValue("top_percentage", topPercentage.value.toString());
     update();
   }
 
@@ -209,6 +216,10 @@ class SaveController extends GetxController {
     if (getValue('SHELLEVATE_PREMIUM_RC') != "") {
       isSubscribedToPremium.value =
           getValue('SHELLEVATE_PREMIUM_RC').toLowerCase() == 'true';
+    }
+
+    if (getValue('top_percentage') != "") {
+      topPercentage.value = int.parse(getValue('top_percentage'));
     }
 
     loadingSaveController.value = false;

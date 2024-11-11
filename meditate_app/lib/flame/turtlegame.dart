@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
+import 'package:flame/particles.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
@@ -16,6 +20,7 @@ import 'package:meditate_app/flame/components/other_turtle.dart';
 import 'package:meditate_app/flame/components/rainbow_lilypad.dart';
 import 'package:meditate_app/flame/components/seafloor_object.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
+import 'package:meditate_app/flame/components/wateranimation_above.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 import 'components/wateranimation.dart';
@@ -40,6 +45,12 @@ class TurtleGame extends FlameGame with HasTappables {
   List<SeaFloorObject> seafloorObjects = [];
   WaterAnimation waterAnimation = WaterAnimation(Vector2(400, 100), (700));
   WaterAnimation waterAnimation2 = WaterAnimation(Vector2(400, 800), (700));
+  WaterAnimationAbove waterAnimation3 =
+      WaterAnimationAbove(Vector2(400, 800), (400), 300);
+  WaterAnimationAbove waterAnimation4 =
+      WaterAnimationAbove(Vector2(400, 800), (400), -100);
+  WaterAnimationAbove waterAnimation5 =
+      WaterAnimationAbove(Vector2(400, 800), (400), -500);
   @override
   Future<void> onLoad() async {
     // FlameAudio.loopLongAudio('water_sounds.wav', volume: 0.5);
@@ -75,6 +86,10 @@ class TurtleGame extends FlameGame with HasTappables {
     add(player);
 
     add(cameraPoint);
+
+    add(waterAnimation3);
+    add(waterAnimation4);
+    add(waterAnimation5);
 
     for (int i = 0; i < 600; i++) {
       add(Lilypad(
@@ -115,7 +130,7 @@ class TurtleGame extends FlameGame with HasTappables {
     if (!info.handled && canMove) {
       debounceCanMove();
       FlameAudio.play('splash.wav');
-      // HapticFeedback.lightImpact();
+      HapticFeedback.lightImpact();
       final touchPoint = info.eventPosition.game;
 
       double borderX = touchPoint.x > 10000
@@ -147,6 +162,8 @@ class TurtleGame extends FlameGame with HasTappables {
             EffectController(duration: 0.6)),
       );
       swimAnimation(playerBase);
+      swimParticles();
+
       parallaxMove(borderX, borderY);
 
       cameraPoint.add(
@@ -154,6 +171,51 @@ class TurtleGame extends FlameGame with HasTappables {
             Vector2(borderX - player.position.x, borderY - player.position.y),
             EffectController(duration: 0.75)),
       );
+    }
+  }
+
+  Future<void> swimParticles() async {
+    Random rnd = Random();
+
+    Vector2 randomVector2() =>
+        (Vector2.random(rnd) - Vector2.random(rnd)) * 400;
+
+    for (int i = 0; i < 4; i++) {
+      add(
+        ParticleSystemComponent(
+          particle: Particle.generate(
+            count: 40,
+            generator: (i) => AcceleratedParticle(
+              // make it change color over time
+
+              acceleration: randomVector2(),
+              position: player.position.clone() + Vector2(-30, -40),
+              child: CircleParticle(
+                paint: Paint()..color = const Color.fromARGB(7, 255, 255, 255),
+              ),
+            ),
+          ),
+          priority: 0,
+        ),
+      );
+
+      add(
+        ParticleSystemComponent(
+          particle: Particle.generate(
+            count: 40,
+            generator: (i) => AcceleratedParticle(
+              acceleration: randomVector2(),
+              position: player.position.clone() + Vector2(30, -40),
+              child: CircleParticle(
+                paint: Paint()..color = const Color.fromARGB(7, 255, 255, 255),
+              ),
+            ),
+          ),
+          priority: 0,
+        ),
+      );
+
+      await Future.delayed(const Duration(milliseconds: 50));
     }
   }
 
@@ -187,6 +249,22 @@ class TurtleGame extends FlameGame with HasTappables {
       MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
           EffectController(duration: 0.6, curve: Curves.linear)),
     );
+
+    waterAnimation3.add(
+      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
+          EffectController(duration: 0.6, curve: Curves.linear)),
+    );
+
+    waterAnimation4.add(
+      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
+          EffectController(duration: 0.6, curve: Curves.linear)),
+    );
+
+    waterAnimation5.add(
+      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
+          EffectController(duration: 0.6, curve: Curves.linear)),
+    );
+
     await Future.delayed(const Duration(milliseconds: 600));
 
     _turtleWorld.parallax?.baseVelocity = Vector2(
@@ -215,7 +293,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
     GameController game = Get.find();
     if (!isBase) {
       // TODO: crystal turtle
-
+      priority = 1;
       if (game.selectedTurtle.value == 21) {
         Sprite underlay = await gameRef.loadSprite(
           'turtles/21_underlay.png',
@@ -226,19 +304,39 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
-
       Sprite sprite =
           await gameRef.loadSprite('turtles/${game.selectedTurtle}.png');
       paint = Paint()
         ..colorFilter = ColorFilter.mode(
             TURTLE_COLORS[game.turtleColor.value].withOpacity(0.4),
             BlendMode.srcATop);
+
       add(SpriteComponent(
           sprite: sprite,
           paint: paint,
           size: Vector2(squareSize, squareSize),
           anchor: Anchor.center));
 
+      if (game.turtleColor.value == 18) {
+        if (game.selectedTurtle.value != 10) {
+          Sprite sprite =
+              await gameRef.loadSprite('turtles/overlay_rainbow_default.png');
+
+          add(SpriteComponent(
+              sprite: sprite,
+              size: Vector2(squareSize, squareSize),
+              anchor: Anchor.center));
+        } else {
+          Sprite sprite = await gameRef.loadSprite(
+            'turtles/overlay_rainbow_crystal.png',
+          );
+
+          add(SpriteComponent(
+              sprite: sprite,
+              size: Vector2(squareSize, squareSize),
+              anchor: Anchor.center));
+        }
+      }
       if (game.selectedTurtle.value == 10) {
         Sprite overlay = await gameRef.loadSprite(
           'turtles/10_overlay.png',
@@ -295,7 +393,7 @@ class PlayerBase extends SpriteGroupComponent<PlayerState>
   @override
   Future<void> onLoad() async {
     super.onLoad();
-
+    priority = 1;
     final idleSprite = await gameRef.loadSprite("turtles/swim/swim1.png");
     final swimSprite = await gameRef.loadSprite("turtles/swim/swim2.png");
 

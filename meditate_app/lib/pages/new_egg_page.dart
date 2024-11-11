@@ -72,17 +72,42 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                       child: Stack(
                         children: [
                           Image.asset("assets/egg.png"),
-                          ColorFiltered(
-                              colorFilter: ColorFilter.mode(
-                                  TURTLE_COLORS[int.parse(user
-                                          .user.value.eggTypes.last
-                                          .split("-")[1])]
-                                      .withOpacity(0.8),
-                                  BlendMode.srcATop),
-                              child: Image.asset(
-                                "assets/egg_spots.png",
-                                // height: 60,
-                              )),
+                          (int.parse(user.user.value.eggTypes.last
+                                      .split("-")[1]) ==
+                                  18)
+                              ? ShaderMask(
+                                  shaderCallback: (Rect bounds) {
+                                    return LinearGradient(
+                                      colors: [
+                                        Colors.red.withOpacity(0.5),
+                                        Colors.orange.withOpacity(0.5),
+                                        Colors.yellow.withOpacity(0.5),
+                                        Colors.green.withOpacity(0.5),
+                                        Colors.blue.withOpacity(0.5),
+                                        Colors.indigo.withOpacity(0.5),
+                                        Colors.purple.withOpacity(0.5),
+                                      ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.centerRight,
+                                    ).createShader(bounds);
+                                  },
+                                  blendMode: BlendMode.srcATop,
+                                  child: Image.asset(
+                                    "assets/egg_spots.png",
+                                    // height: 60,
+                                  ),
+                                )
+                              : ColorFiltered(
+                                  colorFilter: ColorFilter.mode(
+                                      TURTLE_COLORS[int.parse(user
+                                              .user.value.eggTypes.last
+                                              .split("-")[1])]
+                                          .withOpacity(0.8),
+                                      BlendMode.srcATop),
+                                  child: Image.asset(
+                                    "assets/egg_spots.png",
+                                    // height: 60,
+                                  )),
                         ],
                       )))),
           const SizedBox(
