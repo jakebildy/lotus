@@ -1,0 +1,184 @@
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bounce/flutter_bounce.dart';
+import 'package:get/get.dart';
+import 'package:meditate_app/components/premium_container.dart';
+import 'package:meditate_app/controllers/network_status_controller.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/pages/get_subscription_page.dart';
+import 'package:meditate_app/util/breathwork.dart';
+
+import '../app_pages.dart';
+
+class SelectBreathworkPage extends StatefulWidget {
+  const SelectBreathworkPage({super.key});
+
+  @override
+  State<SelectBreathworkPage> createState() => _SelectBreathworkPageState();
+}
+
+class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
+  int currentAudioSource = -1;
+  late AudioPlayer audioPlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    audioPlayer = AudioPlayer();
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.stop();
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SaveController save = Get.find();
+    NetworkStatusController network = Get.find();
+
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.keyboard_arrow_down),
+            onPressed: () {
+              Get.offAll(const AppPages(), transition: Transition.topLevel);
+            },
+          ),
+          title: Column(
+            children: const [
+              Text("Choose Breathwork"),
+              // network.offline.value
+              //     ? const Text(
+              //         "Premium ambiences are not available offline",
+              //         style:
+              //             TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              //       )
+              //     : Container(),
+            ],
+          ),
+        ),
+        body: GridView.count(
+            crossAxisCount: 1,
+            childAspectRatio: 1.3,
+            crossAxisSpacing: 4.0,
+            mainAxisSpacing: 8.0,
+            children: List.generate(BREATHWORKS.length, (index) {
+              return Center(
+                child: Bounce(
+                  duration: const Duration(milliseconds: 110),
+                  onPressed: () {
+                    HapticFeedback.mediumImpact();
+
+                    Get.to(const GetSubscriptionPage());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: Colors.black,
+                      child: Card(
+                          child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: (Column(
+                          children: [
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                AspectRatio(
+                                    aspectRatio: 1.9,
+                                    child:
+                                        // gradient of blues
+                                        Stack(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                Colors.blue[900]!,
+                                                Colors.blue[800]!,
+                                                Colors.blue[700]!,
+                                                Colors.blue[600]!,
+                                                Colors.blue[500]!,
+                                                Colors.blue[400]!,
+                                                Colors.blue[300]!,
+                                                Colors.blue[200]!,
+                                                Colors.blue[100]!,
+                                                Colors.blue[50]!,
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Opacity(
+                                          opacity: 0.3,
+                                          child: Image.asset(
+                                              "assets/breathwork_background.jpg",
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ],
+                                    )),
+                                Column(
+                                  children: [
+                                    Text(BREATHWORKS[index].emoji,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 50)),
+                                    Text(BREATHWORKS[index].whenToUse,
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 24)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 20, 0, 4),
+                                      child: Text(
+                                        BREATHWORKS[index].name,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18,
+                                            color:
+                                                save.selectedAmbience.value ==
+                                                        BREATHWORKS[index].name
+                                                    ? Colors.tealAccent
+                                                    : Colors.white),
+                                      ),
+                                    ),
+                                    Text(
+                                      BREATHWORKS[index].description,
+                                      style: TextStyle(color: Colors.grey),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                      )),
+                    ),
+                  ),
+                ),
+              );
+            })),
+      ),
+    );
+  }
+}

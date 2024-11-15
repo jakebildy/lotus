@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
+import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown_page.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/select_ambience_page.dart';
+import 'package:meditate_app/pages/select_breathwork_page.dart';
 import 'package:meditate_app/services/heap_service.dart';
 
 import '../components/duration_picker.dart';
@@ -179,16 +181,80 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                   ),
                   GestureDetector(
                     onTap: (() {
-                      Get.to(const SelectAmbiencePage(),
-                          transition: Transition.downToUp);
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor:
+                                const Color.fromARGB(255, 47, 111, 129),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            title: const Text(
+                              "Select Meditation Type",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  leading: const Icon(
+                                    Icons.self_improvement,
+                                    color: Colors.white,
+                                  ),
+                                  title: const Text(
+                                    "Freestyle Meditation",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                    Get.to(const SelectAmbiencePage(),
+                                        transition: Transition.downToUp);
+                                  },
+                                ),
+                                const Divider(color: Colors.white54),
+                                ListTile(
+                                  leading: const Icon(
+                                    Icons.air,
+                                    color: Colors.white,
+                                  ),
+                                  title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Breathwork",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      const SizedBox(
+                                          width: 80, child: PremiumContainer())
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+
+                                    Get.to(
+                                      const SelectBreathworkPage(),
+                                      transition: Transition.downToUp,
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
                     }),
                     child: Column(
                       children: [
-                        MediaQuery.of(context).size.height < 680
-                            ? Container()
-                            : const SizedBox(
-                                height: 30,
-                              ),
                         Container(
                           decoration: BoxDecoration(
                               border: Border.all(
@@ -211,14 +277,11 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(
-                                  saveController.selectedAmbience.value != "OFF"
-                                      ? Icons.music_note
-                                      : Icons.music_off,
+                                  Icons.self_improvement,
                                   size: 30,
                                 ),
                                 Text(
-                                  "Soundscape: " +
-                                      saveController.selectedAmbience.value,
+                                  "Freestyle Meditation",
                                   style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.white,
@@ -227,6 +290,59 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                 const Icon(Icons.arrow_drop_down,
                                     color: Colors.white)
                               ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () => {
+                            Get.to(
+                              const SelectAmbiencePage(),
+                              transition: Transition.downToUp,
+                            )
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.white54,
+                                  width: 2,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 1,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                                color: const Color.fromARGB(0, 48, 48, 48),
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    saveController.selectedAmbience.value !=
+                                            "OFF"
+                                        ? Icons.music_note
+                                        : Icons.music_off,
+                                    size: 30,
+                                  ),
+                                  Text(
+                                    "Soundscape: " +
+                                        saveController.selectedAmbience.value,
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Icon(Icons.arrow_drop_down,
+                                      color: Colors.white)
+                                ],
+                              ),
                             ),
                           ),
                         ),

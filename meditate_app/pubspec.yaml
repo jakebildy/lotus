@@ -256,6 +256,7 @@ flutter:
     - assets/ambiences/none.jpg
     - assets/streak_revive.png
     - assets/images/game/lilypad_flower.png
+    - assets/breathwork_background.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
