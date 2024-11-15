@@ -77,6 +77,9 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                     widget.turtleToHatch != 10
                         ? Container()
                         : Image.asset("assets/images/turtles/10_overlay.png"),
+                    widget.turtleToHatch != 23
+                        ? Container()
+                        : Image.asset("assets/images/turtles/23_overlay.png"),
                   ],
                 )),
           ),

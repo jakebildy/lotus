@@ -263,6 +263,10 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                                                       ? Container()
                                                       : Image.asset(
                                                           "assets/images/turtles/10_overlay.png"),
+                                                  widget.id != 23
+                                                      ? Container()
+                                                      : Image.asset(
+                                                          "assets/images/turtles/23_overlay.png"),
                                                 ],
                                               ),
                                             ));

@@ -33,7 +33,8 @@ class TurtleCategoryPage extends StatelessWidget {
                   TURTLES[id].level <=
                               calculateLevel(user.user.value.levelPoints) &&
                           TURTLES[id].foundIn == null &&
-                          TURTLES[id].tier != Tier.LITBACK
+                          TURTLES[id].tier != Tier.LITBACK &&
+                          TURTLES[id].name != "Aether Turtle"
                       ? Container()
                       : const Text(" • "),
                   TURTLES[id].level <=
@@ -43,14 +44,17 @@ class TurtleCategoryPage extends StatelessWidget {
                   TURTLES[id].level <=
                               calculateLevel(user.user.value.levelPoints) &&
                           TURTLES[id].foundIn == null &&
-                          TURTLES[id].tier != Tier.LITBACK
+                          TURTLES[id].tier != Tier.LITBACK &&
+                          TURTLES[id].name != "Aether Turtle"
                       ? Container()
                       : Text(
                           TURTLES[id].name == "Litback Turtle"
                               ? "Add Friends to Find"
-                              : TURTLES[id].foundIn != null
-                                  ? "${TURTLES[id].foundIn!.name}"
-                                  : "Level " + TURTLES[id].level.toString(),
+                              : TURTLES[id].name == "Aether Turtle"
+                                  ? "Breathwork"
+                                  : TURTLES[id].foundIn != null
+                                      ? "${TURTLES[id].foundIn!.name}"
+                                      : "Level " + TURTLES[id].level.toString(),
                           style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,

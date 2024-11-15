@@ -44,7 +44,7 @@ const List<Breathwork> BREATHWORKS = [
   Breathwork(
     name: "5-5 Breathing",
     description: "Regain balance and center yourself",
-    whenToUse: "General Relaxation",
+    whenToUse: "Stop Overthinking",
     emoji: '🧘',
     inOutTimes: [5, 5],
     instructions: ["Breathe in", "Breathe out"],

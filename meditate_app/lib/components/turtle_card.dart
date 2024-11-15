@@ -51,13 +51,15 @@ class TurtleCard extends StatelessWidget {
                         ? Colors.tealAccent
                         : rarityColor(TURTLES[id].rarity),
                 content: Text(
-                  TURTLES[id].name == "Litback Turtle"
-                      ? "This social turtle can be found once you add at least one friend on Shellevate!"
-                      : TURTLES[id].foundIn != null
-                          ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
-                          : "This " +
-                              rarityReadable(TURTLES[id].rarity) +
-                              " Turtle can be found by Level ${TURTLES[id].level} users and above!",
+                  TURTLES[id].name == "Aether Turtle"
+                      ? "This turtle can be found when doing breathwork!"
+                      : TURTLES[id].name == "Litback Turtle"
+                          ? "This social turtle can be found once you add at least one friend on Shellevate!"
+                          : TURTLES[id].foundIn != null
+                              ? "Meditate with the ${TURTLES[id].foundIn!.name} Ambience to find this turtle!"
+                              : "This " +
+                                  rarityReadable(TURTLES[id].rarity) +
+                                  " Turtle can be found by Level ${TURTLES[id].level} users and above!",
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 )));
           }
@@ -115,6 +117,10 @@ class TurtleCard extends StatelessWidget {
                               ? Container()
                               : Image.asset(
                                   "assets/images/turtles/10_overlay.png"),
+                          id != 23
+                              ? Container()
+                              : Image.asset(
+                                  "assets/images/turtles/23_overlay.png"),
                         ],
                       ))
                   : Stack(children: [

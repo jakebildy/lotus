@@ -71,6 +71,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                     Colors.white.withAlpha(30),
                   ],
                 )),
+                Opacity(
+                    opacity: 0.2,
+                    child: Container(
+                      color: Colors.black,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                    )),
                 Column(
                   children: [
                     Expanded(
@@ -79,137 +86,22 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                         // If the widget is hidden, animate to 1.0 (fully visible).
                         opacity: opacity,
                         duration: const Duration(milliseconds: 2000),
-                        child: SafeArea(
-                          child: SingleChildScrollView(
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const SizedBox(height: 50),
-                                  const Text(
-                                    "Premium users are more likely to make meditation a habit!",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            color: Colors.black12,
-                                            border: Border.all(
-                                              color: const Color.fromARGB(
-                                                  64, 255, 255, 255),
-                                              width: 2,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              children: [
-                                                const Text(
-                                                  "Unlock whole new soundscapes to meditate in!",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                const SizedBox(height: 20),
-                                                CarouselSlider(
-                                                  options: CarouselOptions(
-                                                      autoPlay: true,
-                                                      viewportFraction: 0.5,
-                                                      height: 400.0),
-                                                  items: [
-                                                    "Rain",
-                                                    "Jungle",
-                                                    "Prehistoric Sea",
-                                                  ].map((i) {
-                                                    return Builder(
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return SizedBox(
-                                                            height: 400,
-                                                            child: OverflowBox(
-                                                              maxWidth: 300,
-                                                              maxHeight: 690,
-                                                              child: Transform
-                                                                  .scale(
-                                                                      scale:
-                                                                          0.5,
-                                                                      child:
-                                                                          ClipRRect(
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(20),
-                                                                        child:
-                                                                            SizedBox(
-                                                                          height: MediaQuery.of(context)
-                                                                              .size
-                                                                              .height,
-                                                                          child:
-                                                                              CountdownDemoPage(ambience: i),
-                                                                        ),
-                                                                      )),
-                                                            ));
-                                                      },
-                                                    );
-                                                  }).toList(),
-                                                ),
-                                              ],
-                                            ),
-                                          ))),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black12,
-                                        border: Border.all(
-                                          color: const Color.fromARGB(
-                                              64, 255, 255, 255),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            const Text(
-                                              "Find EXCLUSIVE turtles!",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            const SizedBox(height: 20),
-                                            SizedBox(
-                                                height: 160,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: const [
-                                                    UnlockedTurtle(
-                                                        id: 21, color: 1),
-                                                    UnlockedTurtle(
-                                                        id: 22, color: 4),
-                                                  ],
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Padding(
+                        child: SingleChildScrollView(
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 100),
+                                const Text(
+                                  "Premium users are more likely to make meditation a habit!",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 20),
+                                Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                         width:
@@ -224,52 +116,162 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                           borderRadius:
                                               BorderRadius.circular(20),
                                         ),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text(
-                                            "Just \$4 USD a month! Cancel anytime!",
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              const Text(
+                                                "Unlock whole new soundscapes to meditate in!",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              const SizedBox(height: 20),
+                                              CarouselSlider(
+                                                options: CarouselOptions(
+                                                    autoPlay: true,
+                                                    viewportFraction: 0.5,
+                                                    height: 400.0),
+                                                items: [
+                                                  "Rain",
+                                                  "Jungle",
+                                                  "Prehistoric Sea",
+                                                ].map((i) {
+                                                  return Builder(
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return SizedBox(
+                                                          height: 400,
+                                                          child: OverflowBox(
+                                                            maxWidth: 300,
+                                                            maxHeight: 690,
+                                                            child:
+                                                                Transform.scale(
+                                                                    scale: 0.5,
+                                                                    child:
+                                                                        ClipRRect(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                      child:
+                                                                          SizedBox(
+                                                                        height: MediaQuery.of(context)
+                                                                            .size
+                                                                            .height,
+                                                                        child: CountdownDemoPage(
+                                                                            ambience:
+                                                                                i),
+                                                                      ),
+                                                                    )),
+                                                          ));
+                                                    },
+                                                  );
+                                                }).toList(),
+                                              ),
+                                            ],
+                                          ),
+                                        ))),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black12,
+                                      border: Border.all(
+                                        color: const Color.fromARGB(
+                                            64, 255, 255, 255),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          const Text(
+                                            "Find EXCLUSIVE turtles!",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
                                             textAlign: TextAlign.center,
                                           ),
-                                        )),
+                                          const SizedBox(height: 20),
+                                          SizedBox(
+                                              height: 160,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: const [
+                                                  UnlockedTurtle(
+                                                      id: 21, color: 1),
+                                                  UnlockedTurtle(
+                                                      id: 22, color: 4),
+                                                ],
+                                              )),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  const SizedBox(height: 20),
-                                  const Text(
-                                    "A message from me, the developer 💌 ",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.black12,
-                                          border: Border.all(
-                                            color: const Color.fromARGB(
-                                                64, 255, 255, 255),
-                                            width: 2,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                ),
+                                const SizedBox(height: 20),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        border: Border.all(
+                                          color: const Color.fromARGB(
+                                              64, 255, 255, 255),
+                                          width: 2,
                                         ),
-                                        child: const Padding(
-                                          padding: EdgeInsets.all(8.0),
-                                          child: Text(
-                                            "I'm one person developing this entire app. \n\n I think gamified meditation has the potential to bring peace and balance to so many people who might not otherwise get into meditation. \n\n That's why I made Shellevate! This app has helped me get through my own dark times. I hope it can be there for you as well.\n\n  I believe in Shellevate and I hope you do too. If you love this app, I'm counting on your support to keep it going! ❤️",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        )),
-                                  ),
-                                  const SizedBox(height: 20),
-                                ],
-                              ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Just \$4 USD a month! Cancel anytime!",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )),
+                                ),
+                                const SizedBox(height: 20),
+                                const Text(
+                                  "A message from me, the developer 💌 ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                  textAlign: TextAlign.center,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        border: Border.all(
+                                          color: const Color.fromARGB(
+                                              64, 255, 255, 255),
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "I'm one person developing this entire app. \n\n I think gamified meditation has the potential to bring peace and balance to so many people who might not otherwise get into meditation. \n\n That's why I made Shellevate! This app has helped me get through my own dark times. I hope it can be there for you as well.\n\n  I believe in Shellevate and I hope you do too. If you love this app, I'm counting on your support to keep it going! ❤️",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )),
+                                ),
+                                const SizedBox(height: 20),
+                              ],
                             ),
                           ),
                         ),
@@ -279,41 +281,66 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                       thickness: 4,
                       height: 2,
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ElevatedButton(
-                      // color is teal
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.tealAccent,
+                    Container(
+                      color: Colors.black12,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.lightBlue,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(1000)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: ElevatedButton(
+                                // add a border
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.lightBlue,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20))),
+                                onPressed: () {
+                                  subscriptionController
+                                      .buySubscription(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                      subscriptionController
+                                                  .getPremiumTapped.value ==
+                                              true
+                                          ? "Loading..."
+                                          : "Get Premium",
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          GestureDetector(
+                              onTap: () => {Get.offAll(const AppPages())},
+                              child: const Text("No Thanks",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14))),
+                          const SizedBox(
+                            height: 50,
+                          )
+                        ],
                       ),
-                      onPressed: () {
-                        subscriptionController.buySubscription(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            subscriptionController.getPremiumTapped.value ==
-                                    true
-                                ? "Loading..."
-                                : "Get Premium",
-                            style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
-                      ),
                     ),
-                    const SizedBox(height: 20),
-                    GestureDetector(
-                        onTap: () => {Get.offAll(const AppPages())},
-                        child: const Text("No Thanks",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14))),
-                    const SizedBox(
-                      height: 50,
-                    )
                   ],
                 )
               ]))),
