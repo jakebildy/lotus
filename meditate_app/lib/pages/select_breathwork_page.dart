@@ -76,15 +76,17 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                   duration: const Duration(milliseconds: 110),
                   onPressed: () {
                     HapticFeedback.mediumImpact();
-                    save.updateBreathworkSelected(true);
-                    save.updateSelectedBreathwork(BREATHWORKS[index].name);
 
-                    //  Get.to(const GetSubscriptionPage());
-
-                    Get.to(
-                      const SelectAmbiencePage(),
-                      transition: Transition.topLevel,
-                    );
+                    if (save.isSubscribedToPremium.value) {
+                      save.updateBreathworkSelected(true);
+                      save.updateSelectedBreathwork(BREATHWORKS[index].name);
+                      Get.to(
+                        const SelectAmbiencePage(),
+                        transition: Transition.topLevel,
+                      );
+                    } else {
+                      Get.to(const GetSubscriptionPage());
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
