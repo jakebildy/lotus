@@ -13,6 +13,8 @@ class SaveController extends GetxController {
   RxBool hasReviewed = false.obs;
   RxBool requestNotifications = false.obs;
   RxString selectedAmbience = "Water Sounds".obs;
+  RxString selectedBreathwork = "Box Breathing".obs;
+  RxBool breathworkSelected = false.obs;
   RxBool isSubscribedToPremium = false.obs;
   RxInt topPercentage = (-1).obs;
 
@@ -60,6 +62,16 @@ class SaveController extends GetxController {
   void updateTopPercentage(int newVal) {
     topPercentage.value = newVal;
     saveValue("top_percentage", topPercentage.value.toString());
+    update();
+  }
+
+  void updateBreathworkSelected(bool newVal) {
+    breathworkSelected.value = newVal;
+    update();
+  }
+
+  void updateSelectedBreathwork(String newVal) {
+    selectedBreathwork.value = newVal;
     update();
   }
 

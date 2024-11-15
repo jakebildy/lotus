@@ -7,7 +7,7 @@ import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/pages/countdown_page.dart';
+import 'package:meditate_app/pages/countdown/countdown_page.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:meditate_app/pages/select_breathwork_page.dart';
@@ -213,6 +213,8 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                   ),
                                   onTap: () {
                                     Navigator.of(context).pop();
+                                    SaveController save = Get.find();
+                                    save.updateBreathworkSelected(false);
                                     Get.to(const SelectAmbiencePage(),
                                         transition: Transition.downToUp);
                                   },
@@ -276,12 +278,19 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
-                                  Icons.self_improvement,
-                                  size: 30,
-                                ),
+                                saveController.breathworkSelected.value
+                                    ? Icon(
+                                        Icons.air,
+                                        size: 30,
+                                      )
+                                    : Icon(
+                                        Icons.self_improvement,
+                                        size: 30,
+                                      ),
                                 Text(
-                                  "Freestyle Meditation",
+                                  saveController.breathworkSelected.value
+                                      ? saveController.selectedBreathwork.value
+                                      : "Freestyle Meditation",
                                   style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.white,

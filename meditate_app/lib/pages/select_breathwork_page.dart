@@ -73,13 +73,17 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                   duration: const Duration(milliseconds: 110),
                   onPressed: () {
                     HapticFeedback.mediumImpact();
+                    save.updateBreathworkSelected(true);
+                    save.updateSelectedBreathwork(BREATHWORKS[index].name);
 
-                    Get.to(const GetSubscriptionPage());
+                    //  Get.to(const GetSubscriptionPage());
+
+                    Get.offAll(const AppPages(),
+                        transition: Transition.topLevel);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      color: Colors.black,
                       child: Card(
                           child: ClipRRect(
                         borderRadius: BorderRadius.circular(4),
@@ -173,6 +177,9 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                           ],
                         )),
                       )),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: Colors.black),
                     ),
                   ),
                 ),
