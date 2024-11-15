@@ -56,7 +56,7 @@ class _BreathworkTimerState extends State<BreathworkTimer> {
 
             title = widget.breathwork.instructions[stepIndex];
             count = "1";
-            breathIndex = 1;
+            breathIndex = 0;
           });
 
           while (breathIndex < widget.breathwork.inOutTimes[stepIndex]) {

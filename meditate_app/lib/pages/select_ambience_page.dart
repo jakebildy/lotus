@@ -42,7 +42,11 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
 
     return Obx(
       () => Scaffold(
+        // backgroundColor: const Color.fromARGB(255, 47, 111, 129),
         appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          // backgroundColor: const Color.fromARGB(255, 47, 111, 129),
+          elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.keyboard_arrow_down),
             onPressed: () {
@@ -96,91 +100,117 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                       }
                     }
                   },
-                  child: Card(
-                      child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: (Column(
-                      children: [
-                        AspectRatio(
-                            aspectRatio: 1.5,
-                            child: Image.asset(
-                              AMBIENCES[index].image,
-                              fit: BoxFit.fitWidth,
-                            )),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Card(
+                        color: Colors.transparent,
+                        // color: Color.fromARGB(255, 7, 7, 7),
+                        elevation:
+                            save.selectedAmbience.value == AMBIENCES[index].name
+                                ? 0
+                                : 10,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Container(
+                            color: const Color.fromARGB(255, 84, 84, 84),
+                            child: (Column(
                               children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 8, 0, 4),
-                                  child: Text(
-                                    AMBIENCES[index].name,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: save.selectedAmbience.value ==
-                                                AMBIENCES[index].name
-                                            ? Colors.tealAccent
-                                            : Colors.white),
-                                  ),
+                                AspectRatio(
+                                    aspectRatio: 1.5,
+                                    child: AMBIENCES[index].name == "No Sound"
+                                        ? Container(
+                                            child: Icon(
+                                              Icons.music_off,
+                                              size: 60,
+                                              color: Colors.white54,
+                                            ),
+                                          )
+                                        : Image.asset(
+                                            AMBIENCES[index].image,
+                                            fit: BoxFit.fitWidth,
+                                          )),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 8, 0, 4),
+                                          child: Text(
+                                            AMBIENCES[index].name,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: save.selectedAmbience
+                                                            .value ==
+                                                        AMBIENCES[index].name
+                                                    ? Colors.tealAccent
+                                                    : Colors.white),
+                                          ),
+                                        ),
+                                        AMBIENCES[index].premium
+                                            ? const SizedBox(
+                                                width: 80,
+                                                child: PremiumContainer())
+                                            : const SizedBox(
+                                                width: 80,
+                                                height: 30,
+                                              )
+                                      ],
+                                    ),
+                                    AMBIENCES[index].name == "Random" ||
+                                            AMBIENCES[index].name == "No Sound"
+                                        ? Container(
+                                            width: 30,
+                                          )
+                                        : IconButton(
+                                            onPressed: () {
+                                              // If currently playing this sound
+                                              if (currentAudioSource == index) {
+                                                // stop the audio
+
+                                                audioPlayer.stop();
+                                                setState(() {
+                                                  currentAudioSource = -1;
+                                                });
+                                              } else {
+                                                audioPlayer.stop();
+
+                                                // play the audio for 10 seconds
+                                                audioPlayer.setVolume(5);
+
+                                                if (AMBIENCES[index]
+                                                    .audio
+                                                    .startsWith("https")) {
+                                                  audioPlayer.play(UrlSource(
+                                                      AMBIENCES[index].audio));
+                                                } else {
+                                                  audioPlayer.play(
+                                                    AssetSource(AMBIENCES[index]
+                                                        .audio
+                                                        .replaceAll(
+                                                            "assets/", "")),
+                                                  );
+                                                }
+                                                setState(() {
+                                                  currentAudioSource = index;
+                                                });
+                                              }
+                                            },
+                                            icon: Icon(
+                                                currentAudioSource == index
+                                                    ? Icons.pause
+                                                    : Icons.play_arrow))
+                                  ],
                                 ),
-                                AMBIENCES[index].premium
-                                    ? const SizedBox(
-                                        width: 80, child: PremiumContainer())
-                                    : const SizedBox(
-                                        width: 80,
-                                        height: 30,
-                                      )
                               ],
-                            ),
-                            AMBIENCES[index].name == "Random" ||
-                                    AMBIENCES[index].name == "None"
-                                ? Container(
-                                    width: 30,
-                                  )
-                                : IconButton(
-                                    onPressed: () {
-                                      // If currently playing this sound
-                                      if (currentAudioSource == index) {
-                                        // stop the audio
-
-                                        audioPlayer.stop();
-                                        setState(() {
-                                          currentAudioSource = -1;
-                                        });
-                                      } else {
-                                        audioPlayer.stop();
-
-                                        // play the audio for 10 seconds
-                                        audioPlayer.setVolume(5);
-
-                                        if (AMBIENCES[index]
-                                            .audio
-                                            .startsWith("https")) {
-                                          audioPlayer.play(UrlSource(
-                                              AMBIENCES[index].audio));
-                                        } else {
-                                          audioPlayer.play(
-                                            AssetSource(AMBIENCES[index]
-                                                .audio
-                                                .replaceAll("assets/", "")),
-                                          );
-                                        }
-                                        setState(() {
-                                          currentAudioSource = index;
-                                        });
-                                      }
-                                    },
-                                    icon: Icon(currentAudioSource == index
-                                        ? Icons.pause
-                                        : Icons.play_arrow))
-                          ],
-                        ),
-                      ],
-                    )),
-                  )),
+                            )),
+                          ),
+                        )),
+                  ),
                 ),
               );
             })),

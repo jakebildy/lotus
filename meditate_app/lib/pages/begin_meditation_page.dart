@@ -257,6 +257,11 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                     }),
                     child: Column(
                       children: [
+                        MediaQuery.of(context).size.height < 680
+                            ? Container()
+                            : const SizedBox(
+                                height: 30,
+                              ),
                         Container(
                           decoration: BoxDecoration(
                               border: Border.all(
@@ -288,9 +293,12 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                         size: 30,
                                       ),
                                 Text(
-                                  saveController.breathworkSelected.value
-                                      ? saveController.selectedBreathwork.value
-                                      : "Freestyle Meditation",
+                                  (saveController.breathworkSelected.value
+                                          ? saveController
+                                              .selectedBreathwork.value
+                                          : "Meditation") +
+                                      " - " +
+                                      (saveController.selectedAmbience.value),
                                   style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.white,
@@ -302,59 +310,59 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () => {
-                            Get.to(
-                              const SelectAmbiencePage(),
-                              transition: Transition.downToUp,
-                            )
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.white54,
-                                  width: 2,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    spreadRadius: 1,
-                                    blurRadius: 5,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                                color: const Color.fromARGB(0, 48, 48, 48),
-                                borderRadius: BorderRadius.circular(100)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    saveController.selectedAmbience.value !=
-                                            "OFF"
-                                        ? Icons.music_note
-                                        : Icons.music_off,
-                                    size: 30,
-                                  ),
-                                  Text(
-                                    "Soundscape: " +
-                                        saveController.selectedAmbience.value,
-                                    style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const Icon(Icons.arrow_drop_down,
-                                      color: Colors.white)
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () => {
+                        //     Get.to(
+                        //       const SelectAmbiencePage(),
+                        //       transition: Transition.downToUp,
+                        //     )
+                        //   },
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //         border: Border.all(
+                        //           color: Colors.white54,
+                        //           width: 2,
+                        //         ),
+                        //         boxShadow: [
+                        //           BoxShadow(
+                        //             color: Colors.black.withOpacity(0.2),
+                        //             spreadRadius: 1,
+                        //             blurRadius: 5,
+                        //             offset: const Offset(0, 3),
+                        //           ),
+                        //         ],
+                        //         color: const Color.fromARGB(0, 48, 48, 48),
+                        //         borderRadius: BorderRadius.circular(100)),
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.all(8.0),
+                        //       child: Row(
+                        //         mainAxisSize: MainAxisSize.min,
+                        //         children: [
+                        //           Icon(
+                        //             saveController.selectedAmbience.value !=
+                        //                     "OFF"
+                        //                 ? Icons.music_note
+                        //                 : Icons.music_off,
+                        //             size: 30,
+                        //           ),
+                        //           Text(
+                        //             "Soundscape: " +
+                        //                 saveController.selectedAmbience.value,
+                        //             style: const TextStyle(
+                        //                 fontSize: 13,
+                        //                 color: Colors.white,
+                        //                 fontWeight: FontWeight.bold),
+                        //           ),
+                        //           const Icon(Icons.arrow_drop_down,
+                        //               color: Colors.white)
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: _duration == noTime ||
