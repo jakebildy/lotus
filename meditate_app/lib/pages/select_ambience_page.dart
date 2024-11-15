@@ -112,11 +112,12 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
-                            color: const Color.fromARGB(255, 84, 84, 84),
-                            child: (Column(
+                            color: Color.fromARGB(255, 138, 138, 138),
+                            child: (Stack(
+                              alignment: Alignment.bottomCenter,
                               children: [
                                 AspectRatio(
-                                    aspectRatio: 1.5,
+                                    aspectRatio: 1,
                                     child: AMBIENCES[index].name == "No Sound"
                                         ? Container(
                                             child: Icon(
@@ -127,84 +128,96 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                                           )
                                         : Image.asset(
                                             AMBIENCES[index].image,
-                                            fit: BoxFit.fitWidth,
+                                            fit: BoxFit.cover,
                                           )),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 8, 0, 4),
-                                          child: Text(
-                                            AMBIENCES[index].name,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: save.selectedAmbience
-                                                            .value ==
-                                                        AMBIENCES[index].name
-                                                    ? Colors.tealAccent
-                                                    : Colors.white),
+                                Container(
+                                  color: Colors.black54,
+                                  height: 60,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 8, 0, 4),
+                                            child: Text(
+                                              AMBIENCES[index].name,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: save.selectedAmbience
+                                                              .value ==
+                                                          AMBIENCES[index].name
+                                                      ? Colors.tealAccent
+                                                      : Colors.white),
+                                            ),
                                           ),
-                                        ),
-                                        AMBIENCES[index].premium
-                                            ? const SizedBox(
-                                                width: 80,
-                                                child: PremiumContainer())
-                                            : const SizedBox(
-                                                width: 80,
-                                                height: 30,
-                                              )
-                                      ],
-                                    ),
-                                    AMBIENCES[index].name == "Random" ||
-                                            AMBIENCES[index].name == "No Sound"
-                                        ? Container(
-                                            width: 30,
-                                          )
-                                        : IconButton(
-                                            onPressed: () {
-                                              // If currently playing this sound
-                                              if (currentAudioSource == index) {
-                                                // stop the audio
+                                          AMBIENCES[index].premium
+                                              ? const SizedBox(
+                                                  width: 80,
+                                                  child: PremiumContainer())
+                                              : const SizedBox(
+                                                  width: 80,
+                                                  height: 30,
+                                                )
+                                        ],
+                                      ),
+                                      AMBIENCES[index].name == "Random" ||
+                                              AMBIENCES[index].name ==
+                                                  "No Sound"
+                                          ? Container(
+                                              width: 30,
+                                            )
+                                          : IconButton(
+                                              onPressed: () {
+                                                // If currently playing this sound
+                                                if (currentAudioSource ==
+                                                    index) {
+                                                  // stop the audio
 
-                                                audioPlayer.stop();
-                                                setState(() {
-                                                  currentAudioSource = -1;
-                                                });
-                                              } else {
-                                                audioPlayer.stop();
-
-                                                // play the audio for 10 seconds
-                                                audioPlayer.setVolume(5);
-
-                                                if (AMBIENCES[index]
-                                                    .audio
-                                                    .startsWith("https")) {
-                                                  audioPlayer.play(UrlSource(
-                                                      AMBIENCES[index].audio));
+                                                  audioPlayer.stop();
+                                                  setState(() {
+                                                    currentAudioSource = -1;
+                                                  });
                                                 } else {
-                                                  audioPlayer.play(
-                                                    AssetSource(AMBIENCES[index]
-                                                        .audio
-                                                        .replaceAll(
-                                                            "assets/", "")),
-                                                  );
+                                                  audioPlayer.stop();
+
+                                                  // play the audio for 10 seconds
+                                                  audioPlayer.setVolume(5);
+
+                                                  if (AMBIENCES[index]
+                                                      .audio
+                                                      .startsWith("https")) {
+                                                    audioPlayer.play(UrlSource(
+                                                        AMBIENCES[index]
+                                                            .audio));
+                                                  } else {
+                                                    audioPlayer.play(
+                                                      AssetSource(
+                                                          AMBIENCES[index]
+                                                              .audio
+                                                              .replaceAll(
+                                                                  "assets/",
+                                                                  "")),
+                                                    );
+                                                  }
+                                                  setState(() {
+                                                    currentAudioSource = index;
+                                                  });
                                                 }
-                                                setState(() {
-                                                  currentAudioSource = index;
-                                                });
-                                              }
-                                            },
-                                            icon: Icon(
-                                                currentAudioSource == index
-                                                    ? Icons.pause
-                                                    : Icons.play_arrow))
-                                  ],
+                                              },
+                                              icon: Icon(
+                                                  currentAudioSource == index
+                                                      ? Icons.pause
+                                                      : Icons.play_arrow))
+                                    ],
+                                  ),
                                 ),
                               ],
                             )),
