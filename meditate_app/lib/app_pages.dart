@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:meditate_app/components/onboarding/onboarding_progress_bar.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
@@ -163,13 +164,19 @@ class _AppPagesState extends State<AppPages> {
                           ],
                         )),
                   ),
-                  body: _page == 0
-                      ? const BeginMeditationPage()
-                      : _page == 1
-                          ? const ShopPage()
-                          : _page == 2
-                              ? const TurtlesPage()
-                              : const ProfilePage(),
+                  body: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      _page == 0
+                          ? const BeginMeditationPage()
+                          : _page == 1
+                              ? const ShopPage()
+                              : _page == 2
+                                  ? const TurtlesPage()
+                                  : const ProfilePage(),
+                      _page == 0 ? Container() : OnboardingProgressBar(),
+                    ],
+                  ),
                   bottomNavigationBar: BottomNavigationBar(
                       onTap: ((value) => setState(() {
                             _page = value;
