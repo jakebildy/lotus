@@ -56,6 +56,11 @@ class Login extends StatelessWidget {
                       shape: BubbleShape
                           .circle, // circle is the default. No need to explicitly mention if its a circle.
                     )),
+                    Container(
+                      color: Colors.black54,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                    ),
                     ListView(
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
