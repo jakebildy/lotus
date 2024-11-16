@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:foil/foil.dart';
 import 'package:get/get.dart';
@@ -220,6 +221,50 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                   );
                                                 }).toList(),
                                               ),
+                                              Container(
+                                                height: 40,
+                                                child: Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 20,
+                                                    ),
+                                                    Text("Breathwork ",
+                                                        style: TextStyle(
+                                                            fontSize: 16)),
+                                                    AnimatedTextKit(
+                                                      repeatForever: true,
+                                                      pause: const Duration(
+                                                          milliseconds: 0),
+                                                      animatedTexts: [
+                                                        RotateAnimatedText(
+                                                          "for going to bed",
+                                                          textStyle:
+                                                              const TextStyle(
+                                                                  fontSize: 16),
+                                                        ),
+                                                        RotateAnimatedText(
+                                                          "before big events",
+                                                          textStyle:
+                                                              const TextStyle(
+                                                                  fontSize: 16),
+                                                        ),
+                                                        RotateAnimatedText(
+                                                          "when you're overthinking",
+                                                          textStyle:
+                                                              const TextStyle(
+                                                                  fontSize: 16),
+                                                        ),
+                                                        RotateAnimatedText(
+                                                          "when you're stressed",
+                                                          textStyle:
+                                                              const TextStyle(
+                                                                  fontSize: 16),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
                                             ],
                                           ),
                                         ))),
@@ -464,145 +509,155 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                           const SizedBox(
                             height: 30,
                           ),
-                          Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(1000)),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: ElevatedButton(
-                                    // add a border
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.lightBlue,
-                                        elevation: 0,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20))),
-                                    onPressed: () {
-                                      subscriptionController
-                                          .buySubscription(context);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                          subscriptionController
-                                                      .getPremiumTapped.value ==
-                                                  true
-                                              ? "Loading..."
-                                              : "Get Premium",
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Opacity(
-                                opacity: 0.2,
-                                child: Foil(
-                                  child: Container(
-                                    decoration: BoxDecoration(
+                          GestureDetector(
+                            onTap: () => {
+                              subscriptionController.buySubscription(context)
+                            },
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.lightBlue,
+                                      border: Border.all(
                                         color: Colors.white,
-                                        border: Border.all(
+                                        width: 2,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(1000)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: ElevatedButton(
+                                      // add a border
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.lightBlue,
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20))),
+                                      onPressed: () {},
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                            subscriptionController
+                                                        .getPremiumTapped
+                                                        .value ==
+                                                    true
+                                                ? "Loading..."
+                                                : "Get Premium",
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Opacity(
+                                  opacity: 0.2,
+                                  child: Foil(
+                                    child: Container(
+                                      decoration: BoxDecoration(
                                           color: Colors.white,
-                                          width: 2,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(1000)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: ElevatedButton(
-                                        // add a border
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                            elevation: 0,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20))),
-                                        onPressed: () {
-                                          subscriptionController
-                                              .buySubscription(context);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                              subscriptionController
-                                                          .getPremiumTapped
-                                                          .value ==
-                                                      true
-                                                  ? "Loading..."
-                                                  : "Get Premium",
-                                              style: const TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold)),
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(1000)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: ElevatedButton(
+                                          // add a border
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.white,
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20))),
+                                          onPressed: () {},
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                                subscriptionController
+                                                            .getPremiumTapped
+                                                            .value ==
+                                                        true
+                                                    ? "Loading..."
+                                                    : "Get Premium",
+                                                style: const TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Opacity(
-                                opacity: 0.2,
-                                child: Shimmer.fromColors(
-                                  baseColor: Colors.white10,
-                                  highlightColor: Colors.white30,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.lightBlue,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(1000)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: ElevatedButton(
-                                        // add a border
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.lightBlue,
-                                            elevation: 0,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20))),
-                                        onPressed: () {
-                                          subscriptionController
-                                              .buySubscription(context);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                              subscriptionController
-                                                          .getPremiumTapped
-                                                          .value ==
-                                                      true
-                                                  ? "Loading..."
-                                                  : "Get Premium",
-                                              style: const TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold)),
+                                Opacity(
+                                  opacity: 0.2,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.white10,
+                                    highlightColor: Colors.white30,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.lightBlue,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(1000)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: ElevatedButton(
+                                          // add a border
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.lightBlue,
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20))),
+                                          onPressed: () {
+                                            subscriptionController
+                                                .buySubscription(context);
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                                subscriptionController
+                                                            .getPremiumTapped
+                                                            .value ==
+                                                        true
+                                                    ? "Loading..."
+                                                    : "Get Premium",
+                                                style: const TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Text("Get Premium",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20)),
-                            ],
+                                Text(
+                                    subscriptionController
+                                                .getPremiumTapped.value ==
+                                            true
+                                        ? "Loading..."
+                                        : "Get Premium",
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)),
+                              ],
+                            ),
                           ),
                           const SizedBox(height: 20),
                           GestureDetector(

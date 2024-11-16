@@ -330,6 +330,7 @@ class _CountdownDemoPageState extends State<CountdownDemoPage>
                                                     breathwork: BREATHWORKS[0],
                                                     totalSeconds: 300,
                                                     paused: false,
+                                                    vibrate: false,
                                                   )
                                                 : const CountdownTimer(
                                                     totalSeconds: 300),

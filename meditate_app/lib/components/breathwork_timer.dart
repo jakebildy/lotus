@@ -10,10 +10,12 @@ class BreathworkTimer extends StatefulWidget {
   final int totalSeconds;
   final Breathwork breathwork;
   final bool paused;
+  final bool vibrate;
 
   const BreathworkTimer({
     Key? key,
     this.totalSeconds = 20,
+    this.vibrate = true,
     required this.paused,
     required this.breathwork,
   }) : super(key: key);
@@ -42,7 +44,9 @@ class _BreathworkTimerState extends State<BreathworkTimer> {
     while (isOnPage) {
       if (isOnPage) {
         while (stepIndex < widget.breathwork.inOutTimes.length) {
-          HapticFeedback.lightImpact();
+          if (widget.vibrate) {
+            HapticFeedback.lightImpact();
+          }
 
           setState(() {
             if (widget.breathwork.instructions[stepIndex] == "Breathe in") {

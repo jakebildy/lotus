@@ -55,6 +55,11 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
           title: Column(
             children: const [
               Text("Choose Breathwork"),
+              Text(
+                "Don't push yourself beyond your limits",
+                style: TextStyle(fontSize: 12, color: Colors.white38),
+              ),
+
               // network.offline.value
               //     ? const Text(
               //         "Premium ambiences are not available offline",
@@ -77,7 +82,8 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                   onPressed: () {
                     HapticFeedback.mediumImpact();
 
-                    if (save.isSubscribedToPremium.value) {
+                    //TODO: undo
+                    if (!save.isSubscribedToPremium.value) {
                       save.updateBreathworkSelected(true);
                       save.updateSelectedBreathwork(BREATHWORKS[index].name);
                       Get.to(
