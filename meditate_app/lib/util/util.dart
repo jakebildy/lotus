@@ -321,3 +321,23 @@ double calculateRemainingLevelPercentage(int levelPoints) {
 
   return 1.0; // Fully completed level percentage
 }
+
+//For the streak chart
+// get the highest value of the week. first slice the map to the last 7 days
+int getMaxValueForStreakChart(Map<DateTime, int> map) {
+  int highest = 0;
+  map.forEach((key, value) {
+    if (key.isAfter(DateTime.now().subtract(const Duration(days: 7)))) {
+      if (value > highest) {
+        highest = value;
+      }
+    }
+  });
+
+  // Adjust highest value based on the requirements
+  highest += 15;
+
+  //  round highest to the nearest 10
+  highest = (highest / 10).ceil() * 10;
+  return highest;
+}
