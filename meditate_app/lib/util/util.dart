@@ -178,10 +178,12 @@ bool isSameDay(DateTime date1, DateTime date2) {
 
 int getUserStreak(User user) {
   DateTime now = DateTime.now();
-  // TODAY in the local time zone
-  DateTime today = DateTime(now.year, now.month, now.day);
-  DateTime lastMeditatedAdjusted = DateTime(user.lastMeditated.year,
+  // TODAY in the local time zone (now moved to utc (as of nov 17 - jacob))
+  DateTime today = DateTime.utc(now.year, now.month, now.day);
+  DateTime lastMeditatedAdjusted = DateTime.utc(user.lastMeditated.year,
       user.lastMeditated.month, user.lastMeditated.day);
+  print("today: ${user.username} $today");
+  print("lastMeditatedAdjusted: ${user.username} $lastMeditatedAdjusted");
   if (user.streakFreezes == 0) {
     if (lastMeditatedAdjusted
             .isAfter(today.subtract(const Duration(days: 1))) ||
@@ -201,6 +203,13 @@ int getUserStreak(User user) {
             .isAfter(today.subtract(const Duration(days: 3))) ||
         lastMeditatedAdjusted
             .isAtSameMomentAs(today.subtract(const Duration(days: 3)))) {
+      return user.streak;
+    }
+  } else if (user.streakFreezes == 3) {
+    if (lastMeditatedAdjusted
+            .isAfter(today.subtract(const Duration(days: 4))) ||
+        lastMeditatedAdjusted
+            .isAtSameMomentAs(today.subtract(const Duration(days: 4)))) {
       return user.streak;
     }
   }
