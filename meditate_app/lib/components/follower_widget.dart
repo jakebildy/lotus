@@ -4,7 +4,7 @@ import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/user_profile/user_profile_page.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/util.dart';
 
 class FollowerWidget extends StatelessWidget {
@@ -158,7 +158,7 @@ class FollowerWidget extends StatelessWidget {
                                       onPressed: () {
                                         follow.followStylist(user);
                                         //Log the event to AppsFlyer
-                                        HeapService appsflyer = Get.find();
+                                        PostHogService appsflyer = Get.find();
                                         appsflyer.logEvent("FOLLOW", {});
                                       },
                                       child: const Text("Follow",

@@ -7,7 +7,7 @@ import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'dart:math' as math;
@@ -277,7 +277,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                     GestureDetector(
                         onTap: () {
                           //Log the event to AppsFlyer
-                          HeapService appsflyer = Get.find();
+                          PostHogService appsflyer = Get.find();
                           appsflyer.logEvent("GAME_STARTED", {});
                           gameController.startGame(
                               widget.id, widget.color, context);
@@ -413,7 +413,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                             ),
                             onPressed: () {
                               //Log the event to AppsFlyer
-                              HeapService appsflyer = Get.find();
+                              PostHogService appsflyer = Get.find();
                               appsflyer.logEvent("GAME_STARTED", {});
                               gameController.startGame(
                                   widget.id, widget.color, context);

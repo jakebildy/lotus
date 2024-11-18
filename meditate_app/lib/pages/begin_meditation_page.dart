@@ -12,7 +12,7 @@ import 'package:meditate_app/pages/countdown/countdown_page.dart';
 import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:meditate_app/pages/select_breathwork_page.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:overlay_tooltip/overlay_tooltip.dart';
 
 import '../components/duration_picker.dart';
@@ -492,8 +492,9 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                                 HapticFeedback.heavyImpact();
 
                                                 //Log the event to AppsFlyer
-                                                HeapService heap = Get.find();
-                                                heap.logEvent(
+                                                PostHogService posthog =
+                                                    Get.find();
+                                                posthog.logEvent(
                                                     "MEDITATION_TAPPED", {
                                                   "time": _duration.inMinutes
                                                       .toString()

@@ -6,7 +6,7 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/version.dart';
 
@@ -45,7 +45,7 @@ class SignupController extends GetxController {
       userController.setUser(user);
 
       //Log the event to AppsFlyer
-      HeapService appsflyer = Get.find();
+      PostHogService appsflyer = Get.find();
       appsflyer.logEvent("SIGNUP", {"version": APP_VERSION});
 
       Get.offAll(const AppPages());

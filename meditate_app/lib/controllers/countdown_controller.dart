@@ -8,7 +8,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/ambiences.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -385,8 +385,8 @@ class CountdownController extends GetxController {
       await eggController.addEgg(tColor, tHatch);
     }
     //Log the event to AppsFlyer
-    HeapService heap = Get.find();
-    heap.logEvent("MEDITATION_COMPLETE", {"time": timeInMinutes.toString()});
+    PostHogService posthog = Get.find();
+    posthog.logEvent("MEDITATION_COMPLETE", {"time": timeInMinutes.toString()});
 
     try {
       bonusTimer.cancel();
@@ -396,6 +396,7 @@ class CountdownController extends GetxController {
 
     loading.value = false;
     bonusTime.value = 0;
+    addExtraTime.value = false;
     update();
 
     Get.offAll(StreakCountPage(

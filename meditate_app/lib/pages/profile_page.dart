@@ -14,7 +14,7 @@ import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
@@ -733,8 +733,8 @@ class _ProfilePageState extends State<ProfilePage>
                           GestureDetector(
                             onTap: () {
                               //Log the event to AppsFlyer
-                              HeapService heap = Get.find();
-                              heap.logEvent("ADD_FRIENDS_TAPPED", {});
+                              PostHogService posthog = Get.find();
+                              posthog.logEvent("ADD_FRIENDS_TAPPED", {});
 
                               Get.to(const Search());
                             },

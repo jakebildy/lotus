@@ -14,9 +14,10 @@ import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/shellevate.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/services/push_notification_service.dart';
 import 'package:meditate_app/util/logger.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 
 Future<void> main() async {
   try {
@@ -35,7 +36,7 @@ Future<void> main() async {
   Get.put(NetworkStatusController());
   Get.put(UserController());
   Get.put(AuthController());
-  Get.put(HeapService());
+  Get.put(PostHogService());
   Get.put(GameController());
   Get.put(EggController());
   Get.put(CountdownController());
@@ -94,6 +95,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorObservers: [
+        // The PosthogObserver records screen views automatically
+        PosthogObserver(),
+      ],
       debugShowCheckedModeBanner: false,
       title: 'Meditate',
       darkTheme: ThemeData.dark(),
