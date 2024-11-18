@@ -69,7 +69,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
         },
         preferredOverlay: GestureDetector(
           onTap: () {
-            _tooltipController.dismiss();
+            _tooltipController.next();
             //move the overlay forward or backwards, or dismiss the overlay
           },
           child: Container(

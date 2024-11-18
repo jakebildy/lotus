@@ -415,7 +415,7 @@ class _ProfilePageState extends State<ProfilePage>
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                      height: 530,
+                      height: 370,
                       decoration: BoxDecoration(
                         color: Colors.black12,
                         border: Border.all(
@@ -490,116 +490,170 @@ class _ProfilePageState extends State<ProfilePage>
                               const SizedBox(
                                 height: 5,
                               ),
-                              const Text(
-                                "The color of your streak flame shows your average meditation length for the last week.\n\nReach Rainbow to find Rainbow Turtles.\n",
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                      height: 15,
-                                      child: Image.asset(
-                                          "assets/streak_icon.png")),
-                                  const SizedBox(
-                                    width: 3,
+                              OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    side: const BorderSide(
+                                        width: 1.0, color: Colors.white24),
+                                    shape: const StadiumBorder(),
                                   ),
-                                  const Text(
-                                    "Beginner Flame",
-                                    style: TextStyle(
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const Text(": 0-10 Minutes/Day",
-                                      style: TextStyle(color: Colors.grey)),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                        height: 15,
-                                        child: Image.asset(
-                                            "assets/streak_icon_yellow.png")),
-                                    const SizedBox(
-                                      width: 3,
-                                    ),
-                                    const Text("Yellow Flame",
-                                        style: TextStyle(
-                                            color: Colors.yellow,
-                                            fontWeight: FontWeight.bold)),
-                                    const Text(": 10-20 Minutes/Day",
-                                        style: TextStyle(color: Colors.grey)),
-                                  ]),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                        height: 15,
-                                        child: Image.asset(
-                                            "assets/streak_icon_blue.png")),
-                                    const SizedBox(
-                                      width: 3,
-                                    ),
-                                    const Text("Blue Flame",
-                                        style: TextStyle(
-                                            color: Colors.lightBlueAccent,
-                                            fontWeight: FontWeight.bold)),
-                                    const Text(": 20-40 Minutes/Day",
-                                        style: TextStyle(color: Colors.grey)),
-                                  ]),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                        height: 15,
-                                        child: Image.asset(
-                                            "assets/streak_icon_rainbow.png")),
-                                    const SizedBox(
-                                      width: 3,
-                                    ),
-                                    ShaderMask(
-                                      shaderCallback: (Rect bounds) {
-                                        return const LinearGradient(
-                                          colors: <Color>[
-                                            Colors.red,
-                                            Colors.redAccent,
-                                            Colors.orange,
-                                            Colors.yellow,
-                                            Colors.green,
-                                            Colors.blue,
-                                            Colors.indigo,
-                                            Colors.purple,
-                                          ],
-                                          tileMode: TileMode.mirror,
-                                        ).createShader(bounds);
-                                      },
-                                      child: const Text(
-                                        "Rainbow Flame",
-                                        style: TextStyle(
-                                          color: Colors
-                                              .white, // Set the base color for text
-                                          fontWeight: FontWeight.bold,
-                                          fontSize:
-                                              14, // Optional: adjust the font size
-                                        ),
-                                      ),
-                                    ),
-                                    const Text(": 40+ Minutes/Day",
-                                        style: TextStyle(color: Colors.grey)),
-                                  ])
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                              content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Text(
+                                                "The color of your streak flame shows how much you've been meditating for the last week.\n\nReach Rainbow to find Rainbow Turtles.\n",
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                      height: 15,
+                                                      child: Image.asset(
+                                                          "assets/streak_icon.png")),
+                                                  const SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                  const Text(
+                                                    "Beginner Flame",
+                                                    style: TextStyle(
+                                                        color: Colors.green,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  const Text(
+                                                      ": 0-10 Minutes/Day",
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.grey)),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                        height: 15,
+                                                        child: Image.asset(
+                                                            "assets/streak_icon_yellow.png")),
+                                                    const SizedBox(
+                                                      width: 3,
+                                                    ),
+                                                    const Text("Yellow Flame",
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.yellow,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                    const Text(
+                                                        ": 10-20 Minutes/Day",
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.grey)),
+                                                  ]),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                        height: 15,
+                                                        child: Image.asset(
+                                                            "assets/streak_icon_blue.png")),
+                                                    const SizedBox(
+                                                      width: 3,
+                                                    ),
+                                                    const Text("Blue Flame",
+                                                        style: TextStyle(
+                                                            color: Colors
+                                                                .lightBlueAccent,
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                    const Text(
+                                                        ": 20-40 Minutes/Day",
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.grey)),
+                                                  ]),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    SizedBox(
+                                                        height: 15,
+                                                        child: Image.asset(
+                                                            "assets/streak_icon_rainbow.png")),
+                                                    const SizedBox(
+                                                      width: 3,
+                                                    ),
+                                                    ShaderMask(
+                                                      shaderCallback:
+                                                          (Rect bounds) {
+                                                        return const LinearGradient(
+                                                          colors: <Color>[
+                                                            Colors.red,
+                                                            Colors.redAccent,
+                                                            Colors.orange,
+                                                            Colors.yellow,
+                                                            Colors.green,
+                                                            Colors.blue,
+                                                            Colors.indigo,
+                                                            Colors.purple,
+                                                          ],
+                                                          tileMode:
+                                                              TileMode.mirror,
+                                                        ).createShader(bounds);
+                                                      },
+                                                      child: const Text(
+                                                        "Rainbow Flame",
+                                                        style: TextStyle(
+                                                          color: Colors
+                                                              .white, // Set the base color for text
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize:
+                                                              14, // Optional: adjust the font size
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const Text(
+                                                        ": 40+ Minutes/Day",
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color:
+                                                                Colors.grey)),
+                                                  ])
+                                            ],
+                                          ));
+                                        });
+                                  },
+                                  child: const Text(
+                                    "Learn More",
+                                    style: TextStyle(color: Colors.grey),
+                                  )),
                             ],
                           ),
                         ],

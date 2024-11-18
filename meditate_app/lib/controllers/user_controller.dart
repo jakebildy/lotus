@@ -852,6 +852,7 @@ class UserController extends GetxController {
 
         //Use a streak freeze if possible
         if (user.value.streakFreezes > 0) {
+          // if (user.value.streakFreezes > numDays - 1) {
           DateTime now = DateTime.now();
           DateTime today = DateTime.utc(now.year, now.month, now.day);
           DateTime yesterday = today.subtract(const Duration(days: 1));
