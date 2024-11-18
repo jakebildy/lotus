@@ -5,8 +5,13 @@ import 'package:flutter/src/widgets/placeholder.dart';
 class ChecklistItem extends StatelessWidget {
   final String text;
   final bool checked;
+  final Function()? action;
 
-  const ChecklistItem({super.key, required this.text, required this.checked});
+  const ChecklistItem(
+      {super.key,
+      required this.text,
+      required this.checked,
+      required this.action});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +26,15 @@ class ChecklistItem extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(text,
                 style: TextStyle(
+                    fontWeight: FontWeight.w500,
                     color: checked ? Colors.lightBlue : Colors.white)),
           ),
+          action != null
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_forward_outlined, size: 20),
+                  onPressed: action,
+                )
+              : Container(),
         ],
       ),
     );

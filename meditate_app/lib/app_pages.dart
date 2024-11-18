@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:meditate_app/components/onboarding/onboarding_progress_bar.dart';
+import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
@@ -21,12 +22,11 @@ class AppPages extends StatefulWidget {
 }
 
 class _AppPagesState extends State<AppPages> {
-  int _page = 0;
-
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find();
     NetworkStatusController network = Get.find();
+    AppPagesController appPages = Get.find();
 
     return Obx(
       () => Stack(
@@ -40,8 +40,9 @@ class _AppPagesState extends State<AppPages> {
                         Size.fromHeight(network.offline.value ? 66 : 56),
                     child: AppBar(
                         elevation: 0,
-                        backgroundColor:
-                            _page == 0 ? Colors.transparent : Colors.grey[850],
+                        backgroundColor: appPages.page.value == 0
+                            ? Colors.transparent
+                            : Colors.grey[850],
                         centerTitle: true,
                         title: Column(
                           children: [
@@ -108,7 +109,9 @@ class _AppPagesState extends State<AppPages> {
                                                                       .streak >
                                                                   0
                                                           ? Colors.red
-                                                          : _page == 0
+                                                          : appPages.page
+                                                                      .value ==
+                                                                  0
                                                               ? Colors.grey
                                                               : Colors.grey
                                                       : Colors.white),
@@ -122,9 +125,7 @@ class _AppPagesState extends State<AppPages> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    setState(() {
-                                      _page = 1;
-                                    });
+                                    appPages.switchPage(1);
                                   },
                                   child: Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -167,27 +168,29 @@ class _AppPagesState extends State<AppPages> {
                   body: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      _page == 0
+                      appPages.page.value == 0
                           ? const BeginMeditationPage()
-                          : _page == 1
+                          : appPages.page.value == 1
                               ? const ShopPage()
-                              : _page == 2
+                              : appPages.page.value == 2
                                   ? const TurtlesPage()
                                   : const ProfilePage(),
-                      _page == 0 ? Container() : OnboardingProgressBar(),
+                      appPages.page.value == 0
+                          ? Container()
+                          : OnboardingProgressBar(),
                     ],
                   ),
                   bottomNavigationBar: BottomNavigationBar(
                       onTap: ((value) => setState(() {
-                            _page = value;
+                            appPages.page.value = value;
                           })),
-                      currentIndex: _page,
+                      currentIndex: appPages.page.value,
                       type: BottomNavigationBarType.fixed,
                       showSelectedLabels: false,
                       showUnselectedLabels: false,
                       items: [
                         BottomNavigationBarItem(
-                            icon: _page == 0
+                            icon: appPages.page.value == 0
                                 ? SizedBox(
                                     height: 35,
                                     child: Image.asset(
@@ -198,7 +201,7 @@ class _AppPagesState extends State<AppPages> {
                                         "assets/meditate_unselected.png")),
                             label: "Home"),
                         BottomNavigationBarItem(
-                            icon: _page == 1
+                            icon: appPages.page.value == 1
                                 ? SizedBox(
                                     height: 30,
                                     child: Image.asset(
@@ -235,7 +238,7 @@ class _AppPagesState extends State<AppPages> {
                                   ),
                             label: "Shop"),
                         BottomNavigationBarItem(
-                            icon: _page == 2
+                            icon: appPages.page.value == 2
                                 ? SizedBox(
                                     height: 35,
                                     child: Image.asset(
@@ -246,7 +249,7 @@ class _AppPagesState extends State<AppPages> {
                                         "assets/turtle_unselected.png")),
                             label: "Turtles"),
                         BottomNavigationBarItem(
-                            icon: _page == 3
+                            icon: appPages.page.value == 3
                                 ? SizedBox(
                                     height: 30,
                                     child: Image.asset(

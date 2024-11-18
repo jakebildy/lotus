@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/cookie_controller.dart';
 import 'package:meditate_app/controllers/countdown_controller.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
     logError(error.toString());
   }
 
+  Get.put(AppPagesController());
   Get.put(PushNotificationService());
 
   Get.put(SaveController());

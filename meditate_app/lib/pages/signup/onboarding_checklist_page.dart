@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:meditate_app/app_pages.dart';
+import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/signup/checklist/checklist_item.dart';
 
 class OnboardingChecklistPage extends StatelessWidget {
@@ -22,6 +22,7 @@ class OnboardingChecklistPage extends StatelessWidget {
   Widget build(BuildContext context) {
     UserController user = Get.find();
     FollowController follow = Get.find();
+    AppPagesController appPages = Get.find();
     return Obx(
       () => Scaffold(
         appBar: AppBar(
@@ -74,27 +75,53 @@ class OnboardingChecklistPage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Column(
               children: [
-                const ChecklistItem(text: "Create an account", checked: true),
+                const ChecklistItem(
+                  text: "Create an account",
+                  checked: true,
+                  action: null,
+                ),
                 const Divider(),
                 ChecklistItem(
                     text: "Meditate for the first time",
-                    checked: user.user.value.totalMinutes > 0),
+                    checked: user.user.value.totalMinutes > 0,
+                    action: () {
+                      appPages.switchPage(0);
+                      Get.offAll(const AppPages());
+                    }),
                 const Divider(),
                 ChecklistItem(
                     text: "Add a profile picture",
                     checked: user.user.value.avatar !=
-                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"),
+                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                    action: () {
+                      appPages.switchPage(3);
+                      Get.offAll(const AppPages());
+                    }),
                 const Divider(),
                 ChecklistItem(
                     text: "Add a friend",
-                    checked: follow.usersFollowing.isNotEmpty),
+                    checked: follow.usersFollowing.isNotEmpty,
+                    action: () {
+                      appPages.switchPage(3);
+                      Get.offAll(const AppPages());
+                    }),
                 const Divider(),
                 ChecklistItem(
                     text: "Protect your streak with streak freezes",
-                    checked: false),
+                    checked: false,
+                    action: () {
+                      appPages.switchPage(1);
+                      Get.offAll(const AppPages());
+                    }),
                 const Divider(),
-                ChecklistItem(text: "Try breathwork", checked: false),
-                Divider(),
+                ChecklistItem(
+                    text: "Try breathwork",
+                    checked: false,
+                    action: () {
+                      appPages.switchPage(0);
+                      Get.offAll(const AppPages());
+                    }),
+                const Divider(),
               ],
             ),
           ),
