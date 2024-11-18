@@ -491,7 +491,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                               onTap: (() {
                                                 HapticFeedback.heavyImpact();
 
-                                                //Log the event to AppsFlyer
+                                                //Log the event to PostHog
                                                 PostHogService posthog =
                                                     Get.find();
                                                 posthog.logEvent(

@@ -146,8 +146,8 @@ class _ShopPageState extends State<ShopPage> {
                       user.reviveStreak();
                     } else {
                       //Log the event to AppsFlyer
-                      PostHogService appsflyer = Get.find();
-                      appsflyer.logEvent(
+                      PostHogService posthog = Get.find();
+                      posthog.logEvent(
                           "STREAK_REVIVE_TAPPED", {"purchased": "false"});
 
                       ScaffoldMessenger.of(context).clearSnackBars();
@@ -304,8 +304,8 @@ class _ShopPageState extends State<ShopPage> {
                 }
               } else {
                 //Log the event to AppsFlyer
-                PostHogService appsflyer = Get.find();
-                appsflyer
+                PostHogService posthog = Get.find();
+                posthog
                     .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "false"});
 
                 ScaffoldMessenger.of(context).clearSnackBars();

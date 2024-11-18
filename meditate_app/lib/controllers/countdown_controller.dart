@@ -384,7 +384,7 @@ class CountdownController extends GetxController {
 
       await eggController.addEgg(tColor, tHatch);
     }
-    //Log the event to AppsFlyer
+    //Log the event to Posthog
     PostHogService posthog = Get.find();
     posthog.logEvent("MEDITATION_COMPLETE", {"time": timeInMinutes.toString()});
 

@@ -157,9 +157,9 @@ class FollowerWidget extends StatelessWidget {
                                       ),
                                       onPressed: () {
                                         follow.followStylist(user);
-                                        //Log the event to AppsFlyer
-                                        PostHogService appsflyer = Get.find();
-                                        appsflyer.logEvent("FOLLOW", {});
+                                        //Log the event to PostHog
+                                        PostHogService posthog = Get.find();
+                                        posthog.logEvent("FOLLOW", {});
                                       },
                                       child: const Text("Follow",
                                           style: TextStyle(

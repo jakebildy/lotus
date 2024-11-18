@@ -45,8 +45,8 @@ class SignupController extends GetxController {
       userController.setUser(user);
 
       //Log the event to AppsFlyer
-      PostHogService appsflyer = Get.find();
-      appsflyer.logEvent("SIGNUP", {"version": APP_VERSION});
+      PostHogService posthog = Get.find();
+      posthog.logEvent("SIGNUP", {"version": APP_VERSION});
 
       Get.offAll(const AppPages());
     } catch (error, trace) {
