@@ -76,13 +76,13 @@ class OnboardingChecklistPage extends StatelessWidget {
             child: Column(
               children: [
                 const ChecklistItem(
-                  text: "Create an account",
+                  text: "Create an account 🎉",
                   checked: true,
                   action: null,
                 ),
                 const Divider(),
                 ChecklistItem(
-                    text: "Meditate for the first time",
+                    text: "Meditate for the first time 🪷",
                     checked: user.user.value.totalMinutes > 0,
                     action: () {
                       appPages.switchPage(0);
@@ -90,7 +90,7 @@ class OnboardingChecklistPage extends StatelessWidget {
                     }),
                 const Divider(),
                 ChecklistItem(
-                    text: "Add a profile picture",
+                    text: "Add a profile picture 📸",
                     checked: user.user.value.avatar !=
                         "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
                     action: () {
@@ -99,15 +99,7 @@ class OnboardingChecklistPage extends StatelessWidget {
                     }),
                 const Divider(),
                 ChecklistItem(
-                    text: "Add a friend",
-                    checked: follow.usersFollowing.isNotEmpty,
-                    action: () {
-                      appPages.switchPage(3);
-                      Get.offAll(const AppPages());
-                    }),
-                const Divider(),
-                ChecklistItem(
-                    text: "Protect your streak with streak freezes",
+                    text: "Get a streak freeze 🔥",
                     checked: false,
                     action: () {
                       appPages.switchPage(1);
@@ -115,7 +107,15 @@ class OnboardingChecklistPage extends StatelessWidget {
                     }),
                 const Divider(),
                 ChecklistItem(
-                    text: "Try breathwork",
+                    text: "Add a friend 👋",
+                    checked: follow.usersFollowing.isNotEmpty,
+                    action: () {
+                      appPages.switchPage(3);
+                      Get.offAll(const AppPages());
+                    }),
+                const Divider(),
+                ChecklistItem(
+                    text: "Try breathwork 🌬️",
                     checked: false,
                     action: () {
                       appPages.switchPage(0);

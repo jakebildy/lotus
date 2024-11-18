@@ -26,9 +26,11 @@ class ChecklistItem extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(text,
                 style: TextStyle(
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
                     color: checked ? Colors.lightBlue : Colors.white)),
           ),
+          Spacer(),
           action != null
               ? IconButton(
                   icon: const Icon(Icons.arrow_forward_outlined, size: 20),
