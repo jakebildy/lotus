@@ -4,13 +4,11 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/signup/checklist/checklist_item.dart';
+import 'package:meditate_app/util/util.dart';
 
 class OnboardingChecklistPage extends StatelessWidget {
   const OnboardingChecklistPage({super.key});
-
-  //TODO: Add ChecklistItem widget (has boolean checked, and text)
 
   //Check add profile picture with userController
   //Check add a friend with followController
@@ -52,7 +50,15 @@ class OnboardingChecklistPage extends StatelessWidget {
                     ),
                     Container(
                       height: 8,
-                      width: (MediaQuery.of(context).size.width - 70) * 0.4,
+                      width: (MediaQuery.of(context).size.width - 70) *
+                          calculateOnboardingPercentage(
+                              user.user.value.totalMinutes > 0,
+                              user.user.value.avatar !=
+                                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                              false,
+                              follow.usersFollowing.isNotEmpty,
+                              false) /
+                          100,
                       decoration: BoxDecoration(
                         color: Colors.lightBlue,
                         borderRadius: BorderRadius.circular(20),
@@ -63,9 +69,19 @@ class OnboardingChecklistPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text("28%", style: TextStyle(color: Colors.lightBlue)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                    calculateOnboardingPercentage(
+                                user.user.value.totalMinutes > 0,
+                                user.user.value.avatar !=
+                                    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                                false,
+                                follow.usersFollowing.isNotEmpty,
+                                false)
+                            .toString() +
+                        "%",
+                    style: const TextStyle(color: Colors.lightBlue)),
               )
             ],
           ),

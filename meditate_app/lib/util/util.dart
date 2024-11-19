@@ -350,3 +350,27 @@ int getMaxValueForStreakChart(Map<DateTime, int> map) {
   highest = (highest / 10).ceil() * 10;
   return highest;
 }
+
+int calculateOnboardingPercentage(bool meditated, bool profilePictureAdded,
+    bool streakFreezeGot, bool addedFriend, bool breathworkTried) {
+  int percentage = 17;
+
+  // plus create an account which is already true
+  if (meditated) {
+    percentage += 16;
+  }
+  if (profilePictureAdded) {
+    percentage += 16;
+  }
+  if (streakFreezeGot) {
+    percentage += 16;
+  }
+  if (addedFriend) {
+    percentage += 16;
+  }
+  if (breathworkTried) {
+    percentage += 16;
+  }
+
+  return percentage;
+}

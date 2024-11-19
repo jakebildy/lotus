@@ -65,11 +65,14 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
         controller: _tooltipController,
         startWhen: (initializedWidgetLength) async {
           await Future.delayed(const Duration(milliseconds: 500));
-          return initializedWidgetLength == 3 && !done;
+          return initializedWidgetLength == 3 &&
+              !done &&
+              !saveController.hasShownOnboardingTooltipsPage1.value;
         },
         preferredOverlay: GestureDetector(
           onTap: () {
             _tooltipController.next();
+            saveController.updateHasShownOnboardingTooltipsPage1();
             //move the overlay forward or backwards, or dismiss the overlay
           },
           child: Container(

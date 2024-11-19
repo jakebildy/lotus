@@ -18,6 +18,8 @@ class SaveController extends GetxController {
   RxBool isSubscribedToPremium = false.obs;
   RxInt topPercentage = (-1).obs;
 
+  RxBool hasShownOnboardingTooltipsPage1 = false.obs;
+
   RxBool loadingSaveController = true.obs;
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
@@ -67,11 +69,20 @@ class SaveController extends GetxController {
 
   void updateBreathworkSelected(bool newVal) {
     breathworkSelected.value = newVal;
+    saveValue("breathwork_selected", breathworkSelected.value.toString());
     update();
   }
 
   void updateSelectedBreathwork(String newVal) {
     selectedBreathwork.value = newVal;
+    saveValue("selected_breathwork", selectedBreathwork.value.toString());
+    update();
+  }
+
+  void updateHasShownOnboardingTooltipsPage1() {
+    hasShownOnboardingTooltipsPage1.value = true;
+    saveValue("has_shown_onboarding_tooltips_page1",
+        hasShownOnboardingTooltipsPage1.value.toString());
     update();
   }
 
@@ -232,6 +243,25 @@ class SaveController extends GetxController {
 
     if (getValue('top_percentage') != "") {
       topPercentage.value = int.parse(getValue('top_percentage'));
+    }
+
+    // Load selected breathwork
+    if (getValue('selected_breathwork') != "") {
+      selectedBreathwork.value = getValue('selected_breathwork');
+    } else {
+      selectedBreathwork.value = "Box Breathing";
+    }
+
+    // Load if breathwork has been selected
+    if (getValue('breathwork_selected') != "") {
+      breathworkSelected.value =
+          getValue('breathwork_selected').toLowerCase() == 'true';
+    }
+
+    if (getValue('has_shown_onboarding_tooltips_page1') != "") {
+      hasShownOnboardingTooltipsPage1.value =
+          getValue('has_shown_onboarding_tooltips_page1').toLowerCase() ==
+              'true';
     }
 
     loadingSaveController.value = false;
