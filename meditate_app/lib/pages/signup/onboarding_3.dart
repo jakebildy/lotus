@@ -9,6 +9,7 @@ import 'package:meditate_app/components/egg_card.dart';
 import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/login/login.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class Onboarding3 extends StatefulWidget {
@@ -107,6 +108,8 @@ class _Onboarding3State extends State<Onboarding3> {
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(color: Colors.white, width: 2)))),
                 onPressed: () {
+                  PostHogService posthog = Get.find();
+                  posthog.logEvent("THIRD_ONBOARDING_CONTINUE_PRESSED", {});
                   controller.page.value = 0;
                   controller.update();
                 },

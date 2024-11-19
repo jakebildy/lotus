@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/login/login.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 
 class Onboarding2 extends StatelessWidget {
   const Onboarding2({super.key});
@@ -50,6 +51,8 @@ class Onboarding2 extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(color: Colors.white, width: 2)))),
                 onPressed: () {
+                  PostHogService posthog = Get.find();
+                  posthog.logEvent("SECOND_ONBOARDING_CONTINUE_PRESSED", {});
                   controller.page.value = -1;
                   controller.update();
                 },
