@@ -7,6 +7,7 @@ import 'package:meditate_app/pages/login/login.dart';
 import 'package:meditate_app/pages/signup/onboarding_1.dart';
 import 'package:meditate_app/pages/signup/onboarding_2.dart';
 import 'package:meditate_app/pages/signup/onboarding_3.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 
 class Signup extends StatefulWidget {
   final bool? noOptions;
@@ -19,6 +20,12 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  // init state
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final SignupController controller = Get.put(SignupController());
@@ -94,7 +101,11 @@ class _SignupState extends State<Signup> {
                                         child: Text(
                                           controller.page.value == 0
                                               ? "What's your name?"
-                                              : "Create your account",
+                                              : "Hi " +
+                                                  controller
+                                                      .usernameText.value +
+                                                  " 👋 \nReady to start?",
+                                          textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               fontSize: 24,
                                               fontWeight: FontWeight.bold),
@@ -311,6 +322,10 @@ class _SignupState extends State<Signup> {
                                                     controller.update();
                                                   });
                                                 } else {
+                                                  PostHogService posthog =
+                                                      Get.find();
+                                                  posthog.logEvent(
+                                                      "SIGNUP_PRESSED", {});
                                                   controller.signup();
                                                 }
                                               },
