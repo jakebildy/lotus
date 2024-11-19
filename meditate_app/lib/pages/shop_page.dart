@@ -288,6 +288,10 @@ class _ShopPageState extends State<ShopPage> {
                       user.user.value.gems - STREAK_FREEZE_PRICE);
                   user.updateProperty(UserProperty.streakFreezes,
                       user.user.value.streakFreezes + 1);
+                  if (user.user.value.hasTriedStreakFreeze == false) {
+                    user.updateProperty(
+                        UserProperty.hasTriedStreakFreeze, true);
+                  }
                 } else {
                   //Log the event to AppsFlyer
                   PostHogService posthog = Get.find();

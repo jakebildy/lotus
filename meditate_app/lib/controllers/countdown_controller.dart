@@ -399,6 +399,12 @@ class CountdownController extends GetxController {
     addExtraTime.value = false;
     update();
 
+    if (save.breathworkSelected.value == true) {
+      if (userController.user.value.hasTriedBreathwork == false) {
+        userController.updateProperty(UserProperty.hasTriedBreathwork, true);
+      }
+    }
+
     Get.offAll(StreakCountPage(
       gemsAmount: gemsToGive,
       alreadyMeditatedToday: alreadyMeditatedToday,

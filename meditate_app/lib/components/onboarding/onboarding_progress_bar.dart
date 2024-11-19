@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/follow_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/signup/onboarding_checklist_page.dart';
+import 'package:meditate_app/util/util.dart';
 
 class OnboardingProgressBar extends StatelessWidget {
   const OnboardingProgressBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    UserController user = Get.find();
+    FollowController follow = Get.find();
+
     return GestureDetector(
       onTap: () => {
         Get.to(OnboardingChecklistPage()),
@@ -40,7 +44,16 @@ class OnboardingProgressBar extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("28%"),
+                        child: Text((calculateOnboardingPercentage(
+                                    user.user.value.totalMinutes > 0,
+                                    user.user.value.avatar !=
+                                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                                    user.user.value.hasTriedStreakFreeze ||
+                                        user.user.value.streakFreezes > 0,
+                                    follow.usersFollowing.isNotEmpty,
+                                    user.user.value.hasTriedBreathwork))
+                                .toString() +
+                            "%"),
                       ),
                     ],
                   ),
@@ -61,7 +74,16 @@ class OnboardingProgressBar extends StatelessWidget {
                       ),
                       Container(
                         height: 8,
-                        width: (MediaQuery.of(context).size.width - 60) * 0.4,
+                        width: (MediaQuery.of(context).size.width - 60) *
+                            (calculateOnboardingPercentage(
+                                    user.user.value.totalMinutes > 0,
+                                    user.user.value.avatar !=
+                                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                                    user.user.value.hasTriedStreakFreeze ||
+                                        user.user.value.streakFreezes > 0,
+                                    follow.usersFollowing.isNotEmpty,
+                                    user.user.value.hasTriedBreathwork) /
+                                100),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -74,7 +96,7 @@ class OnboardingProgressBar extends StatelessWidget {
                 )
               ],
             ),
-            Icon(Icons.arrow_forward_ios_sharp)
+            const Icon(Icons.arrow_forward_ios_sharp)
           ],
         ),
       ),

@@ -55,9 +55,10 @@ class OnboardingChecklistPage extends StatelessWidget {
                               user.user.value.totalMinutes > 0,
                               user.user.value.avatar !=
                                   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-                              false,
+                              user.user.value.hasTriedStreakFreeze ||
+                                  user.user.value.streakFreezes > 0,
                               follow.usersFollowing.isNotEmpty,
-                              false) /
+                              user.user.value.hasTriedBreathwork) /
                           100,
                       decoration: BoxDecoration(
                         color: Colors.lightBlue,
@@ -76,9 +77,10 @@ class OnboardingChecklistPage extends StatelessWidget {
                                 user.user.value.totalMinutes > 0,
                                 user.user.value.avatar !=
                                     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-                                false,
+                                user.user.value.hasTriedStreakFreeze ||
+                                    user.user.value.streakFreezes > 0,
                                 follow.usersFollowing.isNotEmpty,
-                                false)
+                                user.user.value.hasTriedBreathwork)
                             .toString() +
                         "%",
                     style: const TextStyle(color: Colors.lightBlue)),
@@ -116,7 +118,8 @@ class OnboardingChecklistPage extends StatelessWidget {
                 const Divider(),
                 ChecklistItem(
                     text: "Get a streak freeze 🔥",
-                    checked: false,
+                    checked: user.user.value.hasTriedStreakFreeze ||
+                        user.user.value.streakFreezes > 0,
                     action: () {
                       appPages.switchPage(1);
                       Get.offAll(const AppPages());
@@ -132,7 +135,7 @@ class OnboardingChecklistPage extends StatelessWidget {
                 const Divider(),
                 ChecklistItem(
                     text: "Try breathwork 🌬️",
-                    checked: false,
+                    checked: user.user.value.hasTriedBreathwork,
                     action: () {
                       appPages.switchPage(0);
                       Get.offAll(const AppPages());

@@ -176,6 +176,18 @@ class UserController extends GetxController {
           val?.levelPoints = value;
         });
         break;
+      case UserProperty.hasTriedBreathwork:
+        storage.write("has_tried_breathwork", value.toString());
+        localStorageUser.update((val) {
+          val?.hasTriedBreathwork = value;
+        });
+        break;
+      case UserProperty.hasTriedStreakFreeze:
+        storage.write("has_tried_streak_freeze", value.toString());
+        localStorageUser.update((val) {
+          val?.hasTriedStreakFreeze = value;
+        });
+        break;
       case UserProperty.streakFreezes:
         storage.write("streak_freezes", value.toString());
 
@@ -359,6 +371,20 @@ class UserController extends GetxController {
     if (getValue('level_points') != "") {
       localStorageUser.value.levelPoints = int.parse(getValue("level_points"));
       logSuccess("Loaded levelPoints: ${localStorageUser.value.levelPoints}");
+    }
+
+    if (getValue('has_tried_breathwork') != "") {
+      localStorageUser.value.hasTriedBreathwork =
+          getValue("has_tried_breathwork") == "true";
+      logSuccess(
+          "Loaded hasTriedBreathwork: ${localStorageUser.value.hasTriedBreathwork}");
+    }
+
+    if (getValue('has_tried_streak_freeze') != "") {
+      localStorageUser.value.hasTriedStreakFreeze =
+          getValue("has_tried_streak_freeze") == "true";
+      logSuccess(
+          "Loaded hasTriedStreakFreeze: ${localStorageUser.value.hasTriedStreakFreeze}");
     }
 
     if (getValue('streak_freezes') != "") {
@@ -550,6 +576,16 @@ class UserController extends GetxController {
           val?.levelPoints = value;
         });
         break;
+      case UserProperty.hasTriedBreathwork:
+        databaseUser.update((val) {
+          val?.hasTriedBreathwork = value;
+        });
+        break;
+      case UserProperty.hasTriedStreakFreeze:
+        databaseUser.update((val) {
+          val?.hasTriedStreakFreeze = value;
+        });
+        break;
       case UserProperty.streakFreezes:
         // databaseUser.value.streakFreezes = value as int;
         databaseUser.update((val) {
@@ -624,6 +660,10 @@ class UserController extends GetxController {
           UserProperty.totalMinutes, localStorageUser.value.totalMinutes),
       updatePropertySafe(
           UserProperty.levelPoints, localStorageUser.value.levelPoints),
+      updatePropertySafe(UserProperty.hasTriedBreathwork,
+          localStorageUser.value.hasTriedBreathwork),
+      updatePropertySafe(UserProperty.hasTriedStreakFreeze,
+          localStorageUser.value.hasTriedStreakFreeze),
       updatePropertySafe(
           UserProperty.streakFreezes, localStorageUser.value.streakFreezes),
       updatePropertySafe(UserProperty.lastMeditated,
@@ -672,6 +712,10 @@ class UserController extends GetxController {
           UserProperty.totalMinutes, databaseUser.value.totalMinutes),
       saveLocalValueSafe(
           UserProperty.levelPoints, databaseUser.value.levelPoints),
+      saveLocalValueSafe(UserProperty.hasTriedBreathwork,
+          databaseUser.value.hasTriedBreathwork),
+      saveLocalValueSafe(UserProperty.hasTriedStreakFreeze,
+          databaseUser.value.hasTriedStreakFreeze),
       saveLocalValueSafe(
           UserProperty.streakFreezes, databaseUser.value.streakFreezes),
       saveLocalValueSafe(UserProperty.lastMeditated,
