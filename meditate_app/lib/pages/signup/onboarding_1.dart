@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/login/login.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 
 class Onboarding1 extends StatelessWidget {
   const Onboarding1({super.key});
@@ -31,7 +32,7 @@ class Onboarding1 extends StatelessWidget {
           "Easily make meditation a habit.",
           style: TextStyle(fontSize: 16),
         ),
-        const SizedBox(height: 60),
+        Spacer(),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 50),
           child: Hero(
@@ -48,6 +49,9 @@ class Onboarding1 extends StatelessWidget {
                 onPressed: () {
                   controller.page.value = -2;
                   controller.update();
+
+                  PostHogService posthog = Get.find();
+                  posthog.logEvent("FIRST_ONBOARDING_CONTINUE_PRESSED", {});
                 },
                 child: SizedBox(
                     width: 2000,
@@ -76,6 +80,7 @@ class Onboarding1 extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(height: 60),
       ],
     );
   }

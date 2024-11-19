@@ -15,27 +15,27 @@ class Onboarding2 extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          height: 100,
+          height: 130,
           width: MediaQuery.of(context).size.width,
+        ),
+        Text(
+          "start a meditation streak",
+          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
         ),
         Image(
           image: AssetImage("assets/fire_joypixel.gif"),
           width: 100,
           height: 100,
         ),
-        Text(
-          "start a meditation streak",
-          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
-        ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(14.0),
           child: Text(
             "Get streak freezes to save your streak if you miss a day!",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 16),
           ),
         ),
-        const SizedBox(height: 60),
+        Spacer(),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 50),
           child: Hero(
@@ -81,6 +81,7 @@ class Onboarding2 extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(height: 60),
       ],
     );
   }

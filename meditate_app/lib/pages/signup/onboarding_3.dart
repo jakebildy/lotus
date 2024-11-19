@@ -92,7 +92,7 @@ class _Onboarding3State extends State<Onboarding3> {
                             )),
                       ],
                     )))),
-        const SizedBox(height: 60),
+        Spacer(),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 50),
           child: Hero(
@@ -107,7 +107,7 @@ class _Onboarding3State extends State<Onboarding3> {
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(color: Colors.white, width: 2)))),
                 onPressed: () {
-                  controller.page.value = -1;
+                  controller.page.value = 0;
                   controller.update();
                 },
                 child: SizedBox(
@@ -138,6 +138,7 @@ class _Onboarding3State extends State<Onboarding3> {
             ),
           ),
         ),
+        const SizedBox(height: 60),
       ],
     );
   }
