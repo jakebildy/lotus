@@ -53,7 +53,7 @@ const UserSchema = new mongoose.Schema<UserI>(
     streak: { type: Number, required: false },
     streakValueNeverReset: { type: Number, required: false },
     totalMinutes: { type: Number, required: false },
-    gems: { type: Number, required: false },
+    gems: { type: Number, required: false, default: 120 },
     totalEggs: { type: Number, required: false },
     hatchProgressEggOne: { type: Number, required: false },
 
@@ -66,7 +66,7 @@ const UserSchema = new mongoose.Schema<UserI>(
     unlockedTurtles: { type: Array, required: false },
     unlockedTurtleColors: { type: [[Number]], required: false },
     eggs: { type: Number, required: false },
-    streakFreezes: { type: Number, required: false, default: 3 },
+    streakFreezes: { type: Number, required: false, default: 0 },
     levelPoints: { type: Number, required: false, default: 0 },
     eggTypes: {type: Array, required: false},
 
