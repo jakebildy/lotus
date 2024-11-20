@@ -184,15 +184,16 @@ class _AppPagesState extends State<AppPages> {
                                           0,
                                       userController.user.value.avatar !=
                                           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-                                      userController.user.value
-                                              .hasTriedStreakFreeze ||
+                                      userController
+                                              .user.value.hasTriedStreakFreeze ||
                                           userController
                                                   .user.value.streakFreezes >
                                               0,
                                       followController
                                               .usersFollowing.isNotEmpty ||
                                           followController
-                                              .loadingFollowers.value,
+                                              .loadingFollowers.value ||
+                                          network.offline.value,
                                       userController
                                           .user.value.hasTriedBreathwork) >=
                                   97
