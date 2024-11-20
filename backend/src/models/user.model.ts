@@ -34,6 +34,9 @@ export interface UserI {
 
   emojisSentAt?: { [key: string]: Date };
   sentEmojis?: { [key: string]: string };
+
+  hasTriedBreathwork?: boolean;
+  hasTriedStreakFreeze?: boolean;
 }
 
 const UserSchema = new mongoose.Schema<UserI>(
@@ -69,6 +72,9 @@ const UserSchema = new mongoose.Schema<UserI>(
 
     emojisSentAt: { type: Map, of: Date, required: false },
     sentEmojis: { type: Map, of: String, required: false },
+
+    hasTriedBreathwork: { type: Boolean, required: false, default: false },
+    hasTriedStreakFreeze: { type: Boolean, required: false, default: false },
   },
   {
     versionKey: false,
