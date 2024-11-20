@@ -65,7 +65,9 @@ class UserController extends GetxController {
     databaseUser.listen((User user) {
       logSuccess("🔥AUTH: User value has been set ${user.username}");
       pushNotificationService.updateDeviceToken();
-      Get.put(FollowController());
+      if (!Get.isRegistered<FollowController>()) {
+        Get.put(FollowController());
+      }
       Get.put(SearchController());
       if (!Get.isRegistered<SubscriptionController>()) {
         // If the controller does not exist, create and register it
@@ -86,6 +88,10 @@ class UserController extends GetxController {
       logError(trace.toString());
     }
     update();
+    // Get.put follow controller if it doesn't already exist
+    if (!Get.isRegistered<FollowController>()) {
+      Get.put(FollowController());
+    }
   }
 
   /// This saves the changed value to the local storage. Also updates the localStorageUser and lastUpdatedAt - this is used to sync data when the user goes online.

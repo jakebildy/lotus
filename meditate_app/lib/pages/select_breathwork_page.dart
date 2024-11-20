@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/get_subscription_page.dart';
 import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:meditate_app/util/breathwork.dart';
@@ -81,9 +82,51 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                   duration: const Duration(milliseconds: 110),
                   onPressed: () {
                     HapticFeedback.mediumImpact();
+                    UserController user = Get.find();
 
-                    //TODO: undo
-                    if (!save.isSubscribedToPremium.value) {
+                    if (user.user.value.hasTriedBreathwork == false) {
+                      // show a dialog saying this is paid, but you can try it this time for free!
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text("Try Breathwork"),
+                              content: const Text(
+                                  "Breathwork is part of Shellevate Premium. You can try it for free this time!"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    save.updateBreathworkSelected(true);
+                                    save.updateSelectedBreathwork(
+                                        BREATHWORKS[index].name);
+                                    Get.to(const SelectAmbiencePage(),
+                                        transition: Transition.topLevel);
+                                  },
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              color: Colors.white, width: 2),
+                                          color: Colors.lightBlue),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: const Text(
+                                          "Okay",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      )),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: const Text("Cancel"),
+                                ),
+                              ],
+                            );
+                          });
+                    } else if (save.isSubscribedToPremium.value) {
                       save.updateBreathworkSelected(true);
                       save.updateSelectedBreathwork(BREATHWORKS[index].name);
                       Get.to(

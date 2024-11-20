@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/onboarding/onboarding_progress_bar.dart';
 import 'package:meditate_app/controllers/app_pages_controller.dart';
+import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
@@ -12,6 +13,7 @@ import 'package:meditate_app/pages/signup/signup.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/turtles_page.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:meditate_app/util/util.dart';
 import 'pages/shop_page.dart';
 
 class AppPages extends StatefulWidget {
@@ -27,6 +29,7 @@ class _AppPagesState extends State<AppPages> {
     UserController userController = Get.find();
     NetworkStatusController network = Get.find();
     AppPagesController appPages = Get.find();
+    FollowController followController = Get.find();
 
     return Obx(
       () => Stack(
@@ -175,7 +178,22 @@ class _AppPagesState extends State<AppPages> {
                               : appPages.page.value == 2
                                   ? const TurtlesPage()
                                   : const ProfilePage(),
-                      appPages.page.value == 0
+                      appPages.page.value == 0 ||
+                              calculateOnboardingPercentage(
+                                      userController.user.value.totalMinutes >
+                                          0,
+                                      userController.user.value.avatar !=
+                                          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+                                      userController.user.value
+                                              .hasTriedStreakFreeze ||
+                                          userController
+                                                  .user.value.streakFreezes >
+                                              0,
+                                      followController
+                                          .usersFollowing.isNotEmpty,
+                                      userController
+                                          .user.value.hasTriedBreathwork) >=
+                                  97
                           ? Container()
                           : OnboardingProgressBar(),
                     ],
