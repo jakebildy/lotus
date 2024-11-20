@@ -178,10 +178,12 @@ bool isSameDay(DateTime date1, DateTime date2) {
 
 int getUserStreak(User user) {
   DateTime now = DateTime.now();
-  // TODAY in the local time zone
-  DateTime today = DateTime(now.year, now.month, now.day);
-  DateTime lastMeditatedAdjusted = DateTime(user.lastMeditated.year,
+  // TODAY in the local time zone (now moved to utc (as of nov 17 - jacob))
+  DateTime today = DateTime.utc(now.year, now.month, now.day);
+  DateTime lastMeditatedAdjusted = DateTime.utc(user.lastMeditated.year,
       user.lastMeditated.month, user.lastMeditated.day);
+  print("today: ${user.username} $today");
+  print("lastMeditatedAdjusted: ${user.username} $lastMeditatedAdjusted");
   if (user.streakFreezes == 0) {
     if (lastMeditatedAdjusted
             .isAfter(today.subtract(const Duration(days: 1))) ||
@@ -201,6 +203,13 @@ int getUserStreak(User user) {
             .isAfter(today.subtract(const Duration(days: 3))) ||
         lastMeditatedAdjusted
             .isAtSameMomentAs(today.subtract(const Duration(days: 3)))) {
+      return user.streak;
+    }
+  } else if (user.streakFreezes == 3) {
+    if (lastMeditatedAdjusted
+            .isAfter(today.subtract(const Duration(days: 4))) ||
+        lastMeditatedAdjusted
+            .isAtSameMomentAs(today.subtract(const Duration(days: 4)))) {
       return user.streak;
     }
   }
@@ -320,4 +329,48 @@ double calculateRemainingLevelPercentage(int levelPoints) {
   }
 
   return 1.0; // Fully completed level percentage
+}
+
+//For the streak chart
+// get the highest value of the week. first slice the map to the last 7 days
+int getMaxValueForStreakChart(Map<DateTime, int> map) {
+  int highest = 0;
+  map.forEach((key, value) {
+    if (key.isAfter(DateTime.now().subtract(const Duration(days: 7)))) {
+      if (value > highest) {
+        highest = value;
+      }
+    }
+  });
+
+  // Adjust highest value based on the requirements
+  highest += 15;
+
+  //  round highest to the nearest 10
+  highest = (highest / 10).ceil() * 10;
+  return highest;
+}
+
+int calculateOnboardingPercentage(bool meditated, bool profilePictureAdded,
+    bool streakFreezeGot, bool addedFriend, bool breathworkTried) {
+  int percentage = 17;
+
+  // plus create an account which is already true
+  if (meditated) {
+    percentage += 16;
+  }
+  if (profilePictureAdded) {
+    percentage += 16;
+  }
+  if (streakFreezeGot) {
+    percentage += 16;
+  }
+  if (addedFriend) {
+    percentage += 16;
+  }
+  if (breathworkTried) {
+    percentage += 16;
+  }
+
+  return percentage;
 }

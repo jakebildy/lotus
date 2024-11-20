@@ -25,6 +25,8 @@ enum UserProperty {
   eggTypes,
   emojisSentAt,
   sentEmojis,
+  hasTriedBreathwork,
+  hasTriedStreakFreeze,
 }
 
 class User {
@@ -60,6 +62,9 @@ class User {
 
   /// Maps the User ID the emoji was sent to, to the emoji sent
   RxMap<String, String> sentEmojis;
+
+  bool hasTriedBreathwork;
+  bool hasTriedStreakFreeze;
 
   static User deletedUser = User(
     id: "-1",
@@ -100,6 +105,8 @@ class User {
     this.unlockedTurtles = const [],
     this.unlockedTurtleColors = const [],
     this.eggTypes = const [],
+    this.hasTriedBreathwork = false,
+    this.hasTriedStreakFreeze = false,
   })  : meditationHistory = meditationHistory ?? <DateTime, int>{}.obs,
         emojisSentAt = emojisSentAt ?? <String, DateTime>{}.obs,
         sentEmojis = sentEmojis ?? <String, String>{}.obs;
@@ -184,6 +191,8 @@ class User {
           <String, DateTime>{}.obs,
       sentEmojis:
           _parseSentEmojis(map["sentEmojis"] as Map<String, dynamic>?).obs,
+      hasTriedBreathwork: map["hasTriedBreathwork"] ?? false,
+      hasTriedStreakFreeze: map["hasTriedStreakFreeze"] ?? false,
     );
   }
 

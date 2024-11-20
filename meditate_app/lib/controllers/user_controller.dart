@@ -65,7 +65,9 @@ class UserController extends GetxController {
     databaseUser.listen((User user) {
       logSuccess("🔥AUTH: User value has been set ${user.username}");
       pushNotificationService.updateDeviceToken();
-      Get.put(FollowController());
+      if (!Get.isRegistered<FollowController>()) {
+        Get.put(FollowController());
+      }
       Get.put(SearchController());
       if (!Get.isRegistered<SubscriptionController>()) {
         // If the controller does not exist, create and register it
@@ -86,6 +88,10 @@ class UserController extends GetxController {
       logError(trace.toString());
     }
     update();
+    // Get.put follow controller if it doesn't already exist
+    if (!Get.isRegistered<FollowController>()) {
+      Get.put(FollowController());
+    }
   }
 
   /// This saves the changed value to the local storage. Also updates the localStorageUser and lastUpdatedAt - this is used to sync data when the user goes online.
@@ -174,6 +180,18 @@ class UserController extends GetxController {
         storage.write("level_points", value.toString());
         localStorageUser.update((val) {
           val?.levelPoints = value;
+        });
+        break;
+      case UserProperty.hasTriedBreathwork:
+        storage.write("has_tried_breathwork", value.toString());
+        localStorageUser.update((val) {
+          val?.hasTriedBreathwork = value;
+        });
+        break;
+      case UserProperty.hasTriedStreakFreeze:
+        storage.write("has_tried_streak_freeze", value.toString());
+        localStorageUser.update((val) {
+          val?.hasTriedStreakFreeze = value;
         });
         break;
       case UserProperty.streakFreezes:
@@ -359,6 +377,20 @@ class UserController extends GetxController {
     if (getValue('level_points') != "") {
       localStorageUser.value.levelPoints = int.parse(getValue("level_points"));
       logSuccess("Loaded levelPoints: ${localStorageUser.value.levelPoints}");
+    }
+
+    if (getValue('has_tried_breathwork') != "") {
+      localStorageUser.value.hasTriedBreathwork =
+          getValue("has_tried_breathwork") == "true";
+      logSuccess(
+          "Loaded hasTriedBreathwork: ${localStorageUser.value.hasTriedBreathwork}");
+    }
+
+    if (getValue('has_tried_streak_freeze') != "") {
+      localStorageUser.value.hasTriedStreakFreeze =
+          getValue("has_tried_streak_freeze") == "true";
+      logSuccess(
+          "Loaded hasTriedStreakFreeze: ${localStorageUser.value.hasTriedStreakFreeze}");
     }
 
     if (getValue('streak_freezes') != "") {
@@ -550,6 +582,16 @@ class UserController extends GetxController {
           val?.levelPoints = value;
         });
         break;
+      case UserProperty.hasTriedBreathwork:
+        databaseUser.update((val) {
+          val?.hasTriedBreathwork = value;
+        });
+        break;
+      case UserProperty.hasTriedStreakFreeze:
+        databaseUser.update((val) {
+          val?.hasTriedStreakFreeze = value;
+        });
+        break;
       case UserProperty.streakFreezes:
         // databaseUser.value.streakFreezes = value as int;
         databaseUser.update((val) {
@@ -624,6 +666,10 @@ class UserController extends GetxController {
           UserProperty.totalMinutes, localStorageUser.value.totalMinutes),
       updatePropertySafe(
           UserProperty.levelPoints, localStorageUser.value.levelPoints),
+      updatePropertySafe(UserProperty.hasTriedBreathwork,
+          localStorageUser.value.hasTriedBreathwork),
+      updatePropertySafe(UserProperty.hasTriedStreakFreeze,
+          localStorageUser.value.hasTriedStreakFreeze),
       updatePropertySafe(
           UserProperty.streakFreezes, localStorageUser.value.streakFreezes),
       updatePropertySafe(UserProperty.lastMeditated,
@@ -672,6 +718,10 @@ class UserController extends GetxController {
           UserProperty.totalMinutes, databaseUser.value.totalMinutes),
       saveLocalValueSafe(
           UserProperty.levelPoints, databaseUser.value.levelPoints),
+      saveLocalValueSafe(UserProperty.hasTriedBreathwork,
+          databaseUser.value.hasTriedBreathwork),
+      saveLocalValueSafe(UserProperty.hasTriedStreakFreeze,
+          databaseUser.value.hasTriedStreakFreeze),
       saveLocalValueSafe(
           UserProperty.streakFreezes, databaseUser.value.streakFreezes),
       saveLocalValueSafe(UserProperty.lastMeditated,
@@ -852,6 +902,7 @@ class UserController extends GetxController {
 
         //Use a streak freeze if possible
         if (user.value.streakFreezes > 0) {
+          // if (user.value.streakFreezes > numDays - 1) {
           DateTime now = DateTime.now();
           DateTime today = DateTime.utc(now.year, now.month, now.day);
           DateTime yesterday = today.subtract(const Duration(days: 1));

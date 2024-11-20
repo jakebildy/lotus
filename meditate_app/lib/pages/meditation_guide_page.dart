@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
-import 'package:meditate_app/pages/countdown_page.dart';
+import 'package:meditate_app/pages/countdown/countdown_page.dart';
 
 class MeditationGuide extends StatefulWidget {
   final Duration? time;

@@ -9,7 +9,7 @@ import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -146,8 +146,8 @@ class _ShopPageState extends State<ShopPage> {
                       user.reviveStreak();
                     } else {
                       //Log the event to AppsFlyer
-                      HeapService appsflyer = Get.find();
-                      appsflyer.logEvent(
+                      PostHogService posthog = Get.find();
+                      posthog.logEvent(
                           "STREAK_REVIVE_TAPPED", {"purchased": "false"});
 
                       ScaffoldMessenger.of(context).clearSnackBars();
@@ -277,8 +277,9 @@ class _ShopPageState extends State<ShopPage> {
               if (user.user.value.gems >= STREAK_FREEZE_PRICE) {
                 if (user.user.value.streakFreezes < 3) {
                   //Log the event to AppsFlyer
-                  HeapService heap = Get.find();
-                  heap.logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
+                  PostHogService posthog = Get.find();
+                  posthog
+                      .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "true"});
 
                   logSuccess("Purchasing Streak Freeze!");
                   HapticFeedback.lightImpact();
@@ -287,10 +288,14 @@ class _ShopPageState extends State<ShopPage> {
                       user.user.value.gems - STREAK_FREEZE_PRICE);
                   user.updateProperty(UserProperty.streakFreezes,
                       user.user.value.streakFreezes + 1);
+                  if (user.user.value.hasTriedStreakFreeze == false) {
+                    user.updateProperty(
+                        UserProperty.hasTriedStreakFreeze, true);
+                  }
                 } else {
                   //Log the event to AppsFlyer
-                  HeapService heap = Get.find();
-                  heap.logEvent(
+                  PostHogService posthog = Get.find();
+                  posthog.logEvent(
                       "STREAK_FREEZE_TAPPED", {"purchased": "false, >3"});
 
                   ScaffoldMessenger.of(context).clearSnackBars();
@@ -303,8 +308,8 @@ class _ShopPageState extends State<ShopPage> {
                 }
               } else {
                 //Log the event to AppsFlyer
-                HeapService appsflyer = Get.find();
-                appsflyer
+                PostHogService posthog = Get.find();
+                posthog
                     .logEvent("STREAK_FREEZE_TAPPED", {"purchased": "false"});
 
                 ScaffoldMessenger.of(context).clearSnackBars();

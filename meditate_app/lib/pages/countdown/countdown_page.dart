@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/breathwork_timer.dart';
 import 'package:meditate_app/components/countdown_timer.dart';
 import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/util/ambiences.dart';
+import 'package:meditate_app/pages/countdown/countdown_box_decoration.dart';
+import 'package:meditate_app/pages/countdown/countdown_waves_and_art.dart';
+import 'package:meditate_app/util/breathwork.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:wakelock/wakelock.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
-
-import '../components/bubbles/bubbles.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key, required this.time, required this.ambience})
@@ -77,221 +77,23 @@ class _CountdownPageState extends State<CountdownPage>
   EggController eggController = Get.find();
   UserController userController = Get.find();
   CountdownController countdownController = Get.find();
+  SaveController saveController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Stack(
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            decoration: const BoxDecoration(
-                // image: DecorationImage(
-                //   fit: BoxFit.cover,
-                //   image: AssetImage("assets/water_vibes.webp"),
-                // ),
-                ),
           ),
           Scaffold(
-            // backgroundColor: isDarkMode ? Colors.black : Color(0xff87CEEB),
             body: Container(
-              decoration: AMBIENCES
-                          .where((element) => element.name == widget.ambience)
-                          .first
-                          .setting ==
-                      "Rain"
-                  ? const BoxDecoration(
-                      gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color.fromARGB(255, 205, 205, 205),
-                        Color(0xff87CEEB),
-                        Color.fromARGB(255, 25, 178, 238),
-                        Color.fromARGB(255, 255, 255, 255),
-                        Color.fromRGBO(255, 255, 255, 1),
-                        Color.fromARGB(255, 255, 255, 255),
-                        Color(0xff87CEEB),
-                        Color.fromARGB(255, 25, 178, 238),
-                      ],
-                    ))
-                  : AMBIENCES
-                              .where(
-                                  (element) => element.name == widget.ambience)
-                              .first
-                              .setting ==
-                          "Night"
-                      ? const BoxDecoration(
-                          gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black,
-                            Colors.black,
-                            Color.fromARGB(255, 183, 163, 211),
-                          ],
-                        ))
-                      : const BoxDecoration(
-                          gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xff87CEEB),
-                            Color(0xff87CEEB),
-                            Color.fromARGB(255, 25, 178, 238),
-                            Color.fromARGB(255, 183, 163, 211),
-                            Color.fromARGB(255, 247, 190, 221),
-                            Color.fromARGB(255, 247, 244, 186),
-                            Color(0xff87CEEB),
-                            Color.fromARGB(255, 25, 178, 238),
-                          ],
-                        )),
+              decoration: getBoxDecorationForAmbience(widget.ambience),
               child: Stack(
                 children: [
-                  // Padding(
-                  //       padding: EdgeInsets.fromLTRB(0,MediaQuery.of(context).size.height/2,0,0),
-                  //       child: Container(height: 500, color: Color(0xff8006994), width: MediaQuery.of(context).size.width,),
-                  //     ),
-                  WaveWidget(
-                    config: CustomConfig(
-                      colors: [
-                        const Color.fromRGBO(0, 105, 147, 0.22),
-                        const Color(0x3300BBF9),
-                      ],
-                      durations: [
-                        10000,
-                        12000,
-                      ],
-                      heightPercentages: [
-                        0.54,
-                        0.55,
-                      ],
-                    ),
-                    backgroundColor: Colors.transparent,
-                    size: const Size(double.infinity, double.infinity),
-                    waveAmplitude: 0,
-                  ),
-
-                  AMBIENCES
-                              .where(
-                                  (element) => element.name == widget.ambience)
-                              .first
-                              .setting ==
-                          "Night"
-                      ? Opacity(
-                          opacity: 0.2,
-                          child: Image.asset(
-                            "assets/stars.jpg",
-                            height: 500,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Container(),
-
-                  AMBIENCES
-                              .where(
-                                  (element) => element.name == widget.ambience)
-                              .first
-                              .setting ==
-                          "Jungle"
-                      ? Image.asset(
-                          "assets/jungle_top.png",
-                          height: 300,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(),
-
-                  Center(
-                    child: Stack(alignment: Alignment.bottomCenter, children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height - 60,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
-                        child: Image.asset("assets/lotus2.png"),
-                      ),
-                    ]),
-                  ),
-                  AMBIENCES
-                              .where(
-                                  (element) => element.name == widget.ambience)
-                              .first
-                              .setting ==
-                          "Rain"
-                      ? Opacity(
-                          opacity: 0.5,
-                          child: Image.asset(
-                            "assets/images/rainy_overlay.gif",
-                            height: 1000,
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Container(),
-
-                  AMBIENCES
-                              .where(
-                                  (element) => element.name == widget.ambience)
-                              .first
-                              .setting ==
-                          "Underwater"
-                      ? Stack(
-                          children: [
-                            Image.asset(
-                              "assets/ocean_background.jpeg",
-                              height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width,
-                              fit: BoxFit.cover,
-                            ),
-                            Opacity(
-                              opacity: 0.3,
-                              child: Image.asset(
-                                "assets/images/game/water_2.gif",
-                                height: MediaQuery.of(context).size.height,
-                                width: MediaQuery.of(context).size.width,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned.fill(
-                                child: FloatingBubbles.alwaysRepeating(
-                              noOfBubbles: 20,
-                              colorsOfBubbles: [
-                                Colors.white.withAlpha(30),
-                              ],
-                              sizeFactor: 0.03,
-                              opacity: 70,
-                              paintingStyle: PaintingStyle.fill,
-                              strokeWidth: 1,
-                              shape: BubbleShape
-                                  .circle, // circle is the default. No need to explicitly mention if its a circle.
-                            )),
-                          ],
-                        )
-                      : Container(),
-
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      AMBIENCES
-                                      .where((element) =>
-                                          element.name == widget.ambience)
-                                      .first
-                                      .setting ==
-                                  "Jungle" ||
-                              AMBIENCES
-                                      .where((element) =>
-                                          element.name == widget.ambience)
-                                      .first
-                                      .setting ==
-                                  "Forest"
-                          ? Image.asset(
-                              "assets/jungle_bottom.png",
-                              height: 230,
-                              fit: BoxFit.cover,
-                            )
-                          : Container(),
-                    ],
-                  ),
+                  CountdownWavesAndArt(ambience: widget.ambience),
                   ListView(
                     physics: const NeverScrollableScrollPhysics(),
                     //mainAxisAlignment: MainAxisAlignment.end,
@@ -303,10 +105,6 @@ class _CountdownPageState extends State<CountdownPage>
                             SizedBox(
                               height: MediaQuery.of(context).size.height - 200,
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
-                            //   child: Image.asset("assets/lotus2.png"),
-                            // ),
                             countdownController.meditationComplete.value
                                 ? Padding(
                                     padding: EdgeInsets.fromLTRB(
@@ -370,10 +168,24 @@ class _CountdownPageState extends State<CountdownPage>
                                                     .size
                                                     .height /
                                                 2,
-                                            child: CountdownTimer(
-                                              totalSeconds:
-                                                  widget.time.inSeconds,
-                                            ),
+                                            child: saveController
+                                                    .breathworkSelected.value
+                                                ? BreathworkTimer(
+                                                    paused: isPaused,
+                                                    totalSeconds:
+                                                        widget.time.inSeconds,
+                                                    breathwork: BREATHWORKS
+                                                        .where((element) =>
+                                                            element.name ==
+                                                            saveController
+                                                                .selectedBreathwork
+                                                                .value)
+                                                        .first,
+                                                  )
+                                                : CountdownTimer(
+                                                    totalSeconds:
+                                                        widget.time.inSeconds,
+                                                  ),
                                           )),
                                     ),
                                   ),
@@ -462,7 +274,6 @@ class _CountdownPageState extends State<CountdownPage>
                                       ),
                                     ),
                                   ),
-
                             Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
                               child: isPaused

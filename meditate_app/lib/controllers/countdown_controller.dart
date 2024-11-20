@@ -8,7 +8,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/streak_count_page.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/ambiences.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -185,21 +185,31 @@ class CountdownController extends GetxController {
     bell.dispose();
   }
 
-  void pauseApp() {
+  bool appStateSetPaused = false;
+  int pausedTenthsOFSecondsPassed = 0;
+  void appPaused() {
     if (!isPaused.value) {
-      logSuccess("App paused, saving current time");
       lastCountdownTimerTime = DateTime.now();
+      logSuccess("App Paused, saving current time: " +
+          lastCountdownTimerTime.toString());
+      logInfo(
+          "tenths of seconds passed" + tenthsOfSecondsPassed.value.toString());
+      appStateSetPaused = true;
+      pausedTenthsOFSecondsPassed = tenthsOfSecondsPassed.value;
     }
   }
 
   void resumeApp() {
-    if (!isPaused.value) {
+    if (!isPaused.value && appStateSetPaused) {
       logSuccess("App resumed, calculating time passed");
       DateTime now = DateTime.now();
       logInfo("Last time: $lastCountdownTimerTime");
       int timePassed = now.difference(lastCountdownTimerTime).inSeconds;
       logInfo("Time passed: $timePassed seconds");
-      tenthsOfSecondsPassed.value += timePassed * 10;
+      logInfo(
+          "tenths of seconds passed" + tenthsOfSecondsPassed.value.toString());
+      tenthsOfSecondsPassed.value =
+          pausedTenthsOFSecondsPassed + timePassed * 10;
       lastCountdownTimerTime = now;
 
       // if tenthsOfSecondsPassed is greater than totalSeconds, then add to bonusTime
@@ -208,6 +218,7 @@ class CountdownController extends GetxController {
             (tenthsOfSecondsPassed.value ~/ 10) - totalSeconds.value;
         tenthsOfSecondsPassed.value = totalSeconds.value * 10;
       }
+      appStateSetPaused = false;
       update();
     }
   }
@@ -384,9 +395,9 @@ class CountdownController extends GetxController {
 
       await eggController.addEgg(tColor, tHatch);
     }
-    //Log the event to AppsFlyer
-    HeapService heap = Get.find();
-    heap.logEvent("MEDITATION_COMPLETE", {"time": timeInMinutes.toString()});
+    //Log the event to Posthog
+    PostHogService posthog = Get.find();
+    posthog.logEvent("MEDITATION_COMPLETE", {"time": timeInMinutes.toString()});
 
     try {
       bonusTimer.cancel();
@@ -396,7 +407,14 @@ class CountdownController extends GetxController {
 
     loading.value = false;
     bonusTime.value = 0;
+    addExtraTime.value = false;
     update();
+
+    if (save.breathworkSelected.value == true) {
+      if (userController.user.value.hasTriedBreathwork == false) {
+        userController.updateProperty(UserProperty.hasTriedBreathwork, true);
+      }
+    }
 
     Get.offAll(StreakCountPage(
       gemsAmount: gemsToGive,

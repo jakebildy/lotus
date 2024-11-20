@@ -49,6 +49,9 @@ class LockedTurtle extends StatelessWidget {
           id != 10
               ? Container()
               : Image.asset("assets/images/turtles/10_overlay.png"),
+          id != 23
+              ? Container()
+              : Image.asset("assets/images/turtles/23_overlay.png"),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(Icons.lock),

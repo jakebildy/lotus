@@ -17,7 +17,7 @@ class Ambience {
 // ignore: constant_identifier_names
 const List<Ambience> AMBIENCES = [
   Ambience(
-      name: "None",
+      name: "No Sound",
       image: 'assets/ambiences/none.jpg',
       audio: '',
       setting: 'Default',
