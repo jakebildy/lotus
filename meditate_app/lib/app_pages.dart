@@ -195,7 +195,7 @@ class _AppPagesState extends State<AppPages> {
                                           .user.value.hasTriedBreathwork) >=
                                   97
                           ? Container()
-                          : OnboardingProgressBar(),
+                          : const OnboardingProgressBar(),
                     ],
                   ),
                   bottomNavigationBar: BottomNavigationBar(

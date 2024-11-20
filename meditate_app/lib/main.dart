@@ -48,6 +48,11 @@ Future<void> main() async {
     Get.put(SubscriptionController());
   }
 
+  if (!Get.isRegistered<FollowController>()) {
+    // If the controller does not exist, create and register it
+    Get.put(FollowController());
+  }
+
   final AudioContext audioContext = AudioContext(
     iOS: AudioContextIOS(
       defaultToSpeaker: true,
@@ -72,7 +77,7 @@ Future<void> main() async {
     switch (msg) {
       case 'AppLifecycleState.paused':
         {
-          Get.find<CountdownController>().pauseApp();
+          Get.find<CountdownController>().appPaused();
           logInfo(msg.toString());
         }
         break;
@@ -89,6 +94,9 @@ Future<void> main() async {
           // Check if Timer is running
           // If so, update State accordingly
         }
+        break;
+      default:
+        logInfo(msg!);
         break;
     }
     return Future.value();
