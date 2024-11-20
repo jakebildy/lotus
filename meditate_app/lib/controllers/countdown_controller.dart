@@ -413,6 +413,7 @@ class CountdownController extends GetxController {
     if (save.breathworkSelected.value == true) {
       if (userController.user.value.hasTriedBreathwork == false) {
         userController.updateProperty(UserProperty.hasTriedBreathwork, true);
+        save.updateBreathworkSelected(false);
       }
     }
 

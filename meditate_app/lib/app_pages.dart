@@ -190,7 +190,9 @@ class _AppPagesState extends State<AppPages> {
                                                   .user.value.streakFreezes >
                                               0,
                                       followController
-                                          .usersFollowing.isNotEmpty,
+                                              .usersFollowing.isNotEmpty ||
+                                          followController
+                                              .loadingFollowers.value,
                                       userController
                                           .user.value.hasTriedBreathwork) >=
                                   97
