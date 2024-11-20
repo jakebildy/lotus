@@ -67,6 +67,13 @@ class FollowController extends GetxController {
                 .isAtSameMomentAs(today.subtract(const Duration(days: 3)))) {
           activeUsers.add(user);
         }
+      } else if (user.streakFreezes == 3) {
+        if (lastMeditatedAdjusted
+                .isAfter(today.subtract(const Duration(days: 4))) ||
+            lastMeditatedAdjusted
+                .isAtSameMomentAs(today.subtract(const Duration(days: 4)))) {
+          activeUsers.add(user);
+        }
       }
     }
 
