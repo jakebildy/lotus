@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:meditate_app/models/user.dart';
 
+import '../util/util.dart';
+
 class UserStreakChart extends StatelessWidget {
   final User user;
   final double height;
@@ -25,7 +27,8 @@ class UserStreakChart extends StatelessWidget {
                 topTitles: SideTitles(showTitles: false),
               ),
               minY: 0,
-              maxY: 80,
+              maxY:
+                  getMaxValueForStreakChart(user.meditationHistory).toDouble(),
               lineBarsData: [
                 LineChartBarData(
                     colors: [
@@ -37,7 +40,20 @@ class UserStreakChart extends StatelessWidget {
                       show: true,
                       gradientFrom: const Offset(1, 1),
                       gradientTo: const Offset(1, 0),
-                      gradientColorStops: [0.05, 0.15, 0.35, 1],
+                      gradientColorStops: [
+                        0.05 *
+                            80 /
+                            getMaxValueForStreakChart(user.meditationHistory),
+                        0.15 *
+                            80 /
+                            getMaxValueForStreakChart(user.meditationHistory),
+                        0.35 *
+                            80 /
+                            getMaxValueForStreakChart(user.meditationHistory),
+                        1 *
+                            80 /
+                            getMaxValueForStreakChart(user.meditationHistory)
+                      ],
                       colors: [
                         // Color.fromARGB(0, 255, 153, 0),
                         Colors.green,

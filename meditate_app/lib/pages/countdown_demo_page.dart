@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/breathwork_timer.dart';
 import 'package:meditate_app/components/countdown_timer.dart';
 import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/ambiences.dart';
+import 'package:meditate_app/util/breathwork.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
 import '../components/bubbles/bubbles.dart';
 
 class CountdownDemoPage extends StatefulWidget {
-  const CountdownDemoPage({Key? key, required this.ambience}) : super(key: key);
+  const CountdownDemoPage(
+      {Key? key, required this.ambience, required this.breathwork})
+      : super(key: key);
 
   final String ambience;
+  final bool breathwork;
 
   @override
   State<CountdownDemoPage> createState() => _CountdownDemoPageState();
@@ -320,8 +325,15 @@ class _CountdownDemoPageState extends State<CountdownDemoPage>
                                                     .size
                                                     .height /
                                                 2,
-                                            child: const CountdownTimer(
-                                                totalSeconds: 300),
+                                            child: widget.breathwork
+                                                ? BreathworkTimer(
+                                                    breathwork: BREATHWORKS[0],
+                                                    totalSeconds: 300,
+                                                    paused: false,
+                                                    vibrate: false,
+                                                  )
+                                                : const CountdownTimer(
+                                                    totalSeconds: 300),
                                           )),
                                     ),
                                   ),

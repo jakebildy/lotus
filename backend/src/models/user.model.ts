@@ -34,6 +34,9 @@ export interface UserI {
 
   emojisSentAt?: { [key: string]: Date };
   sentEmojis?: { [key: string]: string };
+
+  hasTriedBreathwork?: boolean;
+  hasTriedStreakFreeze?: boolean;
 }
 
 const UserSchema = new mongoose.Schema<UserI>(
@@ -50,7 +53,7 @@ const UserSchema = new mongoose.Schema<UserI>(
     streak: { type: Number, required: false },
     streakValueNeverReset: { type: Number, required: false },
     totalMinutes: { type: Number, required: false },
-    gems: { type: Number, required: false },
+    gems: { type: Number, required: false, default: 120 },
     totalEggs: { type: Number, required: false },
     hatchProgressEggOne: { type: Number, required: false },
 
@@ -63,12 +66,15 @@ const UserSchema = new mongoose.Schema<UserI>(
     unlockedTurtles: { type: Array, required: false },
     unlockedTurtleColors: { type: [[Number]], required: false },
     eggs: { type: Number, required: false },
-    streakFreezes: { type: Number, required: false, default: 3 },
+    streakFreezes: { type: Number, required: false, default: 0 },
     levelPoints: { type: Number, required: false, default: 0 },
     eggTypes: {type: Array, required: false},
 
     emojisSentAt: { type: Map, of: Date, required: false },
     sentEmojis: { type: Map, of: String, required: false },
+
+    hasTriedBreathwork: { type: Boolean, required: false, default: false },
+    hasTriedStreakFreeze: { type: Boolean, required: false, default: false },
   },
   {
     versionKey: false,

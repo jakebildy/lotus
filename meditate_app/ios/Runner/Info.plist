@@ -59,5 +59,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>com.posthog.posthog.AUTO_INIT</key>
+    <false/>
 </dict>
 </plist>

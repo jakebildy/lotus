@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:get/get.dart';
+import 'package:meditate_app/services/posthog_service.dart';
+
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import "index.dart" as api;
@@ -36,6 +39,8 @@ class UserApi {
         await http.get(api.https(url, "/api/user/me"), headers: api.headers);
     if (response.statusCode == 200) {
       api.updateCookie(response);
+      PostHogService posthog = Get.find();
+      posthog.identifyUser(json.decode(response.body)["username"]);
       return User.fromJson(json.decode(response.body));
     } else {
       throw (response.body);

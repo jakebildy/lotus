@@ -107,6 +107,10 @@ class TurtleCategory extends StatelessWidget {
                               ? Container()
                               : Image.asset(
                                   "assets/images/turtles/10_overlay.png"),
+                          id != 23
+                              ? Container()
+                              : Image.asset(
+                                  "assets/images/turtles/23_overlay.png"),
                         ],
                       ))
                   : Stack(children: [
@@ -148,7 +152,8 @@ class TurtleCategory extends StatelessWidget {
                                       calculateLevel(userController
                                           .user.value.levelPoints) &&
                                   TURTLES[id].foundIn == null &&
-                                  TURTLES[id].tier != Tier.LITBACK
+                                  TURTLES[id].tier != Tier.LITBACK &&
+                                  TURTLES[id].name != "Aether Turtle"
                               ? Container()
                               : const Text(" • "),
                           TURTLES[id].level <=
@@ -161,15 +166,18 @@ class TurtleCategory extends StatelessWidget {
                                       calculateLevel(userController
                                           .user.value.levelPoints) &&
                                   TURTLES[id].foundIn == null &&
-                                  TURTLES[id].tier != Tier.LITBACK
+                                  TURTLES[id].tier != Tier.LITBACK &&
+                                  TURTLES[id].name != "Aether Turtle"
                               ? Container()
                               : Text(
-                                  TURTLES[id].name == "Litback Turtle"
-                                      ? "Add Friends to Find"
-                                      : TURTLES[id].foundIn != null
-                                          ? "${TURTLES[id].foundIn!.name}"
-                                          : "Level " +
-                                              TURTLES[id].level.toString(),
+                                  TURTLES[id].name == "Aether Turtle"
+                                      ? "Breathwork"
+                                      : TURTLES[id].name == "Litback Turtle"
+                                          ? "Add Friends to Find"
+                                          : TURTLES[id].foundIn != null
+                                              ? "${TURTLES[id].foundIn!.name}"
+                                              : "Level " +
+                                                  TURTLES[id].level.toString(),
                                   style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,

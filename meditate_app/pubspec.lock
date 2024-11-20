@@ -9,6 +9,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  animated_text_kit:
+    dependency: "direct main"
+    description:
+      name: animated_text_kit
+      sha256: "37392a5376c9a1a503b02463c38bc0342ef814ddbb8f9977bc90f2a84b22fa92"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.2.2"
   archive:
     dependency: transitive
     description:
@@ -185,14 +193,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.17.2"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      sha256: e35129dc44c9118cee2a5603506d823bab99c68393879edb440e0090d07586be
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.5"
   data_connection_checker:
     dependency: "direct main"
     description:
@@ -417,14 +417,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  heap_flutter_bridge:
-    dependency: "direct main"
-    description:
-      name: heap_flutter_bridge
-      sha256: "4f901373c88f19edef7c84bc208c1c6f113e2fe2a3e99c617cb447c33562fb62"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
   html:
     dependency: transitive
     description:
@@ -665,6 +657,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.2"
+  overlay_tooltip:
+    dependency: "direct main"
+    description:
+      name: overlay_tooltip
+      sha256: "283c16b695f672291fa9777711e2d13c3d86a897cf8a340c4dbb837f16d86833"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
   path:
     dependency: transitive
     description:
@@ -793,6 +793,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
+  posthog_flutter:
+    dependency: "direct main"
+    description:
+      name: posthog_flutter
+      sha256: fa766d3768e97bfe69faea688ad4a282e8c0a2fd3d877a5376df618a5a13c9e8
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.0"
   process:
     dependency: transitive
     description:

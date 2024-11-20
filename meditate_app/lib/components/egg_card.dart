@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/services/heap_service.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -35,9 +35,9 @@ class EggCard extends StatelessWidget {
                     : "Meditate 3 days to hatch this egg!",
                 style: const TextStyle(fontWeight: FontWeight.bold))));
 
-        //Log the event to AppsFlyer
-        HeapService appsflyer = Get.find();
-        appsflyer.logEvent("EGG_TAPPED", {
+        //Log the event to Posthog
+        PostHogService posthog = Get.find();
+        posthog.logEvent("EGG_TAPPED", {
           "more_days": (3 - user.user.value.hatchProgressEggOne).toString()
         });
       },

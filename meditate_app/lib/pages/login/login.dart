@@ -56,6 +56,11 @@ class Login extends StatelessWidget {
                       shape: BubbleShape
                           .circle, // circle is the default. No need to explicitly mention if its a circle.
                     )),
+                    Container(
+                      color: Colors.black54,
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                    ),
                     ListView(
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
@@ -141,14 +146,15 @@ class Login extends StatelessWidget {
                                         MaterialStateProperty.all<double>(0),
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
-                                            Colors.tealAccent),
+                                            Colors.lightBlue),
                                     shape: MaterialStateProperty.all<
                                             RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
                                             side: const BorderSide(
-                                                color: Colors.tealAccent)))),
+                                                width: 2,
+                                                color: Colors.white)))),
                                 onPressed: controller.login,
                                 child: const SizedBox(
                                     width: 2000,
@@ -157,7 +163,7 @@ class Login extends StatelessWidget {
                                       child: Text("Login",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                              color: Colors.black,
+                                              color: Colors.white,
                                               fontWeight: FontWeight.bold)),
                                     ))),
                           ),

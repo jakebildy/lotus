@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/logger.dart';
 
@@ -20,13 +21,15 @@ class Turtle {
   final Tier tier;
   final int level;
   final Ambience? foundIn;
+  final bool? isBreathwork;
 
   const Turtle(
       {required this.name,
       required this.rarity,
       required this.tier,
       this.level = 1,
-      this.foundIn})
+      this.foundIn,
+      this.isBreathwork})
       : super();
 }
 
@@ -157,6 +160,12 @@ List<Turtle> TURTLES = [
       rarity: Rarity.COMMON,
       tier: Tier.AMBIENCE,
       foundIn: AMBIENCES[11]),
+  const Turtle(
+      name: "Aether Turtle",
+      rarity: Rarity.UNCOMMON,
+      tier: Tier.ORANGE,
+      isBreathwork: true,
+      level: 1),
 ];
 
 int getTurtleToHatch(String ambience) {
@@ -177,6 +186,13 @@ int getTurtleToHatch(String ambience) {
           .where((element) => element.name != "Litback Turtle")
           .toList();
     }
+  }
+
+  SaveController save = Get.find();
+  if (save.breathworkSelected.value == false) {
+    possibleTurtles = possibleTurtles
+        .where((element) => element.name != "Aether Turtle")
+        .toList();
   }
 
   // Only show ambience turtles if the user meditated with that ambience

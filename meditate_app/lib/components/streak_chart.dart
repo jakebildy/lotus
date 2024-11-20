@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/util/util.dart';
 
 class StreakChart extends StatelessWidget {
   final double height;
@@ -27,7 +28,9 @@ class StreakChart extends StatelessWidget {
                   topTitles: SideTitles(showTitles: false),
                 ),
                 minY: 0,
-                maxY: 80,
+                maxY: getMaxValueForStreakChart(
+                        userController.user.value.meditationHistory)
+                    .toDouble(),
                 lineBarsData: [
                   LineChartBarData(
                       colors: [
@@ -39,7 +42,24 @@ class StreakChart extends StatelessWidget {
                         show: true,
                         gradientFrom: const Offset(1, 1),
                         gradientTo: const Offset(1, 0),
-                        gradientColorStops: [0.05, 0.15, 0.35, 1],
+                        gradientColorStops: [
+                          0.05 *
+                              80 /
+                              getMaxValueForStreakChart(
+                                  userController.user.value.meditationHistory),
+                          0.15 *
+                              80 /
+                              getMaxValueForStreakChart(
+                                  userController.user.value.meditationHistory),
+                          0.35 *
+                              80 /
+                              getMaxValueForStreakChart(
+                                  userController.user.value.meditationHistory),
+                          1 *
+                              80 /
+                              getMaxValueForStreakChart(
+                                  userController.user.value.meditationHistory)
+                        ],
                         colors: [
                           // Color.fromARGB(0, 255, 153, 0),
                           Colors.green,

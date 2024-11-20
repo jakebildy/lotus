@@ -23,6 +23,9 @@ class TurtleImage extends StatelessWidget {
         id != 10
             ? Container()
             : Image.asset("assets/images/turtles/10_overlay.png"),
+        id != 23
+            ? Container()
+            : Image.asset("assets/images/turtles/23_overlay.png"),
       ],
     );
   }

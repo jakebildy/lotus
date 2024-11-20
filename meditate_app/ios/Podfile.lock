@@ -65,13 +65,6 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
-  - heap_flutter_bridge (0.0.1):
-    - Flutter
-    - HeapSwiftCore (~> 0.1)
-  - HeapSwiftCore (0.5.0):
-    - HeapSwiftCoreInterfaces (= 0.5.1)
-    - SwiftProtobuf (~> 1.6)
-  - HeapSwiftCoreInterfaces (0.5.1)
   - image_cropper (0.0.4):
     - Flutter
     - TOCropViewController (~> 2.6.1)
@@ -95,6 +88,11 @@ PODS:
     - Flutter
   - permission_handler_apple (9.0.4):
     - Flutter
+  - PostHog (3.15.3)
+  - posthog_flutter (0.0.1):
+    - Flutter
+    - FlutterMacOS
+    - PostHog (~> 3.0)
   - PromisesObjC (2.3.1)
   - purchases_flutter (6.21.0):
     - Flutter
@@ -106,7 +104,6 @@ PODS:
     - Flutter
   - share_plus (0.0.1):
     - Flutter
-  - SwiftProtobuf (1.25.2)
   - TOCropViewController (2.6.1)
   - url_launcher_ios (0.0.1):
     - Flutter
@@ -120,7 +117,6 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
-  - heap_flutter_bridge (from `.symlinks/plugins/heap_flutter_bridge/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/ios`)
@@ -129,6 +125,7 @@ DEPENDENCIES:
   - ocarina (from `.symlinks/plugins/ocarina/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - posthog_flutter (from `.symlinks/plugins/posthog_flutter/ios`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
@@ -145,13 +142,11 @@ SPEC REPOS:
     - FirebaseMessaging
     - GoogleDataTransport
     - GoogleUtilities
-    - HeapSwiftCore
-    - HeapSwiftCoreInterfaces
     - nanopb
+    - PostHog
     - PromisesObjC
     - PurchasesHybridCommon
     - RevenueCat
-    - SwiftProtobuf
     - TOCropViewController
 
 EXTERNAL SOURCES:
@@ -167,8 +162,6 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
-  heap_flutter_bridge:
-    :path: ".symlinks/plugins/heap_flutter_bridge/ios"
   image_cropper:
     :path: ".symlinks/plugins/image_cropper/ios"
   image_picker_ios:
@@ -185,6 +178,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  posthog_flutter:
+    :path: ".symlinks/plugins/posthog_flutter/ios"
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
   sensors_plus:
@@ -211,9 +206,6 @@ SPEC CHECKSUMS:
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  heap_flutter_bridge: cda4fed7467b0a6cffd6168ef6dd44fe4f63b877
-  HeapSwiftCore: 0b4f1e1ceefd1f645b7d306f42528a6fe6950eee
-  HeapSwiftCoreInterfaces: 45219bc4e48cc4fc9bcb3419276cc77f6ca9569c
   image_cropper: 60c2789d1f1a78c873235d4319ca0c34a69f2d98
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
   in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
@@ -223,13 +215,14 @@ SPEC CHECKSUMS:
   ocarina: 632a3387b2cf3f130af7ce53a6014e3bf0c145d2
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
+  PostHog: 3d70135d015082d2701d8eb6c731839f105b0484
+  posthog_flutter: e80defebf021b13375b351c838c9b87d769d7546
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   purchases_flutter: becb61c2ca37cd944aeaae688119e1f485158fee
   PurchasesHybridCommon: 76ea82671cfb30f921c5697362b56d86b341da04
   RevenueCat: 991b09e19835c2e7344f3cdda6921c2a5f2da47a
   sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
-  SwiftProtobuf: 407a385e97fd206c4fbe880cc84123989167e0d1
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
