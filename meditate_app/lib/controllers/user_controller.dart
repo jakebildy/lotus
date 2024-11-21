@@ -91,6 +91,13 @@ class UserController extends GetxController {
     // Get.put follow controller if it doesn't already exist
     if (!Get.isRegistered<FollowController>()) {
       Get.put(FollowController());
+      FollowController followController = Get.find();
+      followController.fetchFollows();
+    }
+    if (!Get.isRegistered<SubscriptionController>()) {
+      Get.put(SubscriptionController());
+      SubscriptionController subscriptionController = Get.find();
+      subscriptionController.initPlatformState();
     }
   }
 

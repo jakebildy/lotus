@@ -32,13 +32,13 @@ class _Onboarding3State extends State<Onboarding3> {
   Future<void> shakeAfterASec() async {
     await Future.delayed(const Duration(milliseconds: 400));
     shakeKey.currentState?.shake();
-    HapticFeedback.lightImpact();
+    // HapticFeedback.lightImpact();
 
     while (isOnPage) {
       await Future.delayed(Duration(seconds: Random().nextInt(4) + 3));
       if (isOnPage) {
         shakeKey.currentState?.shake();
-        HapticFeedback.lightImpact();
+        // HapticFeedback.lightImpact();
       }
     }
   }
@@ -77,7 +77,7 @@ class _Onboarding3State extends State<Onboarding3> {
                 shakeDuration: const Duration(milliseconds: 500),
                 child: GestureDetector(
                     onTap: () {
-                      HapticFeedback.mediumImpact();
+                      // HapticFeedback.mediumImpact();
                       shakeKey.currentState?.shake();
                     },
                     child: Stack(
