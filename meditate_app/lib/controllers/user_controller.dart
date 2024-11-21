@@ -91,14 +91,14 @@ class UserController extends GetxController {
     // Get.put follow controller if it doesn't already exist
     if (!Get.isRegistered<FollowController>()) {
       Get.put(FollowController());
-      FollowController followController = Get.find();
-      followController.fetchFollows();
     }
+    FollowController followController = Get.find();
+    followController.fetchFollows();
     if (!Get.isRegistered<SubscriptionController>()) {
       Get.put(SubscriptionController());
-      SubscriptionController subscriptionController = Get.find();
-      subscriptionController.initPlatformState();
     }
+    SubscriptionController subscriptionController = Get.find();
+    subscriptionController.initPlatformState();
   }
 
   /// This saves the changed value to the local storage. Also updates the localStorageUser and lastUpdatedAt - this is used to sync data when the user goes online.
