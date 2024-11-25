@@ -45,7 +45,7 @@ class _AppPagesState extends State<AppPages> {
                         elevation: 0,
                         backgroundColor: appPages.page.value == 0
                             ? Colors.transparent
-                            : Colors.grey[850],
+                            : Colors.grey[900],
                         centerTitle: true,
                         title: Column(
                           children: [
@@ -168,6 +168,7 @@ class _AppPagesState extends State<AppPages> {
                           ],
                         )),
                   ),
+                  backgroundColor: Colors.grey[900],
                   body: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
@@ -202,6 +203,7 @@ class _AppPagesState extends State<AppPages> {
                     ],
                   ),
                   bottomNavigationBar: BottomNavigationBar(
+                      backgroundColor: Colors.grey[900],
                       onTap: ((value) => setState(() {
                             appPages.page.value = value;
                           })),

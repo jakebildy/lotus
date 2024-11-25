@@ -42,6 +42,7 @@ class EggCard extends StatelessWidget {
         });
       },
       child: Card(
+        color: Colors.grey[850],
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
