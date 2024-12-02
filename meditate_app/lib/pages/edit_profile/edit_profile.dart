@@ -11,12 +11,12 @@ class EditProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[850],
+        backgroundColor: Colors.grey[900],
         elevation: 0,
         title: const Text("Edit Profile"),
       ),
       body: Container(
-        color: Colors.grey[850],
+        color: Colors.grey[900],
         child: ListView(
           // physics: ClampingScrollPhysics(),
           children: const <Widget>[

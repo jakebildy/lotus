@@ -6,6 +6,7 @@ import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/components/piechart_painter.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/turtle_category_page.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
@@ -31,6 +32,10 @@ class TurtleCategory extends StatelessWidget {
       duration: const Duration(milliseconds: 110),
       onPressed: () {
         HapticFeedback.lightImpact();
+
+        PostHogService posthog = Get.find();
+        posthog.logEvent("TURTLE_CATEGORY_TAPPED", {});
+
         Get.to(TurtleCategoryPage(id: id), transition: Transition.downToUp);
         // if (unlocked) {
         //   HapticFeedback.lightImpact();

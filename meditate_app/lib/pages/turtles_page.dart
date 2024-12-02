@@ -36,9 +36,10 @@ class _TurtlesPageState extends State<TurtlesPage> {
       return DefaultTabController(
         length: 2,
         child: Scaffold(
+          backgroundColor: Colors.grey[900],
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.grey[900],
             title: TabBar(
               tabs: [
                 Tab(

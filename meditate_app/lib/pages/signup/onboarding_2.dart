@@ -24,7 +24,7 @@ class Onboarding2 extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
         ),
         Image(
-          image: AssetImage("assets/fire_joypixel.gif"),
+          image: AssetImage("assets/fire.gif"),
           width: 100,
           height: 100,
         ),

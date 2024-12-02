@@ -25,6 +25,22 @@ class FollowController extends GetxController {
     fetchFollows();
   }
 
+  RxList<User> combinedUsers = <User>[].obs; // Filtered & sorted users
+
+  // Updates `combinedUsers` based on `usersNotFollowing`
+  void updateCombinedUsers() {
+    final activeUsers = getActiveUsers(usersNotFollowing);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    final newUsers = usersNotFollowing.where((user) {
+      return user.createdAt.isAfter(today.subtract(const Duration(days: 3)));
+    }).toList();
+
+    // Combine and deduplicate active and new users
+    combinedUsers.value = (activeUsers + newUsers).toSet().toList();
+  }
+
   List<User> getActiveUsers(List<User> users) {
     // Only return users for whom lastMeditated was at most yesterday, OR lastMeditated was at most 2 days ago and they have one streak freeze, OR last meditated was 3 days ago and they have two streak freezes
     List<User> activeUsers = [];
@@ -164,14 +180,23 @@ class FollowController extends GetxController {
       update();
     }
     try {
-      List<Follow> allFollowers = await api.follow.getEveryUserFollowers();
-      allUserFollowers.value = allFollowers;
+      // Fetch all the required data concurrently
+      final results = await Future.wait([
+        api.follow.getEveryUserFollowers(), // Fetch all followers
+        api.follow.getFollowers(), // Fetch followers of the user
+        api.follow.getFollowing(), // Fetch users being followed
+        api.follow.getStylistNotFollowing(Get.find<UserController>()
+            .user
+            .value), // Fetch stylists not being followed
+      ]);
 
-      List<Follow> _followers = await api.follow.getFollowers();
-      List<Follow> _following = await api.follow.getFollowing();
+      // Destructure the results into separate variables
+      allUserFollowers.value = results[0] as List<Follow>;
+      List<Follow> _followers = results[1] as List<Follow>;
+      List<Follow> _following = results[2] as List<Follow>;
+      List<User> _notFollowing = results[3] as List<User>;
+
       UserController userController = Get.find();
-      List<User> _notFollowing =
-          await api.follow.getStylistNotFollowing(userController.user.value);
       following.value = _followers;
       followers.value = [];
       usersFollowing.value = [];
@@ -200,6 +225,7 @@ class FollowController extends GetxController {
       logError(trace.toString());
     }
     loadingFollowers.value = false;
+    updateCombinedUsers();
     update();
   }
 

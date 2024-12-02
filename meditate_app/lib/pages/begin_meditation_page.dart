@@ -557,37 +557,44 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                                       "GUIDE_SHOWN", "TRUE");
                                                 }
                                               }),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    // border: Border.all(
-                                                    //     color: Colors.cyan),
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.black
-                                                            .withOpacity(0.5),
-                                                        spreadRadius: 1,
-                                                        blurRadius: 5,
-                                                        offset:
-                                                            const Offset(0, 3),
-                                                      ),
-                                                    ],
-                                                    color: Colors.cyan,
-                                                    border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 2),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            60)),
-                                                child: const Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Hero(
-                                                      tag: "PLAY_BUTTON",
-                                                      child: Icon(
-                                                        Icons.play_arrow,
-                                                        size: 50,
-                                                        color: Colors.white,
-                                                      )),
-                                                ),
+                                              child: Stack(
+                                                children: [
+                                                  Container(
+                                                    decoration: BoxDecoration(
+                                                        // border: Border.all(
+                                                        //     color: Colors.cyan),
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors.black
+                                                                .withOpacity(
+                                                                    0.5),
+                                                            spreadRadius: 1,
+                                                            blurRadius: 5,
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 3),
+                                                          ),
+                                                        ],
+                                                        color: Colors.cyan,
+                                                        border: Border.all(
+                                                            color: Colors.white,
+                                                            width: 2),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(60)),
+                                                    child: const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(8.0),
+                                                      child: Hero(
+                                                          tag: "PLAY_BUTTON",
+                                                          child: Icon(
+                                                            Icons.play_arrow,
+                                                            size: 50,
+                                                            color: Colors.white,
+                                                          )),
+                                                    ),
+                                                  ),
+                                                ],
                                               )),
                                         ),
                                 )

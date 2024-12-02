@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
@@ -12,6 +13,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
+import 'package:meditate_app/pages/search/add_friends.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
@@ -82,6 +84,35 @@ class _ProfilePageState extends State<ProfilePage>
             )
           : ListView(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(const EditProfile());
+                        },
+                        child: Container(
+                            width: 120,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(60),
+                              color: Colors.black12,
+                              border: Border.all(
+                                color: Colors.white24,
+                                width: 2,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 8.0),
+                              child: const Text("   Edit Profile   ",
+                                  style: TextStyle(color: Colors.grey)),
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 10.0),
                     child: Center(
@@ -192,99 +223,136 @@ class _ProfilePageState extends State<ProfilePage>
                   style: const TextStyle(color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(
-                                width: 1.0, color: Colors.white24),
-                            shape: const StadiumBorder(),
-                          ),
-                          onPressed: () {
-                            Get.to(const EditProfile());
-                          },
-                          child: const Text("   Edit Profile   ",
-                              style: TextStyle(color: Colors.grey))),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0.0),
-                      child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(
-                                width: 1.0, color: Colors.white),
-                            shape: const StadiumBorder(),
-                          ),
-                          onPressed: () async {
-                            final Uri url = Uri.parse(
-                                'https://forms.gle/Y8WuZ3J8hojTJNoc8');
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(url);
-                            } else {
-                              throw 'Could not launch $url';
-                            }
-                          },
-                          child: const Text("Send Feedback",
-                              style: TextStyle(color: Colors.white))),
-                    ),
-                  ],
-                ),
+
                 const SizedBox(
                   height: 10,
                 ),
                 Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black12,
-                          border: Border.all(
-                            color: Colors.white24,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Level " +
-                                        calculateLevel(userController
-                                                .user.value.levelPoints)
-                                            .toString(),
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          //Log the event to AppsFlyer
+                          PostHogService posthog = Get.find();
+                          posthog.logEvent("ADD_FRIENDS_TAPPED", {});
+                          HapticFeedback.mediumImpact();
+                          Get.to(const AddFriends(),
+                              transition: Transition.downToUp);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width - 90,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black12,
+                                    border: Border.all(
+                                      color: Colors.white24,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                  (followController.meditationAmounts.isEmpty &&
-                                              save.topPercentage.value == -1) ||
-                                          save.topPercentage.value > 50
-                                      ? Container()
-                                      : Text(
-                                          " (Top " +
-                                              save.topPercentage.value
-                                                  .toString() +
-                                              "%)",
-                                          style: const TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 16),
-                                        )
-                                ],
-                              ),
-                              const LevelProgressBar(),
-                            ],
-                          ),
-                        ))),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: const [
+                                      Padding(
+                                          padding:
+                                              EdgeInsets.fromLTRB(0, 0, 5, 5.0),
+                                          child: SizedBox(
+                                              height: 17,
+                                              child: Icon(
+                                                Icons.person_add,
+                                                color: Colors.tealAccent,
+                                                size: 20,
+                                              ))),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "ADD FRIENDS",
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.tealAccent,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                PostHogService posthog = Get.find();
+                                posthog.logEvent("ADD_FRIENDS_LINK_TAPPED", {});
+                                HapticFeedback.mediumImpact();
+                                Share.share(
+                                    "Add me on Shellevate! My username is @" +
+                                        userController.user.value.username +
+                                        "\n\n https://shellevate.app/get");
+                              },
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black12,
+                                    border: Border.all(
+                                      color: Colors.white24,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Icon(
+                                      Icons.ios_share_outlined,
+                                      color: Colors.tealAccent,
+                                    ),
+                                  )),
+                            )
+                          ],
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(10, 0, 0, 0.0),
+                      //   child: OutlinedButton(
+                      //       style: OutlinedButton.styleFrom(
+                      //         side: const BorderSide(
+                      //             width: 1.0, color: Colors.white),
+                      //         shape: const StadiumBorder(),
+                      //       ),
+                      //       onPressed: () async {
+                      //         final Uri url = Uri.parse(
+                      //             'https://forms.gle/Y8WuZ3J8hojTJNoc8');
+                      //         if (await canLaunchUrl(url)) {
+                      //           await launchUrl(url);
+                      //         } else {
+                      //           throw 'Could not launch $url';
+                      //         }
+                      //       },
+                      //       child: const Text("Send Feedback",
+                      //           style: TextStyle(color: Colors.white))),
+                      // ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                // Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: Container(
+                //         decoration: BoxDecoration(
+                //           color: Colors.black12,
+                //           border: Border.all(
+                //             color: Colors.white24,
+                //             width: 2,
+                //           ),
+                //           borderRadius: BorderRadius.circular(20),
+                //         ),
+                //         child: )),
                 GestureDetector(
                   onTap: () {
                     Get.to(const StatsPage());
@@ -384,7 +452,7 @@ class _ProfilePageState extends State<ProfilePage>
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                      height: 250,
+                      height: 330,
                       decoration: BoxDecoration(
                         color: Colors.black12,
                         border: Border.all(
@@ -394,7 +462,47 @@ class _ProfilePageState extends State<ProfilePage>
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Column(
-                        children: const [
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Level " +
+                                          calculateLevel(userController
+                                                  .user.value.levelPoints)
+                                              .toString(),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    (followController.meditationAmounts
+                                                    .isEmpty &&
+                                                save.topPercentage.value ==
+                                                    -1) ||
+                                            save.topPercentage.value > 50
+                                        ? Container()
+                                        : Text(
+                                            " (Top " +
+                                                save.topPercentage.value
+                                                    .toString() +
+                                                "%)",
+                                            style: const TextStyle(
+                                                color: Colors.white70,
+                                                fontSize: 16),
+                                          )
+                                  ],
+                                ),
+                                const LevelProgressBar(),
+                              ],
+                            ),
+                          ),
+                          Divider(),
                           SizedBox(
                             height: 10,
                           ),
@@ -739,9 +847,9 @@ class _ProfilePageState extends State<ProfilePage>
                                                       color:
                                                           const Color.fromARGB(
                                                               255,
-                                                              42,
-                                                              42,
-                                                              42))))
+                                                              29,
+                                                              29,
+                                                              29))))
                                             ]),
                                   followController.loadingFollowers.value
                                       ? const SizedBox(
@@ -775,9 +883,9 @@ class _ProfilePageState extends State<ProfilePage>
                                                       color:
                                                           const Color.fromARGB(
                                                               255,
-                                                              42,
-                                                              42,
-                                                              42))))
+                                                              29,
+                                                              29,
+                                                              29))))
                                             ]),
                                 ]),
                           ),
@@ -790,7 +898,9 @@ class _ProfilePageState extends State<ProfilePage>
                               PostHogService posthog = Get.find();
                               posthog.logEvent("ADD_FRIENDS_TAPPED", {});
 
-                              Get.to(const Search());
+                              HapticFeedback.mediumImpact();
+                              Get.to(const AddFriends(),
+                                  transition: Transition.downToUp);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -840,6 +950,10 @@ class _ProfilePageState extends State<ProfilePage>
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    PostHogService posthog = Get.find();
+                                    posthog.logEvent(
+                                        "ADD_FRIENDS_LINK_TAPPED", {});
+                                    HapticFeedback.mediumImpact();
                                     Share.share(
                                         "Add me on Shellevate! My username is @" +
                                             userController.user.value.username +
@@ -872,7 +986,7 @@ class _ProfilePageState extends State<ProfilePage>
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.black12,
+                        // color: Colors.black12,
                         border: Border.all(
                           color: Colors.white24,
                           width: 2,
@@ -898,7 +1012,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     height: 10,
                                   ),
                                   const Text(
-                                    "People you may know",
+                                    "Friend suggestions",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),
@@ -914,8 +1028,7 @@ class _ProfilePageState extends State<ProfilePage>
                                       // .where((p0) => p0.streak > 0)
                                       .map((user) => FollowerWidget(
                                           user: user,
-                                          color: const Color.fromARGB(
-                                              255, 42, 42, 42)))),
+                                          color: Colors.grey[900]!))),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -926,20 +1039,39 @@ class _ProfilePageState extends State<ProfilePage>
                 const SizedBox(
                   height: 10,
                 ),
-                GestureDetector(
-                    onTap: () async {
-                      final Uri url = Uri.parse('https://shellevate.app');
-                      if (await canLaunchUrl(url)) {
-                        await launchUrl(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
-                    child: const Center(
-                        child: Text(
-                      "Guide to this App",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ))),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0.0),
+                  child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(width: 1.0, color: Colors.white),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () async {
+                        final Uri url =
+                            Uri.parse('https://forms.gle/Y8WuZ3J8hojTJNoc8');
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                      child: const Text("Send Feedback",
+                          style: TextStyle(color: Colors.white))),
+                ),
+                // GestureDetector(
+                //     onTap: () async {
+                //       final Uri url = Uri.parse('https://shellevate.app');
+                //       if (await canLaunchUrl(url)) {
+                //         await launchUrl(url);
+                //       } else {
+                //         throw 'Could not launch $url';
+                //       }
+                //     },
+                //     child: const Center(
+                //         child: Text(
+                //       "Guide to this App",
+                //       style: TextStyle(fontWeight: FontWeight.bold),
+                //     ))),
                 const SizedBox(
                   height: 30,
                 ),

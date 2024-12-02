@@ -16,6 +16,7 @@ class TurtleCategoryPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.grey[900],
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
