@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:meditate_app/api/user_api.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:meditate_app/api/index.dart' as api;
 
 /// SubscriptionController handles the subscription/purchases
 /// {@category Controllers}
@@ -39,6 +41,8 @@ class SubscriptionController extends GetxController {
       try {
         CustomerInfo customerInfo =
             await Purchases.purchasePackage(subscriptionPackage!);
+        UserController user = Get.find();
+        api.user.userSubscribed(user.user.value.email);
         logSuccess("Purchased!");
         if (customerInfo.entitlements.all["Premium"] != null &&
             customerInfo.entitlements.all["Premium"]!.isActive) {

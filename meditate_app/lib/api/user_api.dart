@@ -139,4 +139,21 @@ class UserApi {
       throw (response.body);
     }
   }
+
+  Future<void> userSubscribed(String email) async {
+    final Map<String, String> map = {
+      "email": email,
+    };
+
+    final String body = jsonEncode(map);
+
+    final response = await http.post(api.https(url, "/api/user/subscribed/"),
+        body: body, headers: api.headers);
+    if (response.statusCode == 200) {
+      return;
+      //response.body;
+    } else {
+      throw (response.body);
+    }
+  }
 }
