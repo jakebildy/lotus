@@ -13,6 +13,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
+import 'package:meditate_app/pages/search/add_friends.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
@@ -237,7 +238,8 @@ class _ProfilePageState extends State<ProfilePage>
                           PostHogService posthog = Get.find();
                           posthog.logEvent("ADD_FRIENDS_TAPPED", {});
                           HapticFeedback.mediumImpact();
-                          Get.to(const Search());
+                          Get.to(const AddFriends(),
+                              transition: Transition.downToUp);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -285,6 +287,9 @@ class _ProfilePageState extends State<ProfilePage>
                             ),
                             GestureDetector(
                               onTap: () {
+                                PostHogService posthog = Get.find();
+                                posthog.logEvent("ADD_FRIENDS_LINK_TAPPED", {});
+                                HapticFeedback.mediumImpact();
                                 Share.share(
                                     "Add me on Shellevate! My username is @" +
                                         userController.user.value.username +
@@ -894,8 +899,8 @@ class _ProfilePageState extends State<ProfilePage>
                               posthog.logEvent("ADD_FRIENDS_TAPPED", {});
 
                               HapticFeedback.mediumImpact();
-
-                              Get.to(const Search());
+                              Get.to(const AddFriends(),
+                                  transition: Transition.downToUp);
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -945,6 +950,10 @@ class _ProfilePageState extends State<ProfilePage>
                                 ),
                                 GestureDetector(
                                   onTap: () {
+                                    PostHogService posthog = Get.find();
+                                    posthog.logEvent(
+                                        "ADD_FRIENDS_LINK_TAPPED", {});
+                                    HapticFeedback.mediumImpact();
                                     Share.share(
                                         "Add me on Shellevate! My username is @" +
                                             userController.user.value.username +

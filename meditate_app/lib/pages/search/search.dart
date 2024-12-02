@@ -5,6 +5,7 @@ import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/pages/search/friend_suggestions.dart';
 import 'package:share_plus/share_plus.dart';
 
 class Search extends StatelessWidget {
@@ -63,39 +64,12 @@ class Search extends StatelessWidget {
   }
 }
 
-class FriendSuggestions extends StatelessWidget {
-  const FriendSuggestions({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final followController = Get.find<FollowController>();
-
-    return Obx(() {
-      if (followController.loadingFollowers.value) {
-        return const CircularProgressIndicator();
-      }
-
-      final users = followController.combinedUsers;
-
-      if (users.isEmpty) {
-        return const Text('No suggestions available.');
-      }
-
-      return Column(
-        children: users
-            .map((user) => FollowerWidget(user: user, color: Colors.grey[900]!))
-            .toList(),
-      );
-    });
-  }
-}
-
 class SearchBox extends StatelessWidget {
   SearchBox({Key? key}) : super(key: key);
   final InputDecoration _inputDecoration = InputDecoration(
       prefixIcon: const Icon(
         Icons.search,
-        color: Colors.grey,
+        color: Colors.white,
       ),
       filled: true,
       fillColor: Colors.black12,
@@ -103,7 +77,7 @@ class SearchBox extends StatelessWidget {
       contentPadding: const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: BorderSide.none,
+        borderSide: const BorderSide(color: Colors.white, width: 1),
       ));
 
   @override
