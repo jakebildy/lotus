@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:meditate_app/models/user.dart';
@@ -373,4 +375,32 @@ int calculateOnboardingPercentage(bool meditated, bool profilePictureAdded,
   }
 
   return percentage;
+}
+
+// availableTurtles function - given a date (not time) as the seed, returns 10 unique turtle colors and types
+List<List<int>> availableTurtles(DateTime date) {
+  List<List<int>> availableTurtles = [];
+  List<int> availableColors =
+      List.generate(TURTLE_COLORS.length, (index) => index);
+  List<int> availableTypes = List.generate(TURTLES.length, (index) => index);
+
+  // Shuffle the available colors and types
+  availableColors.shuffle(Random(date.millisecondsSinceEpoch));
+  availableTypes.shuffle(Random(date.millisecondsSinceEpoch));
+
+  // Select the first 10 unique turtle colors and types
+  for (int i = 0; i < 10; i++) {
+    availableTurtles.add([availableTypes[i], availableColors[i]]);
+  }
+
+  return availableTurtles;
+}
+
+int calculateTurtlePrice(int id, int color) {
+  int rainbowBoost = 1;
+  if (color == 18) {
+    rainbowBoost = 2;
+  }
+
+  return (TURTLES[id].rarity.index * 100 + 35 + color * 3) * rainbowBoost;
 }

@@ -5,12 +5,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/turtle_image.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
+import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShopPage extends StatefulWidget {
@@ -75,6 +78,9 @@ class _ShopPageState extends State<ShopPage> {
         subscriptionController = Get.put(SubscriptionController());
       }
     }
+
+    List<List<int>> turtleOptions = availableTurtles(DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day));
 
     return Obx(
       () => ListView(
@@ -548,6 +554,112 @@ class _ShopPageState extends State<ShopPage> {
                 ),
 
           //Lure
+
+          // Daily Turtles
+          SizedBox(
+            height: 40,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Turtles available today",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          // pick 10 random turtles
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(10, (index) {
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      border: Border.all(
+                        color: Colors.white24,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: SizedBox(
+                      height: 100,
+                      child: Center(
+                        child: Row(
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TurtleImage(
+                                  id: turtleOptions[index][0],
+                                  color: turtleOptions[index][1],
+                                )),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(TURTLE_COLORS_NAME[turtleOptions[index]
+                                        [1]] +
+                                    " " +
+                                    TURTLES[turtleOptions[index][0]].name),
+                                Text(
+                                  rarityReadable(
+                                      TURTLES[turtleOptions[index][0]].rarity),
+                                  style: TextStyle(
+                                    color: rarityColor(
+                                        TURTLES[turtleOptions[index][0]]
+                                            .rarity),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "Buy for",
+                                  style: const TextStyle(
+                                      color: Colors.lightBlueAccent,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                        height: 20,
+                                        child: Image.asset(
+                                            "assets/sand_dollar.png")),
+                                    const SizedBox(
+                                      width: 2,
+                                    ),
+                                    Text(
+                                      "${calculateTurtlePrice(turtleOptions[index][0], turtleOptions[index][1])}",
+                                      style: const TextStyle(
+                                          color: Colors.lightBlueAccent,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 20,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
         ],
       ),
     );

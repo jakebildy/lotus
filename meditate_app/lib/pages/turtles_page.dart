@@ -35,6 +35,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
 
       return DefaultTabController(
         length: 2,
+        initialIndex: totalTurtles == 0 ? 1 : 0,
         child: Scaffold(
           backgroundColor: Colors.grey[900],
           appBar: AppBar(
@@ -76,6 +77,14 @@ class _TurtlesPageState extends State<TurtlesPage> {
           body: TabBarView(
             children: [
               ListView(children: [
+                totalTurtles == 0
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 100, 8, 8.0),
+                        child: Text("No turtles found yet!"),
+                      ))
+                    : Container(),
+
                 //Unlocked Turtles
                 ListView(
                     shrinkWrap: true,
@@ -118,32 +127,32 @@ class _TurtlesPageState extends State<TurtlesPage> {
                 const Divider(),
 
                 //Locked Turtles
-                ListView(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  children: List.generate(
-                      listOfIndicesByRarity(
-                              userController.user.value.unlockedTurtles)
-                          .length, (index) {
-                    // Check if index is within the bounds of unlockedTurtles
+                // ListView(
+                //   shrinkWrap: true,
+                //   physics: const ClampingScrollPhysics(),
+                //   children: List.generate(
+                //       listOfIndicesByRarity(
+                //               userController.user.value.unlockedTurtles)
+                //           .length, (index) {
+                //     // Check if index is within the bounds of unlockedTurtles
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4.0),
-                      child: SizedBox(
-                        height: 100,
-                        child: Center(
-                          child: TurtleCategory(
-                            unlocked: false,
-                            id: listOfIndicesByRarity(userController
-                                .user.value.unlockedTurtles)[index],
-                            uniqueQuantity: 0,
-                            displayColor: 0,
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
+                //     return Padding(
+                //       padding: const EdgeInsets.symmetric(vertical: 4.0),
+                //       child: SizedBox(
+                //         height: 100,
+                //         child: Center(
+                //           child: TurtleCategory(
+                //             unlocked: false,
+                //             id: listOfIndicesByRarity(userController
+                //                 .user.value.unlockedTurtles)[index],
+                //             uniqueQuantity: 0,
+                //             displayColor: 0,
+                //           ),
+                //         ),
+                //       ),
+                //     );
+                //   }),
+                // ),
               ]),
               userController.user.value.eggs == 0
                   ? const Center(
