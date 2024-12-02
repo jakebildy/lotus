@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
+import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:share_plus/share_plus.dart';
@@ -16,34 +17,76 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    SearchController searchController = Get.put(SearchController());
+    return Obx(
+      () => Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey[850],
+          backgroundColor: Colors.grey[900],
           centerTitle: false,
           elevation: 0,
           title: SearchBox(),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.ios_share_outlined),
-          onPressed: () {
-            UserController userController = Get.find();
-            Share.share("Add me on Shellevate! My username is @" +
-                userController.user.value.username +
-                "\n\n https://shellevate.app/get");
-          },
-        ),
+        backgroundColor: Colors.grey[900],
+        // floatingActionButton: FloatingActionButton(
+        //   child: const Icon(Icons.ios_share_outlined),
+        //   onPressed: () {
+        //     UserController userController = Get.find();
+        //     Share.share("Add me on Shellevate! My username is @" +
+        //         userController.user.value.username +
+        //         "\n\n https://shellevate.app/get");
+        //   },
+        // ),
         //Search - scafold body
         body: Container(
-          color: Colors.grey[850],
-          child: Center(
-            child: ListView(
-              // physics: ClampingScrollPhysics(),
-              children: const <Widget>[
-                StylistsSearchResults(),
-              ],
-            ),
-          ),
-        ));
+            color: Colors.grey[900],
+            child: Center(
+              child: ListView(
+                // physics: ClampingScrollPhysics(),
+                children: <Widget>[
+                  const SearchResults(),
+                  searchController.queryValue.value != ''
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text("Friend Suggestions",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20)),
+                        ),
+                  searchController.queryValue.value != ''
+                      ? Container()
+                      : const FriendSuggestions(),
+                ],
+              ),
+            )),
+      ),
+    );
+  }
+}
+
+class FriendSuggestions extends StatelessWidget {
+  const FriendSuggestions({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final followController = Get.find<FollowController>();
+
+    return Obx(() {
+      if (followController.loadingFollowers.value) {
+        return const CircularProgressIndicator();
+      }
+
+      final users = followController.combinedUsers;
+
+      if (users.isEmpty) {
+        return const Text('No suggestions available.');
+      }
+
+      return Column(
+        children: users
+            .map((user) => FollowerWidget(user: user, color: Colors.grey[900]!))
+            .toList(),
+      );
+    });
   }
 }
 
@@ -84,8 +127,8 @@ class SearchBox extends StatelessWidget {
   }
 }
 
-class StylistsSearchResults extends StatelessWidget {
-  const StylistsSearchResults({Key? key}) : super(key: key);
+class SearchResults extends StatelessWidget {
+  const SearchResults({Key? key}) : super(key: key);
   final TextStyle titleTextStyle = const TextStyle(
       color: Colors.black,
       fontSize: 20,
@@ -107,7 +150,11 @@ class StylistsSearchResults extends StatelessWidget {
       () => searchController.queryValue.value == ''
           ? const SizedBox(
               height: 176,
-              child: Center(child: Text("Search for friends!")),
+              child: Center(
+                child: Text("Search for friends!",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              ),
             )
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,

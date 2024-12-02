@@ -1003,7 +1003,7 @@ class _ProfilePageState extends State<ProfilePage>
                                     height: 10,
                                   ),
                                   const Text(
-                                    "People you may know",
+                                    "Friend suggestions",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16),

@@ -4,6 +4,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
@@ -27,10 +28,14 @@ class TurtleCard extends StatelessWidget {
       duration: const Duration(milliseconds: 110),
       onPressed: () {
         if (unlocked) {
+          PostHogService posthog = Get.find();
+          posthog.logEvent("TURTLE_CARD_UNLOCKED_TAPPED", {});
           HapticFeedback.lightImpact();
           Get.to(TurtleDetailsPage(id: id, color: color),
               transition: Transition.downToUp);
         } else {
+          PostHogService posthog = Get.find();
+          posthog.logEvent("TURTLE_CARD_LOCKED_TAPPED", {});
           HapticFeedback.lightImpact();
           ScaffoldMessenger.of(context).clearSnackBars();
 
