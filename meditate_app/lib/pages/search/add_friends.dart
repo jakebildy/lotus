@@ -29,7 +29,7 @@ class AddFriends extends StatelessWidget {
         leading: IconButton(
             icon: const Icon(Icons.keyboard_arrow_down),
             onPressed: () {
-              Get.offAll(const AppPages(), transition: Transition.topLevel);
+              Navigator.of(context).pop();
             }),
       ),
       backgroundColor: Colors.grey[900],
@@ -55,7 +55,7 @@ class AddFriends extends StatelessWidget {
                     border: Border.all(color: Colors.teal, width: 2),
                     borderRadius: BorderRadius.circular(10)),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: ListTile(
                     onTap: () {
                       PostHogService posthog = Get.find();
@@ -68,7 +68,7 @@ class AddFriends extends StatelessWidget {
                     title: const Text(
                       "Share link",
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           color: Colors.tealAccent,
                           fontWeight: FontWeight.bold),
                     ),
@@ -104,7 +104,7 @@ class AddFriends extends StatelessWidget {
                 border: Border.all(color: Colors.grey[800]!, width: 2),
                 borderRadius: BorderRadius.circular(10)),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: ListTile(
                 onTap: () {
                   PostHogService posthog = Get.find();
@@ -114,7 +114,7 @@ class AddFriends extends StatelessWidget {
                 // border
                 title: const Text(
                   "Search by username",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 leading: const Padding(
                   padding: EdgeInsets.all(8.0),

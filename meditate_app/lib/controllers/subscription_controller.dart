@@ -41,8 +41,8 @@ class SubscriptionController extends GetxController {
       try {
         CustomerInfo customerInfo =
             await Purchases.purchasePackage(subscriptionPackage!);
-        UserController user = Get.find();
-        api.user.userSubscribed(user.user.value.email);
+        // UserController user = Get.find();
+        // api.user.userSubscribed(user.user.value.email);
         logSuccess("Purchased!");
         if (customerInfo.entitlements.all["Premium"] != null &&
             customerInfo.entitlements.all["Premium"]!.isActive) {
