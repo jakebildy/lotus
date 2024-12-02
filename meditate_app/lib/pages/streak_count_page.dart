@@ -133,14 +133,14 @@ class _StreakCountPageState extends State<StreakCountPage>
                           alignment: Alignment.bottomCenter,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 150),
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 120),
                               child: AnimatedOpacity(
                                 duration: const Duration(milliseconds: 800),
                                 opacity: opacity,
                                 child: SizedBox(
                                     height:
                                         MediaQuery.of(context).size.height / 3,
-                                    width: 350,
+                                    width: 180,
                                     child: Image.asset("assets/fire.gif")),
                               ),
                             ),
