@@ -11,6 +11,7 @@ import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
+import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShopPage extends StatefulWidget {
@@ -21,7 +22,6 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
-  final int STREAK_FREEZE_PRICE = 40;
   final int STREAK_REVIVE_PRICE = 400;
   final int LURE_PRICE = 90;
 

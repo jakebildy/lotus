@@ -3,6 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/turtles.dart';
 
+// ignore: constant_identifier_names
+const int STREAK_FREEZE_PRICE = 40;
+
 String tierReadable(Tier tier) {
   return tier == Tier.ORANGE
       ? "Beginner Flame"

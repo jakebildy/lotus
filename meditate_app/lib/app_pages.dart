@@ -234,19 +234,12 @@ class _AppPagesState extends State<AppPages> {
                                                     .user.value.streakFreezes <=
                                                 2 &&
                                             userController.user.value.gems ~/
-                                                    80 >=
+                                                    STREAK_FREEZE_PRICE >=
                                                 1
                                         ? true
                                         : false,
                                     badgeContent: Text(
-                                      ((userController.user.value.gems ~/ 80 > 3
-                                                  ? 3
-                                                  : userController
-                                                          .user.value.gems ~/
-                                                      80) -
-                                              userController
-                                                  .user.value.streakFreezes)
-                                          .toString(),
+                                      (" !").toString(),
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 10,
