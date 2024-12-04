@@ -29,7 +29,7 @@ const app = express();
 app.use(helmet({
   contentSecurityPolicy: false,
 }));
-app.use(cors({ credentials: true, origin: ['*', 'http://localhost:3000', 'http://localhost:3000', 'http://localhost:53523', 'http://localhost:7007', "http://thefits.app", "http://www.thefits.app", "https://www.thefits.app", "https://www.thefits.app", "https://shopfits.me", "http://localhost:63373"] }));
+app.use(cors({ credentials: true, origin: ['*', 'http://localhost:3000', 'http://localhost:3000', 'http://localhost:53523', 'http://localhost:7007', "http://localhost:63373"] }));
 
 function verify(req: RequestI, res: Response, buf: Buffer) {
   const url = req.originalUrl;
