@@ -561,9 +561,11 @@ class _ShopPageState extends State<ShopPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              "Turtles available today",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            child: Center(
+              child: Text(
+                "Turtles available today",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           SizedBox(
@@ -601,10 +603,13 @@ class _ShopPageState extends State<ShopPage> {
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(TURTLE_COLORS_NAME[turtleOptions[index]
-                                        [1]] +
-                                    " " +
-                                    TURTLES[turtleOptions[index][0]].name),
+                                Text(
+                                    TURTLE_COLORS_NAME[turtleOptions[index]
+                                            [1]] +
+                                        " " +
+                                        TURTLES[turtleOptions[index][0]].name,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
                                 Text(
                                   rarityReadable(
                                       TURTLES[turtleOptions[index][0]].rarity),
@@ -660,6 +665,9 @@ class _ShopPageState extends State<ShopPage> {
               }),
             ),
           ),
+          const SizedBox(
+            height: 30,
+          )
         ],
       ),
     );

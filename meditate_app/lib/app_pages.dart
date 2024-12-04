@@ -6,8 +6,6 @@ import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/flame/reef.dart';
-import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
 import 'package:meditate_app/pages/loading_page.dart';
 import 'package:meditate_app/pages/profile_page.dart';
@@ -45,10 +43,9 @@ class _AppPagesState extends State<AppPages> {
                         Size.fromHeight(network.offline.value ? 66 : 56),
                     child: AppBar(
                         elevation: 0,
-                        backgroundColor:
-                            appPages.page.value == 0 || appPages.page.value == 2
-                                ? Colors.transparent
-                                : Colors.grey[900],
+                        backgroundColor: appPages.page.value == 0
+                            ? Colors.transparent
+                            : Colors.grey[900],
                         centerTitle: true,
                         title: Column(
                           children: [
@@ -180,12 +177,9 @@ class _AppPagesState extends State<AppPages> {
                           : appPages.page.value == 1
                               ? const ShopPage()
                               : appPages.page.value == 2
-                                  ? const ReefPage()
-                                  : appPages.page.value == 3
-                                      ? const TurtlesPage()
-                                      : const ProfilePage(),
+                                  ? const TurtlesPage()
+                                  : const ProfilePage(),
                       appPages.page.value == 0 ||
-                              appPages.page.value == 2 ||
                               calculateOnboardingPercentage(
                                       userController.user.value.totalMinutes >
                                           0,
@@ -209,33 +203,30 @@ class _AppPagesState extends State<AppPages> {
                     ],
                   ),
                   bottomNavigationBar: BottomNavigationBar(
-                      backgroundColor: appPages.page.value == 2
-                          ? Color.fromARGB(16, 0, 0, 0)
-                          : Colors.grey[900],
-                      elevation: appPages.page.value == 2 ? 0 : 8,
+                      backgroundColor: Colors.grey[900],
                       onTap: ((value) => setState(() {
                             appPages.page.value = value;
                           })),
                       currentIndex: appPages.page.value,
                       type: BottomNavigationBarType.fixed,
-                      showSelectedLabels: true,
-                      showUnselectedLabels: true,
+                      showSelectedLabels: false,
+                      showUnselectedLabels: false,
                       items: [
                         BottomNavigationBarItem(
                             icon: appPages.page.value == 0
                                 ? SizedBox(
-                                    height: 30,
+                                    height: 35,
                                     child: Image.asset(
                                         "assets/meditate_selected.png"))
                                 : SizedBox(
-                                    height: 30,
+                                    height: 35,
                                     child: Image.asset(
                                         "assets/meditate_unselected.png")),
-                            label: "Meditate"),
+                            label: "Home"),
                         BottomNavigationBarItem(
                             icon: appPages.page.value == 1
                                 ? SizedBox(
-                                    height: 27,
+                                    height: 30,
                                     child: Image.asset(
                                         "assets/store_selected.png"))
                                 : badges.Badge(
@@ -264,7 +255,7 @@ class _AppPagesState extends State<AppPages> {
                                     position: badges.BadgePosition.bottomEnd(
                                         bottom: -4, end: -4),
                                     child: SizedBox(
-                                        height: 27,
+                                        height: 30,
                                         child: Image.asset(
                                             "assets/store_unselected.png")),
                                   ),
@@ -272,35 +263,34 @@ class _AppPagesState extends State<AppPages> {
                         BottomNavigationBarItem(
                             icon: appPages.page.value == 2
                                 ? SizedBox(
-                                    height: 27,
-                                    child: Image.asset(
-                                        "assets/images/game/starfish_1.png"))
-                                : SizedBox(
-                                    height: 27,
-                                    child: Image.asset(
-                                        "assets/images/game/starfish_1.png")),
-                            label: "Reef"),
-                        BottomNavigationBarItem(
-                            icon: appPages.page.value == 3
-                                ? SizedBox(
-                                    height: 30,
+                                    height: 35,
                                     child: Image.asset(
                                         "assets/turtle_selected.png"))
                                 : SizedBox(
-                                    height: 30,
+                                    height: 35,
                                     child: Image.asset(
                                         "assets/turtle_unselected.png")),
                             label: "Turtles"),
                         BottomNavigationBarItem(
-                            icon: appPages.page.value == 4
-                                ? SizedBox(
-                                    height: 27,
-                                    child: Image.asset(
-                                        "assets/profile_selected.png"))
-                                : SizedBox(
-                                    height: 27,
-                                    child: Image.asset(
-                                        "assets/profile_unselected.png")),
+                            icon: network.offline.value
+                                ? appPages.page.value == 3
+                                    ? SizedBox(
+                                        height: 30,
+                                        child: Image.asset(
+                                            "assets/profile_selected.png"))
+                                    : SizedBox(
+                                        height: 30,
+                                        child: Image.asset(
+                                            "assets/profile_unselected.png"))
+                                : appPages.page.value == 3
+                                    ? SizedBox(
+                                        height: 30,
+                                        child: Image.asset(
+                                            "assets/profile_selected.png"))
+                                    : SizedBox(
+                                        height: 30,
+                                        child: Image.asset(
+                                            "assets/profile_unselected.png")),
                             label: "Profile"),
                       ]),
                 ),

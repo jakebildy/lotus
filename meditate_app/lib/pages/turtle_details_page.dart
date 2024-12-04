@@ -161,7 +161,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               transition: Transition.circularReveal);
                         },
                         child: Hero(
-                            tag: "turtle-${widget.id}",
+                            tag: "turtle-${widget.id}-${widget.color}",
                             child: XL(
                                 sharesPointer: false,
                                 // bypass the gesture detection to the parent

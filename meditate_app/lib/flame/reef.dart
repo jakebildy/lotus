@@ -6,13 +6,17 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/flame/components/butterfly.dart';
+import 'package:meditate_app/flame/components/fish.dart';
+import 'package:meditate_app/flame/components/lilypad.dart';
+import 'package:meditate_app/flame/components/rainbow_lilypad.dart';
 import 'package:meditate_app/flame/components/reef_turtle.dart';
 import 'package:meditate_app/flame/components/reef_world.dart';
 import 'package:meditate_app/flame/components/seafloor_object.dart';
 
 import 'components/wateranimation.dart';
 
-class ReefGame extends FlameGame with HasTappables, ScaleDetector {
+class ReefGame extends FlameGame with HasTappables {
   late Sprite background;
 
   List<SeaFloorObject> seafloorObjects = [];
@@ -25,20 +29,20 @@ class ReefGame extends FlameGame with HasTappables, ScaleDetector {
   @override
   Future<void> onLoad() async {
     add(_reefWorld);
-    // for (int i = 0; i < 700; i++) {
-    //   seafloorObjects.add(SeaFloorObject(
-    //       Vector2(math.Random().nextInt(20000).toDouble() - 10000,
-    //           math.Random().nextInt(20000).toDouble() - 10000),
-    //       (50 + math.Random().nextInt(30)).toDouble()));
-    // }
+    for (int i = 0; i < 10; i++) {
+      seafloorObjects.add(SeaFloorObject(
+          Vector2(math.Random().nextInt(400).toDouble(),
+              math.Random().nextInt(800).toDouble()),
+          (20 + math.Random().nextInt(15)).toDouble()));
+    }
 
-    // for (var seafloorObject in seafloorObjects) {
-    //   add(seafloorObject);
-    // }
+    for (var seafloorObject in seafloorObjects) {
+      add(seafloorObject);
+    }
 
-    // for (int i = 0; i < 400; i++) {
-    //   add(Fish(Vector2(math.Random().nextInt(20000).toDouble() - 10000,
-    //       math.Random().nextInt(20000).toDouble() - 10000)));
+    // for (int i = 0; i < 10; i++) {
+    //   add(Fish(Vector2(math.Random().nextInt(400).toDouble(),
+    //       math.Random().nextInt(800).toDouble())));
     // }
 
     add(waterAnimation);
@@ -51,34 +55,13 @@ class ReefGame extends FlameGame with HasTappables, ScaleDetector {
     for (int i = 0; i < user.user.value.unlockedTurtleColors.length; i++) {
       for (int j = 0; j < user.user.value.unlockedTurtleColors[i].length; j++) {
         add(ReefTurtle(
-          Vector2(math.Random().nextInt(200).toDouble() - 100,
-              math.Random().nextInt(200).toDouble() - 100),
+          Vector2(math.Random().nextInt(400).toDouble(),
+              math.Random().nextInt(800).toDouble()),
           i,
           user.user.value.unlockedTurtleColors[i][j],
         ));
       }
     }
-
-    // for (int i = 0; i < 600; i++) {
-    //   add(Lilypad(
-    //       Vector2(math.Random().nextInt(20000).toDouble() - 10000,
-    //           math.Random().nextInt(20000).toDouble() - 10000),
-    //       (70 + math.Random().nextInt(30)).toDouble()));
-    // }
-
-    // for (int i = 0; i < 1000; i++) {
-    //   add(RainbowLilypad(
-    //       Vector2(math.Random().nextInt(20000).toDouble() - 10000,
-    //           math.Random().nextInt(20000).toDouble() - 10000),
-    //       (70 + math.Random().nextInt(30)).toDouble()));
-    // }
-
-    // //Above the player & lilypads
-
-    // for (int i = 0; i < 400; i++) {
-    //   add(Butterfly(Vector2(math.Random().nextInt(20000).toDouble() - 10000,
-    //       math.Random().nextInt(20000).toDouble() - 10000)));
-    // }
   }
 
   bool canMove = true;
@@ -87,26 +70,6 @@ class ReefGame extends FlameGame with HasTappables, ScaleDetector {
     canMove = false;
     await Future.delayed(const Duration(milliseconds: 620));
     canMove = true;
-  }
-
-  late double startZoom;
-
-  @override
-  void onScaleStart(ScaleStartInfo info) {
-    startZoom = camera.zoom;
-  }
-
-  //zoom in and out with pinching
-  void onScaleUpdate(ScaleUpdateInfo info) {
-    /// not called when Component with DragCallbacks was added
-
-    final currentScale = info.scale.global;
-    if (!currentScale.isIdentity()) {
-      final newZoom = (startZoom * currentScale.y).clamp(1.0, 6.0);
-      camera.zoom = newZoom;
-    } else {
-      camera.zoom = startZoom;
-    }
   }
 }
 

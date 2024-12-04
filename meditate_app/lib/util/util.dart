@@ -402,5 +402,6 @@ int calculateTurtlePrice(int id, int color) {
     rainbowBoost = 2;
   }
 
-  return (TURTLES[id].rarity.index * 100 + 35 + color * 3) * rainbowBoost;
+  return (TURTLES[id].rarity.index * 100 + 35 + color * 3) * rainbowBoost +
+      TURTLES[id].level * 4;
 }
