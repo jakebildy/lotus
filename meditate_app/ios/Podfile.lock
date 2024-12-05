@@ -3,20 +3,16 @@ PODS:
     - Flutter
   - audioplayers_darwin (0.0.1):
     - Flutter
-  - FBSDKCoreKit (8.0.0):
-    - FBSDKCoreKit/Basics (= 8.0.0)
-    - FBSDKCoreKit/Core (= 8.0.0)
-  - FBSDKCoreKit/Basics (8.0.0)
-  - FBSDKCoreKit/Core (8.0.0):
-    - FBSDKCoreKit/Basics
-  - FBSDKLoginKit (8.0.0):
-    - FBSDKLoginKit/Login (= 8.0.0)
-  - FBSDKLoginKit/Login (8.0.0):
-    - FBSDKCoreKit (~> 8.0.0)
-  - FBSDKShareKit (8.0.0):
-    - FBSDKShareKit/Share (= 8.0.0)
-  - FBSDKShareKit/Share (8.0.0):
-    - FBSDKCoreKit (~> 8.0.0)
+  - FBAEMKit (17.4.0):
+    - FBSDKCoreKit_Basics (= 17.4.0)
+  - FBSDKCoreKit (17.4.0):
+    - FBAEMKit (= 17.4.0)
+    - FBSDKCoreKit_Basics (= 17.4.0)
+  - FBSDKCoreKit_Basics (17.4.0)
+  - FBSDKLoginKit (17.4.0):
+    - FBSDKCoreKit (= 17.4.0)
+  - FBSDKShareKit (17.4.0):
+    - FBSDKCoreKit (= 17.4.0)
   - Firebase/CoreOnly (9.5.0):
     - FirebaseCore (= 9.5.0)
   - Firebase/Messaging (9.5.0):
@@ -108,7 +104,7 @@ PODS:
     - Flutter
   - permission_handler_apple (9.0.4):
     - Flutter
-  - PostHog (3.16.1)
+  - PostHog (3.16.2)
   - posthog_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -135,9 +131,9 @@ PODS:
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
-  - FBSDKCoreKit (~> 8.0.0)
-  - FBSDKLoginKit (~> 8.0.0)
-  - FBSDKShareKit (~> 8.0.0)
+  - FBSDKCoreKit (~> 17.4.0)
+  - FBSDKLoginKit (~> 17.4.0)
+  - FBSDKShareKit (~> 17.4.0)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
@@ -159,7 +155,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - FBAEMKit
     - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
     - FBSDKLoginKit
     - FBSDKShareKit
     - Firebase
@@ -222,9 +220,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   audioplayers_darwin: 387322cb364026a1782298c982693b1b6aa9fa1b
-  FBSDKCoreKit: 9d27fe97a2fa2abe5eeefea8240e837623ab88e0
-  FBSDKLoginKit: 2cbaf5405379731b22f2ebc224f7c30f62378171
-  FBSDKShareKit: bf3705fc42b660c3da9f15223db791b3c9c2acde
+  FBAEMKit: 58cb5f302cdd715a56d4c1d0dfdd2e423ac1421a
+  FBSDKCoreKit: 94d7461d0cecf441b1ba7c41acfff41daa8ccd41
+  FBSDKCoreKit_Basics: 151b43db8b834d3f0e02f95d36a44ffd36265e45
+  FBSDKLoginKit: 5c1cd53c91a2282b3a4fe6e6d3dcf2b8b0d33d55
+  FBSDKShareKit: 00546a02dce72f37a4209cd68aaf5fb749185c3b
   Firebase: 800f16f07af493d98d017446a315c27af0552f41
   firebase_core: 31872a49ffe0bf6f834e7044c7334e433536735a
   firebase_messaging: 5180a2b828b1997ea70b7e7d14c0bcefa14938b7
@@ -245,7 +245,7 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
-  PostHog: 391e318b0d6616246224eaa3125d2f3252c97a63
+  PostHog: 649018d9080df7962ae47dd7a53d3a30bc8890e5
   posthog_flutter: e80defebf021b13375b351c838c9b87d769d7546
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   purchases_flutter: becb61c2ca37cd944aeaae688119e1f485158fee
@@ -258,6 +258,6 @@ SPEC CHECKSUMS:
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
-PODFILE CHECKSUM: d416ebded2f1c52ae9f376d8f64aa7be92d33f18
+PODFILE CHECKSUM: f60ddbccc8a7ded8d49b47b95c59bc19add1f996
 
 COCOAPODS: 1.14.3

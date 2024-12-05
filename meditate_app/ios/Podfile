@@ -34,9 +34,9 @@ target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
   # Add Facebook SDK dependencies
-  pod 'FBSDKCoreKit', '~> 8.0.0'
-  pod 'FBSDKLoginKit', '~> 8.0.0'
-  pod 'FBSDKShareKit', '~> 8.0.0'
+  pod 'FBSDKCoreKit', '~> 17.4.0'
+  pod 'FBSDKLoginKit', '~> 17.4.0'
+  pod 'FBSDKShareKit', '~> 17.4.0'
 end
 
 post_install do |installer|
