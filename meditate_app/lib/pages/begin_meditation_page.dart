@@ -491,7 +491,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                             );
                                           },
                                           child: GestureDetector(
-                                              onTap: (() {
+                                              onTap: (() async {
                                                 HapticFeedback.heavyImpact();
 
                                                 //Log the event to PostHog

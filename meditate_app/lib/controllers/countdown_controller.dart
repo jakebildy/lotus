@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
@@ -13,8 +13,7 @@ import 'package:meditate_app/util/ambiences.dart';
 import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
-import 'package:ocarina/ocarina.dart';
-import 'package:just_audio/just_audio.dart' as just_audio;
+import 'package:audioplayers/audioplayers.dart' as audioplayers;
 
 import '../util/DEBUG_MODE.dart';
 import '../util/logger.dart';
@@ -36,20 +35,23 @@ class CountdownController extends GetxController {
   DateTime lastCountdownTimerTime = DateTime.now();
 
   // Migrating some stuff from countdown page
-  late AudioPlayer bell;
+  late audioplayers.AudioPlayer bell;
   RxBool addExtraTime = false.obs;
 
   /// Whether the Continue button is loading after being pressed
   RxBool loading = false.obs;
 
-  late OcarinaPlayer player;
-  late just_audio.AudioPlayer networkAudioPlayer;
+  late AudioPlayer localAudioPlayer;
+
+  late AudioPlayer networkAudioPlayer;
 
   CountdownController() {
-    bell = AudioPlayer();
-    networkAudioPlayer = just_audio.AudioPlayer();
-    networkAudioPlayer.setLoopMode(just_audio.LoopMode.all);
-    bell.setVolume(2.0);
+    bell = audioplayers.AudioPlayer();
+    networkAudioPlayer = AudioPlayer();
+    localAudioPlayer = AudioPlayer();
+    localAudioPlayer.setLoopMode(LoopMode.all);
+    networkAudioPlayer.setLoopMode(LoopMode.all);
+    bell.setVolume(0.6);
   }
 
   Future<void> playAmbience() async {
@@ -65,26 +67,22 @@ class CountdownController extends GetxController {
             .first
             .audio); // Schemes: (https: | file: | asset: )
         await networkAudioPlayer.play();
-
-        // networkAudioPlayer.play(audioUrl);
-        // networkAudioPlayer.setReleaseMode(ReleaseMode.loop);
       } else {
-        player = OcarinaPlayer(
-          asset: AMBIENCES
-              .where((element) => element.name == save.selectedAmbience.value)
-              .first
-              .audio,
-          loop: true,
-          volume: 0.8,
-        );
-        await player.load();
-        await player.play();
+        String assetPath = AMBIENCES
+            .where((element) => element.name == save.selectedAmbience.value)
+            .first
+            .audio;
+
+        await localAudioPlayer.setAsset(assetPath);
+        await localAudioPlayer.setLoopMode(LoopMode.all);
+        await localAudioPlayer.setVolume(0.8);
+        await localAudioPlayer.play();
       }
     }
   }
 
   void startCountdownTimer() {
-    bell.play(AssetSource('audio/tibetan_chime.wav'));
+    bell.play(audioplayers.AssetSource('audio/tibetan_chime.wav'));
     SaveController saveController = Get.find();
 
     if (saveController.ambienceOn.value) {
@@ -120,7 +118,7 @@ class CountdownController extends GetxController {
           .startsWith("https")) {
         networkAudioPlayer.pause();
       } else {
-        player.pause();
+        localAudioPlayer.pause();
       }
     }
 
@@ -140,7 +138,7 @@ class CountdownController extends GetxController {
           .startsWith("https")) {
         networkAudioPlayer.play();
       } else {
-        player.resume();
+        localAudioPlayer.play();
       }
     }
 
@@ -170,9 +168,9 @@ class CountdownController extends GetxController {
           .audio
           .startsWith("https")) {
         networkAudioPlayer.stop();
-        // networkAudioPlayer.dispose();
       } else {
-        player.dispose();
+        localAudioPlayer.pause();
+        // localAudioPlayer.dispose();
       }
     }
     try {
@@ -230,8 +228,6 @@ class CountdownController extends GetxController {
     countdownTimer.cancel();
     tenthsOfSecondsPassed.value = 0;
 
-    // isEnded = true;
-    logInfo('Countdown Ended');
     if (save.selectedAmbience.value != "None") {
       if (AMBIENCES
           .where((element) => element.name == save.selectedAmbience.value)
@@ -239,16 +235,16 @@ class CountdownController extends GetxController {
           .audio
           .startsWith("https")) {
         networkAudioPlayer.stop();
-        // networkAudioPlayer.dispose();
       } else {
-        player.dispose();
+        localAudioPlayer.stop();
+        localAudioPlayer.dispose();
       }
     }
     bell.dispose();
 
-    AudioPlayer endingBell = AudioPlayer();
-    endingBell.setVolume(5.0);
-    endingBell.play(AssetSource('audio/tibetan_chime.wav'));
+    audioplayers.AudioPlayer endingBell = audioplayers.AudioPlayer();
+    endingBell.setVolume(0.6);
+    endingBell.play(audioplayers.AssetSource('audio/tibetan_chime.wav'));
     startBonusTimer();
     update();
   }
