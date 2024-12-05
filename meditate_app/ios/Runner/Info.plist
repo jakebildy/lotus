@@ -71,20 +71,23 @@
 	<string>whatsapp</string>
     <string>tg</string>
 	</array>
-	<key>CFBundleURLTypes</key>
-<array>
-  <dict>
-  <key>CFBundleURLSchemes</key>
-  <array>
-    <string>fb[APP_ID]</string>
-  </array>
-  </dict>
-</array>
-<key>FacebookAppID</key>
-<string>[APP_ID]</string>
-<key>FacebookClientToken</key>
-<string>[CLIENT_TOKEN]</string>
-<key>FacebookDisplayName</key>
-<string>[APP_NAME]</string>
+
+	<!-- FACEBOOK SDK CONFIG --> 
+	<key>CFBundleURLTypes</key> 
+	<array>     
+		<dict>         
+			<key>CFBundleURLSchemes</key>         
+			<array>             
+				<string>fb587093930383035</string>         
+			</array>     
+		</dict> 
+	</array> 
+	<key>FacebookAppID</key> 
+	<string>587093930383035</string> 
+	<key>FacebookClientToken</key> 
+	<string>5caa3bd3d87c1b2813aad61dd1dcec11</string> 
+	<key>FacebookDisplayName</key> 
+	<string>Shellevate</string> 
+	<!-- FACEBOOK SDK CONFIG -->	
 </dict>
 </plist>
