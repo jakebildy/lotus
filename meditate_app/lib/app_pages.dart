@@ -180,6 +180,7 @@ class _AppPagesState extends State<AppPages> {
                                   ? const TurtlesPage()
                                   : const ProfilePage(),
                       appPages.page.value == 0 ||
+                              appPages.page.value == 2 ||
                               calculateOnboardingPercentage(
                                       userController.user.value.totalMinutes >
                                           0,
