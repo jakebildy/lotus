@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -407,4 +409,12 @@ int calculateTurtlePrice(int id, int color) {
 
   return (TURTLES[id].rarity.index * 100 + 35 + color * 3) * rainbowBoost +
       TURTLES[id].level * 4;
+}
+
+bool hasTurtle(
+  int id,
+  int color,
+) {
+  UserController user = Get.find();
+  return user.user.value.unlockedTurtleColors[id].contains(color);
 }
