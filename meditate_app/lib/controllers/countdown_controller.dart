@@ -236,8 +236,9 @@ class CountdownController extends GetxController {
           .startsWith("https")) {
         networkAudioPlayer.stop();
       } else {
-        localAudioPlayer.stop();
-        localAudioPlayer.dispose();
+        // localAudioPlayer.stop();
+        // localAudioPlayer.dispose();
+        localAudioPlayer.pause();
       }
     }
     bell.dispose();
