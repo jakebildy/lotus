@@ -12,10 +12,7 @@ import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
-<<<<<<< HEAD
 import 'package:meditate_app/util/turtles.dart';
-=======
->>>>>>> 33c630b9d65d3cf51d3cfde5d7570ac507f27466
 import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 
