@@ -641,14 +641,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  ocarina:
-    dependency: "direct main"
-    description:
-      name: ocarina
-      sha256: "130d629c1b63771f88e21c1de68588fe2f107f3a7390ba16d34367e43f8f8198"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.2"
   ordered_set:
     dependency: transitive
     description:

@@ -28,7 +28,7 @@ class SignupController extends GetxController {
   final RxString emailText = "".obs;
   final RxString passwordText = "".obs;
 
-  final RxInt page = (-3).obs;
+  final RxInt page = (-4).obs;
 
   // Signup
   void signup() async {

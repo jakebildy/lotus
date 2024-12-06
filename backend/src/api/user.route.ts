@@ -72,3 +72,4 @@ UserRouter.get("/user/search/:text", searchByText);
 UserRouter.post("/user/update", userAuth, updateUser);
 UserRouter.post("/user/upload-avatar", userAuth, uploadAvatar);
 UserRouter.post("/user/update-device-token/:token", userAuth, updateDeviceToken);
+// UserRouter.post("/user/subscribed/", userAuth, markSubscribed);

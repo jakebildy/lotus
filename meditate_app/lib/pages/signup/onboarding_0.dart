@@ -6,8 +6,8 @@ import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/login/login.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 
-class Onboarding1 extends StatelessWidget {
-  const Onboarding1({super.key});
+class Onboarding0 extends StatelessWidget {
+  const Onboarding0({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,31 +19,18 @@ class Onboarding1 extends StatelessWidget {
           height: 100,
           width: MediaQuery.of(context).size.width,
         ),
+        Image(
+          image: AssetImage("assets/logo.png"),
+          width: 100,
+          height: 100,
+        ),
         Text(
-          "staying motivated is hard",
+          "shellevate",
           style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
         ),
-        SizedBox(
-          height: 20,
-        ),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image(
-            image: AssetImage("assets/app_icon.jpg"),
-            width: 100,
-            height: 100,
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: Text(
-            "So Shellevate is like a game. Earn rewards and level up by meditating.",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16),
-          ),
+        Text(
+          "Easily make meditation a habit.",
+          style: TextStyle(fontSize: 16),
         ),
         Spacer(),
         Padding(
@@ -60,11 +47,11 @@ class Onboarding1 extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(color: Colors.white, width: 2)))),
                 onPressed: () {
-                  controller.page.value = -2;
+                  controller.page.value = -3;
                   controller.update();
 
                   PostHogService posthog = Get.find();
-                  posthog.logEvent("FIRST_ONBOARDING_CONTINUE_PRESSED", {});
+                  posthog.logEvent("BEGIN_ONBOARDING_CONTINUE_PRESSED", {});
                 },
                 child: SizedBox(
                     width: 2000,
