@@ -186,6 +186,8 @@ flutter:
     - assets/images/turtles/22.png
     - assets/images/turtles/23.png
     - assets/images/turtles/23_overlay.png
+    - assets/images/turtles/24.png
+    - assets/images/turtles/25.png
     - assets/images/turtles/overlay_rainbow_default.png
     - assets/images/turtles/overlay_rainbow_crystal.png
     - assets/logo.png

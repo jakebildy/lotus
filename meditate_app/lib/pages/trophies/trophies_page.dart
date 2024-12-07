@@ -39,27 +39,43 @@ class TrophyPage extends StatelessWidget {
           )),
           body: ListView(
             children: const [
+              TrophyWidget(title: "Honey", xp: 20, turtles: [
+                [15, 4],
+                [15, 15],
+              ]),
+              TrophyWidget(title: "Fire Portal", xp: 40, turtles: [
+                [4, 12],
+                [6, 2],
+                [7, 1],
+                [17, 4]
+              ]),
+              TrophyWidget(title: "Celestial Harmony", xp: 100, turtles: [
+                [9, 4],
+                [19, 16],
+                [20, 9],
+                [20, 6]
+              ]),
+              TrophyWidget(title: "Fruit Salad", xp: 50, turtles: [
+                [14, 13],
+                [16, 6],
+                [15, 5],
+                [16, 3],
+              ]),
               TrophyWidget(
-                  title: "Into the Fire",
-                  description:
-                      "Collect a Litback Turtle, a Nether Turtle and a Magma Turtle",
-                  xp: 40,
-                  turtles: [
-                    [6, 2],
-                    [7, 1],
-                    [17, 4]
-                  ]),
-              TrophyWidget(
-                  title: "Celestial Harmony",
-                  description:
-                      "Collect a Yellow Sun Turtle, a Grey Luna Turtle, a Blue World Turtle and a Green World Turtle",
+                  title: "Floating Cities on Venus",
                   xp: 100,
                   turtles: [
-                    [9, 4],
-                    [19, 16],
-                    [20, 9],
-                    [20, 6]
-                  ])
+                    [23, 9],
+                    [9, 17],
+                    [8, 12],
+                    [4, 10]
+                  ]),
+              TrophyWidget(title: "Yearning for Mines", xp: 200, turtles: [
+                [1, 15],
+                [1, 16],
+                [10, 18],
+                [4, 15]
+              ])
             ],
           )),
     );

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:meditate_app/components/turtle_image.dart';
+import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
 class TrophyWidget extends StatelessWidget {
   final String title;
-  final String description;
+
   final int xp;
   final List<List<int>> turtles;
   const TrophyWidget(
       {super.key,
       required this.title,
-      required this.description,
       required this.xp,
       required this.turtles});
 
@@ -41,7 +41,18 @@ class TrophyWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        description,
+                        // draft the description from the list of turtles, it should be Collect a 'Royal Sunset Turtle (example)', 'turtle2', 'turtle3' and 'turtle4'
+                        "Collect a " +
+                            turtles
+                                .toList()
+                                .map((
+                                  turtle,
+                                ) =>
+                                    (turtle == turtles.last ? "& " : "") +
+                                    TURTLE_COLORS_NAME[turtle[1]] +
+                                    " " +
+                                    TURTLES[turtle[0]].name)
+                                .join(", "),
                         style: TextStyle(color: Colors.white70, fontSize: 14),
                       ),
                       SizedBox(height: 16),

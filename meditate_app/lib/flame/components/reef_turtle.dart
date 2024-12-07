@@ -114,6 +114,7 @@ class ReefTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
 
       add(SpriteComponent(sprite: overlay2, size: Vector2(100, 100)));
     }
+
     if (turtleColor == 18) {
       if (turtleType == 10) {
         Sprite overlayRainbow = await gameRef.loadSprite(

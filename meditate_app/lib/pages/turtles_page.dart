@@ -234,6 +234,33 @@ class _TurtlesPageState extends State<TurtlesPage> {
                               ),
                             );
                     })),
+
+                //Locked Turtles
+                // ListView(
+                //     shrinkWrap: true,
+                //     physics: const ClampingScrollPhysics(),
+                //     children: List.generate(TURTLES.length, (index) {
+                //       return userController
+                //                   .user.value.unlockedTurtles.isEmpty ||
+                //               userController
+                //                       .user.value.unlockedTurtles[index] ==
+                //                   0
+                //           ? Padding(
+                //               padding:
+                //                   const EdgeInsets.symmetric(vertical: 4.0),
+                //               child: SizedBox(
+                //                 height: 100,
+                //                 child: Center(
+                //                   child: TurtleCategory(
+                //                       unlocked: false,
+                //                       id: index,
+                //                       displayColor: 0,
+                //                       uniqueQuantity: 0),
+                //                 ),
+                //               ),
+                //             )
+                //           : Container();
+                //     })),
               ]),
             ],
           ),
