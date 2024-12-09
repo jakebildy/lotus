@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
@@ -68,6 +69,15 @@ class CountdownController extends GetxController {
             .audio); // Schemes: (https: | file: | asset: )
         await networkAudioPlayer.play();
       } else {
+        final session = await AudioSession.instance;
+        await session.configure(
+          const AudioSessionConfiguration(
+            avAudioSessionCategory: AVAudioSessionCategory.playback,
+            avAudioSessionCategoryOptions:
+                AVAudioSessionCategoryOptions.mixWithOthers,
+            avAudioSessionMode: AVAudioSessionMode.defaultMode,
+          ),
+        );
         String assetPath = AMBIENCES
             .where((element) => element.name == save.selectedAmbience.value)
             .first
