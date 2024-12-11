@@ -243,6 +243,9 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                           ),
                           GestureDetector(
                             onTap: (() {
+                              PostHogService posthog = Get.find();
+                              posthog.logEvent(
+                                  "SELECT_MEDITATION_TYPE_PRESSED", {});
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
