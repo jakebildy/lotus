@@ -20,7 +20,7 @@ class TrophyPage extends StatelessWidget {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.grey[900],
-            title: const Text("Trophies"),
+            title: const Text("Collections"),
           ),
           backgroundColor: Colors.grey[900],
           bottomNavigationBar: SafeArea(
