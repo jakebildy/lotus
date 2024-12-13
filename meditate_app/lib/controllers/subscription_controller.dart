@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:meditate_app/api/user_api.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
@@ -34,6 +35,8 @@ class SubscriptionController extends GetxController {
 
   RxBool purchasingSandDollars = false.obs;
 
+  final InAppReview inAppReview = InAppReview.instance;
+
   Future<void> buySubscription(BuildContext context) async {
     getPremiumTapped.value = true;
     update();
@@ -52,6 +55,13 @@ class SubscriptionController extends GetxController {
           save.updateIsSubscribedToPremium(true);
 
           Get.offAll(const AppPages());
+
+          if (save.hasReviewed.value == false) {
+            if (await inAppReview.isAvailable()) {
+              inAppReview.requestReview();
+              save.updateHasReviewed();
+            }
+          }
         }
       } on PlatformException catch (e) {
         var errorCode = PurchasesErrorHelper.getErrorCode(e);

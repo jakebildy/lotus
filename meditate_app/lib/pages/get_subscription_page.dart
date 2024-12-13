@@ -98,13 +98,22 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                               children: [
                                 const SizedBox(height: 80),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                        width: 80, child: PremiumContainer()),
-                                    SizedBox(
-                                      width: 20,
-                                    )
+                                    IconButton(
+                                        onPressed: () {
+                                          Get.offAll(const AppPages());
+                                        },
+                                        icon: Icon(
+                                          Icons.close,
+                                          color: Colors.grey,
+                                        )),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                      child: Container(
+                                          width: 80, child: PremiumContainer()),
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(height: 50),
@@ -361,7 +370,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                       child: Column(
                                         children: [
                                           const Text(
-                                            "Find EXCLUSIVE turtles!",
+                                            "Find exclusive turtles!",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
@@ -424,41 +433,6 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 20),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      decoration: BoxDecoration(
-                                        color: Colors.black12,
-                                        border: Border.all(
-                                          color: const Color.fromARGB(
-                                              64, 255, 255, 255),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              "Just \$4 / month (US)",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 16),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            Text(
-                                              "Cancel anytime.",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ],
-                                        ),
-                                      )),
-                                ),
                                 // const SizedBox(height: 20),
                                 // const Text(
                                 //   "A message from me, the developer 💌 ",
@@ -507,8 +481,44 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                       child: Column(
                         children: [
                           const SizedBox(
-                            height: 30,
+                            height: 4,
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  // color: Colors.white12,
+                                  // border: Border.all(
+                                  //   color:
+                                  //       const Color.fromARGB(64, 255, 255, 255),
+                                  //   width: 2,
+                                  // ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "\$4 Monthly",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      Text(
+                                        "Cancel anytime.",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            fontSize: 12),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ),
+                          const SizedBox(height: 10),
                           GestureDetector(
                             onTap: () => {
                               subscriptionController.buySubscription(context)
@@ -544,7 +554,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                         .value ==
                                                     true
                                                 ? "Loading..."
-                                                : "Get Premium",
+                                                : "Continue",
                                             style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.white,
@@ -585,7 +595,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                             .value ==
                                                         true
                                                     ? "Loading..."
-                                                    : "Get Premium",
+                                                    : "Continue",
                                                 style: const TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.white,
@@ -634,7 +644,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                             .value ==
                                                         true
                                                     ? "Loading..."
-                                                    : "Get Premium",
+                                                    : "Continue",
                                                 style: const TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.white,
@@ -651,7 +661,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                 .getPremiumTapped.value ==
                                             true
                                         ? "Loading..."
-                                        : "Get Premium",
+                                        : "Continue",
                                     style: const TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -659,14 +669,14 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 20),
-                          GestureDetector(
-                              onTap: () => {Get.offAll(const AppPages())},
-                              child: const Text("No Thanks",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14))),
+
+                          // GestureDetector(
+                          //     onTap: () => {Get.offAll(const AppPages())},
+                          //     child: const Text("No Thanks",
+                          //         style: TextStyle(
+                          //             color: Colors.white,
+                          //             fontWeight: FontWeight.bold,
+                          //             fontSize: 14))),
                           const SizedBox(
                             height: 50,
                           )

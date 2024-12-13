@@ -84,7 +84,8 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                     HapticFeedback.mediumImpact();
                     UserController user = Get.find();
 
-                    if (user.user.value.hasTriedBreathwork == false) {
+                    if (user.user.value.hasTriedBreathwork == false &&
+                        !save.isSubscribedToPremium.value) {
                       // show a dialog saying this is paid, but you can try it this time for free!
                       showDialog(
                           context: context,
