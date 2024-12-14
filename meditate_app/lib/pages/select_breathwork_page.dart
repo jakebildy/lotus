@@ -7,7 +7,7 @@ import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/pages/get_subscription_page.dart';
+import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:meditate_app/util/breathwork.dart';
 

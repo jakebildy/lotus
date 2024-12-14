@@ -50,6 +50,23 @@ class _SignupState extends State<Signup> {
               child: Center(
                 child: Stack(
                   children: [
+                    Opacity(
+                      opacity: 0.5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(0),
+                        //  padding: const EdgeInsets.fromLTRB(20,20,20,38),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(0),
+                          child: SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: Image.asset(
+                                "assets/ocean_background.jpeg",
+                                fit: BoxFit.fill,
+                              )),
+                        ),
+                      ),
+                    ),
                     Hero(
                       tag: "WaterAnimation",
                       child: Opacity(
@@ -212,17 +229,18 @@ class _SignupState extends State<Signup> {
                                                               vertical: 10,
                                                               horizontal: 40),
                                                       hintText: "Email",
-                                                      fillColor: Colors.white,
+                                                      fillColor:
+                                                          Colors.transparent,
                                                       hintStyle:
                                                           const TextStyle(
                                                               color:
-                                                                  Colors.grey),
+                                                                  Colors.white),
                                                       filled: true,
                                                       enabledBorder: OutlineInputBorder(
                                                           borderSide:
                                                               const BorderSide(
                                                                   color: Colors
-                                                                      .grey),
+                                                                      .white),
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
@@ -231,7 +249,7 @@ class _SignupState extends State<Signup> {
                                                           borderSide:
                                                               const BorderSide(
                                                                   color: Colors
-                                                                      .grey),
+                                                                      .white),
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
@@ -261,7 +279,7 @@ class _SignupState extends State<Signup> {
                                                     style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        color: Colors.black),
+                                                        color: Colors.white),
                                                     decoration: InputDecoration(
                                                       alignLabelWithHint: true,
                                                       contentPadding:
@@ -270,17 +288,18 @@ class _SignupState extends State<Signup> {
                                                               vertical: 10,
                                                               horizontal: 40),
                                                       hintText: "Password",
-                                                      fillColor: Colors.white,
+                                                      fillColor:
+                                                          Colors.transparent,
                                                       hintStyle:
                                                           const TextStyle(
                                                               color:
-                                                                  Colors.grey),
+                                                                  Colors.white),
                                                       filled: true,
                                                       enabledBorder: OutlineInputBorder(
                                                           borderSide:
                                                               const BorderSide(
                                                                   color: Colors
-                                                                      .grey),
+                                                                      .white),
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(
@@ -289,7 +308,7 @@ class _SignupState extends State<Signup> {
                                                           borderSide:
                                                               const BorderSide(
                                                                   color: Colors
-                                                                      .grey),
+                                                                      .white),
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(

@@ -54,7 +54,7 @@ class _Onboarding3State extends State<Onboarding3> {
           width: MediaQuery.of(context).size.width,
         ),
         Text(
-          "sometimes you'll find eggs",
+          "find eggs by meditating",
           style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
         ),
         Padding(

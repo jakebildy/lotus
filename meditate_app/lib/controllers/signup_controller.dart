@@ -6,7 +6,7 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
-import 'package:meditate_app/pages/get_subscription_page.dart';
+import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/version.dart';
