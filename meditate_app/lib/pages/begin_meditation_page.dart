@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/components/onboarding/onboarding_tooltip.dart';
 import 'package:meditate_app/components/premium_container.dart';
+import 'package:meditate_app/components/try_for_free_container.dart';
 import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/countdown/countdown_page.dart';
@@ -304,7 +305,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                               ),
                                               const SizedBox(
                                                   width: 80,
-                                                  child: PremiumContainer())
+                                                  child: TryForFreeContainer())
                                             ],
                                           ),
                                           onTap: () {

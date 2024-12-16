@@ -219,10 +219,27 @@ class _ProfilePageState extends State<ProfilePage>
                   height: 5,
                 ),
                 Text(
+                  followController.followers.length.toString() +
+                      (followController.followers.length == 1
+                          ? " Follower"
+                          : " Followers"),
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Text(
                   "Joined ${formatMonth(userController.user.value.createdAt)}",
                   style: const TextStyle(color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
+
+                // Text(followController.followers.length.toString() +
+                //     (followController.followers.length == 1
+                //         ? " Follower"
+                //         : " Followers")),
 
                 const SizedBox(
                   height: 10,

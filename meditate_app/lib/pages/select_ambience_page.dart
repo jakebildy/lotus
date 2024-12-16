@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/premium_container.dart';
+import 'package:meditate_app/components/try_for_free_container.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
@@ -161,7 +162,7 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                                           AMBIENCES[index].premium
                                               ? const SizedBox(
                                                   width: 80,
-                                                  child: PremiumContainer())
+                                                  child: TryForFreeContainer())
                                               : const SizedBox(
                                                   width: 80,
                                                   height: 30,

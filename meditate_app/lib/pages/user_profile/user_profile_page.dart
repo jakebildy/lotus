@@ -38,7 +38,25 @@ class _UserProfilePageState extends State<UserProfilePage>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("@" + widget.user.username),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              widget.user.fullName,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              "(@" + widget.user.username + ")",
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 16, color: Colors.white70),
+            ),
+          ],
+        ),
         elevation: 0,
         backgroundColor: Colors.grey[850],
       ),
@@ -46,7 +64,7 @@ class _UserProfilePageState extends State<UserProfilePage>
         () => ListView(
           children: [
             Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 10.0),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10.0),
                 child: Center(
                   child: Container(
                     width: 84,
@@ -81,25 +99,25 @@ class _UserProfilePageState extends State<UserProfilePage>
                     ),
                   ),
                 )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.user.fullName,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  "(@" + widget.user.username + ")",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 16, color: Colors.white70),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Text(
+            //       widget.user.fullName,
+            //       textAlign: TextAlign.center,
+            //       style: const TextStyle(
+            //           fontWeight: FontWeight.bold, fontSize: 20),
+            //     ),
+            //     const SizedBox(
+            //       width: 5,
+            //     ),
+            //     Text(
+            //       "(@" + widget.user.username + ")",
+            //       textAlign: TextAlign.center,
+            //       style: const TextStyle(fontSize: 16, color: Colors.white70),
+            //     ),
+            //   ],
+            // ),
             const SizedBox(
               height: 5,
             ),
@@ -128,6 +146,22 @@ class _UserProfilePageState extends State<UserProfilePage>
                             color: Colors.white70, fontSize: 16),
                       )
               ],
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              followController
+                      .getAllUsersFollowing(widget.user)
+                      .length
+                      .toString() +
+                  (followController.getAllUsersFollowing(widget.user).length ==
+                          1
+                      ? " Follower"
+                      : " Followers"),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 5,
@@ -301,7 +335,16 @@ class _UserProfilePageState extends State<UserProfilePage>
                     ],
                   )),
             ),
-
+            const SizedBox(
+              height: 10,
+            ),
+            followController.followers
+                    .map((element) => element.id)
+                    .contains(widget.user.id)
+                ? SendVibeWidget(
+                    targetUserId: widget.user.id ?? "",
+                  )
+                : Container(),
             // Display the user's turtles
             widget.user.unlockedTurtleColors
                     .map((list) => list.where((color) => color != -1).toList())
@@ -346,17 +389,6 @@ class _UserProfilePageState extends State<UserProfilePage>
                       ),
                     ),
                   ),
-
-            const SizedBox(
-              height: 10,
-            ),
-            followController.followers
-                    .map((element) => element.id)
-                    .contains(widget.user.id)
-                ? SendVibeWidget(
-                    targetUserId: widget.user.id ?? "",
-                  )
-                : Container(),
 
             Padding(
               padding: const EdgeInsets.all(8.0),
