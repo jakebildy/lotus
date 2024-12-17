@@ -219,15 +219,17 @@ class _ProfilePageState extends State<ProfilePage>
                 const SizedBox(
                   height: 5,
                 ),
-                Text(
-                  followController.followers.length.toString() +
-                      (followController.followers.length == 1
-                          ? " Follower"
-                          : " Followers"),
-                  style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+                followController.loadingFollowers.value
+                    ? Container()
+                    : Text(
+                        followController.followers.length.toString() +
+                            (followController.followers.length == 1
+                                ? " Follower"
+                                : " Followers"),
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
                 const SizedBox(
                   height: 5,
                 ),
