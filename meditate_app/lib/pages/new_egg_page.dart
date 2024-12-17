@@ -209,6 +209,7 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                                       child: GestureDetector(
                                         onTap: () {
                                           Navigator.of(context).pop();
+                                          save.updateHasReviewed();
                                         },
                                         child: const Text("No Thanks"),
                                       ),
