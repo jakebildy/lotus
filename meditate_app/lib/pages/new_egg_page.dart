@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/shake_widget.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -132,7 +134,92 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
               ),
               GestureDetector(
                 onTap: () {
+                  // Leave a review at this stage:
+
                   Get.offAll(const AppPages());
+                  SaveController save = Get.find();
+                  if (save.hasReviewed.value == false) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            backgroundColor:
+                                const Color.fromARGB(255, 47, 111, 129),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            title: const Text(
+                              "Help Shellevate Grow",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    "Hey there! I’m one person designing, building and marketing this entire app. \n\nIf you like it, it would mean a lot if you could leave a review!",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        Navigator.of(context).pop();
+                                        final InAppReview inAppReview =
+                                            InAppReview.instance;
+
+                                        if (await inAppReview.isAvailable()) {
+                                          inAppReview.requestReview();
+                                          save.updateHasReviewed();
+                                        }
+                                        inAppReview.requestReview();
+                                      },
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.white, width: 2),
+                                            color: Colors.cyan,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: const Text("Sure ❤️",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          )),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text("No Thanks"),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ));
+                      },
+                    );
+                  }
                 },
                 child: Container(
                     decoration: const BoxDecoration(

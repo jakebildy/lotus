@@ -150,19 +150,24 @@ class _UserProfilePageState extends State<UserProfilePage>
             const SizedBox(
               height: 5,
             ),
-            Text(
-              followController
-                      .getAllUsersFollowing(widget.user)
-                      .length
-                      .toString() +
-                  (followController.getAllUsersFollowing(widget.user).length ==
-                          1
-                      ? " Follower"
-                      : " Followers"),
-              style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
+
+            followController.loadingFollowers.value
+                ? Container()
+                : Text(
+                    followController
+                            .getAllUsersFollowedBy(widget.user)
+                            .length
+                            .toString() +
+                        (followController
+                                    .getAllUsersFollowedBy(widget.user)
+                                    .length ==
+                                1
+                            ? " Follower"
+                            : " Followers"),
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
             const SizedBox(
               height: 5,
             ),

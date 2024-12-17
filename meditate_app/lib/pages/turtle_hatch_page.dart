@@ -102,12 +102,12 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
               ),
               GestureDetector(
                 onTap: () async {
-                  if (save.hasReviewed.value == false) {
-                    if (await inAppReview.isAvailable()) {
-                      inAppReview.requestReview();
-                      save.updateHasReviewed();
-                    }
-                  }
+                  // if (save.hasReviewed.value == false) {
+                  //   if (await inAppReview.isAvailable()) {
+                  //     inAppReview.requestReview();
+                  //     save.updateHasReviewed();
+                  //   }
+                  // }
                   Get.offAll(NewGemsPage(
                     gemsAmount: widget.gemsAmount,
                     foundEgg: widget.foundEgg,

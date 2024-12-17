@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/components/level_progress_bar.dart';
 import 'package:meditate_app/components/meditation_heatmap.dart';
@@ -999,6 +1000,7 @@ class _ProfilePageState extends State<ProfilePage>
                         ],
                       )),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
@@ -1052,6 +1054,25 @@ class _ProfilePageState extends State<ProfilePage>
                                 ],
                               ),
                       )),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0.0),
+                  child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(width: 1.0, color: Colors.white),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () async {
+                        final InAppReview inAppReview = InAppReview.instance;
+                        if (await inAppReview.isAvailable()) {
+                          inAppReview.requestReview();
+                        }
+                      },
+                      child: const Text("Support us with a Review ❤️",
+                          style: TextStyle(color: Colors.white))),
                 ),
                 const SizedBox(
                   height: 10,
