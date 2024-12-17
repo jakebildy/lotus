@@ -182,7 +182,6 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                                           inAppReview.requestReview();
                                           save.updateHasReviewed();
                                         }
-                                        inAppReview.requestReview();
                                       },
                                       child: Container(
                                           decoration: BoxDecoration(
