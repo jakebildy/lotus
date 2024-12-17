@@ -45,8 +45,34 @@ export async function sendStreakReminder() {
                 //console.log(`Start a new habit (and collect turtles too 🐢)`);
             }
             console.log("\nSending notification to " + user.fullName + "\n");
-            const title = getRandomItem(notificationTitles);
-            const message = getRandomItem(notificationMessages);
+            let title = getRandomItem(notificationTitles);
+            let message = getRandomItem(notificationMessages);
+
+            if (user.lastMeditated && user.streak && user.streak !== 0) {
+                const lastMeditatedTime = new Date(user.lastMeditated).getTime();
+                const currentTime = Date.now();
+                const hoursSinceLastMeditation = (currentTime - lastMeditatedTime) / (1000 * 60 * 60);
+            
+                if (hoursSinceLastMeditation <= 24) {
+                    title = getRandomItem([
+                        'Keep your ' + user.streak + ' day streak going 🔥',
+                        `Don't let your ` + user.streak + ` day streak die 🔥`,
+                    `Can you make it to ` + (user.streak! + 1).toString() + ` days? 🔥`]);
+                }
+            }
+
+            // if (user.totalMinutes == 0 && user.streak == 0) {
+            //     title = getRandomItem([
+            //         'Can you meditate for just 1 minute 🥺',
+            //         'Want meditation as a habit? Start today 🔥',
+            //         'I dare you to meditate today 😎',
+            //         'how about 1 minute of meditation? 🤔',
+            //         'hey. 1 minute of meditation. now. 🤨',
+            //         `imagine how cool you'd be if you meditated today 🤯`,
+                
+            //     ]);
+            //     message = '';
+            // }
 
             sendPushNotification(
                     [user.deviceToken],
