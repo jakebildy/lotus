@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:in_app_review/in_app_review.dart';
 
@@ -102,17 +103,101 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
               ),
               GestureDetector(
                 onTap: () async {
-                  // if (save.hasReviewed.value == false) {
-                  //   if (await inAppReview.isAvailable()) {
-                  //     inAppReview.requestReview();
-                  //     save.updateHasReviewed();
-                  //   }
-                  // }
                   Get.offAll(NewGemsPage(
                     gemsAmount: widget.gemsAmount,
                     foundEgg: widget.foundEgg,
                     levelUp: widget.levelUp,
                   ));
+
+                  SaveController save = Get.find();
+                  if (save.hasReviewed.value == false) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                            backgroundColor:
+                                const Color.fromARGB(255, 47, 111, 129),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            title: const Text(
+                              "Help Shellevate Grow",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                    "Hey there! I’m one person creating this entire app. \n\nIf you like it, it would mean a lot if you could take 10 seconds to leave a rating!",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        Navigator.of(context).pop();
+                                        PostHogService posthog = Get.find();
+                                        posthog
+                                            .logEvent("REVIEW_SURE_TAPPED", {});
+                                        final InAppReview inAppReview =
+                                            InAppReview.instance;
+
+                                        if (await inAppReview.isAvailable()) {
+                                          inAppReview.requestReview();
+                                          save.updateHasReviewed();
+                                        }
+                                      },
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.white, width: 2),
+                                            color: Colors.cyan,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text("Sure ❤️",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                          )),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                          save.updateHasReviewed();
+                                          PostHogService posthog = Get.find();
+                                          posthog.logEvent(
+                                              "REVIEW_NO_THANKS_TAPPED", {});
+                                        },
+                                        child: const Text("No Thanks"),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ));
+                      },
+                    );
+                  }
                 },
                 child: Container(
                     color: const Color.fromARGB(255, 16, 77, 127),

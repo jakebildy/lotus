@@ -35,8 +35,8 @@ class OnboardingProgressBar extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             "YOUR FIRST STEPS ON SHELLEVATE",
                             style: TextStyle(

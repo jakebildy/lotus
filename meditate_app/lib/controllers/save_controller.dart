@@ -19,6 +19,7 @@ class SaveController extends GetxController {
   RxInt topPercentage = (-1).obs;
 
   RxBool hasShownOnboardingTooltipsPage1 = false.obs;
+  RxBool hasShownFollowSomeonePage = false.obs;
 
   RxBool loadingSaveController = true.obs;
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
@@ -83,6 +84,13 @@ class SaveController extends GetxController {
     hasShownOnboardingTooltipsPage1.value = true;
     saveValue("has_shown_onboarding_tooltips_page1",
         hasShownOnboardingTooltipsPage1.value.toString());
+    update();
+  }
+
+  void updateHasShownFollowSomeonePage() {
+    hasShownFollowSomeonePage.value = true;
+    saveValue("has_shown_follow_someone_page",
+        hasShownFollowSomeonePage.value.toString());
     update();
   }
 
@@ -262,6 +270,11 @@ class SaveController extends GetxController {
       hasShownOnboardingTooltipsPage1.value =
           getValue('has_shown_onboarding_tooltips_page1').toLowerCase() ==
               'true';
+    }
+
+    if (getValue('has_shown_follow_someone_page') != "") {
+      hasShownFollowSomeonePage.value =
+          getValue('has_shown_follow_someone_page').toLowerCase() == 'true';
     }
 
     loadingSaveController.value = false;
