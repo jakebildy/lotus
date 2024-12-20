@@ -10,6 +10,7 @@ import 'package:meditate_app/pages/get_subscription/build_table_row.dart';
 import 'package:meditate_app/pages/get_subscription/feature_checkbox.dart';
 import 'package:meditate_app/pages/get_subscription/pricing.dart';
 import 'package:meditate_app/pages/get_subscription/review.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -626,8 +627,10 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                           ),
                           const SizedBox(height: 10),
                           GestureDetector(
-                            onTap: () => {
-                              subscriptionController.buySubscription(context)
+                            onTap: () {
+                              PostHogService posthog = Get.find();
+                              posthog.logEvent("START_TRIAL_TAPPED", {});
+                              subscriptionController.buySubscription(context);
                             },
                             child: Stack(
                               alignment: Alignment.topCenter,
