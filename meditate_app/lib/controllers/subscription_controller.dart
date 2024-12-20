@@ -11,6 +11,7 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:meditate_app/api/index.dart' as api;
@@ -53,6 +54,9 @@ class SubscriptionController extends GetxController {
           logInfo('Unlocking premium content');
           SaveController save = Get.find();
           save.updateIsSubscribedToPremium(true);
+
+          PostHogService posthog = Get.find();
+          posthog.logEvent("TRIAL_STARTED", {});
 
           Get.offAll(const AppPages());
 

@@ -8,9 +8,9 @@ List<String> quotes = [
   "“Pride is not the opposite of shame, but it's source. True humility is the only antidote to shame.” \n– Uncle Iroh",
   "“You can’t always see the light at the end of the tunnel, but if you just keep moving, you will come to a better place.” \n– Uncle Iroh",
   "“True wisdom begins when we accept things as they are.” \n– Tenzin",
-  "“I sit in silence and find whenever I meditate, my fears alleviate, my tears evaporate” \n- J. Cole",
+  // "“I sit in silence and find whenever I meditate, my fears alleviate, my tears evaporate” \n- J. Cole",
   "“Anything’s possible, you gotta dream like you never seen obstacles.” \n- J. Cole",
-  "“No such thing as a life that’s better than yours, no such thing..” \n- J. Cole",
+  // "“No such thing as a life that’s better than yours, no such thing..” \n- J. Cole",
   "“Life can bring much pain. There are many ways to deal with this pain. Choose wisely.” \n- J. Cole",
   "“I’d rather be happy being myself than sad trying to please everyone else.” \n- J. Cole",
   "“Take a chance, because you never know how perfect something can turn out.” \n- J. Cole",
@@ -28,6 +28,7 @@ List<String> quotes = [
   "“We’ve all got both light and dark inside us. What matters is the part we choose to act on. That’s who we really are.” \n- Sirius Black",
   "“It does not do to dwell on dreams and forget to live.” \n- Dumbledore",
   "“It is the unknown we fear when we look upon death and darkness, nothing more.” \n- Albus Dumbledore",
+  "“It is our choices that show what we truly are, far more than our abilities.” \n- Albus Dumbledore",
   "“Imagination brings bliss at no cost.” \n- Nujabes",
   "“You have power over your mind - not outside events. Realize this, and you will find strength.” \n- Marcus Aurelius",
   "“Dwell on the beauty of life. Watch the stars, and see yourself running with them.” \n- Marcus Aurelius",
@@ -52,6 +53,7 @@ List<String> quotes = [
   "“Do or do not. There is no try.” \n- Yoda",
   "“Your focus determines your reality.” \n- Qui-Gon Jinn",
   "“What I advise you to do is, not to be unhappy before the crisis comes.” \n- Seneca",
+  "“We suffer more often in imagination than in reality.” \n- Seneca",
   "“I've had a lot of worries in my life, most of which never happened.” \n- Mark Twain",
   "“Oh yes, the past can hurt. But, you can either run from it or, learn from it.” \n- Rafiki",
   "“Discovering the truth about ourselves is a lifetime’s work, but it’s worth the effort.” \n- Fred Rogers",
@@ -59,6 +61,9 @@ List<String> quotes = [
   "“The greatest gift you ever give is your honest self.” \n- Fred Rogers",
   "“The only thing evil can’t stand is forgiveness.” \n- Fred Rogers",
   "“It's good to be curious about many things.” \n- Fred Rogers",
+  "“I am not afraid of storms, for I am learning how to sail my ship.” \n- Louisa May Alcott",
+  "“If you look the right way, you can see that the whole world is a garden.” \n- Frances Hodgson Burnett",
+  "“Where you tend a rose, my lad, a thistle cannot grow.” \n- Frances Hodgson Burnett",
 ];
 
 String randomQuote() {

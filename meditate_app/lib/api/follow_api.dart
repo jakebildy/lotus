@@ -47,9 +47,9 @@ class FollowApi {
     }
   }
 
-  Future<List<Follow>> getStylistFollowing(User stylist) async {
+  Future<List<Follow>> getStylistFollowing(User user) async {
     final response = await http.get(
-        api.https(url, "/api/follow/stylist/following/${stylist.id}"),
+        api.https(url, "/api/follow/stylist/following/${user.id}"),
         headers: api.headers);
     if (response.statusCode == 200) {
       return Follow.listFromJson(json.decode(response.body));

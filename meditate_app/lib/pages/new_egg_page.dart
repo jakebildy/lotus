@@ -8,6 +8,7 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class NewEggPage extends StatefulWidget {
@@ -175,6 +176,9 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                                     GestureDetector(
                                       onTap: () async {
                                         Navigator.of(context).pop();
+                                        PostHogService posthog = Get.find();
+                                        posthog
+                                            .logEvent("REVIEW_SURE_TAPPED", {});
                                         final InAppReview inAppReview =
                                             InAppReview.instance;
 
@@ -209,6 +213,9 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                                         onTap: () {
                                           Navigator.of(context).pop();
                                           save.updateHasReviewed();
+                                          PostHogService posthog = Get.find();
+                                          posthog.logEvent(
+                                              "REVIEW_NO_THANKS_TAPPED", {});
                                         },
                                         child: const Text("No Thanks"),
                                       ),

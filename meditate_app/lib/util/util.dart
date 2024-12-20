@@ -132,23 +132,21 @@ String formatMonth(DateTime date) {
 
 double userStreakAverage(User user) {
   DateTime now = DateTime.now();
-  DateTime date = DateTime(now.year, now.month, now.day);
-  int daysShifted = user.meditationTimesAsOf.difference(date).inDays.abs();
-  List<double> lastSevenDays = [
-    daysShifted >= 1 ? 0.0 : user.meditationTimes[0 - daysShifted].toDouble(),
-    daysShifted >= 2 ? 0.0 : user.meditationTimes[1 - daysShifted].toDouble(),
-    daysShifted >= 3 ? 0.0 : user.meditationTimes[2 - daysShifted].toDouble(),
-    daysShifted >= 4 ? 0.0 : user.meditationTimes[3 - daysShifted].toDouble(),
-    daysShifted >= 5 ? 0.0 : user.meditationTimes[4 - daysShifted].toDouble(),
-    daysShifted >= 6 ? 0.0 : user.meditationTimes[5 - daysShifted].toDouble(),
-    daysShifted >= 7 ? 0.0 : user.meditationTimes[6 - daysShifted].toDouble(),
-  ];
 
-  double sum = 0;
-  for (double i in lastSevenDays) {
-    sum += i;
-  }
-  return sum / 7;
+  // Filter and sort the last seven days
+  var lastSevenDays = user.meditationHistory.entries
+      .where(
+          (entry) => entry.key.isAfter(now.subtract(const Duration(days: 7))))
+      .toList();
+
+  // Sort in descending order
+  lastSevenDays.sort((a, b) => b.key.compareTo(a.key));
+
+  // Calculate the sum
+  double sum = lastSevenDays.fold(0, (prev, entry) => prev + entry.value);
+
+  // Calculate the average
+  return lastSevenDays.isNotEmpty ? sum / 7 : 0.0;
 }
 
 String userStreakIconURL(User user) {
