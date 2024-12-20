@@ -16,24 +16,24 @@ const POPULATE = ["stylist", "user"];
 
 // Returns a list of stylist and brands that a user is following
 export async function getFollowing(user: UserOrId): Promise<FollowI[] | null> {
-  const following = await Follow.find({ user }).populate(POPULATE).exec();
+  const following = await Follow.find({ user }).populate(POPULATE).lean().exec();
   return following;
 }
 
 export async function getNotFollowing(user: UserOrId): Promise<UserI[] | null> {
-  const following = await User.find({}).exec();
+  const following = await User.find({}).lean().exec();
   return following;
 }
 
 
 // Returns a list of users who are following a stylist
 export async function getFollowers(stylist: UserOrId): Promise<FollowI[] | null> {
-  const followers = await Follow.find({ stylist }).populate(POPULATE).exec();
+  const followers = await Follow.find({ stylist }).populate(POPULATE).lean().exec();
   return followers;
 }
 
 export async function getEveryUserFollowers(): Promise<FollowI[] | null> {
-  const followers = await Follow.find().populate(POPULATE).exec();
+  const followers = await Follow.find().populate(POPULATE).lean().exec();
   return followers;
 }
 
