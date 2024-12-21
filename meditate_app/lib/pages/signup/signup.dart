@@ -220,7 +220,7 @@ class _SignupState extends State<Signup> {
                                                     style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.w600,
-                                                        color: Colors.black),
+                                                        color: Colors.white),
                                                     decoration: InputDecoration(
                                                       alignLabelWithHint: true,
                                                       contentPadding:
