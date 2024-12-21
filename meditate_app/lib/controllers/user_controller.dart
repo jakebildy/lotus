@@ -65,7 +65,13 @@ class UserController extends GetxController {
     databaseUser.listen((User user) {
       logSuccess("🔥AUTH: User value has been set ${user.username}");
       pushNotificationService.updateDeviceToken();
-      api.user.updateTimezoneOffset(DateTime.now().timeZoneOffset.inMinutes);
+      try {
+        api.user.updateTimezoneOffset(DateTime.now().timeZoneOffset.inMinutes);
+      } catch (error, trace) {
+        logError("Failed to update timezone offset");
+        logError(error.toString());
+        logError(trace.toString());
+      }
       if (!Get.isRegistered<FollowController>()) {
         Get.put(FollowController());
       }
