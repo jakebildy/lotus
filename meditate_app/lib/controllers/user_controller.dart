@@ -65,6 +65,7 @@ class UserController extends GetxController {
     databaseUser.listen((User user) {
       logSuccess("🔥AUTH: User value has been set ${user.username}");
       pushNotificationService.updateDeviceToken();
+      api.user.updateTimezoneOffset(DateTime.now().timeZoneOffset.inMinutes);
       if (!Get.isRegistered<FollowController>()) {
         Get.put(FollowController());
       }

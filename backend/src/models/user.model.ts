@@ -11,6 +11,7 @@ export interface UserI {
   avatar?: string;
   lastSeenActivity?: Date,
   deviceToken?: string,
+  timezoneOffset?: number,
 
   streak?: number,
   streakValueNeverReset?: number,
@@ -49,6 +50,7 @@ const UserSchema = new mongoose.Schema<UserI>(
     avatar: { type: String, required: true, default: defaultImage },
     lastSeenActivity: { type: Date, required: true },
     deviceToken: { type: String, required: false },
+    timezoneOffset: { type: Number, required: false },
 
     streak: { type: Number, required: false },
     streakValueNeverReset: { type: Number, required: false },

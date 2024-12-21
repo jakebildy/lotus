@@ -123,6 +123,9 @@ class _AddSomeonePageState extends State<AddSomeonePage> {
 
                         PostHogService posthog = Get.find();
                         posthog.logEvent("ADD_FRIENDS_LINK_TAPPED", {});
+
+                        posthog.logEvent(
+                            "ADD_FRIENDS_LINK_TAPPED_ADD_SOMEONE_PAGE", {});
                         HapticFeedback.mediumImpact();
                         Share.share("Add me on Shellevate! My username is @" +
                             user.user.value.username +
@@ -160,36 +163,36 @@ class _AddSomeonePageState extends State<AddSomeonePage> {
                       ),
                     ),
                   ))),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[800]!, width: 2),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: ListTile(
-                  onTap: () {
-                    PostHogService posthog = Get.find();
-                    posthog.logEvent("GO_TO_SEARCH_PAGE_TAPPED", {});
-                    Get.to(() => const Search());
-                  },
-                  // border
-                  title: const Text(
-                    "Search by username",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  leading: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.search,
-                      size: 40,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //         border: Border.all(color: Colors.grey[800]!, width: 2),
+          //         borderRadius: BorderRadius.circular(10)),
+          //     child: Padding(
+          //       padding: const EdgeInsets.all(5.0),
+          //       child: ListTile(
+          //         onTap: () {
+          //           PostHogService posthog = Get.find();
+          //           posthog.logEvent("GO_TO_SEARCH_PAGE_TAPPED", {});
+          //           Get.to(() => const Search());
+          //         },
+          //         // border
+          //         title: const Text(
+          //           "Search by username",
+          //           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          //         ),
+          //         leading: const Padding(
+          //           padding: EdgeInsets.all(8.0),
+          //           child: Icon(
+          //             Icons.search,
+          //             size: 40,
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           const SizedBox(
             height: 30,
           ),

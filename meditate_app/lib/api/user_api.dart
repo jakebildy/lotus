@@ -128,6 +128,20 @@ class UserApi {
     }
   }
 
+  Future<void> updateTimezoneOffset(int timezoneOffset) async {
+    final response = await http.post(
+        api.https(url,
+            "/api/user/update-timezone-offset/" + timezoneOffset.toString()),
+        headers: api.headers);
+    if (response.statusCode == 200) {
+      api.updateCookie(response);
+      return;
+      //response.body;
+    } else {
+      throw (response.body);
+    }
+  }
+
   Future<User?> getUserFromUsername(String username) async {
     final response = await http.get(
         api.https(url, "/api/user/username/$username"),

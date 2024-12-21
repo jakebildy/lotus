@@ -30,6 +30,17 @@ async function updateDeviceToken(req: RequestI, res: Response) {
   }
 }
 
+async function updateTimezoneOffset(req: RequestI, res: Response) {
+  try {
+    if (!req.user) throw "no user sheeeeeeeeesh";
+    const user = await UserService.updateUser(req.user, { timezoneOffset: parseInt(req.params.offset) } as UserUpdate);
+    return res.json(user);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+}
+
 async function searchByText(req: Request, res: Response) {
   try {
     const items = await UserService.searchUsers(req.params.text);
@@ -72,4 +83,5 @@ UserRouter.get("/user/search/:text", searchByText);
 UserRouter.post("/user/update", userAuth, updateUser);
 UserRouter.post("/user/upload-avatar", userAuth, uploadAvatar);
 UserRouter.post("/user/update-device-token/:token", userAuth, updateDeviceToken);
+UserRouter.post("/user/update-timezone-offset/:offset", userAuth, updateTimezoneOffset);
 // UserRouter.post("/user/subscribed/", userAuth, markSubscribed);
