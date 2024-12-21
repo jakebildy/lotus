@@ -5,7 +5,6 @@ import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/search/friend_suggestions.dart';
-import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:share_plus/share_plus.dart';
 

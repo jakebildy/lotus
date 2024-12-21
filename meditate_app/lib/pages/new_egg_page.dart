@@ -141,12 +141,13 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                   SaveController save = Get.find();
                   FollowController followController = Get.find();
 
-                  if (save.hasShownFollowSomeonePage.value == false ||
+                  if (save.hasShownFollowSomeonePage.value == false &&
                       followController.following.isEmpty) {
                     Get.to(const AddSomeonePage());
                     save.updateHasShownFollowSomeonePage();
+                  } else {
+                    Get.offAll(const AppPages());
                   }
-                  Get.offAll(const AppPages());
                 },
                 child: Container(
                     decoration: const BoxDecoration(
