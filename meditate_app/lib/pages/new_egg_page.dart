@@ -140,7 +140,9 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                   // If it's the first time, go to a page to suggest the user follows someone
                   SaveController save = Get.find();
                   FollowController followController = Get.find();
-
+                  setState(() {
+                    isOnPage = false;
+                  });
                   if (save.hasShownFollowSomeonePage.value == false &&
                       followController.following.isEmpty) {
                     Get.to(const AddSomeonePage());
