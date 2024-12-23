@@ -11,6 +11,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/add_someone_page.dart';
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
+import 'package:meditate_app/pages/signup/set_goal_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -145,7 +146,7 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                   });
                   if (save.hasShownPaywallPage.value == false &&
                       save.isSubscribedToPremium.value == false) {
-                    Get.to(const GetSubscriptionPage());
+                    Get.to(const SetGoalPage());
                     save.updateHasShownPaywallPage();
                   } else {
                     Get.offAll(const AppPages());

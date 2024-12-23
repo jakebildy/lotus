@@ -264,6 +264,7 @@ flutter:
     - assets/app_icon.jpg
     - assets/audio/bowl.wav
     - assets/audio/tibetan_chime.wav
+    - assets/set_goal.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
