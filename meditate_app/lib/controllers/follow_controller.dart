@@ -21,6 +21,8 @@ class FollowController extends GetxController {
 
   RxList<int> meditationAmounts = RxList();
 
+  RxList<User> newFollowers = RxList();
+
   FollowController() {
     fetchFollows();
   }
@@ -205,6 +207,12 @@ class FollowController extends GetxController {
       for (Follow follow in _followers) {
         if (follow.type == "Stylist") {
           followers.add(follow.user);
+
+          // if follow was created in the last 3 days, add to newFollowers
+          if (follow.createdAt!
+              .isAfter(DateTime.now().subtract(const Duration(days: 3)))) {
+            newFollowers.add(follow.user);
+          }
         }
       }
 

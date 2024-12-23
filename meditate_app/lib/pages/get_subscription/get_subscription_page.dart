@@ -206,7 +206,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                             ),
                                             TextSpan(text: " full access to "),
                                             TextSpan(
-                                                text: " Shellevate Premium"),
+                                                text: "Shellevate Premium"),
                                           ],
                                         ),
                                       ),

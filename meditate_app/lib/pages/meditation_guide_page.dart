@@ -180,16 +180,20 @@ class _MeditationGuideState extends State<MeditationGuide> {
                       }
                     },
                     child: Container(
-                        color: const Color.fromARGB(255, 16, 77, 127),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white, width: 2),
+                          color: const Color.fromARGB(255, 16, 77, 127),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 100),
+                              vertical: 10.0, horizontal: 100),
                           child: Text(
-                            "Continue",
+                            "Start Meditation",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 18),
                           ),
                         )),
                   )
