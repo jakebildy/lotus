@@ -204,6 +204,7 @@ class FollowController extends GetxController {
       usersFollowing.value = [];
       usersNotFollowing.value = [];
       usersFollowingIDs.value = [];
+      newFollowers.value = [];
       for (Follow follow in _followers) {
         if (follow.type == "Stylist") {
           followers.add(follow.user);
