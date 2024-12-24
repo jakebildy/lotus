@@ -120,6 +120,7 @@ class FirstMeditationOnboardingPage extends StatelessWidget {
                         const Duration(minutes: 1).inSeconds;
                     countdownController.update();
                     SaveController save = Get.find();
+                    save.saveValue("GUIDE_SHOWN", "TRUE");
                     Get.to(
                         MeditationGuide(
                             time: const Duration(minutes: 1),
