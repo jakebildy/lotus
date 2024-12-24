@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/api/index.dart';
 import 'package:meditate_app/controllers/edit_profile_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/delete_account_popup.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EditProfile extends StatelessWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -48,6 +50,41 @@ class ProfileInfo extends StatelessWidget {
       () => Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const Divider(
+            thickness: 1,
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              // make it so tapping anywhere on the row opens the app settings (including space)
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                // open app settings
+                launchUrl(Uri.parse("app-settings:"));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const [
+                  Icon(Icons.notifications),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text("Notification Settings",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      )),
+                  Spacer(),
+                  Icon(Icons.arrow_forward_ios, color: Colors.white),
+                ],
+              ),
+            ),
+          ),
+
+          const Divider(
+            thickness: 1,
+          ),
           // Profile Image
           Padding(
               padding: const EdgeInsets.only(top: 30, bottom: 10),
@@ -145,10 +182,6 @@ class ProfileInfo extends StatelessWidget {
             ),
           ),
 
-          const Divider(
-            thickness: 1,
-          ),
-
           Padding(
             padding: const EdgeInsets.all(0.0),
             child: OutlinedButton(
@@ -166,6 +199,10 @@ class ProfileInfo extends StatelessWidget {
 
           const SizedBox(
             height: 20,
+          ),
+
+          const SizedBox(
+            height: 200,
           ),
           Padding(
             padding: const EdgeInsets.all(0.0),

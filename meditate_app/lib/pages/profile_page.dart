@@ -831,32 +831,32 @@ class _ProfilePageState extends State<ProfilePage>
                                             ? " Follower"
                                             : " Followers")),
 
-                                    // number of new followers in last 3 days
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    followController.newFollowers.length > 0
-                                        ? Container(
-                                            decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(4.0),
-                                              child: Text(
-                                                followController
-                                                        .newFollowers.length
-                                                        .toString() +
-                                                    " new",
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 10),
-                                              ),
-                                            ),
-                                          )
-                                        : Container()
+                                    // // number of new followers in last 3 days
+                                    // const SizedBox(
+                                    //   width: 5,
+                                    // ),
+                                    // followController.newFollowers.length > 0
+                                    //     ? Container(
+                                    //         decoration: BoxDecoration(
+                                    //             color: Colors.red,
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(10)),
+                                    //         child: Padding(
+                                    //           padding:
+                                    //               const EdgeInsets.all(4.0),
+                                    //           child: Text(
+                                    //             followController
+                                    //                     .newFollowers.length
+                                    //                     .toString() +
+                                    //                 " new",
+                                    //             style: const TextStyle(
+                                    //                 color: Colors.white,
+                                    //                 fontWeight: FontWeight.bold,
+                                    //                 fontSize: 10),
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //     : Container()
                                   ],
                                 ))
                               ]),

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
-import 'package:meditate_app/controllers/countdown_controller.dart';
-import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
-import 'package:meditate_app/pages/meditation_guide_page.dart';
 import 'package:meditate_app/pages/signup/goal_widget.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 
@@ -22,7 +17,6 @@ class _SetGoalPageState extends State<SetGoalPage> {
 
   @override
   Widget build(BuildContext context) {
-    SignupController controller = Get.find();
     return Scaffold(
         body: Stack(children: [
       Opacity(
@@ -92,8 +86,8 @@ class _SetGoalPageState extends State<SetGoalPage> {
             const SizedBox(
               height: 20,
             ),
-            Image.asset(
-              "assets/set_goal.gif",
+            const Image(
+              image: AssetImage("assets/set_goal.webp"),
               width: 100,
               height: 100,
             ),
