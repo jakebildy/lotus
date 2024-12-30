@@ -48,18 +48,18 @@ export async function sendStreakReminder() {
             let title = getRandomItem(notificationTitles);
             let message = getRandomItem(notificationMessages);
 
-            if (user.lastMeditated && user.streak && user.streak !== 0) {
-                const lastMeditatedTime = new Date(user.lastMeditated).getTime();
-                const currentTime = Date.now();
-                const hoursSinceLastMeditation = (currentTime - lastMeditatedTime) / (1000 * 60 * 60);
+            // if (user.lastMeditated && user.streak && user.streak !== 0) {
+            //     const lastMeditatedTime = new Date(user.lastMeditated).getTime();
+            //     const currentTime = Date.now();
+            //     const hoursSinceLastMeditation = (currentTime - lastMeditatedTime) / (1000 * 60 * 60);
             
-                if (hoursSinceLastMeditation <= 24) {
-                    title = getRandomItem([
-                        'Keep your ' + user.streak + ' day streak going 🔥',
-                        `Don't let your ` + user.streak + ` day streak die 🔥`,
-                    `Can you make it to ` + (user.streak! + 1).toString() + ` days? 🔥`]);
-                }
-            }
+            //     if (hoursSinceLastMeditation <= 24) {
+            //         title = getRandomItem([
+            //             'Keep your ' + user.streak + ' day streak going 🔥',
+            //             `Don't let your ` + user.streak + ` day streak die 🔥`,
+            //         `Can you make it to ` + (user.streak! + 1).toString() + ` days? 🔥`]);
+            //     }
+            // }
 
             // if (user.totalMinutes == 0 && user.streak == 0) {
             //     title = getRandomItem([
