@@ -6,6 +6,7 @@ class Breathwork {
   final String emoji;
   final List<int> inOutTimes;
   final List<String> instructions;
+  final bool? advanced;
 
   const Breathwork({
     required this.name,
@@ -14,6 +15,7 @@ class Breathwork {
     required this.emoji,
     required this.inOutTimes,
     required this.instructions,
+    this.advanced,
   }) : super();
 }
 
@@ -49,6 +51,30 @@ const List<Breathwork> BREATHWORKS = [
     inOutTimes: [5, 5],
     instructions: ["Breathe in", "Breathe out"],
   ),
+  Breathwork(
+      name: "Long-Exhale Box Breathing",
+      description: "When you're winding down after a hectic day.",
+      whenToUse: "For winding down",
+      emoji: '🛋️',
+      inOutTimes: [4, 4, 6, 2],
+      instructions: ["Breathe in", "Hold", "Breathe out", "Hold"]),
+  Breathwork(
+      name: "10-10-10-10 Breathing",
+      description: "When clarity feels out of reach",
+      whenToUse: "For deep clarity",
+      emoji: '🔍',
+      inOutTimes: [10, 10, 10, 10],
+      instructions: ["Breathe in", "Hold", "Breathe out", "Hold"],
+      advanced: true),
+  Breathwork(
+    name: "2:1 Breathing",
+    description: "Deep relaxation and relief from stress.",
+    whenToUse: "For deep relaxation",
+    emoji: '🔄',
+    inOutTimes: [4, 8],
+    instructions: ["Breathe in", "Breathe out"],
+  ),
+
   // Breathwork(
   //     name: "Triangle Breathing",
   //     description: "",

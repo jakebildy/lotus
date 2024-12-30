@@ -72,7 +72,7 @@ class _SetGoalPageState extends State<SetGoalPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 100,
+              height: 60,
               width: MediaQuery.of(context).size.width,
             ),
             const Padding(
@@ -83,17 +83,17 @@ class _SetGoalPageState extends State<SetGoalPage> {
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Image(
-              image: AssetImage("assets/set_goal.webp"),
-              width: 100,
-              height: 100,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // const Image(
+            //   image: AssetImage("assets/set_goal.webp"),
+            //   width: 100,
+            //   height: 100,
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
             const Padding(
               padding: EdgeInsets.all(14.0),
               child: Text(

@@ -203,6 +203,34 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 24)),
+                                          BREATHWORKS[index].advanced == true
+                                              ? Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.green,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40),
+                                                        border: Border.all(
+                                                            color: Colors.green,
+                                                            width: 2)),
+                                                    child: const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(4.0),
+                                                      child: Text("Advanced",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                              fontSize: 14)),
+                                                    ),
+                                                  ),
+                                                )
+                                              : Container(),
                                         ],
                                       ),
                                     ],

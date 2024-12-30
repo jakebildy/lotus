@@ -59,7 +59,7 @@ class _BreathworkTimerState extends State<BreathworkTimer> {
             }
 
             title = widget.breathwork.instructions[stepIndex];
-            count = "1";
+            count = (widget.breathwork.inOutTimes[stepIndex]).toString();
             breathIndex = 0;
           });
 
@@ -70,7 +70,8 @@ class _BreathworkTimerState extends State<BreathworkTimer> {
             }
             setState(() {
               breathIndex++;
-              count = (breathIndex + 1).toString();
+              count = (widget.breathwork.inOutTimes[stepIndex] - (breathIndex))
+                  .toString();
             });
           }
           stepIndex++;
