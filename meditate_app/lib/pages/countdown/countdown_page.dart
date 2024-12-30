@@ -115,9 +115,12 @@ class _CountdownPageState extends State<CountdownPage>
                                             0.7),
                                     child: Column(
                                       children: [
-                                        const Text(
-                                          "Meditation Complete!",
-                                          style: TextStyle(
+                                        Text(
+                                          saveController
+                                                  .breathworkSelected.value
+                                              ? "Breathwork Complete! \nReturn to normal breathing."
+                                              : "Meditation Complete!",
+                                          style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 23,
                                               fontWeight: FontWeight.bold),

@@ -295,8 +295,8 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                           title: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            children: [
-                                              const Text(
+                                            children: const [
+                                              Text(
                                                 "Breathwork",
                                                 style: TextStyle(
                                                     color: Colors.white),
@@ -304,7 +304,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                               SizedBox(
                                                 height: 4,
                                               ),
-                                              const SizedBox(
+                                              SizedBox(
                                                   width: 80,
                                                   child: TryForFreeContainer())
                                             ],
@@ -504,6 +504,17 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                                   "time": _duration.inMinutes
                                                       .toString()
                                                 });
+
+                                                if (saveController
+                                                    .breathworkSelected.value) {
+                                                  PostHogService posthog =
+                                                      Get.find();
+                                                  posthog.logEvent(
+                                                      "BREATHWORK_TAPPED", {
+                                                    "time": _duration.inMinutes
+                                                        .toString()
+                                                  });
+                                                }
 
                                                 CountdownController
                                                     countdownController =

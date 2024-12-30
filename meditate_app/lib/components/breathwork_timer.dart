@@ -65,6 +65,7 @@ class _BreathworkTimerState extends State<BreathworkTimer> {
 
           while (breathIndex < widget.breathwork.inOutTimes[stepIndex]) {
             await Future.delayed(const Duration(seconds: 1));
+
             while (widget.paused) {
               await Future.delayed(const Duration(seconds: 1));
             }

@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:audioplayers/audioplayers.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
@@ -45,7 +48,7 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.grey[900],
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -57,7 +60,7 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
             children: const [
               Text("Choose Breathwork"),
               Text(
-                "Don't push yourself beyond your limits",
+                "Don't push yourself beyond your limits.",
                 style: TextStyle(fontSize: 12, color: Colors.white38),
               ),
 
@@ -71,17 +74,36 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
             ],
           ),
         ),
+        backgroundColor: Colors.grey[900],
+        // extendBody: true,
+        // bottomNavigationBar: SafeArea(
+        //   child: Container(
+        //     color: Colors.black87,
+        //     child: Padding(
+        //       padding: const EdgeInsets.all(8.0),
+        //       child: Text(
+        //         " If you feel uncomfortable or lightheaded, stop and breathe normally.",
+        //         style: TextStyle(fontSize: 12, color: Colors.white38),
+        //         textAlign: TextAlign.center,
+        //       ),
+        //     ),
+        //   ),
+        // ),
+        // extendBodyBehindAppBar: true,
         body: GridView.count(
             crossAxisCount: 1,
-            childAspectRatio: 1.3,
+            // padding between the items should be 0
+            padding: const EdgeInsets.all(8.0),
             crossAxisSpacing: 4.0,
-            mainAxisSpacing: 8.0,
+            mainAxisSpacing: 0,
+            childAspectRatio: 1.17,
             children: List.generate(BREATHWORKS.length, (index) {
               return Center(
                 child: Bounce(
                   duration: const Duration(milliseconds: 110),
                   onPressed: () {
                     HapticFeedback.mediumImpact();
+
                     UserController user = Get.find();
 
                     if (user.user.value.hasTriedBreathwork == false &&
@@ -141,8 +163,9 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
+                      height: 272,
                       child: Card(
-                          elevation: 20,
+                          elevation: 0,
                           color: Colors.transparent,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(16),
@@ -153,44 +176,55 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                   Stack(
                                     alignment: Alignment.center,
                                     children: [
-                                      AspectRatio(
-                                          aspectRatio: 1.9,
-                                          child:
-                                              // gradient of blues
-                                              Stack(
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    begin: Alignment.topCenter,
-                                                    end: Alignment.bottomCenter,
-                                                    colors: [
-                                                      Colors.blue[900]!,
-                                                      Colors.blue[800]!,
-                                                      Colors.blue[700]!,
-                                                      Colors.blue[600]!,
-                                                      Colors.blue[500]!,
-                                                      Colors.blue[400]!,
-                                                      Colors.blue[300]!,
-                                                      Colors.blue[200]!,
-                                                      Colors.blue[100]!,
-                                                      Colors.blue[50]!,
-                                                    ],
+                                      Stack(
+                                        children: [
+                                          Container(
+                                            height: 264,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            color: Colors.black,
+                                          ),
+                                          Opacity(
+                                            opacity: 0.5,
+                                            child: Stack(
+                                              children: [
+                                                ColorFiltered(
+                                                    colorFilter:
+                                                        ColorFilter.mode(
+                                                      BREATHWORKS[index]
+                                                          .color
+                                                          .withOpacity(
+                                                              0.5), // Adjust the opacity as needed
+                                                      BlendMode
+                                                          .color, // Choose a blend mode that suits your design
+                                                    ),
+                                                    child: Image.asset(
+                                                      "assets/breathwork_background.jpg",
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      height: 264,
+                                                      fit: BoxFit.fill,
+                                                    )),
+                                                BackdropFilter(
+                                                  filter: ImageFilter.blur(
+                                                    sigmaX:
+                                                        20.0, // Adjust the X blur intensity
+                                                    sigmaY:
+                                                        20.0, // Adjust the Y blur intensity
+                                                  ),
+                                                  child: Container(
+                                                    color: Colors.black.withOpacity(
+                                                        0), // Transparent container to apply blur
                                                   ),
                                                 ),
-                                              ),
-                                              Opacity(
-                                                opacity: 0.3,
-                                                child: Image.asset(
-                                                    "assets/breathwork_background.jpg",
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    fit: BoxFit.cover),
-                                              ),
-                                            ],
-                                          )),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                       Column(
                                         children: [
                                           Text(BREATHWORKS[index].emoji,
@@ -202,68 +236,87 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
-                                                  fontSize: 24)),
+                                                  fontSize: 26)),
                                           BREATHWORKS[index].advanced == true
                                               ? Padding(
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        color: Colors.green,
+                                                        color: Colors.orange,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(40),
                                                         border: Border.all(
-                                                            color: Colors.green,
+                                                            color:
+                                                                Colors.orange,
                                                             width: 2)),
                                                     child: const Padding(
                                                       padding:
                                                           EdgeInsets.all(4.0),
-                                                      child: Text("Advanced",
+                                                      child: Text("Difficult",
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.white,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w900,
-                                                              fontSize: 14)),
+                                                              fontSize: 12)),
                                                     ),
                                                   ),
                                                 )
                                               : Container(),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 20, 0, 4),
-                                            child: Text(
-                                              BREATHWORKS[index].name,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 18,
-                                                  color: save.selectedAmbience
-                                                              .value ==
-                                                          BREATHWORKS[index]
-                                                              .name
-                                                      ? Colors.tealAccent
-                                                      : Colors.white),
-                                            ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 20, 0, 4),
+                                                child: Text(
+                                                  BREATHWORKS[index].name,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16,
+                                                      color:
+                                                          save.selectedAmbience
+                                                                      .value ==
+                                                                  BREATHWORKS[
+                                                                          index]
+                                                                      .name
+                                                              ? Colors
+                                                                  .tealAccent
+                                                              : Colors.white70),
+                                                ),
+                                              ),
+                                              Text(
+                                                BREATHWORKS[index].description,
+                                                style: TextStyle(
+                                                    color: Colors.grey),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(40),
+                                                  border: Border.all(
+                                                      color: Colors.white,
+                                                      width: 2),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Icon(Icons.play_arrow,
+                                                      color: Colors.black),
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                          Text(
-                                            BREATHWORKS[index].description,
-                                            style:
-                                                TextStyle(color: Colors.grey),
-                                          )
                                         ],
                                       ),
                                     ],
