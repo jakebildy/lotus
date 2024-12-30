@@ -3,11 +3,20 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/login_controller.dart';
 import 'package:meditate_app/pages/login/forgot_password_reset_page.dart';
-
+import 'package:meditate_app/api/index.dart' as api;
+import 'package:meditate_app/util/logger.dart';
 import '../signup/signup.dart';
 
-class ForgotPasswordEmailPage extends StatelessWidget {
-  const ForgotPasswordEmailPage({Key? key}) : super(key: key);
+class ForgotPasswordEmailPage extends StatefulWidget {
+  const ForgotPasswordEmailPage({super.key});
+
+  @override
+  State<ForgotPasswordEmailPage> createState() =>
+      _ForgotPasswordEmailPageState();
+}
+
+class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -152,16 +161,33 @@ class ForgotPasswordEmailPage extends StatelessWidget {
                                               BorderRadius.circular(10.0),
                                           side: const BorderSide(
                                               width: 2, color: Colors.white)))),
-                              onPressed: () {
-                                Get.to(const ForgotPasswordResetPage());
+                              onPressed: () async {
+                                if (loading == false) {
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  try {
+                                    logSuccess("Reset password email sent");
+                                    await api.user.resetPasswordEmail(
+                                        controller.email.text);
+                                    Get.to(const ForgotPasswordResetPage());
+                                  } catch (e) {
+                                    Get.snackbar("Error", e.toString());
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                    return;
+                                  }
+                                }
                               },
-                              child: const SizedBox(
+                              child: SizedBox(
                                   width: 2000,
                                   child: Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Text("Email Code",
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Text(
+                                        loading ? "Loading..." : "Email Code",
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold)),
                                   ))),

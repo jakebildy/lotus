@@ -142,6 +142,22 @@ class UserApi {
     }
   }
 
+  Future<User> resetPasswordEmail(String email) async {
+    final Map<String, String> map = {
+      "email": email,
+    };
+
+    final String body = jsonEncode(map);
+    final response = await http.post(api.https(url, "/api/reset-password"),
+        body: body, headers: api.headers);
+
+    if (response.statusCode == 200) {
+      return User.fromJson(json.decode(response.body));
+    } else {
+      throw (response.body);
+    }
+  }
+
   Future<User?> getUserFromUsername(String username) async {
     final response = await http.get(
         api.https(url, "/api/user/username/$username"),
