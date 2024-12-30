@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Breathwork {
   final String name;
   final String description;
@@ -6,6 +8,8 @@ class Breathwork {
   final String emoji;
   final List<int> inOutTimes;
   final List<String> instructions;
+  final bool? advanced;
+  final Color color;
 
   const Breathwork({
     required this.name,
@@ -14,41 +18,70 @@ class Breathwork {
     required this.emoji,
     required this.inOutTimes,
     required this.instructions,
+    required this.color,
+    this.advanced,
   }) : super();
 }
 
 // ignore: constant_identifier_names
 const List<Breathwork> BREATHWORKS = [
   Breathwork(
-      name: "4-7-8 Breathing",
-      description: "Relax and fall asleep",
-      whenToUse: "Before bed",
-      emoji: '💤',
-      inOutTimes: [
-        4,
-        7,
-        8
-      ],
-      instructions: [
-        "Breathe in",
-        "Hold",
-        "Breathe out",
-      ]),
+    name: "4-7-8 Breathing",
+    description: "Relax and fall asleep",
+    whenToUse: "Before Bed",
+    emoji: '💤',
+    inOutTimes: [4, 7, 8],
+    instructions: [
+      "Breathe in",
+      "Hold",
+      "Breathe out",
+    ],
+    color: Colors.purple,
+  ),
   Breathwork(
       name: "Box Breathing",
       description: "Calm and focus when stressed or anxious",
-      whenToUse: "Before a big event",
+      whenToUse: "Before a Big Event",
       emoji: '■',
       inOutTimes: [4, 4, 4, 4],
-      instructions: ["Breathe in", "Hold", "Breathe out", "Hold"]),
+      instructions: ["Breathe in", "Hold", "Breathe out", "Hold"],
+      color: Colors.orange),
   Breathwork(
     name: "5-5 Breathing",
     description: "Regain balance and center yourself",
-    whenToUse: "When overthinking",
+    whenToUse: "Overthinking",
     emoji: '🧘',
     inOutTimes: [5, 5],
     instructions: ["Breathe in", "Breathe out"],
+    color: Colors.green,
   ),
+  Breathwork(
+      name: "Long-Exhale Box Breathing",
+      description: "When you're winding down after a hectic day.",
+      whenToUse: "Winding Down",
+      emoji: '🛋️',
+      inOutTimes: [4, 4, 6, 2],
+      instructions: ["Breathe in", "Hold", "Breathe out", "Hold"],
+      color: Colors.blue),
+
+  Breathwork(
+    name: "2:1 Breathing",
+    description: "Deep relaxation and relief from stress.",
+    whenToUse: "Deep Relaxation",
+    emoji: '🔄',
+    inOutTimes: [4, 8],
+    color: Colors.tealAccent,
+    instructions: ["Breathe in", "Breathe out"],
+  ),
+  Breathwork(
+      name: "10-10-10-10 Breathing",
+      description: "When clarity feels out of reach.",
+      whenToUse: "Deep Clarity",
+      emoji: '🔍',
+      inOutTimes: [10, 10, 10, 10],
+      instructions: ["Breathe in", "Hold", "Breathe out", "Hold"],
+      color: Colors.black,
+      advanced: true),
   // Breathwork(
   //     name: "Triangle Breathing",
   //     description: "",

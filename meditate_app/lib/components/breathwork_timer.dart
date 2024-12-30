@@ -59,18 +59,20 @@ class _BreathworkTimerState extends State<BreathworkTimer> {
             }
 
             title = widget.breathwork.instructions[stepIndex];
-            count = "1";
+            count = (widget.breathwork.inOutTimes[stepIndex]).toString();
             breathIndex = 0;
           });
 
           while (breathIndex < widget.breathwork.inOutTimes[stepIndex]) {
             await Future.delayed(const Duration(seconds: 1));
+
             while (widget.paused) {
               await Future.delayed(const Duration(seconds: 1));
             }
             setState(() {
               breathIndex++;
-              count = (breathIndex + 1).toString();
+              count = (widget.breathwork.inOutTimes[stepIndex] - (breathIndex))
+                  .toString();
             });
           }
           stepIndex++;

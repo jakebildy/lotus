@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/login_controller.dart';
+import 'package:meditate_app/pages/login/forgot_password_email.dart';
 
 import '../signup/signup.dart';
 
@@ -31,6 +32,23 @@ class Login extends StatelessWidget {
               child: Center(
                 child: Stack(
                   children: [
+                    Opacity(
+                      opacity: 0.5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(0),
+                        //  padding: const EdgeInsets.fromLTRB(20,20,20,38),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(0),
+                          child: SizedBox(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: Image.asset(
+                                "assets/ocean_background.jpeg",
+                                fit: BoxFit.fill,
+                              )),
+                        ),
+                      ),
+                    ),
                     Hero(
                       tag: "WaterAnimation",
                       child: Opacity(
@@ -171,6 +189,22 @@ class Login extends StatelessWidget {
                         const SizedBox(height: 20),
                         GestureDetector(
                           onTap: () {
+                            // enter your email page (the email should have a code that gets generated)
+                            Get.to(ForgotPasswordEmailPage());
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              "Forgot password",
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        GestureDetector(
+                          onTap: () {
                             Get.offAll(const Signup());
                           },
                           child: const Padding(
@@ -178,7 +212,7 @@ class Login extends StatelessWidget {
                             child: Text(
                               "I want to sign up instead",
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                                  fontSize: 14, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                           ),

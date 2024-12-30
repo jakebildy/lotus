@@ -206,7 +206,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                             ),
                                             TextSpan(text: " full access to "),
                                             TextSpan(
-                                                text: " Shellevate Premium"),
+                                                text: "Shellevate Premium"),
                                           ],
                                         ),
                                       ),
@@ -430,10 +430,10 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                         children: [
                                                           Padding(
                                                             padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
+                                                                const EdgeInsets
+                                                                    .all(8.0),
                                                             child: Column(
-                                                              children: [
+                                                              children: const [
                                                                 Text("🪷",
                                                                     style: TextStyle(
                                                                         fontSize:
@@ -453,10 +453,10 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                           ),
                                                           Padding(
                                                             padding:
-                                                                EdgeInsets.all(
-                                                                    8.0),
+                                                                const EdgeInsets
+                                                                    .all(8.0),
                                                             child: Column(
-                                                              children: [
+                                                              children: const [
                                                                 Text("🤔",
                                                                     style: TextStyle(
                                                                         fontSize:
@@ -476,7 +476,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                           ),
                                                           Container(
                                                             decoration:
-                                                                BoxDecoration(
+                                                                const BoxDecoration(
                                                               color: Colors
                                                                   .white12,
                                                               borderRadius:
@@ -489,10 +489,10 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                             ),
                                                             child: Padding(
                                                               padding:
-                                                                  EdgeInsets
+                                                                  const EdgeInsets
                                                                       .all(8.0),
                                                               child: Column(
-                                                                children: [
+                                                                children: const [
                                                                   Text("🌟",
                                                                       style: TextStyle(
                                                                           fontSize:

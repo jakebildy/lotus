@@ -16,6 +16,7 @@ steps:
       - "STRIPE_ENDPOINT=${_STRIPE_ENDPOINT}"
       - "REVERY_PRIVATE_KEY=${_REVERY_PRIVATE_KEY}"
       - "REVERY_PUBLIC_KEY=${_REVERY_PUBLIC_KEY}"
+      - "EMAIL_PASSWORD=${_EMAIL_PASSWORD}"
   - name: "gcr.io/cloud-builders/gcloud"
     dir: backend/
     args: ["app", "deploy", "app.yaml"]

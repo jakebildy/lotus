@@ -16,6 +16,8 @@ class LoginController extends GetxController {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
 
+  final TextEditingController resetCode = TextEditingController();
+
   final Rx<String> warningMessage = "".obs;
   final Rx<bool> isLoading = false.obs;
   final Rx<bool> isLoggingIn = false.obs;

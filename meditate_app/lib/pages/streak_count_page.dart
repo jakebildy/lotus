@@ -266,85 +266,95 @@ class _StreakCountPageState extends State<StreakCountPage>
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      setState(() {
-                                        sharingToStory = true;
-                                      });
+                                  userController.user.value.streak % 10 != 0
+                                      ? Container()
+                                      : GestureDetector(
+                                          onTap: () async {
+                                            setState(() {
+                                              sharingToStory = true;
+                                            });
 
-                                      HapticFeedback.mediumImpact();
+                                            HapticFeedback.mediumImpact();
 
-                                      // wait for the new image to load
-                                      await Future.delayed(
-                                          const Duration(milliseconds: 500));
+                                            // wait for the new image to load
+                                            await Future.delayed(const Duration(
+                                                milliseconds: 500));
 
-                                      try {
-                                        //Log the event to PostHog
-                                        PostHogService posthog = Get.find();
-                                        posthog.logEvent(
-                                            "SHARE_TO_STORY_TAPPED", {});
+                                            try {
+                                              //Log the event to PostHog
+                                              PostHogService posthog =
+                                                  Get.find();
+                                              posthog.logEvent(
+                                                  "SHARE_TO_STORY_TAPPED", {});
 
-                                        // Capture the screenshot
-                                        final image = await screenshotController
-                                            .capture();
+                                              // Capture the screenshot
+                                              final image =
+                                                  await screenshotController
+                                                      .capture();
 
-                                        if (image != null) {
-                                          // Get a temporary directory to save the image
-                                          final directory =
-                                              await getTemporaryDirectory();
-                                          final imagePath =
-                                              "${directory.path}/screenshot.png";
+                                              if (image != null) {
+                                                // Get a temporary directory to save the image
+                                                final directory =
+                                                    await getTemporaryDirectory();
+                                                final imagePath =
+                                                    "${directory.path}/screenshot.png";
 
-                                          // Save the image to a file
-                                          final file = File(imagePath);
-                                          await file.writeAsBytes(image);
+                                                // Save the image to a file
+                                                final file = File(imagePath);
+                                                await file.writeAsBytes(image);
 
-                                          // Share the image on Instagram Story
-                                          await SocialShare.shareInstagramStory(
-                                            appId: "587093930383035",
-                                            imagePath: imagePath,
-                                            attributionURL:
-                                                "https://shellevate.app/get",
-                                          );
-                                        } else {
-                                          print("Screenshot capture failed.");
-                                        }
-                                      } catch (e) {
-                                        print("Error: $e");
-                                      }
+                                                // Share the image on Instagram Story
+                                                await SocialShare
+                                                    .shareInstagramStory(
+                                                  appId: "587093930383035",
+                                                  imagePath: imagePath,
+                                                  attributionURL:
+                                                      "https://shellevate.app/get",
+                                                );
+                                              } else {
+                                                print(
+                                                    "Screenshot capture failed.");
+                                              }
+                                            } catch (e) {
+                                              print("Error: $e");
+                                            }
 
-                                      setState(() {
-                                        sharingToStory = false;
-                                      });
-                                    },
-                                    child: Container(
-                                        decoration: const BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 22.0, horizontal: 100),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Image.asset(
-                                                  "assets/instagram.png",
-                                                  height: 22),
-                                              SizedBox(width: 10),
-                                              Text(
-                                                "Share to my story",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 17),
-                                              ),
-                                            ],
-                                          ),
-                                        )),
-                                  ),
+                                            setState(() {
+                                              sharingToStory = false;
+                                            });
+                                          },
+                                          child: Container(
+                                              decoration: const BoxDecoration(
+                                                  color: Colors.transparent,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(10))),
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 22.0,
+                                                    horizontal: 100),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Image.asset(
+                                                        "assets/instagram.png",
+                                                        height: 22),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                      "Share to my story",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 17),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )),
+                                        ),
                                 ],
                               ),
                       ],

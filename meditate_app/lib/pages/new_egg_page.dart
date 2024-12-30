@@ -10,6 +10,8 @@ import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/add_someone_page.dart';
+import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
+import 'package:meditate_app/pages/signup/set_goal_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -137,16 +139,16 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
               ),
               GestureDetector(
                 onTap: () {
-                  // If it's the first time, go to a page to suggest the user follows someone
+                  // If it's the first time, go to paywall page
                   SaveController save = Get.find();
-                  FollowController followController = Get.find();
                   setState(() {
                     isOnPage = false;
                   });
-                  if (save.hasShownFollowSomeonePage.value == false &&
-                      followController.following.isEmpty) {
-                    Get.to(const AddSomeonePage());
-                    save.updateHasShownFollowSomeonePage();
+                  if (save.hasShownPaywallPage.value == false &&
+                      save.isSubscribedToPremium.value == false &&
+                      user.user.value.totalMinutes < 40) {
+                    Get.to(const SetGoalPage());
+                    save.updateHasShownPaywallPage();
                   } else {
                     Get.offAll(const AppPages());
                   }

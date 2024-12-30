@@ -128,30 +128,35 @@ class _ProfilePageState extends State<ProfilePage>
                           child: SizedBox(
                               height: 80,
                               child: Center(
-                                child: Hero(
-                                  tag: "profile_picture",
-                                  child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(60)),
-                                      child: userController.user.value.avatar ==
-                                                  "https://i.imgur.com/BIRdTgg.png" ||
-                                              userController
-                                                      .user.value.avatar ==
-                                                  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                                          ? Image.asset(
-                                              "assets/blank_profile.png",
-                                              // height: 40,
-                                              fit: BoxFit.fill,
-                                            )
-                                          : FadeInImage.assetNetwork(
-                                              placeholder:
-                                                  'assets/blank_profile.png',
-                                              image: userController
-                                                  .user.value.avatar,
-                                              // height: 40,
-                                              fit: BoxFit.fill,
-                                            )),
-                                ),
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(const EditProfile());
+                                    },
+                                    child: Hero(
+                                      tag: "profile_picture",
+                                      child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(60)),
+                                          child: userController
+                                                          .user.value.avatar ==
+                                                      "https://i.imgur.com/BIRdTgg.png" ||
+                                                  userController
+                                                          .user.value.avatar ==
+                                                      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                                              ? Image.asset(
+                                                  "assets/blank_profile.png",
+                                                  // height: 40,
+                                                  fit: BoxFit.fill,
+                                                )
+                                              : FadeInImage.assetNetwork(
+                                                  placeholder:
+                                                      'assets/blank_profile.png',
+                                                  image: userController
+                                                      .user.value.avatar,
+                                                  // height: 40,
+                                                  fit: BoxFit.fill,
+                                                )),
+                                    )),
                               )),
                         ),
                       ),
@@ -817,11 +822,43 @@ class _ProfilePageState extends State<ProfilePage>
                                       " Following",
                                 ),
                                 Tab(
-                                    text: followController.followers.length
+                                    child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(followController.followers.length
                                             .toString() +
                                         (followController.followers.length == 1
                                             ? " Follower"
-                                            : " Followers"))
+                                            : " Followers")),
+
+                                    // // number of new followers in last 3 days
+                                    // const SizedBox(
+                                    //   width: 5,
+                                    // ),
+                                    // followController.newFollowers.length > 0
+                                    //     ? Container(
+                                    //         decoration: BoxDecoration(
+                                    //             color: Colors.red,
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(10)),
+                                    //         child: Padding(
+                                    //           padding:
+                                    //               const EdgeInsets.all(4.0),
+                                    //           child: Text(
+                                    //             followController
+                                    //                     .newFollowers.length
+                                    //                     .toString() +
+                                    //                 " new",
+                                    //             style: const TextStyle(
+                                    //                 color: Colors.white,
+                                    //                 fontWeight: FontWeight.bold,
+                                    //                 fontSize: 10),
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //     : Container()
+                                  ],
+                                ))
                               ]),
                           SizedBox(
                             height: 40 +
