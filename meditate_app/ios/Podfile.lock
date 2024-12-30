@@ -125,8 +125,6 @@ PODS:
   - TOCropViewController (2.6.1)
   - url_launcher_ios (0.0.1):
     - Flutter
-  - vibration (1.7.5):
-    - Flutter
   - wakelock (0.0.1):
     - Flutter
 
@@ -153,7 +151,6 @@ DEPENDENCIES:
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - social_share (from `.symlinks/plugins/social_share/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
-  - vibration (from `.symlinks/plugins/vibration/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
@@ -217,8 +214,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/social_share/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
-  vibration:
-    :path: ".symlinks/plugins/vibration/ios"
   wakelock:
     :path: ".symlinks/plugins/wakelock/ios"
 
@@ -261,7 +256,6 @@ SPEC CHECKSUMS:
   social_share: 702a5e3842addd22db515aa9e1e00a4b80a0296d
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
-  vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
 
 PODFILE CHECKSUM: f60ddbccc8a7ded8d49b47b95c59bc19add1f996

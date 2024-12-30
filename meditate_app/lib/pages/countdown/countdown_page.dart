@@ -118,12 +118,13 @@ class _CountdownPageState extends State<CountdownPage>
                                         Text(
                                           saveController
                                                   .breathworkSelected.value
-                                              ? "Breathwork Complete! \nReturn to normal breathing."
+                                              ? "Breathwork Complete! \nReturn to breathing normally."
                                               : "Meditation Complete!",
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 23,
                                               fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
                                         ),
                                         const SizedBox(
                                           height: 20,
