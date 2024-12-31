@@ -40,39 +40,37 @@ const resetCode =  Math.floor(1000 + Math.random() * 9000);
 }
 
 export async function checkResetCodeAndResetPassword(email: string, code: string, newPassword: string) {
-  // Find the reset code record by email
-  const resetCode = await ResetCode.findOne({ email });
+  // Find all reset codes for the given email
+  const resetCodes = await ResetCode.find({ email });
 
-  if (!resetCode) {
-      console.error("Error: could not find reset code");
-      return false;
-  } else {
-      // Compare the provided code with the hashed code in the database
-      const isCodeValid = bcrypt.compareSync(code, resetCode.code);
-
-      if (!isCodeValid) {
-          console.error("Error: reset code does not match");
-          return "Invalid reset code.";
-      }
-
-      // Check if the reset code is within the valid time frame
-      if (new Date().getTime() - resetCode.createdAt.getTime() < 30 * 60 * 1000) {
-          // Find the user by email
-          const user = await User.findOne({ email });
-
-          if (!user) {
-              console.error("Error: could not find user");
-              return "Couldn't find a user with that email";
-          } else {
-              // Update the user password
-              user.password = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
-              await user.save();
-              console.log("Password reset successfully");
-              return "Success";
-          }
-      } else {
-          console.error("Error: reset code expired");
-          return "Reset code expired! Try again.";
-      }
+  if (!resetCodes || resetCodes.length === 0) {
+      console.error("Error: could not find any reset codes for the email");
+      return "No reset codes found for this email.";
   }
+
+  // Check if any reset code matches and is within the valid time frame
+  const validResetCode = resetCodes.find(resetCode => {
+      const isCodeValid = bcrypt.compareSync(code, resetCode.code);
+      const isWithinTimeFrame = (new Date().getTime() - resetCode.createdAt.getTime() < 30 * 60 * 1000);
+      return isCodeValid && isWithinTimeFrame;
+  });
+
+  if (!validResetCode) {
+      console.error("Error: no valid reset code found (either mismatched or expired)");
+      return "Invalid or expired reset code.";
+  }
+
+  // Find the user by email
+  const user = await User.findOne({ email });
+
+  if (!user) {
+      console.error("Error: could not find user");
+      return "Couldn't find a user with that email.";
+  }
+
+  // Update the user's password
+  user.password = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
+  await user.save();
+  console.log("Password reset successfully");
+  return "Success";
 }
