@@ -28,12 +28,12 @@ async function resetPasswordComplete(req: RequestI, res: Response) {
     // }
     let response = await checkResetCodeAndResetPassword(req.body.email, req.body.code, req.body.newPassword);
 
-    if (response === true) {
+    if (response === "Success") {
     res.status(200).json({message: "Password reset email sent"});
     } else {
       res.status(
         500
-      ).json({message: "Failed to reset password"});
+      ).json({message: response});
     }
   } catch (e) {
     res.status(500).send(e);

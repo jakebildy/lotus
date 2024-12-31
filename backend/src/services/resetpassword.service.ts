@@ -54,17 +54,17 @@ export async function checkResetCodeAndResetPassword(email: string, code: string
 
             if (!user) {
                 console.error("Error: could not find user");
-                return false;
+                return "Couldn't find a user with that email";
             } else {
                 // update user password
                 user.password = bcrypt.hashSync(newPassword, bcrypt.genSaltSync(10));
                 await user.save();
                 console.log("Password reset successfully");
-                return true;
+                return "Success";
             }
         } else {
             console.error("Error: reset code expired");
-            return false;
+            return "Reset code expired! Try again.";
         }
     }
 }

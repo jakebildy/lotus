@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/login_controller.dart';
 
-import '../signup/signup.dart';
+import 'package:meditate_app/api/index.dart' as api;
 
 class ForgotPasswordResetPage extends StatelessWidget {
   const ForgotPasswordResetPage({Key? key}) : super(key: key);
@@ -98,7 +98,7 @@ class ForgotPasswordResetPage extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
-                            "Enter the code you recieved to your email.",
+                            "Enter the code you recieved to your email, and your new password.",
                             textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 16),
                           ),
@@ -132,6 +132,35 @@ class ForgotPasswordResetPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0)),
                             ),
                           )),
+                      const SizedBox(height: 30),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 50),
+                          // Code
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            controller: controller.password,
+                            obscureText: true,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
+                            decoration: InputDecoration(
+                              alignLabelWithHint: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 40),
+                              hintText: "New Password",
+                              fillColor: Colors.white,
+                              hintStyle: const TextStyle(color: Colors.grey),
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10.0)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(10.0)),
+                            ),
+                          )),
                       const SizedBox(height: 80),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -151,12 +180,19 @@ class ForgotPasswordResetPage extends StatelessWidget {
                                               BorderRadius.circular(10.0),
                                           side: const BorderSide(
                                               width: 2, color: Colors.white)))),
-                              onPressed: controller.login,
+                              onPressed: () async {
+                                await api.user.resetPassword(
+                                    controller.email.text,
+                                    controller.password.text,
+                                    controller.resetCode.text);
+
+                                controller.login();
+                              },
                               child: const SizedBox(
                                   width: 2000,
                                   child: Padding(
                                     padding: EdgeInsets.all(12.0),
-                                    child: Text("Verify",
+                                    child: Text("Change Password",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Colors.white,
