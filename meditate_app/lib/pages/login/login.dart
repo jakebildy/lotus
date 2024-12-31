@@ -224,6 +224,7 @@ class Login extends StatelessWidget {
                                 controller.isLoggingIn.value
                                     ? "Loading..."
                                     : controller.warningMessage.value,
+                                textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold)),
                           ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/login_controller.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 
 import '../models/user.dart';
@@ -174,6 +175,9 @@ class UserApi {
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
     } else {
+      LoginController controller = Get.find();
+      controller.resetMessage.value = jsonDecode(response.body)["message"];
+      controller.update();
       throw (response.body);
     }
   }

@@ -161,7 +161,15 @@ class ForgotPasswordResetPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.0)),
                             ),
                           )),
-                      const SizedBox(height: 80),
+                      const SizedBox(height: 10),
+                      Center(
+                        child: Text(
+                          controller.resetMessage.value,
+                          style: const TextStyle(
+                              color: Colors.red, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(height: 70),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50.0),
                         child: Hero(
@@ -200,16 +208,16 @@ class ForgotPasswordResetPage extends StatelessWidget {
                                   ))),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text("I didn't receive an email",
+                        child: const Text("Send another email",
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14)),

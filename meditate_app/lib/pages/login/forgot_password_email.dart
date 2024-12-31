@@ -170,6 +170,9 @@ class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
                                     logSuccess("Reset password email sent");
                                     await api.user.resetPasswordEmail(
                                         controller.email.text);
+                                    setState(() {
+                                      loading = false;
+                                    });
                                     Get.to(const ForgotPasswordResetPage());
                                   } catch (e) {
                                     Get.snackbar("Error", e.toString());
