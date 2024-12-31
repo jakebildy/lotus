@@ -266,6 +266,19 @@ int getTurtleToHatch(String ambience) {
   Turtle selectedTurtle =
       possibleTurtles[Random().nextInt(possibleTurtles.length)];
 
+  // if ambience is night, thunderstorm or prehistoric sea, only show ambience turtles 50% of the time
+  if (ambience == "Night" ||
+      ambience == "Thunderstorm" ||
+      ambience == "Prehistoric Sea") {
+    if (Random().nextInt(2) == 0) {
+      var ambienceTurtles = possibleTurtles
+          .where((element) => element.tier == Tier.AMBIENCE)
+          .toList();
+      selectedTurtle =
+          ambienceTurtles[Random().nextInt(ambienceTurtles.length)];
+    }
+  }
+
   for (int i = 0; i < TURTLES.length; i++) {
     if (TURTLES[i] == selectedTurtle) {
       result = i;

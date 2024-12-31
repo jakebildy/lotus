@@ -47,7 +47,7 @@ class Onboarding0 extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10.0),
                             side: BorderSide(color: Colors.white, width: 2)))),
                 onPressed: () {
-                  controller.page.value = -3;
+                  controller.page.value = -4;
                   controller.update();
 
                   PostHogService posthog = Get.find();
