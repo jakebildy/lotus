@@ -24,10 +24,15 @@ class CountdownWavesAndArt extends StatelessWidget {
               10000,
               12000,
             ],
-            heightPercentages: [
-              0.54,
-              0.55,
-            ],
+            heightPercentages: MediaQuery.of(context).size.height < 670
+                ? [
+                    0.44,
+                    0.45,
+                  ]
+                : [
+                    0.54,
+                    0.55,
+                  ],
           ),
           backgroundColor: Colors.transparent,
           size: const Size(double.infinity, double.infinity),
@@ -39,7 +44,7 @@ class CountdownWavesAndArt extends StatelessWidget {
                 opacity: 0.2,
                 child: Image.asset(
                   "assets/stars.jpg",
-                  height: 500,
+                  height: MediaQuery.of(context).size.height < 670 ? 400 : 500,
                   fit: BoxFit.cover,
                 ),
               )
