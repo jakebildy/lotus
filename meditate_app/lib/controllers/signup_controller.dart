@@ -50,7 +50,7 @@ class SignupController extends GetxController {
       PostHogService posthog = Get.find();
       posthog.logEvent("SIGNUP", {"version": APP_VERSION});
 
-      Get.offAll(const FirstMeditationOnboardingPage());
+      Get.offAll(const AppPages());
     } catch (error, trace) {
       logError("error signing up: " + error.toString());
       logError(trace.toString());

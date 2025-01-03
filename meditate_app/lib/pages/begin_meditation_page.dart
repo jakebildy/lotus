@@ -74,6 +74,9 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
         preferredOverlay: GestureDetector(
           onTap: () {
             _tooltipController.next();
+            setState(() {
+              done = true;
+            });
             saveController.updateHasShownOnboardingTooltipsPage1();
             //move the overlay forward or backwards, or dismiss the overlay
           },

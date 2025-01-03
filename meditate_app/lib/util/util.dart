@@ -219,7 +219,7 @@ int getUserStreak(User user) {
 
 int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
   // Remove all 0 values
-  meditationTimes.removeWhere((element) => element == 0);
+  meditationTimes.removeWhere((element) => element <= 2);
 
   // Sort the meditation times in descending order
   meditationTimes.sort((a, b) => b.compareTo(a));
@@ -230,7 +230,7 @@ int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
   // Calculate percentile
   double percentile = (rank / meditationTimes.length) * 100;
 
-  return percentile.toInt(); // Convert to integer for whole number
+  return percentile.toInt() + 1; // Convert to integer for whole number
 }
 
 int calculateLevel(int levelPoints) {
