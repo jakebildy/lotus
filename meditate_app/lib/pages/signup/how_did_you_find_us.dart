@@ -127,12 +127,12 @@ class _HowDidYouFindUsPageState extends State<HowDidYouFindUsPage> {
             GestureDetector(
                 onTap: () {
                   PostHogService postHogService = Get.find();
-                  postHogService.logEvent("HOW_TIKTOK", {});
+                  postHogService.logEvent("HOW_YOUTUBE", {});
                   SignupController controller = Get.find();
                   controller.page.value = -3;
                   controller.update();
                 },
-                child: const FindUsWidget(text: "TikTok", selected: false)),
+                child: const FindUsWidget(text: "YouTube", selected: false)),
             GestureDetector(
                 onTap: () {
                   PostHogService postHogService = Get.find();
@@ -145,6 +145,15 @@ class _HowDidYouFindUsPageState extends State<HowDidYouFindUsPage> {
             GestureDetector(
                 onTap: () {
                   PostHogService postHogService = Get.find();
+                  postHogService.logEvent("HOW_TIKTOK", {});
+                  SignupController controller = Get.find();
+                  controller.page.value = -3;
+                  controller.update();
+                },
+                child: const FindUsWidget(text: "TikTok", selected: false)),
+            GestureDetector(
+                onTap: () {
+                  PostHogService postHogService = Get.find();
                   postHogService.logEvent("HOW_OTHER", {});
                   SignupController controller = Get.find();
                   controller.page.value = -3;
@@ -153,7 +162,7 @@ class _HowDidYouFindUsPageState extends State<HowDidYouFindUsPage> {
                 child: const FindUsWidget(text: "Other", selected: false)),
             const Spacer(),
 
-            const SizedBox(height: 80),
+            // const SizedBox(height: 80),
           ],
         ),
       )

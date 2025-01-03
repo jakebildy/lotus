@@ -109,3 +109,34 @@ export async function sendStreakReminder() {
     }
 
 }
+
+
+
+// export async function sendStreakReminderByHour() {
+//     console.log("\nSENDING STREAK REMINDER by HOUR NOTIFICATION\n");
+//     const _users = await User.find();
+//     // console.log(_users);
+
+//     for (const user of _users) {
+//         //   console.log(user.fullName);
+//         if (user.username === "jacob" && user.deviceToken !== undefined) { //switch back to user.fullName !== ""
+            
+//             console.log("\nSending notification to " + user.fullName + "\n");
+//             let title = getRandomItem(notificationTitles);
+//             let message = getRandomItem(notificationMessages);
+
+
+
+
+//             sendPushNotification(
+//                     [user.deviceToken],
+//                     title,
+//                     message,
+//                     {}, true, null
+//                 );
+
+         
+//         }
+//     }
+
+// }

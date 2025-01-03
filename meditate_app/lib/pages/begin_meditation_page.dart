@@ -215,6 +215,12 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                           onChange: (val) {
                                             if (_duration != val) {
                                               HapticFeedback.lightImpact();
+
+                                              if (val.inMinutes >= 1) {
+                                                saveController
+                                                    .updateDefaultMeditationTime(
+                                                        val.inMinutes);
+                                              }
                                             }
                                             setState(() => _duration = val);
                                           },

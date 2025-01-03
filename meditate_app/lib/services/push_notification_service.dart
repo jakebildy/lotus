@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:meditate_app/api/index.dart' as api;
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 
 class PushNotificationService extends GetxService {
@@ -15,7 +16,23 @@ class PushNotificationService extends GetxService {
   void _init() async {
     try {
       await Firebase.initializeApp();
-      FirebaseMessaging.instance.requestPermission();
+      NotificationSettings settings =
+          await FirebaseMessaging.instance.requestPermission();
+      PostHogService posthog = Get.find();
+
+      // Check the authorization status
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        // User granted permission
+        posthog.logEvent("PUSH_NOTIFICATIONS_ENABLED", {});
+      } else if (settings.authorizationStatus ==
+          AuthorizationStatus.provisional) {
+        // User granted provisional permission
+        posthog.logEvent("PUSH_NOTIFICATIONS_ENABLED", {});
+      } else {
+        // User denied or did not respond to the permission request
+        posthog.logEvent("PUSH_NOTIFICATIONS_DENIED", {});
+      }
+
       FirebaseMessaging.onBackgroundMessage(_messageHandler);
       firebaseMessaging = FirebaseMessaging.instance;
       String? _token = await firebaseMessaging.getToken();
