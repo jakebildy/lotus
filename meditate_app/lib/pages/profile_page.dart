@@ -520,7 +520,67 @@ class _ProfilePageState extends State<ProfilePage>
                                             style: const TextStyle(
                                                 color: Colors.white70,
                                                 fontSize: 16),
-                                          )
+                                          ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(4, 0, 0, 0),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            PostHogService posthog = Get.find();
+                                            posthog.logEvent(
+                                                "LEVEL_INFO_TAPPED", {});
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                      content: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        "Meditate for " +
+                                                            getRemainingLevelPoints(
+                                                                    userController
+                                                                        .user
+                                                                        .value
+                                                                        .levelPoints)
+                                                                .toString() +
+                                                            " more minutes to reach Level " +
+                                                            (calculateLevel(userController
+                                                                        .user
+                                                                        .value
+                                                                        .levelPoints) +
+                                                                    1)
+                                                                .toString() +
+                                                            "!",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: const TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      const Text(
+                                                        "Your level is determined by the total minutes you've meditated. \n\nThe higher your level, the rarer the turtles you can start finding!",
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                    ],
+                                                  ));
+                                                });
+                                          },
+                                          child: const Icon(
+                                            Icons.info_outline,
+                                            color: Colors.grey,
+                                          )),
+                                    ),
                                   ],
                                 ),
                                 const LevelProgressBar(),

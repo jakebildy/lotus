@@ -416,14 +416,21 @@ class _ShopPageState extends State<ShopPage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            "${user.user.value.streakFreezes} OUT OF 3 ACTIVE",
-                            style: TextStyle(
-                                color: user.user.value.streakFreezes > 0
-                                    ? Colors.lightBlue
-                                    : Colors.grey,
-                                fontWeight: FontWeight.bold),
-                          ),
+                          user.user.value.streakFreezes == 0
+                              ? Text(
+                                  "${user.user.value.streakFreezes} ACTIVE",
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              : Text(
+                                  "${user.user.value.streakFreezes} OUT OF 3 ACTIVE",
+                                  style: TextStyle(
+                                      color: user.user.value.streakFreezes > 0
+                                          ? Colors.lightBlue
+                                          : Colors.grey,
+                                      fontWeight: FontWeight.bold),
+                                ),
                         ],
                       ),
                     )

@@ -292,8 +292,29 @@ class _CountdownPageState extends State<CountdownPage>
                                               : 20.0),
                                       child: GestureDetector(
                                         onTap: () {
-                                          Navigator.of(context).pop();
-                                          countdownController.disposeTimer();
+                                          if (countdownController
+                                                      .tenthsOfSecondsPassed >=
+                                                  600 &&
+                                              countdownController
+                                                      .loading.value !=
+                                                  true) {
+                                            // Set the total seconds to the amount of seconds passed
+                                            countdownController.totalSeconds
+                                                .value = (countdownController
+                                                        .tenthsOfSecondsPassed
+                                                        .value *
+                                                    0.1)
+                                                .round();
+                                            countdownController.update();
+
+                                            countdownController
+                                                .submitMeditation();
+                                          } else if (countdownController
+                                                  .tenthsOfSecondsPassed <
+                                              600) {
+                                            Navigator.of(context).pop();
+                                            countdownController.disposeTimer();
+                                          }
                                         },
                                         child: Container(
                                             decoration: const BoxDecoration(
@@ -301,17 +322,44 @@ class _CountdownPageState extends State<CountdownPage>
                                                     255, 16, 77, 127),
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10))),
-                                            child: const Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 12.0,
-                                                  horizontal: 100),
-                                              child: Text(
-                                                "End Session",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
-                                              ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 12.0,
+                                                      horizontal: 100),
+                                              child: countdownController
+                                                          .tenthsOfSecondsPassed >
+                                                      600
+                                                  ? countdownController
+                                                          .loading.value
+                                                      ? const Text(
+                                                          "Loading...",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 20),
+                                                        )
+                                                      : const Text(
+                                                          "Complete",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 20),
+                                                        )
+                                                  : const Text(
+                                                      "End Session",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20),
+                                                    ),
                                             )),
                                       ),
                                     )

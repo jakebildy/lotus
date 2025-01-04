@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/signup/onboarding_checklist_page.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/util.dart';
 
 class OnboardingProgressBar extends StatelessWidget {
@@ -15,8 +16,11 @@ class OnboardingProgressBar extends StatelessWidget {
 
     return Obx(
       () => GestureDetector(
-        onTap: () => {
-          Get.to(const OnboardingChecklistPage()),
+        onTap: () {
+          PostHogService posthog = Get.find();
+          posthog.logEvent("ONBOARDING_PROGRESS_BAR_TAPPED", {});
+
+          Get.to(const OnboardingChecklistPage());
         },
         child: Container(
           height: 50,

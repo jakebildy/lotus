@@ -219,7 +219,7 @@ int getUserStreak(User user) {
 
 int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
   // Remove all 0 values
-  meditationTimes.removeWhere((element) => element == 0);
+  meditationTimes.removeWhere((element) => element <= 2);
 
   // Sort the meditation times in descending order
   meditationTimes.sort((a, b) => b.compareTo(a));
@@ -230,7 +230,7 @@ int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
   // Calculate percentile
   double percentile = (rank / meditationTimes.length) * 100;
 
-  return percentile.toInt(); // Convert to integer for whole number
+  return percentile.toInt() + 1; // Convert to integer for whole number
 }
 
 int calculateLevel(int levelPoints) {
@@ -278,6 +278,49 @@ int calculateLevel(int levelPoints) {
   }
 
   return level;
+}
+
+int getRemainingLevelPoints(int levelPoints) {
+  // Define an array for the first 10 levels with their specific point requirements
+  List<int> initialThresholds = [
+    20,
+    50,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ];
+
+  int cumulativePoints = 0;
+  int level = 0;
+
+  // Check within the first 10 levels
+  for (int i = 0; i < initialThresholds.length; i++) {
+    cumulativePoints += initialThresholds[i];
+    if (levelPoints < cumulativePoints) {
+      return cumulativePoints - levelPoints; // Return remaining points needed
+    }
+    level++;
+  }
+
+  // Calculate for levels beyond level 10
+  int levelIncrement = 100;
+  int levelsPerIncrement = 10;
+
+  while (true) {
+    int pointsForNextLevel =
+        levelIncrement * ((level - 10) ~/ levelsPerIncrement + 1);
+    cumulativePoints += pointsForNextLevel;
+
+    if (levelPoints < cumulativePoints) {
+      return cumulativePoints - levelPoints;
+    }
+    level++;
+  }
 }
 
 double calculateRemainingLevelPercentage(int levelPoints) {
