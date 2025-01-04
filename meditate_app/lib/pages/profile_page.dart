@@ -690,6 +690,9 @@ class _ProfilePageState extends State<ProfilePage>
                                     shape: const StadiumBorder(),
                                   ),
                                   onPressed: () {
+                                    PostHogService posthog = Get.find();
+                                    posthog.logEvent(
+                                        "LEARN_MORE_FLAME_TAPPED", {});
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
@@ -923,8 +926,12 @@ class _ProfilePageState extends State<ProfilePage>
                           SizedBox(
                             height: 40 +
                                 (selectedTab == 0
-                                    ? followController.usersFollowing.length *
-                                        72
+                                    ? followController.usersFollowing.length ==
+                                            0
+                                        ? 60
+                                        : followController
+                                                .usersFollowing.length *
+                                            72
                                     : followController.followers.length *
                                         72), //TODO: figure out exact
                             child: TabBarView(
@@ -947,6 +954,16 @@ class _ProfilePageState extends State<ProfilePage>
                                                 ),
                                                 Text(
                                                   "You don't have any friends yet - add some!",
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: Colors.grey),
+                                                ),
+                                                SizedBox(
+                                                  height: 9,
+                                                ),
+                                                Text(
+                                                  "Friends help you stay motivated and accountable. Plus you can send each other high-fives 🙌",
+                                                  textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.grey),

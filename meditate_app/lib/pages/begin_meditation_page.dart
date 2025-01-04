@@ -41,9 +41,12 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
           hours: 0, minutes: saveController.defaultMeditationTime.value);
     });
     _tooltipController.onDone(() {
+      saveController.updateHasShownOnboardingTooltipsPage1();
       setState(() {
         done = true;
       });
+      PostHogService posthog = Get.find();
+      posthog.logEvent("ONBOARDING_WALKTHROUGH_DONE", {});
     });
   }
 
@@ -78,6 +81,7 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
               done = true;
             });
             saveController.updateHasShownOnboardingTooltipsPage1();
+
             //move the overlay forward or backwards, or dismiss the overlay
           },
           child: Container(

@@ -27,6 +27,9 @@ class FollowerWidget extends StatelessWidget {
     return Obx(
       () => GestureDetector(
         onTap: () {
+          PostHogService posthog = Get.find();
+          posthog.logEvent("VIEW_USER_PROFILE", {});
+
           Get.to(UserProfilePage(user: user), preventDuplicates: false);
         },
         child: Container(
