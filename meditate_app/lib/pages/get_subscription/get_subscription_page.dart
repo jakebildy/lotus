@@ -208,6 +208,9 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                             TextSpan(
                                                 text:
                                                     "breathwork and soundscapes"),
+                                            TextSpan(
+                                                text:
+                                                    " to help you achieve your meditation goal "),
                                           ],
                                         ),
                                       ),
