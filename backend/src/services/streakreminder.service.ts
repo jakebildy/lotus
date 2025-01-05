@@ -74,13 +74,19 @@ export async function sendStreakReminder() {
             //     message = '';
             // }
 
-            sendPushNotification(
-                    [user.deviceToken],
-                    title,
-                    message,
-                    {}, true, null
-                );
+            //Disabling this
+            // sendPushNotification(
+            //         [user.deviceToken],
+            //         title,
+            //         message,
+            //         {}, true, null
+            //     );
 
+
+
+
+
+            
             //First day after meditating
             // if (user.streak == 0) {
             //     console.log("\nSending notification to " + user.fullName + "\n");
