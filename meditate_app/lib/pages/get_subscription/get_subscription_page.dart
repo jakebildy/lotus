@@ -132,8 +132,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                     child: WaveWidget(
                                       config: CustomConfig(
                                         colors: [
-                                          const Color.fromRGBO(
-                                              0, 105, 147, 0.22),
+                                          Color.fromRGBO(0, 105, 147, 0.22),
                                           const Color(0x3300BBF9),
                                         ],
                                         durations: [
@@ -204,13 +203,12 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                       220,
                                                       255)), // Blue color for "more likely"
                                             ),
-                                            TextSpan(text: " full access to "),
+                                            TextSpan(text: " access to "),
+                                            TextSpan(
+                                                text: "Shellevate Premium"),
                                             TextSpan(
                                                 text:
-                                                    "breathwork and soundscapes"),
-                                            TextSpan(
-                                                text:
-                                                    " to help you achieve your meditation goal "),
+                                                    " to help you achieve your goal "),
                                           ],
                                         ),
                                       ),

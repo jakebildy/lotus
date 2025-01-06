@@ -93,10 +93,13 @@ class _SignupState extends State<Signup> {
                       shape: BubbleShape
                           .circle, // circle is the default. No need to explicitly mention if its a circle.
                     )),
-                    Container(
-                      color: Colors.black54,
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
+                    Opacity(
+                      opacity: controller.page.value == -4 ? 0.2 : 0.4,
+                      child: Container(
+                        color: Colors.black54,
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                      ),
                     ),
                     controller.page.value < -4
                         ? const Onboarding0()

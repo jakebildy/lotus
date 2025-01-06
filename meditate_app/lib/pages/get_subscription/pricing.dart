@@ -40,7 +40,7 @@ class PricingWidget extends StatelessWidget {
                           fontWeight: FontWeight.w900,
                           fontSize: 18),
                     ),
-                    Text("\$3.99",
+                    Text("\$4.99",
                         style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,

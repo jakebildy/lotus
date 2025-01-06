@@ -194,36 +194,48 @@ class CountdownController extends GetxController {
   }
 
   bool appStateSetPaused = false;
-  int pausedTenthsOFSecondsPassed = 0;
+  int pausedTenthsOfSecondsPassed = 0;
   void appPaused() {
     if (!isPaused.value) {
       lastCountdownTimerTime = DateTime.now();
       logSuccess("App Paused, saving current time: " +
           lastCountdownTimerTime.toString());
-      logInfo(
-          "tenths of seconds passed" + tenthsOfSecondsPassed.value.toString());
+      logInfo("tenths of seconds passed: " +
+          tenthsOfSecondsPassed.value.toString());
       appStateSetPaused = true;
-      pausedTenthsOFSecondsPassed = tenthsOfSecondsPassed.value;
+      pausedTenthsOfSecondsPassed = tenthsOfSecondsPassed.value;
     }
   }
 
   void resumeApp() {
+    if (Get.currentRoute == "/CountdownPage") {
+      PostHogService posthog = Get.find();
+      posthog.logEvent("APP_CLOSED_MEDITATION", {});
+    }
+
+    print("resumeApp() + " +
+        isPaused.value.toString() +
+        " " +
+        appStateSetPaused.toString());
     if (!isPaused.value && appStateSetPaused) {
       logSuccess("App resumed, calculating time passed");
+
+      // if the page is 'CountdownPage' then log the event
+      print(Get.currentRoute);
+
       DateTime now = DateTime.now();
       logInfo("Last time: $lastCountdownTimerTime");
       int timePassed = now.difference(lastCountdownTimerTime).inSeconds;
       logInfo("Time passed: $timePassed seconds");
-      logInfo(
-          "tenths of seconds passed" + tenthsOfSecondsPassed.value.toString());
+      logInfo("tenths of seconds passed total: " +
+          (pausedTenthsOfSecondsPassed + timePassed * 10).toString());
       tenthsOfSecondsPassed.value =
-          pausedTenthsOFSecondsPassed + timePassed * 10;
+          pausedTenthsOfSecondsPassed + timePassed * 10;
       lastCountdownTimerTime = now;
 
       // if tenthsOfSecondsPassed is greater than totalSeconds, then add to bonusTime
       if (tenthsOfSecondsPassed.value ~/ 10 > totalSeconds.value) {
-        bonusTime.value =
-            (tenthsOfSecondsPassed.value ~/ 10) - totalSeconds.value;
+        bonusTime.value += timePassed;
         tenthsOfSecondsPassed.value = totalSeconds.value * 10;
       }
       appStateSetPaused = false;
@@ -268,6 +280,7 @@ class CountdownController extends GetxController {
   DateTime lastTimerTime = DateTime.now();
 
   void startBonusTimer() {
+    bonusTime.value = 0;
     const oneSec = Duration(seconds: 1);
 
     bonusTimer = Timer.periodic(

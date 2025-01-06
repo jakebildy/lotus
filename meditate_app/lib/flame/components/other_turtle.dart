@@ -10,6 +10,7 @@ import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/debug_mode.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'dart:math' as math;
@@ -288,6 +289,8 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
                           " " +
                           TURTLES[futureType].name);
                       egg.addEgg(futureColor, futureType);
+                      PostHogService posthog = Get.find();
+                      posthog.logEvent("BRED_TURTLE", {});
 
                       Get.to(const NewEggPage());
                     },

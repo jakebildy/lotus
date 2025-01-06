@@ -56,14 +56,14 @@ class FollowController extends GetxController {
 
       DateTime lastMeditatedAdjusted = DateTime(user.lastMeditated.year,
           user.lastMeditated.month, user.lastMeditated.day);
-      logWarning(lastMeditatedAdjusted.toIso8601String());
-      logInfo(user.fullName +
-          " lastMeditated->" +
-          user.lastMeditated.toString() +
-          " created at->" +
-          user.createdAt.toString() +
-          " " +
-          user.streakFreezes.toString());
+      // logWarning(lastMeditatedAdjusted.toIso8601String());
+      // logInfo(user.fullName +
+      //     " lastMeditated->" +
+      //     user.lastMeditated.toString() +
+      //     " created at->" +
+      //     user.createdAt.toString() +
+      //     " " +
+      //     user.streakFreezes.toString());
       if (user.streakFreezes == 0) {
         if (lastMeditatedAdjusted
                 .isAfter(today.subtract(const Duration(days: 1))) ||

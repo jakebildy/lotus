@@ -5,14 +5,15 @@ import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/pages/signup/find_us_widget.dart';
 
-class HowDidYouFindUsPage extends StatefulWidget {
-  const HowDidYouFindUsPage({super.key});
+class SetNotificationTimePage extends StatefulWidget {
+  const SetNotificationTimePage({super.key});
 
   @override
-  State<HowDidYouFindUsPage> createState() => _HowDidYouFindUsPageState();
+  State<SetNotificationTimePage> createState() =>
+      _SetNotificationTimePageState();
 }
 
-class _HowDidYouFindUsPageState extends State<HowDidYouFindUsPage> {
+class _SetNotificationTimePageState extends State<SetNotificationTimePage> {
   double _waterOpacity = 1.0; // Initial opacity for water fade-out animation
   double _opacity = 0.0; // Initial opacity for fade-in animation of options
 
@@ -117,7 +118,7 @@ class _HowDidYouFindUsPageState extends State<HowDidYouFindUsPage> {
                       opacity: _opacity,
                       duration: const Duration(milliseconds: 500),
                       child: const Text(
-                        "How did you find us?",
+                        "It's hard to remember to meditate",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w900, fontSize: 25),

@@ -144,14 +144,14 @@ class _NewEggPageState extends State<NewEggPage> with TickerProviderStateMixin {
                   setState(() {
                     isOnPage = false;
                   });
-                  if (save.hasShownPaywallPage.value == false &&
-                      save.isSubscribedToPremium.value == false &&
-                      user.user.value.totalMinutes < 40) {
-                    Get.to(const SetGoalPage());
-                    save.updateHasShownPaywallPage();
-                  } else {
-                    Get.offAll(const AppPages());
-                  }
+                  // if (save.hasShownPaywallPage.value == false &&
+                  //     save.isSubscribedToPremium.value == false &&
+                  //     user.user.value.totalMinutes < 40) {
+                  //   Get.to(const SetGoalPage());
+                  //   save.updateHasShownPaywallPage();
+                  // } else {
+                  Get.offAll(const AppPages());
+                  // }
                 },
                 child: Container(
                     decoration: const BoxDecoration(

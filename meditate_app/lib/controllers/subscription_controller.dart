@@ -8,9 +8,11 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:meditate_app/api/user_api.dart';
 import 'package:meditate_app/app_pages.dart';
+import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/pages/turtle_hatch_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -33,8 +35,10 @@ class SubscriptionController extends GetxController {
 
   Package? subscriptionPackage;
   Package? sandDollarPackage;
+  Package? eggHatchPackage;
 
   RxBool purchasingSandDollars = false.obs;
+  RxBool purchasingEggHatch = false.obs;
 
   final InAppReview inAppReview = InAppReview.instance;
 
@@ -128,6 +132,10 @@ class SubscriptionController extends GetxController {
         // Get the sand dollars product
         sandDollarPackage =
             offerings.all["sand_dollar_purchase"]!.availablePackages[0];
+
+        // Get the instant egg hatch product
+        eggHatchPackage =
+            offerings.all["instant_egg_hatch"]!.availablePackages[0];
       }
     } on PlatformException catch (e) {
       // optional error handling
@@ -174,6 +182,49 @@ class SubscriptionController extends GetxController {
       }
     } else {
       logError("sandDollarPackage is null!");
+    }
+  }
+
+  Future<void> purchaseInstantEggHatch() async {
+    SubscriptionController subscriptionController = Get.find();
+    if (subscriptionController.eggHatchPackage != null) {
+      try {
+        purchasingEggHatch.value = true;
+        CustomerInfo customerInfo = await Purchases.purchasePackage(
+            subscriptionController.eggHatchPackage!);
+        logSuccess("Purchased!");
+        // pop the popup that's open
+        Get.back();
+        UserController user = Get.find();
+        int turtleToHatch;
+        int turtleColorToHatch;
+        if (user.user.value.eggTypes.isNotEmpty) {
+          String eggTypeNew = user.user.value.eggTypes[0];
+          turtleToHatch = int.parse(eggTypeNew.split("-")[0]);
+          turtleColorToHatch = int.parse(eggTypeNew.split("-")[1]);
+        } else {
+          turtleToHatch = 1;
+          turtleColorToHatch = 1;
+        }
+        EggController eggController = Get.find();
+        await eggController.hatchTurtle(turtleToHatch, turtleColorToHatch);
+        Get.to(TurtleHatchPage(
+            gemsAmount: -1,
+            foundEgg: false,
+            levelUp: false,
+            id: turtleToHatch,
+            color: turtleColorToHatch));
+
+        purchasingEggHatch.value = false;
+      } on PlatformException catch (e) {
+        var errorCode = PurchasesErrorHelper.getErrorCode(e);
+        if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
+          logError(e.toString());
+        }
+        purchasingEggHatch.value = false;
+      }
+    } else {
+      logError("instant egg hatch is null!");
     }
   }
 }

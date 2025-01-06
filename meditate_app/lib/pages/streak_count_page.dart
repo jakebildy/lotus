@@ -230,9 +230,8 @@ class _StreakCountPageState extends State<StreakCountPage>
                                         Get.offAll(TurtleHatchPage(
                                           gemsAmount: widget.gemsAmount,
                                           foundEgg: widget.foundEgg,
-                                          turtleToHatch: widget.turtleToHatch,
-                                          turtleColorToHatch:
-                                              widget.turtleColorToHatch,
+                                          id: widget.turtleToHatch,
+                                          color: widget.turtleColorToHatch,
                                           levelUp: widget.levelUp,
                                         ));
                                       } else {
