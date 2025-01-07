@@ -207,6 +207,8 @@ class CountdownController extends GetxController {
     }
   }
 
+  int completedInBackgroundBonusTime = 0;
+
   void resumeApp() {
     if (Get.currentRoute == "/CountdownPage") {
       PostHogService posthog = Get.find();
@@ -235,7 +237,12 @@ class CountdownController extends GetxController {
 
       // if tenthsOfSecondsPassed is greater than totalSeconds, then add to bonusTime
       if (tenthsOfSecondsPassed.value ~/ 10 > totalSeconds.value) {
-        bonusTime.value += timePassed;
+        if (bonusTime.value == 0) {
+          completedInBackgroundBonusTime =
+              (tenthsOfSecondsPassed.value ~/ 10 - totalSeconds.value);
+        } else {
+          bonusTime.value += timePassed;
+        }
         tenthsOfSecondsPassed.value = totalSeconds.value * 10;
       }
       appStateSetPaused = false;
@@ -280,7 +287,12 @@ class CountdownController extends GetxController {
   DateTime lastTimerTime = DateTime.now();
 
   void startBonusTimer() {
-    bonusTime.value = 0;
+    if (completedInBackgroundBonusTime != 0) {
+      bonusTime.value = completedInBackgroundBonusTime;
+      completedInBackgroundBonusTime = 0;
+    } else {
+      bonusTime.value = 0;
+    }
     const oneSec = Duration(seconds: 1);
 
     bonusTimer = Timer.periodic(
