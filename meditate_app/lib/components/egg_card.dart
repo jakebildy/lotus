@@ -273,7 +273,7 @@ class EggWidget extends StatelessWidget {
           ),
           Obx(
             () => Stack(
-              alignment: Alignment.center,
+              // alignment: Alignment.center,
               children: [
                 Container(
                   color: Colors.black26,
@@ -290,7 +290,10 @@ class EggWidget extends StatelessWidget {
                                 : 60,
                         height: 4,
                       )
-                    : Container(),
+                    : Container(
+                        width: 0,
+                        height: 4,
+                      ),
               ],
             ),
           )

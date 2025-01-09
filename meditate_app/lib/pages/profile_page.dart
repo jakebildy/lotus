@@ -701,11 +701,8 @@ class _ProfilePageState extends State<ProfilePage>
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               const Text(
-                                                "The color of your streak flame shows how much you've been meditating for the last week.\n\nReach Rainbow to find Rainbow Turtles.\n",
+                                                "The more you meditate on average in a week, the hotter your flame gets.\n",
                                                 textAlign: TextAlign.center,
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
                                               ),
                                               Row(
                                                 mainAxisAlignment:
@@ -841,7 +838,21 @@ class _ProfilePageState extends State<ProfilePage>
                                                             fontSize: 14,
                                                             color:
                                                                 Colors.grey)),
-                                                  ])
+                                                  ]),
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Text(
+                                                "You're averaging " +
+                                                    userController
+                                                        .streakAverage()
+                                                        .toStringAsFixed(1) +
+                                                    " minutes/day this week.\n\nReach Rainbow to find Rainbow Turtles.\n",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
                                             ],
                                           ));
                                         });

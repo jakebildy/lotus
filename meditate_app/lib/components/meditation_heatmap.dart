@@ -18,6 +18,18 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
   Widget build(BuildContext context) {
     UserController userController = Get.find();
 
+// Calculate the start date
+    DateTime getStartDate() {
+      DateTime oneYearAgo = DateTime.now().subtract(const Duration(days: 365));
+      if (userController.user.value.meditationHistory.isEmpty) {
+        return oneYearAgo; // Default to one year ago if no data
+      }
+      DateTime earliestDate = userController.user.value.meditationHistory.keys
+          .map((key) => DateTime(key.year, key.month, key.day))
+          .reduce((a, b) => a.isBefore(b) ? a : b); // Find the earliest date
+      return earliestDate.isBefore(oneYearAgo) ? earliestDate : oneYearAgo;
+    }
+
     return Obx(
       () => ClipRRect(
         child: Container(
@@ -28,6 +40,7 @@ class _MeditationHeatmapState extends State<MeditationHeatmap> {
             scrollable: true,
             defaultColor: Colors.white12,
             colorMode: ColorMode.color,
+            startDate: getStartDate(),
             datasets: userController.user.value.meditationHistory.map(
                 (key, value) =>
                     MapEntry(DateTime(key.year, key.month, key.day), value)),

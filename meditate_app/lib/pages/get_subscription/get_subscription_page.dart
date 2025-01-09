@@ -203,12 +203,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                       220,
                                                       255)), // Blue color for "more likely"
                                             ),
-                                            TextSpan(text: " access to "),
-                                            TextSpan(
-                                                text: "Shellevate Premium"),
+                                            TextSpan(text: " full access to "),
                                             TextSpan(
                                                 text:
-                                                    " to help you achieve your goal "),
+                                                    "everything in Shellevate"),
+                                            // TextSpan(
+                                            //     text:
+                                            //         " to help you achieve your goal "),
                                           ],
                                         ),
                                       ),
