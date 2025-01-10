@@ -34,10 +34,14 @@ class SubscriptionController extends GetxController {
   }
 
   Package? subscriptionPackage;
-  Package? sandDollarPackage;
+  Package? sandDollars800Package;
+  Package? sandDollars100Package;
+  Package? sandDollars14500Package;
   Package? eggHatchPackage;
 
-  RxBool purchasingSandDollars = false.obs;
+  RxBool purchasing800SandDollars = false.obs;
+  RxBool purchasing100SandDollars = false.obs;
+  RxBool purchasing14500SandDollars = false.obs;
   RxBool purchasingEggHatch = false.obs;
 
   final InAppReview inAppReview = InAppReview.instance;
@@ -130,8 +134,14 @@ class SubscriptionController extends GetxController {
         logWarning(offerings.current!.availablePackages.toString());
 
         // Get the sand dollars product
-        sandDollarPackage =
+        sandDollars800Package =
             offerings.all["sand_dollar_purchase"]!.availablePackages[0];
+
+        sandDollars100Package =
+            offerings.all["100_sand_dollar_purchase"]!.availablePackages[0];
+
+        sandDollars14500Package =
+            offerings.all["14500_sand_dollar_purchase"]!.availablePackages[0];
 
         // Get the instant egg hatch product
         eggHatchPackage =
@@ -161,27 +171,75 @@ class SubscriptionController extends GetxController {
     }
   }
 
-  Future<void> purchaseSandDollars() async {
+  Future<void> purchase800SandDollars() async {
     SubscriptionController subscriptionController = Get.find();
-    if (subscriptionController.sandDollarPackage != null) {
+    if (subscriptionController.sandDollars800Package != null) {
       try {
-        purchasingSandDollars.value = true;
+        purchasing800SandDollars.value = true;
         CustomerInfo customerInfo = await Purchases.purchasePackage(
-            subscriptionController.sandDollarPackage!);
+            subscriptionController.sandDollars800Package!);
         logSuccess("Purchased!");
         UserController user = Get.find();
         await user.updateProperty(
             UserProperty.gems, user.user.value.gems + 800);
-        purchasingSandDollars.value = false;
+        purchasing800SandDollars.value = false;
       } on PlatformException catch (e) {
         var errorCode = PurchasesErrorHelper.getErrorCode(e);
         if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
           logError(e.toString());
         }
-        purchasingSandDollars.value = false;
+        purchasing800SandDollars.value = false;
       }
     } else {
       logError("sandDollarPackage is null!");
+    }
+  }
+
+  Future<void> purchase100SandDollars() async {
+    SubscriptionController subscriptionController = Get.find();
+    if (subscriptionController.sandDollars100Package != null) {
+      try {
+        purchasing100SandDollars.value = true;
+        CustomerInfo customerInfo = await Purchases.purchasePackage(
+            subscriptionController.sandDollars100Package!);
+        logSuccess("Purchased!");
+        UserController user = Get.find();
+        await user.updateProperty(
+            UserProperty.gems, user.user.value.gems + 100);
+        purchasing100SandDollars.value = false;
+      } on PlatformException catch (e) {
+        var errorCode = PurchasesErrorHelper.getErrorCode(e);
+        if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
+          logError(e.toString());
+        }
+        purchasing100SandDollars.value = false;
+      }
+    } else {
+      logError("sandDollarPackage 100 is null!");
+    }
+  }
+
+  Future<void> purchase14500SandDollars() async {
+    SubscriptionController subscriptionController = Get.find();
+    if (subscriptionController.sandDollars14500Package != null) {
+      try {
+        purchasing14500SandDollars.value = true;
+        CustomerInfo customerInfo = await Purchases.purchasePackage(
+            subscriptionController.sandDollars14500Package!);
+        logSuccess("Purchased!");
+        UserController user = Get.find();
+        await user.updateProperty(
+            UserProperty.gems, user.user.value.gems + 14500);
+        purchasing14500SandDollars.value = false;
+      } on PlatformException catch (e) {
+        var errorCode = PurchasesErrorHelper.getErrorCode(e);
+        if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
+          logError(e.toString());
+        }
+        purchasing14500SandDollars.value = false;
+      }
+    } else {
+      logError("sandDollarPackage 14500 is null!");
     }
   }
 
@@ -206,14 +264,14 @@ class SubscriptionController extends GetxController {
           turtleToHatch = 1;
           turtleColorToHatch = 1;
         }
-        EggController eggController = Get.find();
-        await eggController.hatchTurtle(turtleToHatch, turtleColorToHatch);
         Get.to(TurtleHatchPage(
             gemsAmount: -1,
             foundEgg: false,
             levelUp: false,
             id: turtleToHatch,
             color: turtleColorToHatch));
+        EggController eggController = Get.find();
+        await eggController.hatchTurtle(turtleToHatch, turtleColorToHatch);
 
         purchasingEggHatch.value = false;
       } on PlatformException catch (e) {

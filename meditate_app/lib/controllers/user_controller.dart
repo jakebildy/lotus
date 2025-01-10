@@ -498,7 +498,7 @@ class UserController extends GetxController {
     if (getValue('gems') != "") {
       DateTime rn = DateTime.now();
       DateTime today = DateTime.now();
-      while (rn.difference(today).abs().inDays <= 365) {
+      while (rn.difference(today).abs().inDays <= (365 * 2)) {
         DateTime simpleDate = DateTime(today.year, today.month, today.day);
         localStorageUser
             .value.meditationHistory[simpleDate] = (double.tryParse(getValue(

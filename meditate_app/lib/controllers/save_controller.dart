@@ -26,6 +26,8 @@ class SaveController extends GetxController {
   //A map of the user's meditation history, with the date as the key and the amount meditated in minutes as the value
   RxMap<DateTime, int> meditationHistory = RxMap();
 
+  Rx<DateTime> xpBoostedAt = DateTime(2011, 1, 1, 1, 1).obs;
+
   void updateAmbience() {
     ambienceOn.value = !ambienceOn.value;
     saveValue("ambience_on", ambienceOn.value.toString());
@@ -98,6 +100,12 @@ class SaveController extends GetxController {
   void updateHasShownPaywallPage() {
     hasShownPaywallPage.value = true;
     saveValue("has_shown_paywall_page", hasShownPaywallPage.value.toString());
+    update();
+  }
+
+  void updateXpBoostedAt(DateTime newVal) {
+    xpBoostedAt.value = newVal;
+    saveValue("xp_boosted_at", xpBoostedAt.value.toIso8601String());
     update();
   }
 
@@ -287,6 +295,10 @@ class SaveController extends GetxController {
     if (getValue('has_shown_paywall_page') != "") {
       hasShownPaywallPage.value =
           getValue('has_shown_paywall_page').toLowerCase() == 'true';
+    }
+
+    if (getValue('xp_boosted_at') != "") {
+      xpBoostedAt.value = DateTime.parse(getValue('xp_boosted_at'));
     }
 
     loadingSaveController.value = false;
