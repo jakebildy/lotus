@@ -162,8 +162,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                   children: [
                                     const SizedBox(height: 40),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         IconButton(
                                             onPressed: () {
@@ -171,7 +170,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                             },
                                             icon: Icon(
                                               Icons.close,
-                                              color: Colors.grey,
+                                              color: Colors.white24,
                                             )),
                                         // Padding(
                                         //   padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
@@ -204,9 +203,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                       255)), // Blue color for "more likely"
                                             ),
                                             TextSpan(text: " full access to "),
-                                            TextSpan(
-                                                text:
-                                                    "everything in Shellevate"),
+                                            TextSpan(text: "Shellevate"),
                                             // TextSpan(
                                             //     text:
                                             //         " to help you achieve your goal "),
@@ -406,7 +403,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
 
                                                   const SizedBox(height: 100),
                                                   const Text(
-                                                    "Make Meditation a Habit with Premium",
+                                                    "The tools you need to make meditation a lifetime habit.",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,

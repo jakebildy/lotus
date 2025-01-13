@@ -32,19 +32,33 @@ class PricingWidget extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       "1 month",
                       style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.w900,
                           fontSize: 18),
                     ),
-                    Text("\$4.99",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16))
+                    Row(
+                      children: [
+                        Text("\$4.99",
+                            style: TextStyle(
+                                color: Colors.black26,
+                                // strikethrough
+                                decoration: TextDecoration.lineThrough,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("\$1.99",
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16))
+                      ],
+                    )
                   ]),
             ),
           ),
