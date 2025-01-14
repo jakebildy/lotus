@@ -153,7 +153,7 @@ class _SetGoalPageState extends State<SetGoalPage> {
                     onPressed: () {
                       PostHogService posthog = Get.find();
                       posthog.logEvent("SELECTED_GOAL", {"goal": selectedGoal});
-                      Get.to(const GetSubscriptionPage());
+                      Get.to(const GetSubscriptionPage(isOnboarding: true));
                     },
                     child: const SizedBox(
                         width: 2000,

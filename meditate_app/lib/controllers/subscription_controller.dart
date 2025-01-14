@@ -34,6 +34,7 @@ class SubscriptionController extends GetxController {
   }
 
   Package? subscriptionPackage;
+  Package? subscriptionPackageDiscount;
   Package? sandDollars800Package;
   Package? sandDollars100Package;
   Package? sandDollars14500Package;
@@ -108,6 +109,61 @@ class SubscriptionController extends GetxController {
     update();
   }
 
+  Future<void> buySubscriptionDiscount(BuildContext context) async {
+    getPremiumTapped.value = true;
+    update();
+    if (subscriptionPackageDiscount != null) {
+      try {
+        CustomerInfo customerInfo =
+            await Purchases.purchasePackage(subscriptionPackageDiscount!);
+        // UserController user = Get.find();
+        // api.user.userSubscribed(user.user.value.email);
+        logSuccess("Purchased!");
+        if (customerInfo.entitlements.all["Premium"] != null &&
+            customerInfo.entitlements.all["Premium"]!.isActive) {
+          // Unlock that great "pro" content
+          logInfo('Unlocking premium content');
+          SaveController save = Get.find();
+          save.updateIsSubscribedToPremium(true);
+
+          PostHogService posthog = Get.find();
+          posthog.logEvent("DISCOUNT_STARTED", {});
+
+          Get.offAll(const AppPages());
+        }
+      } on PlatformException catch (e) {
+        var errorCode = PurchasesErrorHelper.getErrorCode(e);
+        if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
+          logError(e.toString());
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              key: UniqueKey(),
+              backgroundColor: Colors.black,
+              content: Text(
+                e.toString(),
+                style: const TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.white),
+              )));
+        }
+        getPremiumTapped.value = false;
+        update();
+      }
+    } else {
+      logError("subscriptionPackageDiscount is null!");
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          key: UniqueKey(),
+          backgroundColor: Colors.black,
+          content: const Text(
+            "Subscription does not exist!",
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          )));
+    }
+
+    getPremiumTapped.value = false;
+    update();
+  }
+
   Future<void> initPlatformState() async {
     await Purchases.setLogLevel(LogLevel.debug);
     UserController user = Get.find();
@@ -126,11 +182,12 @@ class SubscriptionController extends GetxController {
     // Fetch offerings
     try {
       Offerings offerings = await Purchases.getOfferings();
-      // print("OFFERINGS :" + offerings.toString());
       if (offerings.current != null &&
           offerings.current!.availablePackages.isNotEmpty) {
         // Display packages for sale
         subscriptionPackage = offerings.current!.availablePackages[0];
+        subscriptionPackageDiscount =
+            offerings.all["default_offering_discount"]!.availablePackages[0];
         logWarning(offerings.current!.availablePackages.toString());
 
         // Get the sand dollars product

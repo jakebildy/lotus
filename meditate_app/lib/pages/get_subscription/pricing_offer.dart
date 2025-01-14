@@ -3,12 +3,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
-import 'dart:io' show Platform;
 
-import 'package:meditate_app/util/util.dart';
-
-class PricingWidget extends StatelessWidget {
-  const PricingWidget({super.key});
+class PricingWidgetOffer extends StatelessWidget {
+  const PricingWidgetOffer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,18 +45,30 @@ class PricingWidget extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        if (isCanada)
-                          Text("\$4.99",
-                              style: TextStyle(
-                                  color: Colors.black26,
-                                  decoration: TextDecoration.lineThrough,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16)),
-                        if (isCanada)
-                          SizedBox(
-                            width: 5,
-                          ),
-                        Text(isCanada ? "\$2.99" : "\$4.99",
+                        Text("\$4.99",
+                            style: TextStyle(
+                                color: Colors.black26,
+                                // strikethrough
+                                decoration: TextDecoration.lineThrough,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text("\$2.99",
+                            style: TextStyle(
+                                color: Colors.black26,
+                                // strikethrough
+                                decoration: TextDecoration.lineThrough,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16)),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                            subscription.subscriptionPackageDiscount
+                                    ?.storeProduct.priceString ??
+                                "\$0.99",
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

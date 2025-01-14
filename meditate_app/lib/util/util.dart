@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:meditate_app/models/user.dart';
@@ -417,4 +419,9 @@ int calculateOnboardingPercentage(bool meditated, bool profilePictureAdded,
   }
 
   return percentage;
+}
+
+bool get isCanada {
+  final locale = Platform.localeName;
+  return locale.contains('CA') || locale.contains('ca');
 }

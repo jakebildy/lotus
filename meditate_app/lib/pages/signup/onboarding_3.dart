@@ -19,28 +19,82 @@ class Onboarding3 extends StatefulWidget {
   State<Onboarding3> createState() => _Onboarding3State();
 }
 
-class _Onboarding3State extends State<Onboarding3> {
-  final shakeKey = GlobalKey<ShakeWidgetState>();
+class _Onboarding3State extends State<Onboarding3>
+    with TickerProviderStateMixin {
+  final List<AnimationController> fadeControllers = [];
+  final List<Animation<double>> fadeAnimations = [];
+  final int numEggs = 6; // We'll show 6 eggs in a grid
+
   @override
   void initState() {
     super.initState();
-    shakeAfterASec();
+
+    // Create fade controllers and animations for each egg
+    for (int i = 0; i < numEggs; i++) {
+      final controller = AnimationController(
+        duration: const Duration(seconds: 2),
+        vsync: this,
+      );
+
+      final animation = Tween<double>(
+        begin: 0.2,
+        end: 1.0,
+      ).animate(CurvedAnimation(
+        parent: controller,
+        curve: Curves.easeInOut,
+      ));
+
+      fadeControllers.add(controller);
+      fadeAnimations.add(animation);
+
+      // Start the animations with different delays
+      Future.delayed(Duration(milliseconds: 500 * i), () {
+        startFading(i);
+      });
+    }
   }
 
-  bool isOnPage = true;
-
-  Future<void> shakeAfterASec() async {
-    await Future.delayed(const Duration(milliseconds: 400));
-    shakeKey.currentState?.shake();
-    // HapticFeedback.lightImpact();
-
-    while (isOnPage) {
-      await Future.delayed(Duration(seconds: Random().nextInt(4) + 3));
-      if (isOnPage) {
-        shakeKey.currentState?.shake();
-        // HapticFeedback.lightImpact();
-      }
+  void startFading(int index) async {
+    while (true) {
+      await fadeControllers[index].forward();
+      await fadeControllers[index].reverse();
+      await Future.delayed(
+          Duration(milliseconds: Random().nextInt(1000) + 500));
     }
+  }
+
+  @override
+  void dispose() {
+    // isOnPage = false;
+    for (var controller in fadeControllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  Widget buildEgg(int index) {
+    return AnimatedBuilder(
+      animation: fadeAnimations[index],
+      builder: (context, child) {
+        return Opacity(
+          opacity: fadeAnimations[index].value,
+          child: Stack(
+            children: [
+              Image.asset("assets/egg.png"),
+              ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  TURTLE_COLORS[index % TURTLE_COLORS.length].withOpacity(0.8),
+                  BlendMode.srcATop,
+                ),
+                child: Image.asset(
+                  "assets/egg_spots.png",
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -50,11 +104,11 @@ class _Onboarding3State extends State<Onboarding3> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          height: 130,
+          height: 100,
           width: MediaQuery.of(context).size.width,
         ),
         Text(
-          "find eggs by meditating",
+          "Find eggs by meditating",
           style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
         ),
         Padding(
@@ -65,34 +119,16 @@ class _Onboarding3State extends State<Onboarding3> {
             style: TextStyle(fontSize: 16),
           ),
         ),
-        const SizedBox(height: 60),
+        const SizedBox(height: 30),
+        // Replace the single egg with a grid of eggs
         SizedBox(
-            height: 200,
-            child: ShakeWidget(
-                // 4. pass the GlobalKey as an argument
-                key: shakeKey,
-                // 5. configure the animation parameters
-                shakeCount: 3,
-                shakeOffset: 10,
-                shakeDuration: const Duration(milliseconds: 500),
-                child: GestureDetector(
-                    onTap: () {
-                      // HapticFeedback.mediumImpact();
-                      shakeKey.currentState?.shake();
-                    },
-                    child: Stack(
-                      children: [
-                        Image.asset("assets/egg.png"),
-                        ColorFiltered(
-                            colorFilter: ColorFilter.mode(
-                                TURTLE_COLORS[3].withOpacity(0.8),
-                                BlendMode.srcATop),
-                            child: Image.asset(
-                              "assets/egg_spots.png",
-                              // height: 60,
-                            )),
-                      ],
-                    )))),
+          height: 300,
+          child: GridView.count(
+            crossAxisCount: 3,
+            physics: NeverScrollableScrollPhysics(),
+            children: List.generate(numEggs, (index) => buildEgg(index)),
+          ),
+        ),
         Spacer(),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 50),

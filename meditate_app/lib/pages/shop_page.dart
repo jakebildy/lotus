@@ -419,11 +419,26 @@ class _ShopPageState extends State<ShopPage> {
             childAspectRatio: 0.7,
             padding: const EdgeInsets.all(8.0),
             children: [
-              sandDollarPackage(context, "100\nSand Dollars", "\$0.99",
+              sandDollarPackage(
+                  context,
+                  "100\nSand Dollars",
+                  subscriptionController
+                          ?.sandDollars100Package?.storeProduct.priceString ??
+                      "\$0.99",
                   "assets/sand_dollar_min.png"),
-              sandDollarPackage(context, "800\nSand Dollars", "\$4.99",
+              sandDollarPackage(
+                  context,
+                  "800\nSand Dollars",
+                  subscriptionController
+                          ?.sandDollars800Package?.storeProduct.priceString ??
+                      "\$4.99",
                   "assets/sand_dollar_chest.png"),
-              sandDollarPackage(context, "14,500\nSand Dollars", "\$69.99",
+              sandDollarPackage(
+                  context,
+                  "14,500\nSand Dollars",
+                  subscriptionController
+                          ?.sandDollars14500Package?.storeProduct.priceString ??
+                      "\$69.99",
                   "assets/sand_dollar_max.png"),
             ],
           ),

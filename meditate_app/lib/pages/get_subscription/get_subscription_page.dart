@@ -8,15 +8,19 @@ import 'package:meditate_app/pages/countdown/countdown_box_decoration.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:meditate_app/pages/get_subscription/build_table_row.dart';
 import 'package:meditate_app/pages/get_subscription/feature_checkbox.dart';
+import 'package:meditate_app/pages/get_subscription/one_time_offer_page.dart';
 import 'package:meditate_app/pages/get_subscription/pricing.dart';
 import 'package:meditate_app/pages/get_subscription/review.dart';
 import 'package:meditate_app/services/posthog_service.dart';
+import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
 class GetSubscriptionPage extends StatefulWidget {
-  const GetSubscriptionPage({super.key});
+  final bool isOnboarding;
+
+  const GetSubscriptionPage({super.key, this.isOnboarding = false});
 
   @override
   State<GetSubscriptionPage> createState() => _GetSubscriptionPageState();
@@ -166,11 +170,21 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                       children: [
                                         IconButton(
                                             onPressed: () {
-                                              Get.offAll(const AppPages());
+                                              if ((widget.isOnboarding &&
+                                                      isCanada) ||
+                                                  userController.user.value
+                                                          .username ==
+                                                      "tonya25") {
+                                                //todo, add boolean to check if coming from onboarding
+                                                Get.offAll(
+                                                    const OneTimeOfferPage());
+                                              } else {
+                                                Get.offAll(const AppPages());
+                                              }
                                             },
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.close,
-                                              color: Colors.white24,
+                                              color: Colors.white30,
                                             )),
                                         // Padding(
                                         //   padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
@@ -581,20 +595,20 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                       ),
                                                     ),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 20,
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                       "Try it free for 7 days, then just",
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                           fontSize: 16,
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold)),
                                                   const PricingWidget(),
-                                                  Text(
+                                                  const Text(
                                                       "No commitment. Cancel anytime.",
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                           fontSize: 16,
                                                           color: Colors.white,
                                                           fontWeight:

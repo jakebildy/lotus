@@ -20,7 +20,7 @@ class Onboarding2 extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
         ),
         Text(
-          "start a meditation streak",
+          "Start a meditation streak",
           style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
         ),
         Image(
