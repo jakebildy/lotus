@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:audio_session/audio_session.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
@@ -307,6 +308,7 @@ class CountdownController extends GetxController {
 
   //This does not appear to have any bugs...
   Future<void> submitMeditation() async {
+    FlutterAppBadger.removeBadge();
     // Update the button to a loading state so you can't press it again
     loading.value = true;
     update();

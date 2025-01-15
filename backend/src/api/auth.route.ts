@@ -5,6 +5,7 @@ import { UserI } from "../models/user.model";
 import { RequestI } from "../types/request";
 import { userAuth } from "../middleware/auth.middleware";
 import { logUserEvent, UserEvents } from "../services/analytics.service";
+import { trackSignup } from "../conversion_api";
 export const UserAuthRouter = express.Router();
 
 async function login(req: Request, res: Response) {
@@ -40,6 +41,7 @@ async function signup(req: Request, res: Response) {
 
     logUserEvent(UserEvents.login, user as UserI);
     logUserEvent(UserEvents.signup, user as UserI);
+    trackSignup(req.body.email);
 
     return res.json(user);
   } catch (e) {

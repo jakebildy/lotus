@@ -19,8 +19,44 @@ import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/services/push_notification_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:workmanager/workmanager.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    if (task == 'updateBadgeCount') {
+      // Set the app badge count to '1'
+      FlutterAppBadger.updateBadgeCount(1);
+    }
+    return Future.value(true);
+  });
+}
+
+/// Schedule the periodic task to start at 12 AM
+void scheduleDailyTaskAtMidnight() {
+  final now = DateTime.now();
+  final nextMidnight = DateTime(
+    now.year,
+    now.month,
+    now.day + 1, // Move to the next day
+    0, // 12 AM
+    0, // 0 minutes
+  );
+
+  final initialDelay = nextMidnight.difference(now);
+
+  Workmanager().registerPeriodicTask(
+    '1', // Unique task ID
+    'updateBadgeCount', // Task name
+    frequency: const Duration(days: 1), // Periodic task every 24 hours
+    initialDelay: initialDelay, // Delay to align the task with 12 AM
+  );
+}
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+
   try {
     await GetStorage.init();
   } catch (error) {
@@ -71,6 +107,8 @@ Future<void> main() async {
     ),
   );
   AudioPlayer.global.setGlobalAudioContext(audioContext);
+
+  scheduleDailyTaskAtMidnight();
 
   runApp(const MyApp());
   SystemChannels.lifecycle.setMessageHandler((msg) {

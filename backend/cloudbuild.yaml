@@ -17,6 +17,8 @@ steps:
       - "REVERY_PRIVATE_KEY=${_REVERY_PRIVATE_KEY}"
       - "REVERY_PUBLIC_KEY=${_REVERY_PUBLIC_KEY}"
       - "EMAIL_PASSWORD=${_EMAIL_PASSWORD}"
+      - "FACEBOOK_ACCESS_TOKEN=${_FACEBOOK_ACCESS_TOKEN}"
+      - "FACEBOOK_PIXEL_ID=${_FACEBOOK_PIXEL_ID}"
   - name: "gcr.io/cloud-builders/gcloud"
     dir: backend/
     args: ["app", "deploy", "app.yaml"]
