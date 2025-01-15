@@ -31,7 +31,7 @@ class Onboarding1 extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: Text(
-                "Meditation made into a game to help you build a habit",
+                "Meditation made into a game, so you can build a habit",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
               ),

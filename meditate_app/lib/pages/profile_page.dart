@@ -981,21 +981,36 @@ class _ProfilePageState extends State<ProfilePage>
                                                 ),
                                               ],
                                             )
-                                          : Column(children: [
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              ...(followController
-                                                  .usersFollowing
-                                                  .map((user) => FollowerWidget(
-                                                      user: user,
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              29,
-                                                              29,
-                                                              29))))
-                                            ]),
+                                          : Column(
+                                              children: [
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                ...(followController
+                                                        .usersFollowing
+                                                        .toList() // Convert RxList to a standard List for sorting
+                                                      ..sort((a, b) {
+                                                        final streakDifference =
+                                                            getUserStreak(b) -
+                                                                getUserStreak(
+                                                                    a);
+                                                        if (streakDifference !=
+                                                            0) {
+                                                          return streakDifference;
+                                                        }
+                                                        return b.updatedAt
+                                                            .compareTo(
+                                                                a.updatedAt);
+                                                      }))
+                                                    .map((user) =>
+                                                        FollowerWidget(
+                                                          user: user,
+                                                          color: const Color
+                                                                  .fromARGB(
+                                                              255, 29, 29, 29),
+                                                        ))
+                                              ],
+                                            ),
                                   followController.loadingFollowers.value
                                       ? const SizedBox(
                                           height: 200,

@@ -83,6 +83,36 @@ class FollowerWidget extends StatelessWidget {
                                   : "",
                               style: const TextStyle(fontSize: 20),
                             ),
+                            DateTime.now()
+                                            .difference(user.updatedAt)
+                                            .inMinutes <
+                                        30 &&
+                                    user.sentEmojis[
+                                                userController.user.value.id]
+                                            .toString() ==
+                                        "null"
+                                ? Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 0, 6, 6),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[900],
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Container(
+                                          height: 10,
+                                          width: 10,
+                                          decoration: BoxDecoration(
+                                            color: Colors.green,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                      ),
+                                    ))
+                                : Container()
                           ],
                         ),
                         const SizedBox(
@@ -101,22 +131,72 @@ class FollowerWidget extends StatelessWidget {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    "${getUserStreak(user)}",
-                                    style: const TextStyle(
-                                        color: Colors.grey, fontSize: 14),
-                                  ),
-                                  SizedBox(
-                                      height: 13,
-                                      child:
-                                          Image.asset(userStreakIconURL(user))),
-                                  Text(
-                                    " • Level ${calculateLevel(user.levelPoints)}",
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 14,
-                                    ),
-                                  ),
+                                  getUserStreak(user) == 0
+                                      ? Container()
+                                      : SizedBox(
+                                          height: 13,
+                                          child: Image.asset(
+                                              userStreakIconURL(user))),
+                                  getUserStreak(user) == 0
+                                      ? DateTime.now()
+                                                  .difference(user.updatedAt)
+                                                  .inDays <
+                                              30
+                                          ? Text(
+                                              DateTime.now()
+                                                          .difference(
+                                                              user.updatedAt)
+                                                          .inDays >
+                                                      0
+                                                  ? (DateTime.now()
+                                                          .difference(
+                                                              user.updatedAt)
+                                                          .inDays
+                                                          .toString() +
+                                                      "d")
+                                                  : (DateTime.now()
+                                                              .difference(user
+                                                                  .updatedAt)
+                                                              .inHours ==
+                                                          0
+                                                      ? "1h"
+                                                      : DateTime.now()
+                                                              .difference(user
+                                                                  .updatedAt)
+                                                              .inHours
+                                                              .toString() +
+                                                          "h"),
+                                              style: const TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 14),
+                                            )
+                                          : Container()
+                                      : Text(
+                                          " ${getUserStreak(user)} ${userAdditionalEmoji(user)}",
+                                          style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14),
+                                        ),
+                                  getUserStreak(user) == 0 &&
+                                          DateTime.now()
+                                                  .difference(user.updatedAt)
+                                                  .inDays >
+                                              30
+                                      ? Text(
+                                          "Level ${calculateLevel(user.levelPoints)}",
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14,
+                                          ),
+                                        )
+                                      : Text(
+                                          " • Level ${calculateLevel(user.levelPoints)}",
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14,
+                                          ),
+                                        ),
                                 ],
                               ),
                             ],

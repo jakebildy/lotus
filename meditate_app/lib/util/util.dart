@@ -425,3 +425,30 @@ bool get isCanada {
   final locale = Platform.localeName;
   return locale.contains('CA') || locale.contains('ca');
 }
+
+String userAdditionalEmoji(User user) {
+  DateTime lastMeditated = DateTime.utc(user.lastMeditated.year,
+      user.lastMeditated.month, user.lastMeditated.day);
+
+  // if the user hasn't meditated today, and it's 11pm, show a timer emoji
+  if (lastMeditated.isBefore(DateTime.utc(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day)) &&
+      !DateTime.utc(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      ).isBefore(lastMeditated) &&
+      DateTime.now().hour >= 20) {
+    return "⏳";
+  }
+
+  if (user.totalMinutes <= 10) {
+    return "👶";
+  }
+
+  if (user.streak % 10 == 0 && user.streak >= 10) {
+    return "🎉";
+  }
+
+  return "";
+}

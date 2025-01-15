@@ -36,7 +36,7 @@ class FollowController extends GetxController {
     final today = DateTime(now.year, now.month, now.day);
 
     final newUsers = usersNotFollowing.where((user) {
-      return user.createdAt.isAfter(today.subtract(const Duration(days: 3)));
+      return user.updatedAt.isAfter(today.subtract(const Duration(days: 3)));
     }).toList();
 
     // Combine and deduplicate active and new users

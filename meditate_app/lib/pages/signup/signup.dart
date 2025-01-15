@@ -375,12 +375,12 @@ class _SignupState extends State<Signup> {
                                                               elevation: MaterialStateProperty.all<
                                                                   double>(0),
                                                               backgroundColor: MaterialStateProperty.all<
-                                                                  Color>(controller.page.value == 0 &&
+                                                                  Color>(controller.page.value == 1 &&
                                                                           controller
                                                                               .usernameText
                                                                               .value
                                                                               .isNotEmpty ||
-                                                                      controller.page.value == 1 &&
+                                                                      controller.page.value == 2 &&
                                                                           controller
                                                                               .emailText
                                                                               .value
@@ -423,7 +423,7 @@ class _SignupState extends State<Signup> {
                                                                         12.0),
                                                                 child: Text(
                                                                     controller.page.value ==
-                                                                            0
+                                                                            1
                                                                         ? "Continue"
                                                                         : "Sign Up",
                                                                     textAlign:
@@ -432,7 +432,7 @@ class _SignupState extends State<Signup> {
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                             16,
-                                                                        color: controller.page.value == 0 && controller.usernameText.value.isNotEmpty || controller.page.value == 1 && controller.emailText.value.isNotEmpty && controller.passwordText.value.isNotEmpty
+                                                                        color: controller.page.value == 1 && controller.usernameText.value.isNotEmpty || controller.page.value == 2 && controller.emailText.value.isNotEmpty && controller.passwordText.value.isNotEmpty
                                                                             ? Colors
                                                                                 .white
                                                                             : Colors
