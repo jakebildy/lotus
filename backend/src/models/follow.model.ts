@@ -26,4 +26,8 @@ const FollowSchema = new mongoose.Schema<FollowI>(
   }
 );
 
+// Add indexes
+FollowSchema.index({ user: 1 });
+FollowSchema.index({ stylist: 1 });
+
 export const Follow = mongoose.model('Follow', FollowSchema);
