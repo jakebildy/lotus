@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,6 +20,7 @@ import 'package:meditate_app/pages/search/add_friends.dart';
 import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
+import 'package:meditate_app/util/helpful_tips.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
@@ -34,11 +37,22 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
+  int? lastTipIndex;
 
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  String getRandomTip() {
+    int newIndex;
+    do {
+      newIndex = Random().nextInt(HELPFUL_TIPS.length);
+    } while (newIndex == lastTipIndex);
+
+    lastTipIndex = newIndex;
+    return HELPFUL_TIPS[newIndex];
   }
 
   int selectedTab = 0;
@@ -1196,6 +1210,40 @@ class _ProfilePageState extends State<ProfilePage>
                                 ],
                               ),
                       )),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0.0),
+                  child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.lightBlue.withOpacity(0.2),
+                        side: const BorderSide(width: 1.0, color: Colors.white),
+                        shape: const StadiumBorder(),
+                      ),
+                      onPressed: () async {
+                        // close any open snackbars
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+                        PostHogService posthog = Get.find();
+                        posthog.logEvent("HELPFUL_TIPS_TAPPED", {});
+                        HapticFeedback.lightImpact();
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            duration: const Duration(seconds: 10),
+                            backgroundColor: Colors.black,
+                            // random tip from HELPFUL_TIPS
+                            content: Text(
+                              getRandomTip(),
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Text("Helpful Tips for Shellevate",
+                          style: TextStyle(color: Colors.tealAccent))),
                 ),
                 const SizedBox(
                   height: 10,

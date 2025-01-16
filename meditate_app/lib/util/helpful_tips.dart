@@ -1,0 +1,21 @@
+// ignore: constant_identifier_names
+const HELPFUL_TIPS = [
+  "Once you follow someone and they follow you back, you're able to send each other emojis 🔥",
+  "Try box breathing on Shellevate!",
+  "Try 4-7-8 breathing on Shellevate to help you go to sleep!",
+  "Rainbow turtles can be found if your daily average meditation is 40 minutes or more!",
+  "Tap your turtle to take them to the Shallows! You can breed them with other turtles to get new ones!",
+  "Try the different soundscapes! Watch the rain fall, or travel to the jungle!",
+  "Streak freezes will protect your streak if you miss a day. Buy them in the shop!",
+  "XP Boosts last for 24 hours and let you level up twice as fast when you meditate!",
+  "Shellevate has an original song called 'At Chapter's End' you can find in the soundscapes!",
+  "Leveling up lets you find new turtles!",
+  "Make sure you have notifications enabled to get reminders to meditate!",
+  "Try 5-5 breathing on Shellevate when you're overthinking something!",
+  "Some turtles can only be found in specific soundscapes!",
+  "The color of your flame is based on your daily average meditation time!",
+  "The more minutes you meditate, the faster you level up!",
+  "Inviting friends to Shellevate makes the app more fun! 😉",
+  "Just one person is creating Shellevate. If you press Send Feedback, he'll always read it! 🤗",
+  "Switch between soundscapes and select breathwork by pressing the button underneath the turtle timer.",
+];

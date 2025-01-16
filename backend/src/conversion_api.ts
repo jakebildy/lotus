@@ -3,7 +3,7 @@ import axios from 'axios';
 const FACEBOOK_PIXEL_ID = process.env.FACEBOOK_PIXEL_ID; // Replace with your Facebook Pixel ID
 const ACCESS_TOKEN = process.env.FACEBOOK_ACCESS_TOKEN; // Replace with your Facebook Access Token
 
-const CONVERSIONS_API_URL = `https://graph.facebook.com/v12.0/${FACEBOOK_PIXEL_ID}/events`;
+const CONVERSIONS_API_URL = `https://graph.facebook.com/v21.0/${FACEBOOK_PIXEL_ID}/events`;
 
 interface ConversionEvent {
     event_name: string;
@@ -15,6 +15,7 @@ interface ConversionEvent {
         [key: string]: any;
     };
     event_source_url?: string; // Optional, URL where the event occurred
+    action_source?: string; // Example: "website", "app"
 }
 
 // Function to send events
@@ -48,6 +49,7 @@ export const trackSignup = async (email: string) => {
         user_data: {
             em: hashEmail(email),
         },
+        action_source: 'app', 
     };
     await sendEvent(event);
 };
@@ -60,6 +62,7 @@ export const trackStartTrial = async (email: string) => {
         user_data: {
             em: hashEmail(email),
         },
+        action_source: 'app', 
     };
     await sendEvent(event);
 };

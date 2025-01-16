@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import "package:meditate_app/api/index.dart" as api;
+import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 
@@ -64,6 +66,13 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
 
   void selectVibe(String vibe) {
     HapticFeedback.heavyImpact();
+    SaveController save = Get.find();
+    if ((vibe == "🙏" || vibe == "👍" || vibe == "✨") &&
+        !save.isSubscribedToPremium.value) {
+      Get.to(const GetSubscriptionPage());
+      return;
+    }
+
     PostHogService posthog = Get.find();
     posthog.logEvent("VIBE_SENT", {});
     setState(() {
@@ -159,6 +168,33 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
               ),
             ],
           ),
+          Text("Premium emojis", style: TextStyle(color: Colors.white70)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Vibe(
+                vibe: '🙏',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
+                premium: true,
+              ),
+              Vibe(
+                vibe: '👍',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
+                premium: true,
+              ),
+              Vibe(
+                vibe: '✨',
+                onSelect: selectVibe,
+                isDisabled: nextAvailableTime != null,
+                selectedVibe: selectedVibe ?? "",
+                premium: true,
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -170,13 +206,15 @@ class Vibe extends StatefulWidget {
   final Function(String) onSelect;
   final bool isDisabled;
   final String selectedVibe;
+  final bool premium;
 
   const Vibe(
       {Key? key,
       required this.vibe,
       required this.onSelect,
       required this.selectedVibe,
-      this.isDisabled = false})
+      this.isDisabled = false,
+      this.premium = false})
       : super(key: key);
 
   @override
@@ -186,6 +224,7 @@ class Vibe extends StatefulWidget {
 class _VibeState extends State<Vibe> {
   @override
   Widget build(BuildContext context) {
+    SaveController save = Get.find();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -219,18 +258,20 @@ class _VibeState extends State<Vibe> {
                     widget.vibe,
                     style: const TextStyle(fontSize: 30),
                   ),
-                  Text(
-                    widget.isDisabled
-                        ? widget.selectedVibe == widget.vibe
-                            ? "Sent"
-                            : "Wait"
-                        : "Send",
-                    style: TextStyle(
-                        color: widget.isDisabled &&
-                                widget.selectedVibe != widget.vibe
-                            ? Colors.grey
-                            : Colors.white),
-                  )
+                  widget.premium && !save.isSubscribedToPremium.value
+                      ? const Icon(Icons.lock, size: 15)
+                      : Text(
+                          widget.isDisabled
+                              ? widget.selectedVibe == widget.vibe
+                                  ? "Sent"
+                                  : "Wait"
+                              : "Send",
+                          style: TextStyle(
+                              color: widget.isDisabled &&
+                                      widget.selectedVibe != widget.vibe
+                                  ? Colors.grey
+                                  : Colors.white),
+                        )
                 ],
               ),
             ),

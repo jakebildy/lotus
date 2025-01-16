@@ -556,6 +556,11 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                           "❌",
                                                           "✅",
                                                           5),
+                                                      buildTableRow(
+                                                          "Send Exclusive Emojis to Friends",
+                                                          "❌",
+                                                          "✅",
+                                                          5),
                                                     ],
                                                   ),
                                                   const SizedBox(height: 100),

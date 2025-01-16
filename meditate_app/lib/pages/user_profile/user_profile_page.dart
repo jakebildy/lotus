@@ -182,6 +182,14 @@ class _UserProfilePageState extends State<UserProfilePage>
                   padding: const EdgeInsets.all(0.0),
                   child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
+                        backgroundColor:
+                            userController.user.value.id == widget.user.id
+                                ? Colors.transparent
+                                : followController.usersFollowing
+                                        .map((element) => element.id)
+                                        .contains(widget.user.id)
+                                    ? Colors.transparent
+                                    : Colors.tealAccent,
                         side: BorderSide(
                             width: 1.0,
                             color:
@@ -191,7 +199,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                                             .map((element) => element.id)
                                             .contains(widget.user.id)
                                         ? Colors.white24
-                                        : Colors.teal),
+                                        : Colors.tealAccent),
                         shape: const StadiumBorder(),
                       ),
                       onPressed: () {
@@ -208,6 +216,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                                   ? "Following"
                                   : "Follow",
                           style: TextStyle(
+                              fontWeight: FontWeight.bold,
                               color:
                                   userController.user.value.id == widget.user.id
                                       ? Colors.white
@@ -215,7 +224,7 @@ class _UserProfilePageState extends State<UserProfilePage>
                                               .map((element) => element.id)
                                               .contains(widget.user.id)
                                           ? Colors.grey
-                                          : Colors.tealAccent))),
+                                          : Colors.black))),
                 ),
               ],
             ),
