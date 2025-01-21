@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
+import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
@@ -418,13 +420,15 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               gameController.startGame(
                                   widget.id, widget.color, context);
                               HapticFeedback.lightImpact();
-                              Get.to(const TurtleGamePage(),
+                              AppPagesController appPages = Get.find();
+                              appPages.switchPage(2);
+                              Get.offAll(const AppPages(),
                                   transition: Transition.circularReveal);
                             },
                             child: const Padding(
                               padding: EdgeInsets.all(20.0),
                               child: Text(
-                                "Go to Shallows",
+                                "Choose Turtle",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,

@@ -76,8 +76,6 @@ dependencies:
   path_provider: ^2.0.11
   audio_session: ^0.1.21
   glitters: ^0.4.0
-  flutter_app_badger: ^1.3.0
-  workmanager: ^0.4.1
 
 dev_dependencies:
   flutter_test:
@@ -140,6 +138,8 @@ flutter:
     - assets/meditate_unselected.png
     - assets/store_selected.png
     - assets/store_unselected.png
+    - assets/leaderboard_selected.png
+    - assets/leaderboard_unselected.png
     - assets/streak_freeze.png
     - assets/lilypad.png
     - assets/rock.png

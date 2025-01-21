@@ -7,11 +7,11 @@ import 'package:meditate_app/pages/user_profile/user_profile_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/util.dart';
 
-class FollowerWidget extends StatelessWidget {
+class LeaderboardWidget extends StatelessWidget {
   final User user;
   final Color color;
 
-  const FollowerWidget({Key? key, required this.user, required this.color})
+  const LeaderboardWidget({Key? key, required this.user, required this.color})
       : super(key: key);
 
   @override
@@ -204,54 +204,54 @@ class FollowerWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    userController.user.value.id == user.id
-                        ? Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                                padding: const EdgeInsets.all(0.0),
-                                child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      side: const BorderSide(
-                                          width: 1.0, color: Colors.white),
-                                      shape: const StadiumBorder(),
-                                    ),
-                                    onPressed: () {},
-                                    child: const Text("You",
-                                        style:
-                                            TextStyle(color: Colors.white)))))
-                        : follow.usersFollowing
-                                .map((element) => element.id)
-                                .contains(user.id)
-                            ? const Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
-                                    height: 40,
-                                    child:
-                                        Icon(Icons.arrow_forward_ios_rounded)))
-                            : Align(
-                                alignment: Alignment.centerRight,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(0.0),
-                                  child: OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        side: const BorderSide(
-                                            width: 1.0, color: Colors.teal),
-                                        shape: const StadiumBorder(),
-                                      ),
-                                      onPressed: () {
-                                        follow.followStylist(user);
-                                        //Log the event to PostHog
-                                        PostHogService posthog = Get.find();
-                                        posthog.logEvent("FOLLOW", {});
-                                      },
-                                      child: const Text("Follow",
-                                          style: TextStyle(
-                                              color: Colors.tealAccent))),
-                                ),
-                              )
+                    // userController.user.value.id == user.id
+                    //     ? Align(
+                    //         alignment: Alignment.centerRight,
+                    //         child: Padding(
+                    //             padding: const EdgeInsets.all(0.0),
+                    //             child: OutlinedButton(
+                    //                 style: OutlinedButton.styleFrom(
+                    //                   side: const BorderSide(
+                    //                       width: 1.0, color: Colors.white),
+                    //                   shape: const StadiumBorder(),
+                    //                 ),
+                    //                 onPressed: () {},
+                    //                 child: const Text("You",
+                    //                     style:
+                    //                         TextStyle(color: Colors.white)))))
+                    //     : follow.usersFollowing
+                    //             .map((element) => element.id)
+                    //             .contains(user.id)
+                    //         ? const Align(
+                    //             alignment: Alignment.centerRight,
+                    //             child: SizedBox(
+                    //                 height: 40,
+                    //                 child:
+                    //                     Icon(Icons.arrow_forward_ios_rounded)))
+                    //         : Align(
+                    //             alignment: Alignment.centerRight,
+                    //             child: Padding(
+                    //               padding: const EdgeInsets.all(0.0),
+                    //               child: OutlinedButton(
+                    //                   style: OutlinedButton.styleFrom(
+                    //                     side: const BorderSide(
+                    //                         width: 1.0, color: Colors.teal),
+                    //                     shape: const StadiumBorder(),
+                    //                   ),
+                    //                   onPressed: () {
+                    //                     // follow.followStylist(user);
+                    //                     // //Log the event to PostHog
+                    //                     // PostHogService posthog = Get.find();
+                    //                     // posthog.logEvent("FOLLOW", {});
+                    //                   },
+                    //                   child: const Text("Follow",
+                    //                       style: TextStyle(
+                    //                           color: Colors.tealAccent))),
+                    //             ),
+                    //           )
                   ],
                 ),
-                const Divider()
+                const Divider(height: 0)
               ],
             ),
           ),

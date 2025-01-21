@@ -11,6 +11,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/components/level_progress_bar.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/components/butterfly.dart';
@@ -22,6 +23,7 @@ import 'package:meditate_app/flame/components/seafloor_object.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
 import 'package:meditate_app/flame/components/wateranimation_above.dart';
 import 'package:meditate_app/util/turtles.dart';
+import 'package:meditate_app/util/util.dart';
 
 import 'components/wateranimation.dart';
 
@@ -473,67 +475,28 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
     return Stack(
       children: [
         const GameWidget.controlled(gameFactory: TurtleGame.new),
-        SizedBox(
-            height: 100,
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              actions: [
-                Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                            height: 27, child: Image.asset("assets/egg.png")),
-                        const SizedBox(
-                          width: 3,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
-                          child: Text(
-                            user.user.value.eggs.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: user.user.value.eggs == 0
-                                    ? Colors.grey
-                                    : Colors.white),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    )),
-                Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                            height: 27,
-                            child: Image.asset("assets/sand_dollar.png")),
-                        const SizedBox(
-                          width: 3,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 4.0, 0, 0),
-                          child: Text(
-                            user.user.value.gems.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: user.user.value.gems == 0
-                                    ? Colors.grey
-                                    : Colors.white),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    )),
-              ],
-            ))
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 30, 32.0, 0),
+            child: SizedBox(
+                height: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Level " +
+                          calculateLevel(user.user.value.levelPoints)
+                              .toString(),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                )),
+          ),
+        )
       ],
     );
   }
