@@ -85,9 +85,15 @@ class LeaderboardPage extends StatelessWidget {
                                   width: 50,
                                   child: Center(
                                     child: Text(
-                                      '#${index + 1}',
-                                      style: const TextStyle(
-                                        fontSize: 16,
+                                      index == 0
+                                          ? '🥇'
+                                          : index == 1
+                                              ? '🥈'
+                                              : index == 2
+                                                  ? '🥉'
+                                                  : '#${index + 1}',
+                                      style: TextStyle(
+                                        fontSize: index <= 2 ? 26 : 16,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),

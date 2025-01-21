@@ -477,24 +477,22 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
         const GameWidget.controlled(gameFactory: TurtleGame.new),
         SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 30, 32.0, 0),
+            padding: const EdgeInsets.fromLTRB(8.0, 0, 32.0, 0),
             child: SizedBox(
-                height: 100,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Level " +
-                          calculateLevel(user.user.value.levelPoints)
-                              .toString(),
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                )),
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "Level " +
+                      calculateLevel(user.user.value.levelPoints).toString(),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            )),
           ),
         )
       ],

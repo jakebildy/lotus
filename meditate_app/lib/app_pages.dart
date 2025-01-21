@@ -214,6 +214,7 @@ class _AppPagesState extends State<AppPages> {
                                           : const ProfilePage(),
                       appPages.page.value == 0 ||
                               appPages.page.value == 4 ||
+                              appPages.page.value == 3 ||
                               calculateOnboardingPercentage(
                                       userController.user.value.totalMinutes >
                                           0,
@@ -292,12 +293,12 @@ class _AppPagesState extends State<AppPages> {
                                 ? SizedBox(
                                     height: 35,
                                     child: Image.asset(
-                                        "assets/turtle_selected.png"))
+                                        "assets/shallows_selected.png"))
                                 : SizedBox(
                                     height: 35,
                                     child: Image.asset(
-                                        "assets/turtle_unselected.png")),
-                            label: "Turtles"),
+                                        "assets/shallows_unselected.png")),
+                            label: "Shallows"),
                         BottomNavigationBarItem(
                             icon: appPages.page.value == 3
                                 ? SizedBox(

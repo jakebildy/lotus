@@ -67,7 +67,7 @@ class TurtleCategory extends StatelessWidget {
             children: [
               unlocked
                   ? Hero(
-                      tag: "turtle-$id",
+                      tag: "turtle-$id-$displayColor",
                       child: Stack(
                         children: [
                           Image.asset("assets/images/turtles/swim/swim1.png"),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
+import 'package:meditate_app/components/turtle_image.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
@@ -81,16 +82,51 @@ class _ShopPageState extends State<ShopPage> {
       }
     }
 
-    return ListView(
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+    List<List<int>> turtleOptions = availableTurtles(DateTime(
+        DateTime.now().year, DateTime.now().month, DateTime.now().day));
+
+    return Obx(() => ListView(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Earn  ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                    height: 20, child: Image.asset("assets/sand_dollar.png")),
+                const Text(
+                  " sand dollars",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const Text(
+                  " by meditating. ",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+
             const Text(
-              "Earn  ",
+              "Spend them here! ",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
@@ -98,357 +134,423 @@ class _ShopPageState extends State<ShopPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20, child: Image.asset("assets/sand_dollar.png")),
-            const Text(
-              " sand dollars",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.center,
+            const SizedBox(
+              height: 20,
             ),
-            const Text(
-              " by meditating. ",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-                color: Colors.grey,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
 
-        const Text(
-          "Spend them here! ",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
+            // Streak Revive
+            secondsTillStreakReviveExpires < 0 ||
+                    user.user.value.streakValueNeverReset == 0 ||
+                    user.user.value.streak != 0
+                ? Container()
+                : GestureDetector(
+                    onTap: () {
+                      if (user.user.value.gems >= STREAK_REVIVE_PRICE) {
+                        HapticFeedback.lightImpact();
 
-        // Streak Revive
-        secondsTillStreakReviveExpires < 0 ||
-                user.user.value.streakValueNeverReset == 0 ||
-                user.user.value.streak != 0
-            ? Container()
-            : GestureDetector(
-                onTap: () {
-                  if (user.user.value.gems >= STREAK_REVIVE_PRICE) {
-                    HapticFeedback.lightImpact();
+                        user.updateProperty(UserProperty.gems,
+                            user.user.value.gems - STREAK_REVIVE_PRICE);
+                        // Restore the user's streak
+                        user.reviveStreak();
+                      } else {
+                        //Log the event to AppsFlyer
+                        PostHogService posthog = Get.find();
+                        posthog.logEvent(
+                            "STREAK_REVIVE_TAPPED", {"purchased": "false"});
 
-                    user.updateProperty(UserProperty.gems,
-                        user.user.value.gems - STREAK_REVIVE_PRICE);
-                    // Restore the user's streak
-                    user.reviveStreak();
-                  } else {
-                    //Log the event to AppsFlyer
-                    PostHogService posthog = Get.find();
-                    posthog.logEvent(
-                        "STREAK_REVIVE_TAPPED", {"purchased": "false"});
-
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.greenAccent,
-                      key: UniqueKey(),
-                      content: const Text(
-                          "Earn more sand dollars to purchase this!"),
-                    ));
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      border: Border.all(
-                        color: const Color.fromARGB(255, 107, 80, 80),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 15.0,
-                                horizontal:
-                                    MediaQuery.of(context).size.width / 70),
-                            child: SizedBox(
-                                width: 60,
-                                child: Stack(
-                                  children: [
-                                    SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                4,
-                                        child: Image.asset(
-                                            "assets/streak_revive.png")),
-                                    Opacity(
-                                      opacity: 0.8,
-                                      child: Shimmer.fromColors(
-                                        baseColor: Colors.white12,
-                                        highlightColor: Colors.white70,
-                                        child: SizedBox(
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.greenAccent,
+                          key: UniqueKey(),
+                          content: const Text(
+                              "Earn more sand dollars to purchase this!"),
+                        ));
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 107, 80, 80),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 15.0,
+                                    horizontal:
+                                        MediaQuery.of(context).size.width / 70),
+                                child: SizedBox(
+                                    width: 60,
+                                    child: Stack(
+                                      children: [
+                                        SizedBox(
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height /
                                                 4,
                                             child: Image.asset(
                                                 "assets/streak_revive.png")),
-                                      ),
-                                    ),
-                                  ],
-                                ))),
-                        // SizedBox(
-                        //   width: 10,
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Streak Revive",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              SizedBox(
-                                  width: 200,
-                                  child: Text(
-                                      "Restore your ${user.user.value.streakValueNeverReset} day streak!")),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
+                                        Opacity(
+                                          opacity: 0.8,
+                                          child: Shimmer.fromColors(
+                                            baseColor: Colors.white12,
+                                            highlightColor: Colors.white70,
+                                            child: SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height /
+                                                    4,
+                                                child: Image.asset(
+                                                    "assets/streak_revive.png")),
+                                          ),
+                                        ),
+                                      ],
+                                    ))),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                    "Buy for ",
+                                    "Streak Revive",
                                     style: TextStyle(
-                                        color: Colors.lightBlueAccent,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
                                   ),
                                   SizedBox(
-                                      height: 20,
-                                      child: Image.asset(
-                                          "assets/sand_dollar.png")),
+                                      width: 200,
+                                      child: Text(
+                                          "Restore your ${user.user.value.streakValueNeverReset} day streak!")),
                                   const SizedBox(
-                                    width: 2,
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        "Buy for ",
+                                        style: TextStyle(
+                                            color: Colors.lightBlueAccent,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                          height: 20,
+                                          child: Image.asset(
+                                              "assets/sand_dollar.png")),
+                                      const SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(
+                                        "$STREAK_REVIVE_PRICE",
+                                        style: const TextStyle(
+                                            color: Colors.lightBlueAccent,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
                                   ),
                                   Text(
-                                    "$STREAK_REVIVE_PRICE",
+                                    "${secondsTillStreakReviveExpires ~/ (60 * 60)}:${((secondsTillStreakReviveExpires ~/ 60) % 60).toStringAsFixed(0).padLeft(2, '0')}:${(secondsTillStreakReviveExpires % 60).toString().padLeft(2, '0')} LEFT TO BUY",
                                     style: const TextStyle(
-                                        color: Colors.lightBlueAccent,
+                                        color: Colors.red,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "${secondsTillStreakReviveExpires ~/ (60 * 60)}:${((secondsTillStreakReviveExpires ~/ 60) % 60).toStringAsFixed(0).padLeft(2, '0')}:${(secondsTillStreakReviveExpires % 60).toString().padLeft(2, '0')} LEFT TO BUY",
-                                style: const TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+
+            //Streak Freeze
+            const StreakFreeze(),
+
+            const DividerWithText(text: "OTHER ITEMS"),
+            Container(
+              height: 200,
+              child: GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 0.7,
+                padding: const EdgeInsets.all(8.0),
+                children: [
+                  itemPackage(context, "Lucky Egg", "200", "assets/egg.png"),
+                  itemPackage(context, "XP Boost", "60", "assets/xp_boost.png"),
+                ],
               ),
+            ),
+            // Buy Sand Dollars
+            // network.offline.value ||
+            //         subscriptionController == null ||
+            //         subscriptionController.sandDollarPackage == null
+            //     ? Container()
+            //     : GestureDetector(
+            //         onTap: () {
+            //           // RevenueCat purchase 'sand_dollar_purchase' item
+            //           if (!subscriptionController!.purchasingSandDollars.value) {
+            //             HapticFeedback.lightImpact();
+            //             subscriptionController.purchaseSandDollars();
+            //           }
+            //         },
+            //         child: Padding(
+            //           padding: const EdgeInsets.all(8.0),
+            //           child: Container(
+            //             // height: 100,
+            //             decoration: BoxDecoration(
+            //               color: Colors.black12,
+            //               border: Border.all(
+            //                 color: Colors.white24,
+            //                 width: 2,
+            //               ),
+            //               borderRadius: BorderRadius.circular(20),
+            //             ),
+            //             child: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Padding(
+            //                     padding: EdgeInsets.symmetric(
+            //                         vertical: 15.0,
+            //                         horizontal:
+            //                             MediaQuery.of(context).size.width / 70),
+            //                     child: SizedBox(
+            //                         child: Stack(
+            //                       children: [
+            //                         SizedBox(
+            //                             child: Image.asset(
+            //                                 "assets/sand_dollar_chest.png")),
+            //                         Opacity(
+            //                           opacity: 0.8,
+            //                           child: Shimmer.fromColors(
+            //                             baseColor: Colors.white12,
+            //                             highlightColor: Colors.white70,
+            //                             child: SizedBox(
+            //                                 child: Image.asset(
+            //                                     "assets/sand_dollar_chest.png")),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ))),
+            //                 // SizedBox(
+            //                 //   width: 10,
+            //                 // ),
+            //                 Padding(
+            //                   padding: const EdgeInsets.fromLTRB(0, 0, 15, 0.0),
+            //                   child: Column(
+            //                     crossAxisAlignment: CrossAxisAlignment.start,
+            //                     children: [
+            //                       const SizedBox(
+            //                         height: 5,
+            //                       ),
+            //                       const Text(
+            //                         "800 Sand Dollars",
+            //                         style: TextStyle(
+            //                             fontWeight: FontWeight.bold,
+            //                             fontSize: 16),
+            //                       ),
+            //                       const SizedBox(
+            //                         height: 5,
+            //                       ),
+            //                       // const SizedBox(
+            //                       //     width: 200,
+            //                       //     child: Text(
+            //                       //         "Save your streak if you miss a day of meditation.")),
+            //                       const SizedBox(
+            //                         height: 5,
+            //                       ),
+            //                       Obx(
+            //                         () => Row(
+            //                           mainAxisSize: MainAxisSize.min,
+            //                           children: [
+            //                             Container(
+            //                               decoration: BoxDecoration(
+            //                                 color:
+            //                                     Color.fromARGB(255, 54, 96, 164),
+            //                                 borderRadius:
+            //                                     BorderRadius.circular(4),
+            //                               ),
+            //                               child: Padding(
+            //                                 padding: const EdgeInsets.all(5.0),
+            //                                 child: Text(
+            //                                   subscriptionController!
+            //                                           .purchasingSandDollars.value
+            //                                       ? "Loading..."
+            //                                       : "\$4.99",
+            //                                   style: const TextStyle(
+            //                                       color: Color.fromARGB(
+            //                                           255, 213, 236, 255),
+            //                                       fontWeight: FontWeight.bold),
+            //                                 ),
+            //                               ),
+            //                             ),
+            //                           ],
+            //                         ),
+            //                       ),
+            //                       const SizedBox(
+            //                         height: 0,
+            //                       ),
+            //                     ],
+            //                   ),
+            //                 )
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            const DividerWithText(text: "SAND DOLLARS"),
+            Container(
+              height: 200,
+              child: GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 0.7,
+                padding: const EdgeInsets.all(8.0),
+                children: [
+                  sandDollarPackage(
+                      context,
+                      "100\nSand Dollars",
+                      subscriptionController?.sandDollars100Package
+                              ?.storeProduct.priceString ??
+                          "\$0.99",
+                      "assets/sand_dollar_min.png"),
+                  sandDollarPackage(
+                      context,
+                      "800\nSand Dollars",
+                      subscriptionController?.sandDollars800Package
+                              ?.storeProduct.priceString ??
+                          "\$4.99",
+                      "assets/sand_dollar_chest.png"),
+                  sandDollarPackage(
+                      context,
+                      "14,500\nSand Dollars",
+                      subscriptionController?.sandDollars14500Package
+                              ?.storeProduct.priceString ??
+                          "\$69.99",
+                      "assets/sand_dollar_max.png"),
+                ],
+              ),
+            ),
 
-        //Streak Freeze
-        const StreakFreeze(),
+            // Daily Turtles
+            const DividerWithText(text: "TURTLES AVAILABLE TODAY"),
 
-        const DividerWithText(text: "OTHER ITEMS"),
-        Container(
-          height: 200,
-          child: GridView.count(
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.7,
-            padding: const EdgeInsets.all(8.0),
-            children: [
-              itemPackage(context, "Lucky Egg", "200", "assets/egg.png"),
-              itemPackage(context, "XP Boost", "60", "assets/xp_boost.png"),
-            ],
-          ),
-        ),
-        // Buy Sand Dollars
-        // network.offline.value ||
-        //         subscriptionController == null ||
-        //         subscriptionController.sandDollarPackage == null
-        //     ? Container()
-        //     : GestureDetector(
-        //         onTap: () {
-        //           // RevenueCat purchase 'sand_dollar_purchase' item
-        //           if (!subscriptionController!.purchasingSandDollars.value) {
-        //             HapticFeedback.lightImpact();
-        //             subscriptionController.purchaseSandDollars();
-        //           }
-        //         },
-        //         child: Padding(
-        //           padding: const EdgeInsets.all(8.0),
-        //           child: Container(
-        //             // height: 100,
-        //             decoration: BoxDecoration(
-        //               color: Colors.black12,
-        //               border: Border.all(
-        //                 color: Colors.white24,
-        //                 width: 2,
-        //               ),
-        //               borderRadius: BorderRadius.circular(20),
-        //             ),
-        //             child: Column(
-        //               crossAxisAlignment: CrossAxisAlignment.start,
-        //               children: [
-        //                 Padding(
-        //                     padding: EdgeInsets.symmetric(
-        //                         vertical: 15.0,
-        //                         horizontal:
-        //                             MediaQuery.of(context).size.width / 70),
-        //                     child: SizedBox(
-        //                         child: Stack(
-        //                       children: [
-        //                         SizedBox(
-        //                             child: Image.asset(
-        //                                 "assets/sand_dollar_chest.png")),
-        //                         Opacity(
-        //                           opacity: 0.8,
-        //                           child: Shimmer.fromColors(
-        //                             baseColor: Colors.white12,
-        //                             highlightColor: Colors.white70,
-        //                             child: SizedBox(
-        //                                 child: Image.asset(
-        //                                     "assets/sand_dollar_chest.png")),
-        //                           ),
-        //                         ),
-        //                       ],
-        //                     ))),
-        //                 // SizedBox(
-        //                 //   width: 10,
-        //                 // ),
-        //                 Padding(
-        //                   padding: const EdgeInsets.fromLTRB(0, 0, 15, 0.0),
-        //                   child: Column(
-        //                     crossAxisAlignment: CrossAxisAlignment.start,
-        //                     children: [
-        //                       const SizedBox(
-        //                         height: 5,
-        //                       ),
-        //                       const Text(
-        //                         "800 Sand Dollars",
-        //                         style: TextStyle(
-        //                             fontWeight: FontWeight.bold,
-        //                             fontSize: 16),
-        //                       ),
-        //                       const SizedBox(
-        //                         height: 5,
-        //                       ),
-        //                       // const SizedBox(
-        //                       //     width: 200,
-        //                       //     child: Text(
-        //                       //         "Save your streak if you miss a day of meditation.")),
-        //                       const SizedBox(
-        //                         height: 5,
-        //                       ),
-        //                       Obx(
-        //                         () => Row(
-        //                           mainAxisSize: MainAxisSize.min,
-        //                           children: [
-        //                             Container(
-        //                               decoration: BoxDecoration(
-        //                                 color:
-        //                                     Color.fromARGB(255, 54, 96, 164),
-        //                                 borderRadius:
-        //                                     BorderRadius.circular(4),
-        //                               ),
-        //                               child: Padding(
-        //                                 padding: const EdgeInsets.all(5.0),
-        //                                 child: Text(
-        //                                   subscriptionController!
-        //                                           .purchasingSandDollars.value
-        //                                       ? "Loading..."
-        //                                       : "\$4.99",
-        //                                   style: const TextStyle(
-        //                                       color: Color.fromARGB(
-        //                                           255, 213, 236, 255),
-        //                                       fontWeight: FontWeight.bold),
-        //                                 ),
-        //                               ),
-        //                             ),
-        //                           ],
-        //                         ),
-        //                       ),
-        //                       const SizedBox(
-        //                         height: 0,
-        //                       ),
-        //                     ],
-        //                   ),
-        //                 )
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        const DividerWithText(text: "SAND DOLLARS"),
-        Container(
-          height: 200,
-          child: GridView.count(
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.7,
-            padding: const EdgeInsets.all(8.0),
-            children: [
-              sandDollarPackage(
-                  context,
-                  "100\nSand Dollars",
-                  subscriptionController
-                          ?.sandDollars100Package?.storeProduct.priceString ??
-                      "\$0.99",
-                  "assets/sand_dollar_min.png"),
-              sandDollarPackage(
-                  context,
-                  "800\nSand Dollars",
-                  subscriptionController
-                          ?.sandDollars800Package?.storeProduct.priceString ??
-                      "\$4.99",
-                  "assets/sand_dollar_chest.png"),
-              sandDollarPackage(
-                  context,
-                  "14,500\nSand Dollars",
-                  subscriptionController
-                          ?.sandDollars14500Package?.storeProduct.priceString ??
-                      "\$69.99",
-                  "assets/sand_dollar_max.png"),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 40,
-        )
-        //Lure
-      ],
-    );
+            // pick 10 random turtles
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(10, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        border: Border.all(
+                          color: Colors.white24,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: SizedBox(
+                        height: 100,
+                        child: Center(
+                          child: Row(
+                            children: [
+                              Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: TurtleImage(
+                                    id: turtleOptions[index][0],
+                                    color: turtleOptions[index][1],
+                                  )),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      TURTLE_COLORS_NAME[turtleOptions[index]
+                                              [1]] +
+                                          " " +
+                                          TURTLES[turtleOptions[index][0]]
+                                              .name
+                                              .replaceAll(" Turtle", ""),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                  Text(
+                                    rarityReadable(
+                                        TURTLES[turtleOptions[index][0]]
+                                            .rarity),
+                                    style: TextStyle(
+                                      color: rarityColor(
+                                          TURTLES[turtleOptions[index][0]]
+                                              .rarity),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Container(
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 47, 59, 78),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                              height: 20,
+                                              child: Image.asset(
+                                                  "assets/sand_dollar.png")),
+                                          const SizedBox(
+                                            width: 2,
+                                          ),
+                                          Text(
+                                            "${calculateTurtlePrice(turtleOptions[index][0], turtleOptions[index][1])}",
+                                            style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 213, 236, 255),
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ))),
+                              SizedBox(
+                                width: 20,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+            const SizedBox(
+              height: 40,
+            )
+          ],
+        ));
   }
 }
 

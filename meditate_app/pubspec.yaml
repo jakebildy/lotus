@@ -140,6 +140,8 @@ flutter:
     - assets/store_unselected.png
     - assets/leaderboard_selected.png
     - assets/leaderboard_unselected.png
+    - assets/shallows_selected.png
+    - assets/shallows_unselected.png
     - assets/streak_freeze.png
     - assets/lilypad.png
     - assets/rock.png
@@ -190,6 +192,8 @@ flutter:
     - assets/images/turtles/22.png
     - assets/images/turtles/23.png
     - assets/images/turtles/23_overlay.png
+    - assets/images/turtles/24.png
+    - assets/images/turtles/25.png
     - assets/images/turtles/overlay_rainbow_default.png
     - assets/images/turtles/overlay_rainbow_crystal.png
     - assets/logo.png

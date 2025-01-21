@@ -108,6 +108,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
 
       add(SpriteComponent(sprite: overlay2, size: Vector2(200, 200)));
     }
+
     if (turtleColor == 18) {
       if (turtleType == 10) {
         Sprite overlayRainbow = await gameRef.loadSprite(
