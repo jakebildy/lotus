@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/onboarding/onboarding_progress_bar.dart';
 import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
+import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
@@ -26,6 +27,12 @@ class AppPages extends StatefulWidget {
 }
 
 class _AppPagesState extends State<AppPages> {
+  @override
+  void initState() {
+    super.initState();
+    Get.find<GameController>().setContext(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find();
@@ -206,7 +213,7 @@ class _AppPagesState extends State<AppPages> {
                           : appPages.page.value == 1
                               ? const ShopPage()
                               : appPages.page.value == 2
-                                  ? TurtleGamePage()
+                                  ? const TurtleGamePage()
                                   : appPages.page.value == 3
                                       ? const TurtlesPage()
                                       : appPages.page.value == 4

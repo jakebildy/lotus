@@ -6,7 +6,9 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
+import 'package:meditate_app/util/turtles.dart';
+
+class RainbowFish extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 70.0;
 
@@ -14,7 +16,7 @@ class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
   static Paint red = BasicPalette.red.paint();
   static Paint blue = BasicPalette.blue.paint();
 
-  Fish(Vector2 position) : super(position: position);
+  RainbowFish(Vector2 position) : super(position: position);
 
   int directionResetCounter = 0;
   double xOffset = Random().nextDouble() * 2 - 1;
@@ -48,18 +50,23 @@ class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
 
   @override
   Future<void> onLoad() async {
-    super.onLoad();
+    await super.onLoad();
+
+    fishColor = Random().nextInt(TURTLE_COLORS.length);
 
     final sprites = [
-      Sprite.load("game/fish.png"),
-      Sprite.load("game/fish2.png")
+      await gameRef.loadSprite("game/fish_2.png"),
+      await gameRef.loadSprite("game/fish_2_2.png")
     ];
-    animation =
-        SpriteAnimation.spriteList(await Future.wait(sprites), stepTime: 0.4);
-
-    //sprite = await gameRef.loadSprite('game/fish.png');
+    animation = SpriteAnimation.spriteList(sprites, stepTime: 0.35);
 
     size.setValues(squareSize, squareSize);
     anchor = Anchor.center;
+
+    // Apply color effect after creating the animation
+    paint.colorFilter = ColorFilter.mode(
+      TURTLE_COLORS[fishColor].withOpacity(0.4),
+      BlendMode.srcATop,
+    );
   }
 }

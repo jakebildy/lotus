@@ -6,6 +6,8 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:meditate_app/util/util.dart';
+
 class Butterfly extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 40.0;
@@ -47,7 +49,7 @@ class Butterfly extends SpriteAnimationComponent with HasGameRef, Tappable {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    priority = 10;
+    priority = 105;
     final sprites = [
       Sprite.load("game/insects/butterfly_1.png"),
       Sprite.load("game/insects/butterfly_2.png"),
@@ -65,5 +67,35 @@ class Butterfly extends SpriteAnimationComponent with HasGameRef, Tappable {
 
     size.setValues(squareSize, squareSize);
     anchor = Anchor.center;
+  }
+
+  @override
+  void render(Canvas canvas) {
+    // Render the actual sprite
+    super.render(canvas);
+    // Draw the shadow
+    final shadowPaint = Paint()
+      ..color = Colors.black.withOpacity(0.2)
+      ..blendMode = BlendMode.xor;
+
+    canvas.save();
+
+    // Apply transformation for shadow
+
+    final shadowOffset =
+        unrotateOffset(Offset(15, 20), angle); // Light source direction offset
+    final shadowScale = 1.1; // Slightly scale the shadow for realism
+
+    canvas.translate(shadowOffset.dx, shadowOffset.dy);
+
+    // Render the shadow as a distorted version of the sprite
+    animation?.getSprite().render(
+          canvas,
+          position: Vector2.zero(),
+          size: size,
+          overridePaint: shadowPaint,
+        );
+
+    canvas.restore();
   }
 }

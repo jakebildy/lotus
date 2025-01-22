@@ -39,6 +39,14 @@ class RainbowLilypad extends SpriteComponent with HasGameRef {
       lilypadColor = 13;
     }
 
+    // if lilypadColor is black, brown or grey, make it 14
+    if (lilypadColor == 0 ||
+        lilypadColor == 15 ||
+        lilypadColor == 16 ||
+        lilypadColor == 18) {
+      lilypadColor = 14;
+    }
+
     Sprite overlay = await gameRef.loadSprite(
       'game/lilypad_flower.png',
     );

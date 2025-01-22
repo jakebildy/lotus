@@ -493,3 +493,13 @@ String userAdditionalEmoji(User user) {
 
   return "";
 }
+
+Offset unrotateOffset(Offset offset, double angle) {
+  double cosTheta = cos(angle);
+  double sinTheta = sin(angle);
+
+  double unrotatedX = offset.dx * cosTheta + offset.dy * sinTheta;
+  double unrotatedY = -offset.dx * sinTheta + offset.dy * cosTheta;
+
+  return Offset(unrotatedX, unrotatedY);
+}

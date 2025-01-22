@@ -23,8 +23,9 @@ import '../../models/user.dart';
 class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   static const speed = 0.25;
   static const squareSize = 200.0;
+  final List<List<double>> elevation;
 
-  OtherTurtle(Vector2 position) : super(position: position);
+  OtherTurtle(Vector2 position, this.elevation) : super(position: position);
 
   int directionResetCounter = 0;
   double xOffset = Random().nextDouble() * 2 - 1;
@@ -59,6 +60,17 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    if (position.y ~/ 100 + 100 > elevation.length) {
+      return;
+    }
+    if (position.x ~/ 100 + 100 > elevation[0].length) {
+      return;
+    }
+    if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
+      priority = 101;
+    } else {
+      priority = 1;
+    }
 
     final sprites = [
       Sprite.load("turtles/swim/swim1.png"),
@@ -139,7 +151,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
     HapticFeedback.mediumImpact();
     GameController game = Get.find();
     if (game.localContext != null) {
-      _showMyDialog(turtleColor, turtleType);
+      _showTurtleDialog(turtleColor, turtleType);
     }
     info.handled = true;
     return true;
@@ -147,7 +159,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
 }
 
 //TODO: validate changes
-Future<void> _showMyDialog(int turtleColor, int turtleType) async {
+Future<void> _showTurtleDialog(int turtleColor, int turtleType) async {
   UserController userController = Get.find();
   GameController game = Get.find();
   EggController egg = Get.find();
@@ -157,7 +169,11 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            //  title: const Text('AlertDialog Title'),
+            // add a border
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: const BorderSide(color: Colors.white, width: 2),
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -186,7 +202,10 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            //  title: const Text('AlertDialog Title'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: const BorderSide(color: Colors.white, width: 2),
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: const <Widget>[
@@ -215,7 +234,10 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
         barrierDismissible: false, // user must tap button!
         builder: (BuildContext context) {
           return AlertDialog(
-            //  title: const Text('AlertDialog Title'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: const BorderSide(color: Colors.white, width: 2),
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
@@ -244,6 +266,10 @@ Future<void> _showMyDialog(int turtleColor, int turtleType) async {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+            side: const BorderSide(color: Colors.white, width: 2),
+          ),
           //  title: const Text('AlertDialog Title'),
           content: SingleChildScrollView(
             child: ListBody(

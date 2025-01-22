@@ -76,6 +76,7 @@ dependencies:
   path_provider: ^2.0.11
   audio_session: ^0.1.21
   glitters: ^0.4.0
+  perlin: ^1.1.0+1
 
 dev_dependencies:
   flutter_test:
@@ -223,11 +224,17 @@ flutter:
     - assets/images/game/shell_1.png
     - assets/images/game/water_spritesheet.png
     - assets/images/game/water_spritesheet2.png
+    - assets/images/game/sand_tile.png
+    - assets/images/game/sand_tile_above_water.png
+    - assets/images/game/palm_tree.webp
+    - assets/images/game/sand_dollar.png
+    - assets/images/game/crab.png
     - assets/gems_overlay.png
     - assets/images/game/blue.png
     - assets/offline.png
     - assets/lure.png
     - assets/audio/splash.wav
+    - assets/audio/sand.wav
     - assets/sand_dollar.png
     - assets/sand_dollar_chest.png
     - assets/sand_dollar_overlay.png

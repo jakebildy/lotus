@@ -14,4 +14,9 @@ class GameController extends GetxController {
     localContext = context;
     update();
   }
+
+  void setContext(BuildContext context) {
+    localContext = context;
+    update();
+  }
 }
