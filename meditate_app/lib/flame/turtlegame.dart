@@ -28,6 +28,7 @@ import 'package:meditate_app/flame/components/seafloor_object.dart';
 import 'package:meditate_app/flame/components/special/sand_dollar.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
 import 'package:meditate_app/flame/components/wateranimation_above.dart';
+import 'package:meditate_app/flame/components/x.dart';
 import 'package:meditate_app/flame/tiles/sand_tile.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
@@ -44,6 +45,7 @@ class TurtleGame extends FlameGame with HasTappables {
 
   List<SeaFloorObject> seafloorObjects = [];
   List<PalmTree> palmTrees = [];
+  List<List<double>> palmTreeLocations = [];
 
   WaterAnimation waterAnimation = WaterAnimation(Vector2(400, 100), (700));
   WaterAnimation waterAnimation2 = WaterAnimation(Vector2(400, 800), (700));
@@ -112,20 +114,19 @@ class TurtleGame extends FlameGame with HasTappables {
               double palmTreeSize = 340 + math.Random().nextInt(60).toDouble();
               palmTrees
                   .add(PalmTree(Vector2(i * 100.0, j * 100.0), palmTreeSize));
+              palmTreeLocations.add([i * 100.0, j * 100.0]);
 
               add(PalmTreeShadow(
                   Vector2(i * 100.0, j * 100.0), (palmTreeSize)));
+            } else if (math.Random().nextInt(20) == 1) {
+              add(X(Vector2(i * 100.0, j * 100.0), 45));
             }
-
-            // else if (math.Random().nextInt(20) == 1) {
-            //   add(Crab(Vector2(i * 100.0, j * 100.0)));
-            // }
           } else if (elevation[j + 100][i + 100] > 0.2) {
             sandTile.opacity = 1;
           } else if (elevation[j + 100][i + 100] > 0.1) {
-            sandTile.opacity = 0.5;
+            sandTile.opacity = 0.8;
           } else {
-            sandTile.opacity = 0.2;
+            sandTile.opacity = 0.4;
           }
           add(sandTile);
         } else {
@@ -384,13 +385,18 @@ class TurtleGame extends FlameGame with HasTappables {
       );
     }
 
-    for (var palmTree in palmTrees) {
-      palmTree.add(
-        MoveByEffect(
-            Vector2(
-                (x - player.position.x) * -0.2, (y - player.position.y) * -0.2),
-            EffectController(duration: 0.6, curve: Curves.linear)),
-      );
+    for (int i = 0; i < palmTrees.length; i++) {
+      if (palmTrees[i].position.distanceTo(player.position) < 600) {
+        palmTrees[i].add(
+          MoveByEffect(
+              Vector2((x - player.position.x) * -0.2,
+                  (y - player.position.y) * -0.2),
+              EffectController(duration: 0.6, curve: Curves.linear)),
+        );
+      } else {
+        palmTrees[i].position =
+            Vector2(palmTreeLocations[i][0], palmTreeLocations[i][1]);
+      }
     }
 
     waterAnimation.add(
@@ -454,7 +460,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
       return;
     }
     if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
-      priority = 101;
+      priority = 103;
     } else {
       priority = 1;
     }
@@ -468,6 +474,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
         add(SpriteComponent(
             sprite: underlay,
+            priority: 101,
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
@@ -491,6 +498,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
           add(SpriteComponent(
               sprite: sprite,
+              priority: 104,
               size: Vector2(squareSize, squareSize),
               anchor: Anchor.center));
         } else {
@@ -500,6 +508,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
           add(SpriteComponent(
               sprite: sprite,
+              priority: 104,
               size: Vector2(squareSize, squareSize),
               anchor: Anchor.center));
         }
@@ -511,6 +520,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
         add(SpriteComponent(
             sprite: overlay,
+            priority: 104,
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
@@ -522,6 +532,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
         add(SpriteComponent(
             sprite: overlay,
+            priority: 104,
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
@@ -577,7 +588,7 @@ class PlayerBase extends SpriteGroupComponent<PlayerState>
       return;
     }
     if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
-      priority = 101;
+      priority = 102;
     } else {
       priority = 1;
     }

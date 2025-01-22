@@ -49,7 +49,7 @@ class Butterfly extends SpriteAnimationComponent with HasGameRef, Tappable {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    priority = 105;
+    priority = 110;
     final sprites = [
       Sprite.load("game/insects/butterfly_1.png"),
       Sprite.load("game/insects/butterfly_2.png"),

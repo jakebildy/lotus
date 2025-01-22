@@ -53,13 +53,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
     );
     // angle += speed * dt;
     // angle %= 2 * math.pi;
-  }
 
-  late int turtleColor;
-  late int turtleType;
-  @override
-  Future<void> onLoad() async {
-    super.onLoad();
     if (position.y ~/ 100 + 100 > elevation.length) {
       return;
     }
@@ -67,10 +61,17 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
       return;
     }
     if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
-      priority = 101;
+      priority = 102;
     } else {
       priority = 1;
     }
+  }
+
+  late int turtleColor;
+  late int turtleType;
+  @override
+  Future<void> onLoad() async {
+    super.onLoad();
 
     final sprites = [
       Sprite.load("turtles/swim/swim1.png"),

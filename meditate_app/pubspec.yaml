@@ -229,6 +229,7 @@ flutter:
     - assets/images/game/palm_tree.webp
     - assets/images/game/sand_dollar.png
     - assets/images/game/crab.png
+    - assets/images/game/x.png
     - assets/gems_overlay.png
     - assets/images/game/blue.png
     - assets/offline.png
