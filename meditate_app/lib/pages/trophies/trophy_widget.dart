@@ -23,6 +23,46 @@ class TrophyWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
+          if (turtlesUnlocked == turtles.length) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  backgroundColor: Colors.black87,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  title: Text(
+                    title + (turtlesUnlocked == turtles.length ? " ✅" : ""),
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "You unlocked this collection! The XP has been added to your account.",
+                        )
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Close',
+                        style: TextStyle(color: Colors.tealAccent),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+            return;
+          }
+
           // Open the popup on tap
           showDialog(
             context: context,
@@ -104,7 +144,10 @@ class TrophyWidget extends StatelessWidget {
           // round border
           decoration: BoxDecoration(
             color: Colors.black12,
-            border: Border.all(color: Colors.grey),
+            border: Border.all(
+                color: turtlesUnlocked == turtles.length
+                    ? Colors.tealAccent
+                    : Colors.grey),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
@@ -119,14 +162,18 @@ class TrophyWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.emoji_events,
-                          color: Colors.grey,
+                          color: turtlesUnlocked == turtles.length
+                              ? Colors.tealAccent
+                              : Colors.grey,
                           size: 30,
                         ),
                       ),
                       Text(
                         "+$xp XP",
                         style: TextStyle(
-                          color: Colors.tealAccent,
+                          color: turtlesUnlocked == turtles.length
+                              ? Colors.grey
+                              : Colors.tealAccent,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
@@ -143,11 +190,21 @@ class TrophyWidget extends StatelessWidget {
                     children: [
                       Text(
                         '"$title"',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                        style: TextStyle(
+                            color: turtlesUnlocked == turtles.length
+                                ? Colors.tealAccent
+                                : Colors.white,
+                            fontSize: 16),
                       ),
                       Text(
-                        "$turtlesUnlocked/${turtles.length} TURTLES - TAP FOR DETAILS",
-                        style: TextStyle(color: Colors.white70, fontSize: 12),
+                        turtlesUnlocked == turtles.length
+                            ? "$turtlesUnlocked/${turtles.length} COLLECTED"
+                            : "$turtlesUnlocked/${turtles.length} TURTLES - TAP FOR DETAILS",
+                        style: TextStyle(
+                            color: turtlesUnlocked == turtles.length
+                                ? Colors.white
+                                : Colors.white70,
+                            fontSize: 12),
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,

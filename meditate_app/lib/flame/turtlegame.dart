@@ -71,7 +71,7 @@ class TurtleGame extends FlameGame with HasTappables {
       localAudioPlayer = AudioPlayer();
       await localAudioPlayer.setAsset(assetPath);
       await localAudioPlayer.setLoopMode(LoopMode.all);
-      await localAudioPlayer.setVolume(0.8);
+      await localAudioPlayer.setVolume(0.4);
       await localAudioPlayer.play();
     }
   }
@@ -345,10 +345,9 @@ class TurtleGame extends FlameGame with HasTappables {
   @override
   void onDetach() {
     super.onDetach();
-    if (localAudioPlayer != null) {
-      localAudioPlayer.stop();
-      Get.find<GameController>().toggleAudio(false);
-    }
+
+    localAudioPlayer.stop();
+    Get.find<GameController>().toggleAudio(false);
   }
 
   Future<void> swimParticles() async {
@@ -718,7 +717,9 @@ class _TurtleGamePageState extends State<TurtleGamePage> {
               children: [
                 Text(
                   "Level " +
-                      calculateLevel(user.user.value.levelPoints).toString(),
+                      calculateLevel(
+                              user.user.value.levelPoints, user.user.value)
+                          .toString(),
                   style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,

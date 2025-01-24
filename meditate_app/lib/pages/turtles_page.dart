@@ -38,7 +38,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
 
       return DefaultTabController(
         length: 3,
-        initialIndex: totalTurtles == 0 ? 1 : 0,
+        // initialIndex: totalTurtles == 0 ? 1 : 0,
         child: Scaffold(
           backgroundColor: Colors.grey[900],
           floatingActionButton: FloatingActionButton(
@@ -77,7 +77,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      Text("$totalTurtles",
+                      Text("${totalTurtles + 1}",
                           style: const TextStyle(fontSize: 12)),
                     ],
                   ),
@@ -106,7 +106,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold)),
                       Text(
-                          "$totalTurtles/${TURTLES.length * TURTLE_COLORS.length}",
+                          "${totalTurtles + 1}/${TURTLES.length * TURTLE_COLORS.length}",
                           style: const TextStyle(fontSize: 12)),
                     ],
                   ),
@@ -142,8 +142,20 @@ class _TurtlesPageState extends State<TurtlesPage> {
                       crossAxisSpacing: 4.0,
                       mainAxisSpacing: 8.0,
                       childAspectRatio: 1,
-                      children: userController.user.value.unlockedTurtleColors
+                      children: (userController.user.value.unlockedTurtleColors)
                           .asMap()
+                          // add a value to the map: 0: [0]
+                          .map((index, value) => MapEntry(
+                              index,
+                              index == 0
+                                  ? {
+                                      0: [0] + value
+                                    }
+                                  : {index: value}))
+                          .map((index, value) =>
+                              MapEntry(index, value.entries.toList()))
+                          .map((index, value) => MapEntry(index,
+                              value.expand((entry) => entry.value).toList()))
                           .entries
                           .expand((entry) {
                         int turtleType =
@@ -188,24 +200,17 @@ class _TurtlesPageState extends State<TurtlesPage> {
                         );
                       })),
               ListView(children: [
-                totalTurtles == 0
-                    ? Center(
-                        child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 100, 8, 8.0),
-                        child: Text("No turtles found yet!"),
-                      ))
-                    : Container(),
-
                 //Unlocked Turtles
                 ListView(
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     children: List.generate(TURTLES.length, (index) {
-                      return userController
-                                  .user.value.unlockedTurtles.isEmpty ||
-                              userController
-                                      .user.value.unlockedTurtles[index] ==
-                                  0
+                      return (userController
+                                      .user.value.unlockedTurtles.isEmpty ||
+                                  userController
+                                          .user.value.unlockedTurtles[index] ==
+                                      0) &&
+                              index != 0
                           ? Container()
                           : Padding(
                               padding:
@@ -216,14 +221,17 @@ class _TurtlesPageState extends State<TurtlesPage> {
                                   child: TurtleCategory(
                                       unlocked: true,
                                       id: index,
-                                      displayColor: userController.user.value
-                                              .unlockedTurtleColors[index]
-                                              .contains(0)
+                                      displayColor: index == 0
                                           ? 0
                                           : userController.user.value
-                                              .unlockedTurtleColors[index]
-                                              .where((element) => element != -1)
-                                              .toList()[0],
+                                                  .unlockedTurtleColors[index]
+                                                  .contains(0)
+                                              ? 0
+                                              : userController.user.value
+                                                  .unlockedTurtleColors[index]
+                                                  .where((element) =>
+                                                      element != -1)
+                                                  .toList()[0],
                                       uniqueQuantity: userController.user.value
                                           .unlockedTurtleColors[index]
                                           .where((element) => element != -1)

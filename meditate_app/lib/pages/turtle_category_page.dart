@@ -32,18 +32,21 @@ class TurtleCategoryPage extends StatelessWidget {
                         color: rarityColor(TURTLES[id].rarity),
                       )),
                   TURTLES[id].level <=
-                              calculateLevel(user.user.value.levelPoints) &&
+                              calculateLevel(user.user.value.levelPoints,
+                                  user.user.value) &&
                           TURTLES[id].foundIn == null &&
                           TURTLES[id].tier != Tier.LITBACK &&
                           TURTLES[id].name != "Aether Turtle"
                       ? Container()
                       : const Text(" • "),
                   TURTLES[id].level <=
-                          calculateLevel(user.user.value.levelPoints)
+                          calculateLevel(
+                              user.user.value.levelPoints, user.user.value)
                       ? Container()
                       : const Icon(Icons.lock, color: Colors.grey, size: 15),
                   TURTLES[id].level <=
-                              calculateLevel(user.user.value.levelPoints) &&
+                              calculateLevel(user.user.value.levelPoints,
+                                  user.user.value) &&
                           TURTLES[id].foundIn == null &&
                           TURTLES[id].tier != Tier.LITBACK &&
                           TURTLES[id].name != "Aether Turtle"
@@ -72,9 +75,11 @@ class TurtleCategoryPage extends StatelessWidget {
           children: List.generate(TURTLE_COLORS.length, (index) {
             return Center(
               child: TurtleCard(
-                  unlocked: user.user.value.unlockedTurtles.length >= id &&
-                      user.user.value.unlockedTurtles[id] != 0 &&
-                      user.user.value.unlockedTurtleColors[id].contains(index),
+                  unlocked: id == 0 && index == 0 ||
+                      user.user.value.unlockedTurtles.length >= id &&
+                          user.user.value.unlockedTurtles[id] != 0 &&
+                          user.user.value.unlockedTurtleColors[id]
+                              .contains(index),
                   // set quantity equal to the length of unlockedTurleColors[id] filtered to only the ones that contain the index
                   quantity: user.user.value.unlockedTurtleColors.length <= id
                       ? 0

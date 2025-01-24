@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/pages/trophies/collections.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 // ignore: constant_identifier_names
@@ -239,7 +240,8 @@ int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
   return percentile.toInt() + 1; // Convert to integer for whole number
 }
 
-int calculateLevel(int levelPoints) {
+int calculateLevel(int levelPoints, User user) {
+  levelPoints += calculateUserTotalXPFromCollections(user);
   // Define an array for the first 10 levels with their specific point requirements
   List<int> initialThresholds = [
     20,
@@ -287,6 +289,8 @@ int calculateLevel(int levelPoints) {
 }
 
 int getRemainingLevelPoints(int levelPoints) {
+  levelPoints += calculateTotalXPFromCollections();
+
   // Define an array for the first 10 levels with their specific point requirements
   List<int> initialThresholds = [
     20,
@@ -330,6 +334,7 @@ int getRemainingLevelPoints(int levelPoints) {
 }
 
 double calculateRemainingLevelPercentage(int levelPoints) {
+  levelPoints += calculateTotalXPFromCollections();
   // Define an array for the first 10 levels with their specific point requirements
   List<int> initialThresholds = [
     20,
@@ -464,6 +469,10 @@ bool hasTurtle(
   int color,
 ) {
   UserController user = Get.find();
+
+  if (id == 0 && color == 0) {
+    return true;
+  }
   return user.user.value.unlockedTurtleColors[id].contains(color);
 }
 
@@ -539,4 +548,47 @@ bool isTurtleSoldOut(List<List<int>> turtleOptions, int i) {
 
   // if the turtle is sold out, return true
   return !sortedTurtles.contains(turtleOptions[i]);
+}
+
+int calculateTotalXPFromCollections() {
+  int totalXP = 0;
+
+  for (final collection in COLLECTIONS) {
+    bool allTurtlesUnlocked = collection.turtles.every(
+      (turtle) => hasTurtle(turtle[0], turtle[1]),
+    );
+
+    if (allTurtlesUnlocked) {
+      totalXP += collection.xp;
+    }
+  }
+
+  return totalXP;
+}
+
+int calculateUserTotalXPFromCollections(User user) {
+  int totalXP = 0;
+
+  for (final collection in COLLECTIONS) {
+    bool allTurtlesUnlocked = collection.turtles.every(
+      (turtle) => userHasTurtle(turtle[0], turtle[1], user),
+    );
+
+    if (allTurtlesUnlocked) {
+      totalXP += collection.xp;
+    }
+  }
+
+  return totalXP;
+}
+
+bool userHasTurtle(
+  int id,
+  int color,
+  User user,
+) {
+  if (id == 0 && color == 0) {
+    return true;
+  }
+  return user.unlockedTurtleColors[id].contains(color);
 }

@@ -511,8 +511,10 @@ class _ProfilePageState extends State<ProfilePage>
                                   children: [
                                     Text(
                                       "Level " +
-                                          calculateLevel(userController
-                                                  .user.value.levelPoints)
+                                          calculateLevel(
+                                                  userController
+                                                      .user.value.levelPoints,
+                                                  userController.user.value)
                                               .toString(),
                                       style: const TextStyle(
                                           color: Colors.white,
@@ -561,10 +563,14 @@ class _ProfilePageState extends State<ProfilePage>
                                                                         .levelPoints)
                                                                 .toString() +
                                                             " more minutes to reach Level " +
-                                                            (calculateLevel(userController
-                                                                        .user
-                                                                        .value
-                                                                        .levelPoints) +
+                                                            (calculateLevel(
+                                                                        userController
+                                                                            .user
+                                                                            .value
+                                                                            .levelPoints,
+                                                                        userController
+                                                                            .user
+                                                                            .value) +
                                                                     1)
                                                                 .toString() +
                                                             "!",

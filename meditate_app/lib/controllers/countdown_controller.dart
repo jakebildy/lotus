@@ -52,7 +52,7 @@ class CountdownController extends GetxController {
     localAudioPlayer = AudioPlayer();
     localAudioPlayer.setLoopMode(LoopMode.all);
     networkAudioPlayer.setLoopMode(LoopMode.all);
-    bell.setVolume(0.6);
+    bell.setVolume(0.3);
   }
 
   Future<void> playAmbience() async {
@@ -273,7 +273,7 @@ class CountdownController extends GetxController {
     bell.dispose();
 
     audioplayers.AudioPlayer endingBell = audioplayers.AudioPlayer();
-    endingBell.setVolume(0.6);
+    endingBell.setVolume(0.3);
     endingBell.play(audioplayers.AssetSource('audio/tibetan_chime.wav'));
     startBonusTimer();
     update();
@@ -380,9 +380,12 @@ class CountdownController extends GetxController {
             ? 2
             : 1;
 
-    bool levelUp = calculateLevel(userController.user.value.levelPoints) <
-        calculateLevel(userController.user.value.levelPoints +
-            timeInMinutes * xpBoostMultiplier);
+    bool levelUp = calculateLevel(
+            userController.user.value.levelPoints, userController.user.value) <
+        calculateLevel(
+            userController.user.value.levelPoints +
+                timeInMinutes * xpBoostMultiplier,
+            userController.user.value);
     userController.updateProperty(
         UserProperty.levelPoints,
         (userController.user.value.levelPoints +

@@ -184,14 +184,14 @@ class LeaderboardWidget extends StatelessWidget {
                                                   .inDays >
                                               30
                                       ? Text(
-                                          "Level ${calculateLevel(user.levelPoints)}",
+                                          "Level ${calculateLevel(user.levelPoints, user)}",
                                           style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 14,
                                           ),
                                         )
                                       : Text(
-                                          " • Level ${calculateLevel(user.levelPoints)}",
+                                          " • Level ${calculateLevel(user.levelPoints, user)}",
                                           style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 14,

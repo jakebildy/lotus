@@ -195,8 +195,10 @@ class _LevelUpPageState extends State<LevelUpPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 4, 0, 0),
                                             child: Text(
-                                              (calculateLevel(user
-                                                      .user.value.levelPoints))
+                                              (calculateLevel(
+                                                      user.user.value
+                                                          .levelPoints,
+                                                      user.user.value))
                                                   .toString(),
                                               style: const TextStyle(
                                                   fontSize: 50,
@@ -252,7 +254,8 @@ class _LevelUpPageState extends State<LevelUpPage>
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                           "You reached Level " +
-                              calculateLevel(user.user.value.levelPoints)
+                              calculateLevel(user.user.value.levelPoints,
+                                      user.user.value)
                                   .toString() +
                               "!",
                           style: const TextStyle(

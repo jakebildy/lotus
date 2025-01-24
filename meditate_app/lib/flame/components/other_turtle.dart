@@ -232,7 +232,8 @@ Future<void> _showTurtleDialog(int turtleColor, int turtleType) async {
           );
         });
   } else if (TURTLES[turtleType].level >
-      calculateLevel(userController.user.value.levelPoints)) {
+      calculateLevel(
+          userController.user.value.levelPoints, userController.user.value)) {
     return showDialog<void>(
         context: game.localContext!,
         barrierDismissible: false, // user must tap button!

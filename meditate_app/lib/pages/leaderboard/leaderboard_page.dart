@@ -5,6 +5,7 @@ import 'package:meditate_app/components/follower_widget.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/util/util.dart';
 
 import 'leaderboard_widget.dart';
 
@@ -47,7 +48,9 @@ class LeaderboardPage extends StatelessWidget {
               // Get all users including current user and sort
               final allUsers = [...followController.allUsers]..sort((a, b) {
                   final levelComparison =
-                      b.levelPoints.compareTo(a.levelPoints);
+                      (b.levelPoints + calculateUserTotalXPFromCollections(b))
+                          .compareTo((a.levelPoints +
+                              calculateUserTotalXPFromCollections(a)));
                   if (levelComparison == 0) {
                     return b.totalMinutes.compareTo(a.totalMinutes);
                   }
