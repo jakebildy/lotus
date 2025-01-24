@@ -14,6 +14,7 @@ import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/new_egg_page.dart';
+import 'package:meditate_app/pages/turtle_hatch_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
@@ -415,8 +416,166 @@ class _ShopPageState extends State<ShopPage> {
             //           ),
             //         ),
             //       ),
+
+            // Daily Turtles
+            const DividerWithText(text: "TURTLES AVAILABLE TODAY"),
+
+            // pick 10 random turtles
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: List.generate(10, (index) {
+                  return GestureDetector(
+                    onTap: () async {
+                      if (isTurtleSoldOut(turtleOptions, index)) {
+                        HapticFeedback.lightImpact();
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.black,
+                          key: UniqueKey(),
+                          content: const Text(
+                            "This turtle is out of stock now! Turtles restock daily.",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ));
+                        return;
+                      }
+
+                      if (user.user.value.gems <
+                          calculateTurtlePrice(turtleOptions[index][0],
+                              turtleOptions[index][1])) {
+                        HapticFeedback.lightImpact();
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.black,
+                          key: UniqueKey(),
+                          content: const Text(
+                            "Earn or buy more sand dollars to purchase this!",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ));
+                        return;
+                      } else {
+                        // Buy the turtle
+                        HapticFeedback.mediumImpact();
+                        user.updateProperty(
+                            UserProperty.gems,
+                            user.user.value.gems -
+                                calculateTurtlePrice(turtleOptions[index][0],
+                                    turtleOptions[index][1]));
+
+                        Get.to(TurtleHatchPage(
+                            gemsAmount: -1,
+                            foundEgg: false,
+                            levelUp: false,
+                            id: turtleOptions[index][0],
+                            color: turtleOptions[index][1]));
+                        EggController egg = Get.find();
+                        await egg.addUnlockedTurtle(turtleOptions[index][0], 1,
+                            turtleOptions[index][1]);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          border: Border.all(
+                            color: Colors.white24,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Row(
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TurtleImage(
+                                      id: turtleOptions[index][0],
+                                      color: turtleOptions[index][1],
+                                    )),
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        TURTLE_COLORS_NAME[turtleOptions[index]
+                                                [1]] +
+                                            " " +
+                                            TURTLES[turtleOptions[index][0]]
+                                                .name
+                                                .replaceAll(" Turtle", ""),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                      rarityReadable(
+                                          TURTLES[turtleOptions[index][0]]
+                                              .rarity),
+                                      style: TextStyle(
+                                        color: rarityColor(
+                                            TURTLES[turtleOptions[index][0]]
+                                                .rarity),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                Container(
+                                    decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 47, 59, 78),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: isTurtleSoldOut(
+                                                turtleOptions, index)
+                                            ? const Text("OUT OF STOCK",
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 12,
+                                                ))
+                                            : Row(
+                                                children: [
+                                                  SizedBox(
+                                                      height: 20,
+                                                      child: Image.asset(
+                                                          "assets/sand_dollar.png")),
+                                                  const SizedBox(
+                                                    width: 2,
+                                                  ),
+                                                  Text(
+                                                    "${calculateTurtlePrice(turtleOptions[index][0], turtleOptions[index][1])}",
+                                                    style: const TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 213, 236, 255),
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ))),
+                                SizedBox(
+                                  width: 20,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
             const DividerWithText(text: "SAND DOLLARS"),
-            Container(
+            SizedBox(
               height: 200,
               child: GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
@@ -448,102 +607,6 @@ class _ShopPageState extends State<ShopPage> {
                           "\$69.99",
                       "assets/sand_dollar_max.png"),
                 ],
-              ),
-            ),
-
-            // Daily Turtles
-            const DividerWithText(text: "TURTLES AVAILABLE TODAY"),
-
-            // pick 10 random turtles
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(10, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        border: Border.all(
-                          color: Colors.white24,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: SizedBox(
-                        height: 100,
-                        child: Center(
-                          child: Row(
-                            children: [
-                              Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: TurtleImage(
-                                    id: turtleOptions[index][0],
-                                    color: turtleOptions[index][1],
-                                  )),
-                              Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      TURTLE_COLORS_NAME[turtleOptions[index]
-                                              [1]] +
-                                          " " +
-                                          TURTLES[turtleOptions[index][0]]
-                                              .name
-                                              .replaceAll(" Turtle", ""),
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text(
-                                    rarityReadable(
-                                        TURTLES[turtleOptions[index][0]]
-                                            .rarity),
-                                    style: TextStyle(
-                                      color: rarityColor(
-                                          TURTLES[turtleOptions[index][0]]
-                                              .rarity),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Container(
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 47, 59, 78),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                              height: 20,
-                                              child: Image.asset(
-                                                  "assets/sand_dollar.png")),
-                                          const SizedBox(
-                                            width: 2,
-                                          ),
-                                          Text(
-                                            "${calculateTurtlePrice(turtleOptions[index][0], turtleOptions[index][1])}",
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 213, 236, 255),
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ))),
-                              SizedBox(
-                                width: 20,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
               ),
             ),
             const SizedBox(

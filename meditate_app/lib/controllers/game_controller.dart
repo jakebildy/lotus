@@ -6,17 +6,23 @@ import 'package:get/get.dart';
 class GameController extends GetxController {
   RxInt selectedTurtle = 0.obs;
   RxInt turtleColor = 0.obs;
+  RxBool playingAudio = false.obs;
   BuildContext? localContext;
 
   void startGame(int turtleID, int turtleColorNew, BuildContext context) {
     selectedTurtle.value = turtleID;
     turtleColor.value = turtleColorNew;
-    localContext = context;
+    // localContext = context;
     update();
   }
 
   void setContext(BuildContext context) {
     localContext = context;
+    update();
+  }
+
+  void toggleAudio(bool value) {
+    playingAudio.value = value;
     update();
   }
 }

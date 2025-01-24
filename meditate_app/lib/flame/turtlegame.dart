@@ -12,15 +12,18 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:meditate_app/components/level_progress_bar.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/components/butterfly.dart';
 import 'package:meditate_app/flame/components/crab.dart';
 import 'package:meditate_app/flame/components/fish.dart';
+import 'package:meditate_app/flame/components/land_objects.dart';
 import 'package:meditate_app/flame/components/lilypad.dart';
 import 'package:meditate_app/flame/components/other_turtle.dart';
 import 'package:meditate_app/flame/components/palm_tree.dart';
+import 'package:meditate_app/flame/components/palm_tree_leaf_shadow.dart';
 import 'package:meditate_app/flame/components/palm_tree_shadow.dart';
 import 'package:meditate_app/flame/components/rainbow_fish.dart';
 import 'package:meditate_app/flame/components/rainbow_lilypad.dart';
@@ -28,7 +31,7 @@ import 'package:meditate_app/flame/components/seafloor_object.dart';
 import 'package:meditate_app/flame/components/special/sand_dollar.dart';
 import 'package:meditate_app/flame/components/turtle_world.dart';
 import 'package:meditate_app/flame/components/wateranimation_above.dart';
-import 'package:meditate_app/flame/components/x.dart';
+import 'package:meditate_app/flame/components/treasure_chest.dart';
 import 'package:meditate_app/flame/tiles/sand_tile.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
@@ -46,6 +49,7 @@ class TurtleGame extends FlameGame with HasTappables {
   List<SeaFloorObject> seafloorObjects = [];
   List<PalmTree> palmTrees = [];
   List<List<double>> palmTreeLocations = [];
+  List<List<double>> seafloorObjectLocations = [];
 
   WaterAnimation waterAnimation = WaterAnimation(Vector2(400, 100), (700));
   WaterAnimation waterAnimation2 = WaterAnimation(Vector2(400, 800), (700));
@@ -57,10 +61,19 @@ class TurtleGame extends FlameGame with HasTappables {
       WaterAnimationAbove(Vector2(400, 800), (400), -500);
   var elevation;
 
-  var audioPlayer;
+  late AudioPlayer localAudioPlayer;
 
   Future<void> playAudio() async {
-    audioPlayer = await FlameAudio.loopLongAudio('beach.mp3', volume: 0.3);
+    if (!Get.find<GameController>().playingAudio.value) {
+      Get.find<GameController>().toggleAudio(true);
+
+      String assetPath = "assets/audio/beach.mp3";
+      localAudioPlayer = AudioPlayer();
+      await localAudioPlayer.setAsset(assetPath);
+      await localAudioPlayer.setLoopMode(LoopMode.all);
+      await localAudioPlayer.setVolume(0.8);
+      await localAudioPlayer.play();
+    }
   }
 
   @override
@@ -99,34 +112,53 @@ class TurtleGame extends FlameGame with HasTappables {
         if (terrainMap[j + 100][i + 100] == 'D') {
           // seafloorObjects.add(SeaFloorObject(Vector2(i * 50.0, j * 50.0),
           //     (50 + math.Random().nextInt(30)).toDouble()));
-          if (math.Random().nextInt(100) == 1) {
-            add(SandDollar(Vector2(i * 100.0, j * 100.0), (30)));
+          if (math.Random().nextInt(15) == 1) {
+            add(Lilypad(Vector2(i * 100.0, j * 100.0),
+                (70 + math.Random().nextInt(30)).toDouble()));
+          } else if (math.Random().nextInt(15) == 1) {
+            add(RainbowLilypad(Vector2(i * 100, j * 100),
+                (70 + math.Random().nextInt(30)).toDouble()));
           }
         } else if (terrainMap[j + 100][i + 100] == 'L') {
-          var sandTile =
-              SandTile(isAboveWater: elevation[j + 100][i + 100] > 0.3)
-                ..position = Vector2(i * 100.0, j * 100.0);
+          var sandTile = SandTile(
+              isAboveWater: elevation[j + 100][i + 100] > 0.3,
+              isDeep: elevation[j + 100][i + 100] <= 0.1)
+            ..position = Vector2(
+              i * 100.0,
+              j * 100.0,
+            );
 
           if (elevation[j + 100][i + 100] > 0.3) {
-            sandTile.opacity = 1;
             sandTile.priority = 100;
-            if (math.Random().nextInt(20) == 1) {
+            if (math.Random().nextInt(30) == 1) {
               double palmTreeSize = 340 + math.Random().nextInt(60).toDouble();
-              palmTrees
-                  .add(PalmTree(Vector2(i * 100.0, j * 100.0), palmTreeSize));
+              double angle = Random().nextDouble() * 2 * pi;
+              palmTrees.add(
+                  PalmTree(Vector2(i * 100.0, j * 100.0), angle, palmTreeSize));
               palmTreeLocations.add([i * 100.0, j * 100.0]);
 
               add(PalmTreeShadow(
-                  Vector2(i * 100.0, j * 100.0), (palmTreeSize)));
-            } else if (math.Random().nextInt(20) == 1) {
-              add(X(Vector2(i * 100.0, j * 100.0), 45));
+                  Vector2(i * 100.0, j * 100.0), angle, (palmTreeSize)));
+              add(PalmTreeLeafShadow(
+                  Vector2(i * 100.0, j * 100.0), angle, (palmTreeSize)));
+            } else if (math.Random().nextInt(80) == 1) {
+              add(TreasureChest(Vector2(i * 100.0, j * 100.0), 70));
+            } else if (math.Random().nextInt(4) == 1) {
+              add(LandItems(Vector2(i * 100.0, j * 100.0),
+                  (50 + math.Random().nextInt(30)).toDouble()));
             }
           } else if (elevation[j + 100][i + 100] > 0.2) {
             sandTile.opacity = 1;
+            sandTile.priority = 9;
           } else if (elevation[j + 100][i + 100] > 0.1) {
-            sandTile.opacity = 0.8;
+            sandTile.opacity = 1; //lower
+            sandTile.priority = 6;
           } else {
-            sandTile.opacity = 0.4;
+            sandTile.opacity = 1; //lowest
+            sandTile.priority = 5;
+            if (math.Random().nextInt(100) == 1) {
+              add(SandDollar(Vector2(i * 100.0, j * 100.0), (30)));
+            }
           }
           add(sandTile);
         } else {
@@ -141,6 +173,10 @@ class TurtleGame extends FlameGame with HasTappables {
           Vector2(math.Random().nextInt(20000).toDouble() - 10000,
               math.Random().nextInt(20000).toDouble() - 10000),
           (50 + math.Random().nextInt(30)).toDouble()));
+      seafloorObjectLocations.add([
+        math.Random().nextInt(20000).toDouble() - 10000,
+        math.Random().nextInt(20000).toDouble() - 10000
+      ]);
     }
 
     for (var seafloorObject in seafloorObjects) {
@@ -158,6 +194,7 @@ class TurtleGame extends FlameGame with HasTappables {
     }
 
     add(waterAnimation);
+
     add(waterAnimation2);
 
     for (int i = 0; i < 100; i++) {
@@ -173,22 +210,15 @@ class TurtleGame extends FlameGame with HasTappables {
     add(cameraPoint);
 
     add(waterAnimation3);
+
     add(waterAnimation4);
+
     add(waterAnimation5);
-
-    for (int i = 0; i < 600; i++) {
-      add(Lilypad(
-          Vector2(math.Random().nextInt(20000).toDouble() - 10000,
-              math.Random().nextInt(20000).toDouble() - 10000),
-          (70 + math.Random().nextInt(30)).toDouble()));
-    }
-
-    for (int i = 0; i < 1000; i++) {
-      add(RainbowLilypad(
-          Vector2(math.Random().nextInt(20000).toDouble() - 10000,
-              math.Random().nextInt(20000).toDouble() - 10000),
-          (70 + math.Random().nextInt(30)).toDouble()));
-    }
+    waterAnimation.priority = 8;
+    waterAnimation2.priority = 9;
+    waterAnimation3.priority = 10;
+    waterAnimation4.priority = 11;
+    waterAnimation5.priority = 12;
 
     //Above the player & lilypads
 
@@ -315,7 +345,10 @@ class TurtleGame extends FlameGame with HasTappables {
   @override
   void onDetach() {
     super.onDetach();
-    audioPlayer.stop();
+    if (localAudioPlayer != null) {
+      localAudioPlayer.stop();
+      Get.find<GameController>().toggleAudio(false);
+    }
   }
 
   Future<void> swimParticles() async {
@@ -376,13 +409,18 @@ class TurtleGame extends FlameGame with HasTappables {
         (y - player.position.y) / ratio * 2);
 
     // For all SeafloorObjects, add parallax
-    for (var seafloorObject in seafloorObjects) {
-      seafloorObject.add(
-        MoveByEffect(
-            Vector2((x - player.position.x) / (ratio / 4),
-                (y - player.position.y) / (ratio / 4)),
-            EffectController(duration: 0.6, curve: Curves.linear)),
-      );
+    for (int i = 0; i < seafloorObjects.length; i++) {
+      if (seafloorObjects[i].position.distanceTo(player.position) < 600) {
+        seafloorObjects[i].add(
+          MoveByEffect(
+              Vector2((x - player.position.x) / (ratio / 4),
+                  (y - player.position.y) / (ratio / 4)),
+              EffectController(duration: 0.6, curve: Curves.linear)),
+        );
+      } else {
+        seafloorObjects[i].position = Vector2(
+            seafloorObjectLocations[i][0], seafloorObjectLocations[i][1]);
+      }
     }
 
     for (int i = 0; i < palmTrees.length; i++) {
@@ -453,17 +491,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
     super.onLoad();
 
     GameController game = Get.find();
-    if (position.y ~/ 100 + 100 > elevation.length) {
-      return;
-    }
-    if (position.x ~/ 100 + 100 > elevation[0].length) {
-      return;
-    }
-    if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
-      priority = 103;
-    } else {
-      priority = 1;
-    }
+
     if (!isBase) {
       // TODO: crystal turtle
 
@@ -488,6 +516,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
       add(SpriteComponent(
           sprite: sprite,
           paint: paint,
+          priority: 102,
           size: Vector2(squareSize, squareSize),
           anchor: Anchor.center));
 
@@ -508,7 +537,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
           add(SpriteComponent(
               sprite: sprite,
-              priority: 104,
+              priority: 105,
               size: Vector2(squareSize, squareSize),
               anchor: Anchor.center));
         }
@@ -520,7 +549,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
         add(SpriteComponent(
             sprite: overlay,
-            priority: 104,
+            priority: 105,
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
@@ -532,7 +561,7 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
 
         add(SpriteComponent(
             sprite: overlay,
-            priority: 104,
+            priority: 105,
             size: Vector2(squareSize, squareSize),
             anchor: Anchor.center));
       }
@@ -548,12 +577,22 @@ class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
     }
   }
 
-  // @override
-  // bool onTapUp(TapUpInfo info) {
-  //   removeFromParent();
-  //   info.handled = true;
-  //   return true;
-  // }
+  // update
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (position.y ~/ 100 + 100 > elevation.length) {
+      return;
+    }
+    if (position.x ~/ 100 + 100 > elevation[0].length) {
+      return;
+    }
+    if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
+      priority = 104;
+    } else {
+      priority = 10;
+    }
+  }
 }
 
 enum PlayerState {
@@ -588,16 +627,27 @@ class PlayerBase extends SpriteGroupComponent<PlayerState>
       return;
     }
     if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
-      priority = 102;
+      priority = 103;
     } else {
-      priority = 1;
+      priority = 9;
     }
   }
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    priority = 101;
+
+    if (position.y ~/ 100 + 100 > elevation.length) {
+      return;
+    }
+    if (position.x ~/ 100 + 100 > elevation[0].length) {
+      return;
+    }
+    if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
+      priority = 103;
+    } else {
+      priority = 9;
+    }
     final idleSprite = await gameRef.loadSprite("turtles/swim/swim1.png");
     final swimSprite = await gameRef.loadSprite("turtles/swim/swim2.png");
 
@@ -636,13 +686,6 @@ class CameraPoint extends SpriteComponent with HasGameRef, Tappable {
     size.setValues(0, 0);
     anchor = Anchor.center;
   }
-
-  // @override
-  // bool onTapUp(TapUpInfo info) {
-  //   removeFromParent();
-  //   info.handled = true;
-  //   return true;
-  // }
 }
 
 class TurtleGamePage extends StatefulWidget {

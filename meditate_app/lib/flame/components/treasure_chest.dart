@@ -10,10 +10,12 @@ import 'package:meditate_app/controllers/countdown_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/pages/countdown/countdown_page.dart';
 
-class X extends SpriteComponent with HasGameRef, Tappable {
+import '../../util/util.dart';
+
+class TreasureChest extends SpriteComponent with HasGameRef, Tappable {
   final double xSize;
 
-  X(Vector2 position, this.xSize) : super(position: position);
+  TreasureChest(Vector2 position, this.xSize) : super(position: position);
 
   @override
   Future<void> onLoad() async {
@@ -35,6 +37,38 @@ class X extends SpriteComponent with HasGameRef, Tappable {
     return true;
   }
 
+  @override
+  void render(Canvas canvas) {
+    // Render the actual sprite
+    super.render(canvas);
+
+    // Draw the shadow
+    final shadowPaint = Paint()
+      ..color = Colors.black.withOpacity(0.2)
+      ..blendMode = BlendMode.xor;
+
+    canvas.save();
+
+    // Apply transformation for shadow
+
+    final shadowOffset = unrotateOffset(
+        const Offset(4, 75), angle); // Light source direction offset
+
+    canvas.translate(shadowOffset.dx, shadowOffset.dy);
+    //  flip vertical
+    canvas.scale(1, -0.5);
+
+    // Render the shadow as a distorted version of the sprite
+    sprite?.render(
+      canvas,
+      position: Vector2.zero(),
+      size: size,
+      overridePaint: shadowPaint,
+    );
+
+    canvas.restore();
+  }
+
   Future<void> _showXDialog() async {
     GameController game = Get.find();
 
@@ -51,7 +85,7 @@ class X extends SpriteComponent with HasGameRef, Tappable {
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('Meditate 3 minutes to uncover this treasure?'),
+                  Text('Meditate 3 minutes to open this treasure chest?'),
                 ],
               ),
             ),

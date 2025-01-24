@@ -18,7 +18,7 @@ class Lilypad extends SpriteComponent with HasGameRef {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    priority = 101;
+    priority = 104;
     int variant = Random().nextInt(2);
     if (variant == 0) {
       sprite = await gameRef.loadSprite('game/lilypad.png');

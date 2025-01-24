@@ -34,36 +34,39 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   @override
   void update(double dt) {
     super.update(dt);
-    directionResetCounter += 1;
-    angle = math.atan2((position.x + xOffset * 100) - position.x,
-        -1 * ((position.y + yOffset * 100) - position.y));
-    if (directionResetCounter >= 200 + Random().nextInt(50)) {
-      xOffset = Random().nextDouble() * 2 - 1;
-      yOffset = Random().nextDouble() * 2 - 1;
-      directionResetCounter = 0;
+
+    if (position.distanceTo(gameRef.camera.position) < 600) {
+      directionResetCounter += 1;
       angle = math.atan2((position.x + xOffset * 100) - position.x,
           -1 * ((position.y + yOffset * 100) - position.y));
-    }
+      if (directionResetCounter >= 200 + Random().nextInt(50)) {
+        xOffset = Random().nextDouble() * 2 - 1;
+        yOffset = Random().nextDouble() * 2 - 1;
+        directionResetCounter = 0;
+        angle = math.atan2((position.x + xOffset * 100) - position.x,
+            -1 * ((position.y + yOffset * 100) - position.y));
+      }
 
-    add(
-      MoveByEffect(
-          Vector2((position.x + xOffset / 2) - position.x,
-              (position.y + yOffset / 2) - position.y),
-          EffectController(duration: 0.1)),
-    );
-    // angle += speed * dt;
-    // angle %= 2 * math.pi;
+      add(
+        MoveByEffect(
+            Vector2((position.x + xOffset / 2) - position.x,
+                (position.y + yOffset / 2) - position.y),
+            EffectController(duration: 0.1)),
+      );
+      // angle += speed * dt;
+      // angle %= 2 * math.pi;
 
-    if (position.y ~/ 100 + 100 > elevation.length) {
-      return;
-    }
-    if (position.x ~/ 100 + 100 > elevation[0].length) {
-      return;
-    }
-    if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
-      priority = 102;
-    } else {
-      priority = 1;
+      if (position.y ~/ 100 + 100 > elevation.length) {
+        return;
+      }
+      if (position.x ~/ 100 + 100 > elevation[0].length) {
+        return;
+      }
+      if (elevation[position.y ~/ 100 + 100][position.x ~/ 100 + 100] > 0.1) {
+        priority = 102;
+      } else {
+        priority = 9;
+      }
     }
   }
 
@@ -72,7 +75,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-
+    priority = 9;
     final sprites = [
       Sprite.load("turtles/swim/swim1.png"),
       Sprite.load("turtles/swim/swim2.png")
@@ -180,7 +183,7 @@ Future<void> _showTurtleDialog(int turtleColor, int turtleType) async {
                 children: <Widget>[
                   Text('You need to meditate with the ' +
                       TURTLES[turtleType].foundIn!.name +
-                      ' ambience to find this turtle!'),
+                      ' ambience to collect this turtle!'),
                 ],
               ),
             ),

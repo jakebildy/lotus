@@ -432,6 +432,11 @@ List<List<int>> availableTurtles(DateTime date) {
       List.generate(TURTLE_COLORS.length, (index) => index);
   List<int> availableTypes = List.generate(TURTLES.length, (index) => index);
 
+  // remove all turtles that require an ambience to meditate or are litback
+  availableTypes.removeWhere((element) =>
+      TURTLES[element].foundIn != null ||
+      TURTLES[element].tier == Tier.LITBACK);
+
   // Shuffle the available colors and types
   availableColors.shuffle(Random(date.millisecondsSinceEpoch));
   availableTypes.shuffle(Random(date.millisecondsSinceEpoch));
@@ -502,4 +507,36 @@ Offset unrotateOffset(Offset offset, double angle) {
   double unrotatedY = -offset.dx * sinTheta + offset.dy * cosTheta;
 
   return Offset(unrotatedX, unrotatedY);
+}
+
+bool isTurtleSoldOut(List<List<int>> turtleOptions, int i) {
+  if (i >= turtleOptions.length) {
+    return true;
+  }
+
+  // for x turtle options, at 24-x hours, remove the x-th turtle option sorted in order of turtleprice
+  // if the turtle is sold out, return true
+  List<List<int>> sortedTurtles = List.from(turtleOptions);
+  // sort the turtle options by price
+  sortedTurtles.sort((a, b) => calculateTurtlePrice(a[0], a[1])
+      .compareTo(calculateTurtlePrice(b[0], b[1])));
+
+  // remove however many turtles as there are hours until midnight
+  int hoursUntilMidnight = DateTime.now().hour - 14;
+
+  if (hoursUntilMidnight < 0) {
+    return false;
+  }
+
+  if (hoursUntilMidnight > sortedTurtles.length) {
+    return true;
+  }
+
+  for (int i = 0; i < hoursUntilMidnight; i++) {
+    // remove the most expensive turtle
+    sortedTurtles.removeLast();
+  }
+
+  // if the turtle is sold out, return true
+  return !sortedTurtles.contains(turtleOptions[i]);
 }

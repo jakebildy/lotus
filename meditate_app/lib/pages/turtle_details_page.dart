@@ -156,10 +156,14 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                       height: 300,
                       child: GestureDetector(
                         onTap: () {
+                          PostHogService posthog = Get.find();
+                          posthog.logEvent("TURTLE_SWITCH", {});
                           gameController.startGame(
                               widget.id, widget.color, context);
                           HapticFeedback.lightImpact();
-                          Get.to(const TurtleGamePage(),
+                          AppPagesController appPages = Get.find();
+                          appPages.switchPage(2);
+                          Get.offAll(const AppPages(),
                               transition: Transition.circularReveal);
                         },
                         child: Hero(
@@ -278,13 +282,14 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                     ),
                     GestureDetector(
                         onTap: () {
-                          //Log the event to AppsFlyer
                           PostHogService posthog = Get.find();
-                          posthog.logEvent("GAME_STARTED", {});
+                          posthog.logEvent("TURTLE_SWITCH", {});
                           gameController.startGame(
                               widget.id, widget.color, context);
                           HapticFeedback.lightImpact();
-                          Get.to(const TurtleGamePage(),
+                          AppPagesController appPages = Get.find();
+                          appPages.switchPage(2);
+                          Get.offAll(const AppPages(),
                               transition: Transition.circularReveal);
                         },
                         child: Container(
@@ -414,9 +419,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               shape: const StadiumBorder(),
                             ),
                             onPressed: () {
-                              //Log the event to AppsFlyer
                               PostHogService posthog = Get.find();
-                              posthog.logEvent("GAME_STARTED", {});
+                              posthog.logEvent("TURTLE_SWITCH", {});
                               gameController.startGame(
                                   widget.id, widget.color, context);
                               HapticFeedback.lightImpact();

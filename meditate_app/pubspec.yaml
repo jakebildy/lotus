@@ -129,8 +129,6 @@ flutter:
     - assets/gem_icon.png
     - assets/audio/new_gems.mp3
     - assets/lotus.png
-    - assets/bonsai_circle.png
-    - assets/water_vibes.webp
     - assets/lotus2.png
     - assets/turtle_timer.png
     - assets/fire.gif
@@ -225,11 +223,13 @@ flutter:
     - assets/images/game/water_spritesheet.png
     - assets/images/game/water_spritesheet2.png
     - assets/images/game/sand_tile.png
+    - assets/images/game/sand_tile_deep.png
     - assets/images/game/sand_tile_above_water.png
     - assets/images/game/palm_tree.webp
     - assets/images/game/sand_dollar.png
     - assets/images/game/crab.png
     - assets/images/game/x.png
+    - assets/images/game/tiny_plant.png
     - assets/gems_overlay.png
     - assets/images/game/blue.png
     - assets/offline.png

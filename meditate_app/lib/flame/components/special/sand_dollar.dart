@@ -24,6 +24,7 @@ class SandDollar extends SpriteComponent with HasGameRef, Tappable {
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    priority = 8;
     sprite = await gameRef.loadSprite('game/sand_dollar.png');
     size.setValues(rockSize, rockSize);
     angle = Random().nextDouble() * 2 * pi;

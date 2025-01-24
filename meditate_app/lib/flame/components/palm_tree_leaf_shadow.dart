@@ -5,7 +5,7 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:meditate_app/util/util.dart';
 
-class PalmTreeShadow extends SpriteComponent with HasGameRef {
+class PalmTreeLeafShadow extends SpriteComponent with HasGameRef {
   static const speed = 0.25;
 
   static Paint white = BasicPalette.white.paint();
@@ -13,13 +13,13 @@ class PalmTreeShadow extends SpriteComponent with HasGameRef {
   static Paint blue = BasicPalette.blue.paint();
   final double treeSize;
 
-  PalmTreeShadow(Vector2 position, double angle, this.treeSize)
+  PalmTreeLeafShadow(Vector2 position, double angle, this.treeSize)
       : super(position: position);
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    priority = 104;
+    priority = 106;
     sprite = await gameRef.loadSprite('game/palm_tree.webp');
     size.setValues(treeSize, treeSize);
     angle = angle;

@@ -12,15 +12,16 @@ class PalmTree extends SpriteComponent with HasGameRef, Tappable {
   static Paint blue = BasicPalette.blue.paint();
   final double treeSize;
 
-  PalmTree(Vector2 position, this.treeSize) : super(position: position);
+  PalmTree(Vector2 position, double angle, this.treeSize)
+      : super(position: position);
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    priority = 103;
+    priority = 105;
     sprite = await gameRef.loadSprite('game/palm_tree.webp');
     size.setValues(treeSize, treeSize);
-    angle = Random().nextDouble() * 2 * pi;
+    angle = angle;
     anchor = Anchor.center;
   }
 
