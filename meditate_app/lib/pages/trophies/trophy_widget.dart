@@ -143,11 +143,14 @@ class TrophyWidget extends StatelessWidget {
         child: Container(
           // round border
           decoration: BoxDecoration(
-            color: Colors.black12,
+            color: turtlesUnlocked == turtles.length
+                ? const Color.fromARGB(255, 46, 48, 59)
+                : Colors.black12,
             border: Border.all(
                 color: turtlesUnlocked == turtles.length
-                    ? Colors.tealAccent
-                    : Colors.grey),
+                    ? const Color.fromARGB(255, 81, 80, 107)
+                    : Colors.white24,
+                width: 2),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
@@ -161,19 +164,21 @@ class TrophyWidget extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
-                          Icons.emoji_events,
+                          turtlesUnlocked == turtles.length
+                              ? Icons.emoji_events
+                              : Icons.emoji_events_outlined,
                           color: turtlesUnlocked == turtles.length
-                              ? Colors.tealAccent
-                              : Colors.grey,
-                          size: 30,
+                              ? Colors.lightBlue
+                              : Colors.white12,
+                          size: 40,
                         ),
                       ),
                       Text(
                         "+$xp XP",
                         style: TextStyle(
                           color: turtlesUnlocked == turtles.length
-                              ? Colors.grey
-                              : Colors.tealAccent,
+                              ? Colors.white12
+                              : Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 12,
                         ),
@@ -192,8 +197,11 @@ class TrophyWidget extends StatelessWidget {
                         '"$title"',
                         style: TextStyle(
                             color: turtlesUnlocked == turtles.length
-                                ? Colors.tealAccent
+                                ? Colors.lightBlue
                                 : Colors.white,
+                            fontWeight: turtlesUnlocked == turtles.length
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                             fontSize: 16),
                       ),
                       Text(

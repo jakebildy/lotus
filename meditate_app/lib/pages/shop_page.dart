@@ -428,6 +428,27 @@ class _ShopPageState extends State<ShopPage> {
                 children: List.generate(10, (index) {
                   return GestureDetector(
                     onTap: () async {
+                      if (calculateLevel(
+                              user.user.value.levelPoints, user.user.value) <
+                          TURTLES[turtleOptions[index][0]].level) {
+                        HapticFeedback.lightImpact();
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.black,
+                          key: UniqueKey(),
+                          content: Text(
+                            "You need to level up to buy this turtle! You're at Level " +
+                                calculateLevel(user.user.value.levelPoints,
+                                        user.user.value)
+                                    .toString() +
+                                ".",
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ));
+                        return;
+                      }
                       if (isTurtleSoldOut(turtleOptions, index)) {
                         HapticFeedback.lightImpact();
                         ScaffoldMessenger.of(context).clearSnackBars();
@@ -535,32 +556,50 @@ class _ShopPageState extends State<ShopPage> {
                                     ),
                                     child: Padding(
                                         padding: const EdgeInsets.all(5.0),
-                                        child: isTurtleSoldOut(
-                                                turtleOptions, index)
-                                            ? const Text("OUT OF STOCK",
-                                                style: TextStyle(
+                                        child: calculateLevel(
+                                                    user.user.value.levelPoints,
+                                                    user.user.value) <
+                                                TURTLES[turtleOptions[index][0]]
+                                                    .level
+                                            ? Text(
+                                                "LEVEL " +
+                                                    TURTLES[turtleOptions[index]
+                                                            [0]]
+                                                        .level
+                                                        .toString(),
+                                                style: const TextStyle(
                                                   color: Colors.red,
                                                   fontSize: 12,
                                                 ))
-                                            : Row(
-                                                children: [
-                                                  SizedBox(
-                                                      height: 20,
-                                                      child: Image.asset(
-                                                          "assets/sand_dollar.png")),
-                                                  const SizedBox(
-                                                    width: 2,
-                                                  ),
-                                                  Text(
-                                                    "${calculateTurtlePrice(turtleOptions[index][0], turtleOptions[index][1])}",
-                                                    style: const TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 213, 236, 255),
+                                            : isTurtleSoldOut(
+                                                    turtleOptions, index)
+                                                ? const Text("OUT OF STOCK",
+                                                    style: TextStyle(
+                                                      color: Colors.red,
                                                       fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ))),
+                                                    ))
+                                                : Row(
+                                                    children: [
+                                                      SizedBox(
+                                                          height: 20,
+                                                          child: Image.asset(
+                                                              "assets/sand_dollar.png")),
+                                                      const SizedBox(
+                                                        width: 2,
+                                                      ),
+                                                      Text(
+                                                        "${calculateTurtlePrice(turtleOptions[index][0], turtleOptions[index][1])}",
+                                                        style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              213,
+                                                              236,
+                                                              255),
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ))),
                                 SizedBox(
                                   width: 20,
                                 )
