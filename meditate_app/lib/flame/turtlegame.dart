@@ -6,18 +6,14 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
 import 'package:flame/particles.dart';
-import 'package:flame_audio/flame_audio.dart';
-import 'package:flame_audio/flame_audio.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:meditate_app/components/level_progress_bar.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/components/butterfly.dart';
-import 'package:meditate_app/flame/components/crab.dart';
 import 'package:meditate_app/flame/components/fish.dart';
 import 'package:meditate_app/flame/components/land_objects.dart';
 import 'package:meditate_app/flame/components/lilypad.dart';
@@ -61,24 +57,24 @@ class TurtleGame extends FlameGame with HasTappables {
       WaterAnimationAbove(Vector2(400, 800), (400), -500);
   var elevation;
 
-  late AudioPlayer localAudioPlayer;
+  // late AudioPlayer localAudioPlayer;
 
   Future<void> playAudio() async {
-    if (!Get.find<GameController>().playingAudio.value) {
-      Get.find<GameController>().toggleAudio(true);
+    // if (!Get.find<GameController>().playingAudio.value) {
+    //   Get.find<GameController>().toggleAudio(true);
 
-      String assetPath = "assets/audio/beach.mp3";
-      localAudioPlayer = AudioPlayer();
-      await localAudioPlayer.setAsset(assetPath);
-      await localAudioPlayer.setLoopMode(LoopMode.all);
-      await localAudioPlayer.setVolume(0.4);
-      await localAudioPlayer.play();
-    }
+    //   String assetPath = "assets/audio/beach.mp3";
+    //   localAudioPlayer = AudioPlayer();
+    //   await localAudioPlayer.setAsset(assetPath);
+    //   await localAudioPlayer.setLoopMode(LoopMode.all);
+    //   await localAudioPlayer.setVolume(0.4);
+    //   await localAudioPlayer.play();
+    // }
   }
 
   @override
   Future<void> onLoad() async {
-    playAudio();
+    // playAudio();
     add(_turtleWorld);
 
     double islandThreshold = 0;
@@ -242,6 +238,8 @@ class TurtleGame extends FlameGame with HasTappables {
     canMove = true;
   }
 
+  late AudioPlayer splash;
+
   @override
   void onTapUp(int pointerId, TapUpInfo info) {
     super.onTapUp(pointerId, info);
@@ -249,7 +247,10 @@ class TurtleGame extends FlameGame with HasTappables {
     if (!info.handled && canMove) {
       debounceCanMove();
       if (playerBase.priority < 100) {
-        FlameAudio.play('splash.wav');
+        splash = AudioPlayer();
+        splash.setAsset('assets/audio/splash.wav');
+        splash.play();
+
         HapticFeedback.lightImpact();
         final touchPoint = info.eventPosition.game;
 
@@ -292,7 +293,10 @@ class TurtleGame extends FlameGame with HasTappables {
               EffectController(duration: 0.75)),
         );
       } else {
-        FlameAudio.play('sand.wav');
+        splash = AudioPlayer();
+        splash.setAsset('assets/audio/sand.wav');
+        splash.play();
+
         HapticFeedback.lightImpact();
         final touchPoint = info.eventPosition.game;
 
@@ -346,8 +350,9 @@ class TurtleGame extends FlameGame with HasTappables {
   void onDetach() {
     super.onDetach();
 
-    localAudioPlayer.stop();
-    Get.find<GameController>().toggleAudio(false);
+    // localAudioPlayer.stop();
+    splash.dispose();
+    // Get.find<GameController>().toggleAudio(false);
   }
 
   Future<void> swimParticles() async {

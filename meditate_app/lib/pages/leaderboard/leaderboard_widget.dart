@@ -184,14 +184,14 @@ class LeaderboardWidget extends StatelessWidget {
                                                   .inDays >
                                               30
                                       ? Text(
-                                          "Level ${calculateLevel(user.levelPoints, user)}",
+                                          "Level ${calculateLevel(user.levelPoints, user)}  (${user.levelPoints + calculateUserTotalXPFromCollections(user)} XP)",
                                           style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 14,
                                           ),
                                         )
                                       : Text(
-                                          " • Level ${calculateLevel(user.levelPoints, user)}",
+                                          " • Level ${calculateLevel(user.levelPoints, user)} (${user.levelPoints + calculateUserTotalXPFromCollections(user)} XP)",
                                           style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 14,

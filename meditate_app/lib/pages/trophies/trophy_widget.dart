@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meditate_app/components/piechart_painter.dart';
 import 'package:meditate_app/components/turtle_image.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
@@ -194,8 +195,9 @@ class TrophyWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '"$title"',
+                        '$title',
                         style: TextStyle(
+                            fontStyle: FontStyle.italic,
                             color: turtlesUnlocked == turtles.length
                                 ? Colors.lightBlue
                                 : Colors.white,
@@ -204,15 +206,37 @@ class TrophyWidget extends StatelessWidget {
                                 : FontWeight.normal,
                             fontSize: 16),
                       ),
-                      Text(
-                        turtlesUnlocked == turtles.length
-                            ? "$turtlesUnlocked/${turtles.length} COLLECTED"
-                            : "$turtlesUnlocked/${turtles.length} TURTLES - TAP FOR DETAILS",
-                        style: TextStyle(
-                            color: turtlesUnlocked == turtles.length
-                                ? Colors.white
-                                : Colors.white70,
-                            fontSize: 12),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 5,
+                          ),
+                          CustomPaint(
+                            size: const Size(3, 3), // Size of the pie chart
+                            painter: PieChartPainter(
+                              percentage:
+                                  turtlesUnlocked / turtles.length * 100,
+                              fillColor: Colors.lightBlue,
+                              backgroundColor: Colors.white24,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            turtlesUnlocked == turtles.length
+                                ? "$turtlesUnlocked/${turtles.length} COLLECTED"
+                                : "$turtlesUnlocked/${turtles.length} TURTLES - TAP FOR DETAILS",
+                            style: TextStyle(
+                                color: turtlesUnlocked == turtles.length
+                                    ? Colors.white
+                                    : Colors.white70,
+                                fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4,
                       ),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,

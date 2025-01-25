@@ -19,8 +19,89 @@ import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/services/push_notification_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+
+// Add this as a global variable
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+Future<void> initializeNotifications() async {
+  tz.initializeTimeZones();
+  final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(timeZoneName));
+
+  const DarwinInitializationSettings initializationSettingsIOS =
+      DarwinInitializationSettings(
+    requestAlertPermission: false,
+    requestBadgePermission: true,
+    requestSoundPermission: false,
+    // Add these to handle background notifications
+    notificationCategories: <DarwinNotificationCategory>[
+      DarwinNotificationCategory(
+        'badge_update',
+        actions: <DarwinNotificationAction>[],
+      ),
+    ],
+  );
+
+  const InitializationSettings initializationSettings = InitializationSettings(
+    iOS: initializationSettingsIOS,
+  );
+
+  // Initialize once with the notification handler
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onDidReceiveNotificationResponse: (NotificationResponse details) async {
+      if (details.payload == 'badge_update') {
+        await FlutterAppBadger.updateBadgeCount(1);
+        // Reschedule for next day
+        await scheduleDailyBadgeUpdate();
+      }
+    },
+  );
+}
+
+Future<void> scheduleDailyBadgeUpdate() async {
+  // Cancel any existing notifications
+  await flutterLocalNotificationsPlugin.cancelAll();
+
+  // Schedule for next midnight
+  final now = DateTime.now();
+  final nextMidnight = DateTime(now.year, now.month, now.day + 1);
+
+  await flutterLocalNotificationsPlugin.zonedSchedule(
+    0, // notification id
+    '', // empty title
+    '', // empty body
+    tz.TZDateTime.from(nextMidnight, tz.local),
+    const NotificationDetails(
+      iOS: DarwinNotificationDetails(
+        badgeNumber: 1,
+        presentBadge: true,
+        presentSound: false,
+        presentAlert: false,
+        categoryIdentifier: 'badge_update', // Add this
+      ),
+    ),
+    androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+    uiLocalNotificationDateInterpretation:
+        UILocalNotificationDateInterpretation.absoluteTime,
+    matchDateTimeComponents: DateTimeComponents.time,
+    payload: 'badge_update',
+  );
+}
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize notifications
+  await initializeNotifications();
+  await scheduleDailyBadgeUpdate();
+
   try {
     await GetStorage.init();
   } catch (error) {

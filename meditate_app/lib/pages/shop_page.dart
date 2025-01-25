@@ -548,10 +548,11 @@ class _ShopPageState extends State<ShopPage> {
                                     ),
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Container(
                                     decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 47, 59, 78),
+                                      color:
+                                          const Color.fromARGB(255, 47, 59, 78),
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                     child: Padding(
@@ -727,7 +728,7 @@ class StreakFreeze extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Padding(

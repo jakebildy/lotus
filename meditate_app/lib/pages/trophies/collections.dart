@@ -34,6 +34,11 @@ List<Collection> COLLECTIONS = [
     [8, 17],
   ]),
 
+  const Collection(title: "Vaporwave", xp: 20, turtles: [
+    [24, 9],
+    [25, 17],
+  ]),
+
   const Collection(title: "Fire Portal", xp: 40, turtles: [
     [4, 12],
     [6, 2],
@@ -55,6 +60,12 @@ List<Collection> COLLECTIONS = [
     [16, 3],
   ]),
 
+  const Collection(title: "Olympus", xp: 80, turtles: [
+    [23, 17],
+    [12, 9],
+    [22, 4]
+  ]),
+
   const Collection(title: "Floating Cities on Venus", xp: 100, turtles: [
     [23, 9],
     [9, 17],
@@ -73,7 +84,12 @@ List<Collection> COLLECTIONS = [
   ...List.generate(
       TURTLES.length,
       (i) => Collection(
-          title: TURTLES[i].name + " Set",
+          title: TURTLES[i].name.replaceAll(" Turtle", "") + " Collection",
           xp: 500 + 50 * TURTLES[i].level + 50 * TURTLES[i].rarity.index,
-          turtles: List.generate(TURTLE_COLORS.length, (j) => [i, j])))
+          turtles: List.generate(TURTLE_COLORS.length, (j) => [i, j]))),
+
+  Collection(
+      title: "Rainbow Collection",
+      xp: 2000,
+      turtles: List.generate(TURTLES.length, (i) => [i, 18]))
 ];
