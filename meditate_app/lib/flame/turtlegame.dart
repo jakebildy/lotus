@@ -238,7 +238,7 @@ class TurtleGame extends FlameGame with HasTappables {
     canMove = true;
   }
 
-  late AudioPlayer splash;
+  AudioPlayer splash = AudioPlayer();
 
   @override
   void onTapUp(int pointerId, TapUpInfo info) {
@@ -247,7 +247,6 @@ class TurtleGame extends FlameGame with HasTappables {
     if (!info.handled && canMove) {
       debounceCanMove();
       if (playerBase.priority < 100) {
-        splash = AudioPlayer();
         splash.setAsset('assets/audio/splash.wav');
         splash.play();
 
