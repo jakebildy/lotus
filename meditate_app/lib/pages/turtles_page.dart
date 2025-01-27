@@ -6,6 +6,7 @@ import 'package:meditate_app/components/turtle_card_new.dart';
 import 'package:meditate_app/components/turtle_category.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/trophies/trophies_page.dart';
+import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class TurtlesPage extends StatefulWidget {
@@ -43,13 +44,15 @@ class _TurtlesPageState extends State<TurtlesPage> {
           backgroundColor: Colors.grey[900],
           floatingActionButton: FloatingActionButton(
             onPressed: () {
+              PostHogService posthog = Get.find();
+              posthog.logEvent('COLLECTIONS_PAGE_TAPPED', {});
               Get.to(const TrophyPage());
             },
             // child: const Text(
             //   '🏆',
             //   style: TextStyle(fontSize: 25),
             // ),
-            child: Icon(
+            child: const Icon(
               Icons.emoji_events,
               color: Colors.white,
             ),
@@ -130,53 +133,43 @@ class _TurtlesPageState extends State<TurtlesPage> {
             children: [
               //Unlocked Turtles
 
-              totalTurtles == 0
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 8.0),
-                        child: Text("No turtles found yet!"),
+              GridView.count(
+                crossAxisCount: 3,
+                crossAxisSpacing: 4.0,
+                mainAxisSpacing: 8.0,
+                childAspectRatio: 1,
+                children: (userController.user.value.unlockedTurtleColors)
+                    .asMap()
+                    // add a value to the map: 0: [0]
+                    .map((index, value) => MapEntry(
+                        index,
+                        index == 0
+                            ? {
+                                0: [0] + value
+                              }
+                            : {index: value}))
+                    .map((index, value) =>
+                        MapEntry(index, value.entries.toList()))
+                    .map((index, value) => MapEntry(
+                        index, value.expand((entry) => entry.value).toList()))
+                    .entries
+                    .expand((entry) {
+                  int turtleType =
+                      entry.key; // The index represents the turtle type.
+                  List<int> colors =
+                      entry.value; // The list of colors for this turtle type.
+                  return colors.where((color) => color != -1).map((color) {
+                    return Center(
+                      child: TurtleCardNew(
+                        id: turtleType, // The type of turtle.
+                        color: color, // The unlocked color for this turtle.
+                        unlocked: true,
+                        quantity: 1,
                       ),
-                    )
-                  : GridView.count(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 4.0,
-                      mainAxisSpacing: 8.0,
-                      childAspectRatio: 1,
-                      children: (userController.user.value.unlockedTurtleColors)
-                          .asMap()
-                          // add a value to the map: 0: [0]
-                          .map((index, value) => MapEntry(
-                              index,
-                              index == 0
-                                  ? {
-                                      0: [0] + value
-                                    }
-                                  : {index: value}))
-                          .map((index, value) =>
-                              MapEntry(index, value.entries.toList()))
-                          .map((index, value) => MapEntry(index,
-                              value.expand((entry) => entry.value).toList()))
-                          .entries
-                          .expand((entry) {
-                        int turtleType =
-                            entry.key; // The index represents the turtle type.
-                        List<int> colors = entry
-                            .value; // The list of colors for this turtle type.
-                        return colors
-                            .where((color) => color != -1)
-                            .map((color) {
-                          return Center(
-                            child: TurtleCardNew(
-                              id: turtleType, // The type of turtle.
-                              color:
-                                  color, // The unlocked color for this turtle.
-                              unlocked: true,
-                              quantity: 1,
-                            ),
-                          );
-                        });
-                      }).toList(),
-                    ),
+                    );
+                  });
+                }).toList(),
+              ),
               userController.user.value.eggs == 0
                   ? const Center(
                       child: Padding(

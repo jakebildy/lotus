@@ -355,7 +355,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               child: Column(
                                 children: [
                                   Text(
-                                    "${userController.user.value.unlockedTurtles[widget.id]}",
+                                    "${widget.id == 0 ? userController.user.value.unlockedTurtleColors[widget.id].length + 1 : userController.user.value.unlockedTurtleColors[widget.id].length}",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
