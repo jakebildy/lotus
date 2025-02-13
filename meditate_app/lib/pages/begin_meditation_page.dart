@@ -395,20 +395,33 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                                   Icons.self_improvement,
                                                   size: 30,
                                                 ),
-                                          Text(
-                                            (saveController.breathworkSelected
-                                                        .value
-                                                    ? saveController
-                                                        .selectedBreathwork
-                                                        .value
-                                                    : "Meditation") +
-                                                " - " +
+                                          Column(
+                                            children: [
+                                              Text(
                                                 (saveController
-                                                    .selectedAmbience.value),
-                                            style: const TextStyle(
-                                                fontSize: 13,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+                                                            .breathworkSelected
+                                                            .value
+                                                        ? saveController
+                                                            .selectedBreathwork
+                                                            .value
+                                                        : "Meditation") +
+                                                    " - " +
+                                                    (saveController
+                                                        .selectedAmbience
+                                                        .value),
+                                                style: const TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text("Tap to change",
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: Colors.white70,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ],
                                           ),
                                           const Icon(Icons.arrow_drop_down,
                                               color: Colors.white)

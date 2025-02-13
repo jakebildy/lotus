@@ -19,11 +19,11 @@ class TrophyPage extends StatelessWidget {
 
     return Obx(
       () => Scaffold(
-          appBar: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.grey[900],
-            title: const Text("Collections"),
-          ),
+          // appBar: AppBar(
+          //   elevation: 0,
+          //   backgroundColor: Colors.grey[900],
+          //   title: const Text("Collections"),
+          // ),
           backgroundColor: Colors.grey[900],
           bottomNavigationBar: SafeArea(
               child: Column(

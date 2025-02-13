@@ -42,27 +42,27 @@ class _TurtlesPageState extends State<TurtlesPage> {
         // initialIndex: totalTurtles == 0 ? 1 : 0,
         child: Scaffold(
           backgroundColor: Colors.grey[900],
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              PostHogService posthog = Get.find();
-              posthog.logEvent('COLLECTIONS_PAGE_TAPPED', {});
-              Get.to(const TrophyPage());
-            },
-            // child: const Text(
-            //   '🏆',
-            //   style: TextStyle(fontSize: 25),
-            // ),
-            child: const Icon(
-              Icons.emoji_events,
-              color: Colors.white,
-            ),
-            backgroundColor: Colors.cyan,
-            // outline white 2
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-              side: const BorderSide(color: Colors.white, width: 2),
-            ),
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {
+          //     PostHogService posthog = Get.find();
+          //     posthog.logEvent('COLLECTIONS_PAGE_TAPPED', {});
+          //     Get.to(const TrophyPage());
+          //   },
+          //   // child: const Text(
+          //   //   '🏆',
+          //   //   style: TextStyle(fontSize: 25),
+          //   // ),
+          //   child: const Icon(
+          //     Icons.emoji_events,
+          //     color: Colors.white,
+          //   ),
+          //   backgroundColor: Colors.cyan,
+          //   // outline white 2
+          //   shape: RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.circular(50),
+          //     side: const BorderSide(color: Colors.white, width: 2),
+          //   ),
+          // ),
           appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.grey[900],
@@ -78,27 +78,14 @@ class _TurtlesPageState extends State<TurtlesPage> {
                       const Text(
                         "Turtles",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                       Text("${totalTurtles + 1}",
                           style: const TextStyle(fontSize: 12)),
                     ],
                   ),
                 ),
-                Tab(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      const Text("Eggs",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
-                      Text(userController.user.value.eggs.toString(),
-                          style: const TextStyle(fontSize: 12)),
-                    ],
-                  ),
-                ),
+
                 Tab(
                   child: Column(
                     children: [
@@ -107,10 +94,27 @@ class _TurtlesPageState extends State<TurtlesPage> {
                       ),
                       const Text("TurtleDex",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold)),
+                              fontSize: 14, fontWeight: FontWeight.bold)),
                       Text(
                           "${totalTurtles + 1}/${TURTLES.length * TURTLE_COLORS.length}",
                           style: const TextStyle(fontSize: 12)),
+                    ],
+                  ),
+                ),
+                Tab(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Text("Collections",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold)),
+                      Icon(
+                        Icons.emoji_events,
+                        // color: Colors.white,
+                        size: 15,
+                      )
                     ],
                   ),
                 ),
@@ -133,67 +137,62 @@ class _TurtlesPageState extends State<TurtlesPage> {
             children: [
               //Unlocked Turtles
 
-              GridView.count(
-                crossAxisCount: 3,
-                crossAxisSpacing: 4.0,
-                mainAxisSpacing: 8.0,
-                childAspectRatio: 1,
-                children: (userController.user.value.unlockedTurtleColors)
-                    .asMap()
-                    // add a value to the map: 0: [0]
-                    .map((index, value) => MapEntry(
-                        index,
-                        index == 0
-                            ? {
-                                0: [0] + value
-                              }
-                            : {index: value}))
-                    .map((index, value) =>
-                        MapEntry(index, value.entries.toList()))
-                    .map((index, value) => MapEntry(
-                        index, value.expand((entry) => entry.value).toList()))
-                    .entries
-                    .expand((entry) {
-                  int turtleType =
-                      entry.key; // The index represents the turtle type.
-                  List<int> colors =
-                      entry.value; // The list of colors for this turtle type.
-                  return colors.where((color) => color != -1).map((color) {
-                    return Center(
-                      child: TurtleCardNew(
-                        id: turtleType, // The type of turtle.
-                        color: color, // The unlocked color for this turtle.
-                        unlocked: true,
-                        quantity: 1,
-                      ),
-                    );
-                  });
-                }).toList(),
-              ),
-              userController.user.value.eggs == 0
-                  ? const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          "The longer you meditate, the higher your chance of finding an egg 🥚 \n\n Eggs will hatch into turtles when you meditate!",
-                          textAlign: TextAlign.center,
+              ListView(
+                shrinkWrap: true,
+                physics:
+                    NeverScrollableScrollPhysics(), // Prevents unnecessary scrolling conflicts
+                children: [
+                  // Unlocked Turtles
+                  userController.user.value.eggs == 0
+                      ? Container()
+                      : SizedBox(
+                          // height: 200, // Adjust height as needed
+                          child: GridView.count(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 4.0,
+                            mainAxisSpacing: 8.0,
+                            children: List.generate(
+                              userController.user.value.eggs,
+                              (index) => Center(child: EggCard(index: index)),
+                            ),
+                          ),
                         ),
-                      ),
-                    )
-                  : GridView.count(
+
+                  SizedBox(
+                    child: GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       crossAxisCount: 3,
                       crossAxisSpacing: 4.0,
                       mainAxisSpacing: 8.0,
-                      children: List.generate(userController.user.value.eggs,
-                          (index) {
-                        return Center(
-                          child: EggCard(
-                            index: index,
-                          ),
-                        );
-                      })),
+                      childAspectRatio: 1,
+                      children: userController.user.value.unlockedTurtleColors
+                          .asMap()
+                          .entries
+                          .expand((entry) {
+                        int turtleType = entry.key; // Turtle type index
+                        List<int> colors = entry.value; // Unlocked colors
+
+                        return colors
+                            .where((color) => color != -1)
+                            .map((color) {
+                          return Center(
+                            child: TurtleCardNew(
+                              id: turtleType, // Turtle type
+                              color: color, // Unlocked color
+                              unlocked: true,
+                              quantity: 1,
+                            ),
+                          );
+                        });
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              ),
               ListView(children: [
-                //Unlocked Turtles
                 ListView(
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
@@ -237,32 +236,33 @@ class _TurtlesPageState extends State<TurtlesPage> {
                     })),
 
                 //Locked Turtles
-                // ListView(
-                //     shrinkWrap: true,
-                //     physics: const ClampingScrollPhysics(),
-                //     children: List.generate(TURTLES.length, (index) {
-                //       return userController
-                //                   .user.value.unlockedTurtles.isEmpty ||
-                //               userController
-                //                       .user.value.unlockedTurtles[index] ==
-                //                   0
-                //           ? Padding(
-                //               padding:
-                //                   const EdgeInsets.symmetric(vertical: 4.0),
-                //               child: SizedBox(
-                //                 height: 100,
-                //                 child: Center(
-                //                   child: TurtleCategory(
-                //                       unlocked: false,
-                //                       id: index,
-                //                       displayColor: 0,
-                //                       uniqueQuantity: 0),
-                //                 ),
-                //               ),
-                //             )
-                //           : Container();
-                //     })),
+                ListView(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    children: List.generate(TURTLES.length, (index) {
+                      return userController
+                                  .user.value.unlockedTurtles.isEmpty ||
+                              userController
+                                      .user.value.unlockedTurtles[index] ==
+                                  0
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: SizedBox(
+                                height: 100,
+                                child: Center(
+                                  child: TurtleCategory(
+                                      unlocked: false,
+                                      id: index,
+                                      displayColor: 0,
+                                      uniqueQuantity: 0),
+                                ),
+                              ),
+                            )
+                          : Container();
+                    })),
               ]),
+              const TrophyPage(),
             ],
           ),
         ),
