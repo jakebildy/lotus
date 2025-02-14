@@ -27,6 +27,7 @@ enum UserProperty {
   sentEmojis,
   hasTriedBreathwork,
   hasTriedStreakFreeze,
+  isPremiumOverride,
 }
 
 class User {
@@ -65,6 +66,7 @@ class User {
 
   bool hasTriedBreathwork;
   bool hasTriedStreakFreeze;
+  bool isPremiumOverride;
 
   static User deletedUser = User(
     id: "-1",
@@ -107,6 +109,7 @@ class User {
     this.eggTypes = const [],
     this.hasTriedBreathwork = false,
     this.hasTriedStreakFreeze = false,
+    this.isPremiumOverride = false,
   })  : meditationHistory = meditationHistory ?? <DateTime, int>{}.obs,
         emojisSentAt = emojisSentAt ?? <String, DateTime>{}.obs,
         sentEmojis = sentEmojis ?? <String, String>{}.obs;
@@ -193,6 +196,7 @@ class User {
           _parseSentEmojis(map["sentEmojis"] as Map<String, dynamic>?).obs,
       hasTriedBreathwork: map["hasTriedBreathwork"] ?? false,
       hasTriedStreakFreeze: map["hasTriedStreakFreeze"] ?? false,
+      isPremiumOverride: map["isPremiumOverride"] ?? false,
     );
   }
 

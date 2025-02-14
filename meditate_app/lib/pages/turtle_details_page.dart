@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
+import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
@@ -154,14 +156,18 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                       height: 300,
                       child: GestureDetector(
                         onTap: () {
+                          PostHogService posthog = Get.find();
+                          posthog.logEvent("TURTLE_SWITCH", {});
                           gameController.startGame(
                               widget.id, widget.color, context);
                           HapticFeedback.lightImpact();
-                          Get.to(const TurtleGamePage(),
+                          AppPagesController appPages = Get.find();
+                          appPages.switchPage(2);
+                          Get.offAll(const AppPages(),
                               transition: Transition.circularReveal);
                         },
                         child: Hero(
-                            tag: "turtle-${widget.id}",
+                            tag: "turtle-${widget.id}-${widget.color}",
                             child: XL(
                                 sharesPointer: false,
                                 // bypass the gesture detection to the parent
@@ -276,13 +282,14 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                     ),
                     GestureDetector(
                         onTap: () {
-                          //Log the event to AppsFlyer
                           PostHogService posthog = Get.find();
-                          posthog.logEvent("GAME_STARTED", {});
+                          posthog.logEvent("TURTLE_SWITCH", {});
                           gameController.startGame(
                               widget.id, widget.color, context);
                           HapticFeedback.lightImpact();
-                          Get.to(const TurtleGamePage(),
+                          AppPagesController appPages = Get.find();
+                          appPages.switchPage(2);
+                          Get.offAll(const AppPages(),
                               transition: Transition.circularReveal);
                         },
                         child: Container(
@@ -348,7 +355,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               child: Column(
                                 children: [
                                   Text(
-                                    "${userController.user.value.unlockedTurtles[widget.id]}",
+                                    "${widget.id == 0 ? userController.user.value.unlockedTurtleColors[widget.id].length + 1 : userController.user.value.unlockedTurtleColors[widget.id].length}",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
@@ -412,19 +419,20 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               shape: const StadiumBorder(),
                             ),
                             onPressed: () {
-                              //Log the event to AppsFlyer
                               PostHogService posthog = Get.find();
-                              posthog.logEvent("GAME_STARTED", {});
+                              posthog.logEvent("TURTLE_SWITCH", {});
                               gameController.startGame(
                                   widget.id, widget.color, context);
                               HapticFeedback.lightImpact();
-                              Get.to(const TurtleGamePage(),
+                              AppPagesController appPages = Get.find();
+                              appPages.switchPage(2);
+                              Get.offAll(const AppPages(),
                                   transition: Transition.circularReveal);
                             },
                             child: const Padding(
                               padding: EdgeInsets.all(20.0),
                               child: Text(
-                                "Go to Shallows",
+                                "Choose Turtle",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,

@@ -14,26 +14,6 @@ class FollowerWidget extends StatelessWidget {
   const FollowerWidget({Key? key, required this.user, required this.color})
       : super(key: key);
 
-  String _getFollowedByText(
-      User user, FollowController follow, UserController userController) {
-    // Don't show for the current user
-    if (userController.user.value.id == user.id) {
-      return '';
-    }
-
-    // Get all users who follow the displayed user
-    final usersWhoFollowThem = follow.getAllUsersFollowedBy(user);
-
-    // Find someone from that list who you also follow
-    final mutualFollower = follow.usersFollowing.firstWhereOrNull(
-        (following) => usersWhoFollowThem.any((f) => f.id == following.id));
-
-    if (mutualFollower != null) {
-      return 'FOLLOWED BY ${(mutualFollower.fullName).toUpperCase()}';
-    }
-    return '';
-  }
-
   @override
   Widget build(BuildContext context) {
     FollowController follow = Get.find();
@@ -139,15 +119,7 @@ class FollowerWidget extends StatelessWidget {
                           width: 20,
                         ),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              0,
-                              0,
-                              0,
-                              _getFollowedByText(
-                                          user, follow, userController) ==
-                                      ""
-                                  ? 8
-                                  : 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -212,14 +184,14 @@ class FollowerWidget extends StatelessWidget {
                                                   .inDays >
                                               30
                                       ? Text(
-                                          "Level ${calculateLevel(user.levelPoints)}",
+                                          "Level ${calculateLevel(user.levelPoints, user)}",
                                           style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 14,
                                           ),
                                         )
                                       : Text(
-                                          " • Level ${calculateLevel(user.levelPoints)}",
+                                          " • Level ${calculateLevel(user.levelPoints, user)}",
                                           style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 14,
@@ -227,21 +199,6 @@ class FollowerWidget extends StatelessWidget {
                                         ),
                                 ],
                               ),
-                              _getFollowedByText(
-                                          user, follow, userController) ==
-                                      ""
-                                  ? Container()
-                                  : Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Text(
-                                        _getFollowedByText(
-                                            user, follow, userController),
-                                        style: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                    ),
                             ],
                           ),
                         ),
@@ -252,9 +209,10 @@ class FollowerWidget extends StatelessWidget {
                             alignment: Alignment.centerRight,
                             child: Padding(
                                 padding: const EdgeInsets.all(0.0),
-                                child: FilledButton(
-                                    style: FilledButton.styleFrom(
-                                      backgroundColor: Colors.white24,
+                                child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      side: const BorderSide(
+                                          width: 1.0, color: Colors.white),
                                       shape: const StadiumBorder(),
                                     ),
                                     onPressed: () {},
@@ -274,9 +232,10 @@ class FollowerWidget extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: Padding(
                                   padding: const EdgeInsets.all(0.0),
-                                  child: FilledButton(
-                                      style: FilledButton.styleFrom(
-                                        backgroundColor: Colors.tealAccent,
+                                  child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        side: const BorderSide(
+                                            width: 1.0, color: Colors.teal),
                                         shape: const StadiumBorder(),
                                       ),
                                       onPressed: () {
@@ -285,11 +244,9 @@ class FollowerWidget extends StatelessWidget {
                                         PostHogService posthog = Get.find();
                                         posthog.logEvent("FOLLOW", {});
                                       },
-                                      // follow icon
-                                      child: const Icon(
-                                        Icons.person_add_alt_1_rounded,
-                                        color: Colors.black,
-                                      )),
+                                      child: const Text("Follow",
+                                          style: TextStyle(
+                                              color: Colors.tealAccent))),
                                 ),
                               )
                   ],

@@ -4,9 +4,12 @@ import 'package:get/get.dart';
 import 'package:meditate_app/components/onboarding/onboarding_progress_bar.dart';
 import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
+import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
+import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
+import 'package:meditate_app/pages/leaderboard/leaderboard_page.dart';
 import 'package:meditate_app/pages/loading_page.dart';
 import 'package:meditate_app/pages/profile_page.dart';
 import 'package:meditate_app/pages/signup/signup.dart';
@@ -24,6 +27,12 @@ class AppPages extends StatefulWidget {
 }
 
 class _AppPagesState extends State<AppPages> {
+  @override
+  void initState() {
+    super.initState();
+    Get.find<GameController>().setContext(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     UserController userController = Get.find();
@@ -43,9 +52,10 @@ class _AppPagesState extends State<AppPages> {
                         Size.fromHeight(network.offline.value ? 66 : 56),
                     child: AppBar(
                         elevation: 0,
-                        backgroundColor: appPages.page.value == 0
-                            ? Colors.transparent
-                            : Colors.grey[900],
+                        backgroundColor:
+                            appPages.page.value == 0 || appPages.page.value == 2
+                                ? Colors.transparent
+                                : Colors.grey[900],
                         centerTitle: true,
                         title: Column(
                           children: [
@@ -137,6 +147,32 @@ class _AppPagesState extends State<AppPages> {
                                           SizedBox(
                                               height: 27,
                                               child: Image.asset(
+                                                  "assets/egg.png")),
+                                          const SizedBox(
+                                            width: 3,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 4.0, 0, 0),
+                                            child: Text(
+                                              userController.user.value.eggs
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20,
+                                                  color: userController.user
+                                                              .value.eggs ==
+                                                          0
+                                                      ? Colors.grey
+                                                      : Colors.white),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 15,
+                                          ),
+                                          SizedBox(
+                                              height: 27,
+                                              child: Image.asset(
                                                   "assets/sand_dollar.png")),
                                           const SizedBox(
                                             width: 3,
@@ -177,9 +213,15 @@ class _AppPagesState extends State<AppPages> {
                           : appPages.page.value == 1
                               ? const ShopPage()
                               : appPages.page.value == 2
-                                  ? const TurtlesPage()
-                                  : const ProfilePage(),
+                                  ? const TurtleGamePage()
+                                  : appPages.page.value == 3
+                                      ? const TurtlesPage()
+                                      : appPages.page.value == 4
+                                          ? const LeaderboardPage()
+                                          : const ProfilePage(),
                       appPages.page.value == 0 ||
+                              appPages.page.value == 4 ||
+                              appPages.page.value == 3 ||
                               calculateOnboardingPercentage(
                                       userController.user.value.totalMinutes >
                                           0,
@@ -258,6 +300,17 @@ class _AppPagesState extends State<AppPages> {
                                 ? SizedBox(
                                     height: 35,
                                     child: Image.asset(
+                                        "assets/shallows_selected.png"))
+                                : SizedBox(
+                                    height: 35,
+                                    child: Image.asset(
+                                        "assets/shallows_unselected.png")),
+                            label: "Shallows"),
+                        BottomNavigationBarItem(
+                            icon: appPages.page.value == 3
+                                ? SizedBox(
+                                    height: 35,
+                                    child: Image.asset(
                                         "assets/turtle_selected.png"))
                                 : SizedBox(
                                     height: 35,
@@ -265,7 +318,18 @@ class _AppPagesState extends State<AppPages> {
                                         "assets/turtle_unselected.png")),
                             label: "Turtles"),
                         BottomNavigationBarItem(
-                            icon: appPages.page.value == 3
+                            icon: appPages.page.value == 4
+                                ? SizedBox(
+                                    height: 35,
+                                    child: Image.asset(
+                                        "assets/leaderboard_selected.png"))
+                                : SizedBox(
+                                    height: 35,
+                                    child: Image.asset(
+                                        "assets/leaderboard_unselected.png")),
+                            label: "Leaderboard"),
+                        BottomNavigationBarItem(
+                            icon: appPages.page.value == 5
                                 ? SizedBox(
                                     height: 30,
                                     child: Image.asset(

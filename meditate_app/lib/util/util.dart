@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/pages/trophies/collections.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 // ignore: constant_identifier_names
@@ -235,7 +240,8 @@ int calculateTopPercentile(List<int> meditationTimes, int totalMinutes) {
   return percentile.toInt() + 1; // Convert to integer for whole number
 }
 
-int calculateLevel(int levelPoints) {
+int calculateLevel(int levelPoints, User user) {
+  levelPoints += calculateUserTotalXPFromCollections(user);
   // Define an array for the first 10 levels with their specific point requirements
   List<int> initialThresholds = [
     20,
@@ -283,6 +289,8 @@ int calculateLevel(int levelPoints) {
 }
 
 int getRemainingLevelPoints(int levelPoints) {
+  levelPoints += calculateTotalXPFromCollections();
+
   // Define an array for the first 10 levels with their specific point requirements
   List<int> initialThresholds = [
     20,
@@ -326,6 +334,7 @@ int getRemainingLevelPoints(int levelPoints) {
 }
 
 double calculateRemainingLevelPercentage(int levelPoints) {
+  levelPoints += calculateTotalXPFromCollections();
   // Define an array for the first 10 levels with their specific point requirements
   List<int> initialThresholds = [
     20,
@@ -421,6 +430,52 @@ int calculateOnboardingPercentage(bool meditated, bool profilePictureAdded,
   return percentage;
 }
 
+// availableTurtles function - given a date (not time) as the seed, returns 10 unique turtle colors and types
+List<List<int>> availableTurtles(DateTime date) {
+  List<List<int>> availableTurtles = [];
+  List<int> availableColors =
+      List.generate(TURTLE_COLORS.length, (index) => index);
+  List<int> availableTypes = List.generate(TURTLES.length, (index) => index);
+
+  // remove all turtles that require an ambience to meditate or are litback
+  availableTypes.removeWhere((element) =>
+      TURTLES[element].foundIn != null ||
+      TURTLES[element].tier == Tier.LITBACK);
+
+  // Shuffle the available colors and types
+  availableColors.shuffle(Random(date.millisecondsSinceEpoch));
+  availableTypes.shuffle(Random(date.millisecondsSinceEpoch));
+
+  // Select the first 10 unique turtle colors and types
+  for (int i = 0; i < 10; i++) {
+    availableTurtles.add([availableTypes[i], availableColors[i]]);
+  }
+
+  return availableTurtles;
+}
+
+int calculateTurtlePrice(int id, int color) {
+  int rainbowBoost = 1;
+  if (color == 18) {
+    rainbowBoost = 2;
+  }
+
+  return (TURTLES[id].rarity.index * 100 + 35 + color * 3) * rainbowBoost +
+      TURTLES[id].level * 4;
+}
+
+bool hasTurtle(
+  int id,
+  int color,
+) {
+  UserController user = Get.find();
+
+  if (id == 0 && color == 0) {
+    return true;
+  }
+  return user.user.value.unlockedTurtleColors[id].contains(color);
+}
+
 bool get isCanada {
   final locale = Platform.localeName;
   return locale.contains('CA') || locale.contains('ca');
@@ -451,4 +506,89 @@ String userAdditionalEmoji(User user) {
   }
 
   return "";
+}
+
+Offset unrotateOffset(Offset offset, double angle) {
+  double cosTheta = cos(angle);
+  double sinTheta = sin(angle);
+
+  double unrotatedX = offset.dx * cosTheta + offset.dy * sinTheta;
+  double unrotatedY = -offset.dx * sinTheta + offset.dy * cosTheta;
+
+  return Offset(unrotatedX, unrotatedY);
+}
+
+bool isTurtleSoldOut(List<List<int>> turtleOptions, int i) {
+  if (i >= turtleOptions.length) {
+    return true;
+  }
+
+  // for x turtle options, at 24-x hours, remove the x-th turtle option sorted in order of turtleprice
+  // if the turtle is sold out, return true
+  List<List<int>> sortedTurtles = List.from(turtleOptions);
+  // sort the turtle options by price
+  sortedTurtles.sort((a, b) => calculateTurtlePrice(a[0], a[1])
+      .compareTo(calculateTurtlePrice(b[0], b[1])));
+
+  // remove however many turtles as there are hours until midnight
+  int hoursUntilMidnight = DateTime.now().hour - 14;
+
+  if (hoursUntilMidnight < 0) {
+    return false;
+  }
+
+  if (hoursUntilMidnight > sortedTurtles.length) {
+    return true;
+  }
+
+  for (int i = 0; i < hoursUntilMidnight; i++) {
+    // remove the most expensive turtle
+    sortedTurtles.removeLast();
+  }
+
+  // if the turtle is sold out, return true
+  return !sortedTurtles.contains(turtleOptions[i]);
+}
+
+int calculateTotalXPFromCollections() {
+  int totalXP = 0;
+
+  for (final collection in COLLECTIONS) {
+    bool allTurtlesUnlocked = collection.turtles.every(
+      (turtle) => hasTurtle(turtle[0], turtle[1]),
+    );
+
+    if (allTurtlesUnlocked) {
+      totalXP += collection.xp;
+    }
+  }
+
+  return totalXP;
+}
+
+int calculateUserTotalXPFromCollections(User user) {
+  int totalXP = 0;
+
+  for (final collection in COLLECTIONS) {
+    bool allTurtlesUnlocked = collection.turtles.every(
+      (turtle) => userHasTurtle(turtle[0], turtle[1], user),
+    );
+
+    if (allTurtlesUnlocked) {
+      totalXP += collection.xp;
+    }
+  }
+
+  return totalXP;
+}
+
+bool userHasTurtle(
+  int id,
+  int color,
+  User user,
+) {
+  if (id == 0 && color == 0) {
+    return true;
+  }
+  return user.unlockedTurtleColors[id].contains(color);
 }

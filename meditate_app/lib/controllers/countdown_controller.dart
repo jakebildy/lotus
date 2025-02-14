@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:audio_session/audio_session.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
@@ -16,7 +15,7 @@ import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'package:audioplayers/audioplayers.dart' as audioplayers;
-
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import '../util/DEBUG_MODE.dart';
 import '../util/logger.dart';
 
@@ -53,7 +52,7 @@ class CountdownController extends GetxController {
     localAudioPlayer = AudioPlayer();
     localAudioPlayer.setLoopMode(LoopMode.all);
     networkAudioPlayer.setLoopMode(LoopMode.all);
-    bell.setVolume(0.6);
+    bell.setVolume(0.3);
   }
 
   Future<void> playAmbience() async {
@@ -274,7 +273,7 @@ class CountdownController extends GetxController {
     bell.dispose();
 
     audioplayers.AudioPlayer endingBell = audioplayers.AudioPlayer();
-    endingBell.setVolume(0.6);
+    endingBell.setVolume(0.3);
     endingBell.play(audioplayers.AssetSource('audio/tibetan_chime.wav'));
     startBonusTimer();
     update();
@@ -382,9 +381,12 @@ class CountdownController extends GetxController {
             ? 2
             : 1;
 
-    bool levelUp = calculateLevel(userController.user.value.levelPoints) <
-        calculateLevel(userController.user.value.levelPoints +
-            timeInMinutes * xpBoostMultiplier);
+    bool levelUp = calculateLevel(
+            userController.user.value.levelPoints, userController.user.value) <
+        calculateLevel(
+            userController.user.value.levelPoints +
+                timeInMinutes * xpBoostMultiplier,
+            userController.user.value);
     userController.updateProperty(
         UserProperty.levelPoints,
         (userController.user.value.levelPoints +

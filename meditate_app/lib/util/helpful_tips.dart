@@ -18,4 +18,7 @@ const HELPFUL_TIPS = [
   "Inviting friends to Shellevate makes the app more fun! 😉",
   "Just one person is creating Shellevate. If you press Send Feedback, he'll always read it! 🤗",
   "Switch between soundscapes and select breathwork by pressing the button underneath the turtle timer.",
+  "Turtle breeding combines attributes from both parents to create a new turtle!",
+  "You can find sand dollars rarely in the Shallows!",
+  "You can find treasure chests in the Shallows!",
 ];

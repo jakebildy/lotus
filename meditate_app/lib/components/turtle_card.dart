@@ -78,7 +78,7 @@ class TurtleCard extends StatelessWidget {
             children: [
               unlocked
                   ? Hero(
-                      tag: "turtle-$id",
+                      tag: "turtle-$id-$color",
                       child: Stack(
                         children: [
                           Image.asset("assets/images/turtles/swim/swim1.png"),

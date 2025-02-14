@@ -13,6 +13,7 @@ import '../util/util.dart';
 class FollowController extends GetxController {
   RxList<User> usersFollowing = RxList();
   RxList<User> usersNotFollowing = RxList();
+  RxList<User> allUsers = RxList();
   RxList<String> usersFollowingIDs = RxList();
   RxList<User> followers = RxList();
   RxList<Follow> following = RxList();
@@ -220,6 +221,10 @@ class FollowController extends GetxController {
       for (Follow follow in _following) {
         usersFollowing.add(follow.following!);
         usersFollowingIDs.add(follow.following!.id!);
+
+        if (!allUsers.any((user) => user.id == follow.following!.id)) {
+          allUsers.add(follow.following!);
+        }
       }
 
       for (User follow in _notFollowing) {
@@ -227,6 +232,10 @@ class FollowController extends GetxController {
           if (userController.user.value.id != follow.id) {
             usersNotFollowing.add(follow);
           }
+        }
+
+        if (!allUsers.any((user) => user.id == follow.id)) {
+          allUsers.add(follow);
         }
       }
     } catch (error, trace) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/pages/signup/goal_widget.dart';
@@ -153,7 +154,8 @@ class _SetGoalPageState extends State<SetGoalPage> {
                     onPressed: () {
                       PostHogService posthog = Get.find();
                       posthog.logEvent("SELECTED_GOAL", {"goal": selectedGoal});
-                      Get.to(const GetSubscriptionPage(isOnboarding: true));
+                      // Get.to(const GetSubscriptionPage(isOnboarding: true));
+                      Get.offAll(const AppPages());
                     },
                     child: const SizedBox(
                         width: 2000,

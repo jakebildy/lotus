@@ -125,7 +125,9 @@ class _UserProfilePageState extends State<UserProfilePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Level " + calculateLevel(widget.user.levelPoints).toString(),
+                  "Level " +
+                      calculateLevel(widget.user.levelPoints, widget.user)
+                          .toString(),
                   style: const TextStyle(color: Colors.green, fontSize: 17),
                   textAlign: TextAlign.center,
                 ),

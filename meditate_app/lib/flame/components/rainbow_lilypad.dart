@@ -23,7 +23,7 @@ class RainbowLilypad extends SpriteComponent with HasGameRef {
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    priority = 5;
+    priority = 101;
     sprite = await gameRef.loadSprite('game/lilypad3.png');
     size.setValues(lilypadSize, lilypadSize * 14 / 16);
     anchor = Anchor.center;
@@ -37,6 +37,14 @@ class RainbowLilypad extends SpriteComponent with HasGameRef {
       lilypadColor = 17;
     } else if (Random().nextInt(10) < 2) {
       lilypadColor = 13;
+    }
+
+    // if lilypadColor is black, brown or grey, make it 14
+    if (lilypadColor == 0 ||
+        lilypadColor == 15 ||
+        lilypadColor == 16 ||
+        lilypadColor == 18) {
+      lilypadColor = 14;
     }
 
     Sprite overlay = await gameRef.loadSprite(

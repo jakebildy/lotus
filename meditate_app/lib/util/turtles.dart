@@ -166,6 +166,13 @@ List<Turtle> TURTLES = [
       tier: Tier.ORANGE,
       isBreathwork: true,
       level: 1),
+  const Turtle(
+      name: "Confetti Turtle",
+      rarity: Rarity.RARE,
+      tier: Tier.ORANGE,
+      level: 22),
+  const Turtle(
+      name: "Zigzag Turtle", rarity: Rarity.RARE, tier: Tier.ORANGE, level: 22),
 ];
 
 int getTurtleToHatch(String ambience) {

@@ -119,7 +119,7 @@ class _OnboardingEggState extends State<OnboardingEgg>
         width: MediaQuery.of(context).size.width,
       ),
       Text(
-        "Eggs hatch into turtles",
+        "Hatch your first egg!",
         style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
       ),
       const SizedBox(height: 20),
@@ -159,47 +159,31 @@ class _OnboardingEggState extends State<OnboardingEgg>
                                             child: Stack(
                                               alignment: Alignment.center,
                                               children: [
-                                                ColorFiltered(
-                                                  colorFilter: ColorFilter.mode(
-                                                      Colors.black
-                                                          .withOpacity(0.8),
-                                                      BlendMode.srcATop),
-                                                  child: Center(
-                                                    child: Stack(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      children: [
-                                                        Image.asset(
-                                                          "assets/images/turtles/swim/swim${swimState}.png",
+                                                Center(
+                                                  child: Stack(
+                                                    alignment: Alignment.center,
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/images/turtles/swim/swim${swimState}.png",
+                                                        fit: BoxFit.contain,
+                                                        width: 250,
+                                                      ),
+                                                      ColorFiltered(
+                                                        colorFilter:
+                                                            ColorFilter.mode(
+                                                                TURTLE_COLORS[0]
+                                                                    .withOpacity(
+                                                                        0.5),
+                                                                BlendMode
+                                                                    .srcATop),
+                                                        child: Image.asset(
+                                                          "assets/images/turtles/${0}.png",
                                                           fit: BoxFit.contain,
                                                           width: 250,
                                                         ),
-                                                        ColorFiltered(
-                                                          colorFilter:
-                                                              ColorFilter.mode(
-                                                                  TURTLE_COLORS[
-                                                                          3]
-                                                                      .withOpacity(
-                                                                          0.5),
-                                                                  BlendMode
-                                                                      .srcATop),
-                                                          child: Image.asset(
-                                                            "assets/images/turtles/${0}.png",
-                                                            fit: BoxFit.contain,
-                                                            width: 250,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                                Text(
-                                                  "?",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 80,
-                                                      fontWeight:
-                                                          FontWeight.bold),
                                                 ),
                                               ],
                                             ),
@@ -210,7 +194,9 @@ class _OnboardingEggState extends State<OnboardingEgg>
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                      hatched ? "What turtles will you find?" : "Tap to hatch",
+                      hatched
+                          ? "You found a Brown Swamp Turtle!"
+                          : "Tap to hatch",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
@@ -273,7 +259,7 @@ class _OnboardingEggState extends State<OnboardingEgg>
                             ),
                             ColorFiltered(
                                 colorFilter: ColorFilter.mode(
-                                    TURTLE_COLORS[3].withOpacity(0.8),
+                                    TURTLE_COLORS[0].withOpacity(0.8),
                                     BlendMode.srcATop),
                                 child: Image.asset(
                                   "assets/egg_spots.png",

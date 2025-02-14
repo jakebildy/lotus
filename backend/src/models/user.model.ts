@@ -38,6 +38,7 @@ export interface UserI {
 
   hasTriedBreathwork?: boolean;
   hasTriedStreakFreeze?: boolean;
+  isPremiumOverride?: boolean;
 }
 
 const UserSchema = new mongoose.Schema<UserI>(
@@ -77,6 +78,7 @@ const UserSchema = new mongoose.Schema<UserI>(
 
     hasTriedBreathwork: { type: Boolean, required: false, default: false },
     hasTriedStreakFreeze: { type: Boolean, required: false, default: false },
+    isPremiumOverride: { type: Boolean, required: false, default: false },
   },
   {
     versionKey: false,

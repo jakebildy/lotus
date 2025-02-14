@@ -67,7 +67,7 @@ class TurtleCategory extends StatelessWidget {
             children: [
               unlocked
                   ? Hero(
-                      tag: "turtle-$id",
+                      tag: "turtle-$id-$displayColor",
                       child: Stack(
                         children: [
                           Image.asset("assets/images/turtles/swim/swim1.png"),
@@ -154,8 +154,9 @@ class TurtleCategory extends StatelessWidget {
                                 color: rarityColor(TURTLES[id].rarity),
                               )),
                           TURTLES[id].level <=
-                                      calculateLevel(userController
-                                          .user.value.levelPoints) &&
+                                      calculateLevel(
+                                          userController.user.value.levelPoints,
+                                          userController.user.value) &&
                                   TURTLES[id].foundIn == null &&
                                   TURTLES[id].tier != Tier.LITBACK &&
                                   TURTLES[id].name != "Aether Turtle"
@@ -163,13 +164,15 @@ class TurtleCategory extends StatelessWidget {
                               : const Text(" • "),
                           TURTLES[id].level <=
                                   calculateLevel(
-                                      userController.user.value.levelPoints)
+                                      userController.user.value.levelPoints,
+                                      userController.user.value)
                               ? Container()
                               : const Icon(Icons.lock,
                                   color: Colors.grey, size: 15),
                           TURTLES[id].level <=
-                                      calculateLevel(userController
-                                          .user.value.levelPoints) &&
+                                      calculateLevel(
+                                          userController.user.value.levelPoints,
+                                          userController.user.value) &&
                                   TURTLES[id].foundIn == null &&
                                   TURTLES[id].tier != Tier.LITBACK &&
                                   TURTLES[id].name != "Aether Turtle"
@@ -191,7 +194,7 @@ class TurtleCategory extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                          "${unlocked ? uniqueQuantity : '0'} of ${TURTLE_COLORS.length}",
+                          "${unlocked ? (uniqueQuantity + (id == 0 ? 1 : 0)) : '0'} of ${TURTLE_COLORS.length}",
                           style: const TextStyle(fontSize: 12))
                     ],
                   ),
@@ -207,9 +210,10 @@ class TurtleCategory extends StatelessWidget {
                   CustomPaint(
                     size: const Size(10, 10), // Size of the pie chart
                     painter: PieChartPainter(
-                      percentage: (unlocked ? uniqueQuantity : 0) /
-                          TURTLE_COLORS.length *
-                          100,
+                      percentage:
+                          (unlocked ? uniqueQuantity + (id == 0 ? 1 : 0) : 0) /
+                              TURTLE_COLORS.length *
+                              100,
                       fillColor: Colors.tealAccent,
                       backgroundColor: Colors.black12,
                     ),
@@ -218,7 +222,7 @@ class TurtleCategory extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                      " ${((unlocked ? uniqueQuantity : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(0)}%",
+                      " ${((unlocked ? uniqueQuantity + (id == 0 ? 1 : 0) : 0) / TURTLE_COLORS.length * 100).toStringAsFixed(0)}%",
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
