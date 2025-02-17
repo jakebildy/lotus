@@ -57,7 +57,7 @@ class SandDollar extends SpriteComponent with HasGameRef, Tappable {
             ),
             content: SingleChildScrollView(
               child: ListBody(
-                children: <Widget>[
+                children: const <Widget>[
                   Text('You found a sand dollar!'),
                 ],
               ),

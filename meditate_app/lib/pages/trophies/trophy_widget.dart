@@ -35,12 +35,12 @@ class TrophyWidget extends StatelessWidget {
                   ),
                   title: Text(
                     title + (turtlesUnlocked == turtles.length ? " ✅" : ""),
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    style: const TextStyle(color: Colors.white, fontSize: 20),
                   ),
                   content: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "You unlocked this collection! The XP has been added to your account.",
                         )
@@ -52,7 +52,7 @@ class TrophyWidget extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text(
+                      child: const Text(
                         'Close',
                         style: TextStyle(color: Colors.tealAccent),
                       ),
@@ -75,7 +75,7 @@ class TrophyWidget extends StatelessWidget {
                 ),
                 title: Text(
                   title,
-                  style: TextStyle(color: Colors.white, fontSize: 20),
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 content: SingleChildScrollView(
                   child: Column(
@@ -94,9 +94,10 @@ class TrophyWidget extends StatelessWidget {
                                     " " +
                                     TURTLES[turtle[0]].name)
                                 .join(", "),
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 14),
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
@@ -111,18 +112,19 @@ class TrophyWidget extends StatelessWidget {
                               .toList(),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
                         "Unlocked: $turtlesUnlocked/${turtles.length}",
-                        style: TextStyle(color: Colors.white70, fontSize: 14),
+                        style: const TextStyle(
+                            color: Colors.white70, fontSize: 14),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text("You will earn $xp XP",
-                          style: TextStyle(color: Colors.tealAccent)),
+                          style: const TextStyle(color: Colors.tealAccent)),
                     ],
                   ),
                 ),
@@ -131,7 +133,7 @@ class TrophyWidget extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(
+                    child: const Text(
                       'Close',
                       style: TextStyle(color: Colors.tealAccent),
                     ),
@@ -187,7 +189,7 @@ class TrophyWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Expanded(
@@ -208,7 +210,7 @@ class TrophyWidget extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           CustomPaint(
@@ -220,7 +222,7 @@ class TrophyWidget extends StatelessWidget {
                               backgroundColor: Colors.white24,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8,
                           ),
                           Text(
@@ -235,7 +237,7 @@ class TrophyWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       SingleChildScrollView(

@@ -11,11 +11,11 @@ class ReviewCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        constraints: BoxConstraints(
+        constraints: const BoxConstraints(
           maxHeight: 500, // Maximum height
         ),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 242, 243, 255),
+          color: const Color.fromARGB(255, 242, 243, 255),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Padding(
@@ -29,18 +29,18 @@ class ReviewCard extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text("⭐️⭐️⭐️⭐️⭐️"),
+                  const Text("⭐️⭐️⭐️⭐️⭐️"),
                 ],
               ),
-              SizedBox(height: 8), // Spacing between elements
+              const SizedBox(height: 8), // Spacing between elements
               Text(
                 review,
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
               ),
             ],
           ),

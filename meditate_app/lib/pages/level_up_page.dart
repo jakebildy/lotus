@@ -103,12 +103,12 @@ class _LevelUpPageState extends State<LevelUpPage>
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 180),
-                child: Container(
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 180),
+                child: SizedBox(
                   width: 200,
                   height: 200,
-                  child: const Glitters(
+                  child: Glitters(
                     interval: Duration(milliseconds: 3800),
                     delay: Duration(milliseconds: 1100),
                   ),
@@ -125,12 +125,12 @@ class _LevelUpPageState extends State<LevelUpPage>
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 180),
-                child: Container(
+              const Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 180),
+                child: SizedBox(
                   width: 200,
                   height: 200,
-                  child: const Glitters(
+                  child: Glitters(
                     interval: Duration(milliseconds: 2000),
                     delay: Duration(milliseconds: 1000),
                   ),
@@ -144,7 +144,7 @@ class _LevelUpPageState extends State<LevelUpPage>
                     Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Center(
-                          child: Container(
+                          child: SizedBox(
                             height: 190,
                             width: 150,
                             child: Stack(
@@ -171,11 +171,11 @@ class _LevelUpPageState extends State<LevelUpPage>
                                       child: Stack(
                                         alignment: Alignment.center,
                                         children: [
-                                          Text(
+                                          const Text(
                                             "⭐️",
                                             style: TextStyle(fontSize: 140),
                                           ),
-                                          Opacity(
+                                          const Opacity(
                                             opacity: 0.4,
                                             child: Foil(
                                                 child: Text(
@@ -186,7 +186,7 @@ class _LevelUpPageState extends State<LevelUpPage>
                                           Shimmer.fromColors(
                                             baseColor: Colors.white12,
                                             highlightColor: Colors.white38,
-                                            child: Text(
+                                            child: const Text(
                                               "⭐️",
                                               style: TextStyle(fontSize: 140),
                                             ),
@@ -231,8 +231,8 @@ class _LevelUpPageState extends State<LevelUpPage>
                             ),
                           ),
                         )),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: StrokeText(
                           text: "LEVEL UP",
                           strokeColor: Color.fromRGBO(0, 91, 165, 1),

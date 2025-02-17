@@ -1,7 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -284,7 +283,7 @@ class _ShopPageState extends State<ShopPage> {
             const StreakFreeze(),
 
             const DividerWithText(text: "OTHER ITEMS"),
-            Container(
+            SizedBox(
               height: 200,
               child: GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
@@ -601,7 +600,7 @@ class _ShopPageState extends State<ShopPage> {
                                                       ),
                                                     ],
                                                   ))),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 )
                               ],
@@ -649,9 +648,6 @@ class _ShopPageState extends State<ShopPage> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 40,
-            )
           ],
         ));
   }
@@ -858,17 +854,17 @@ Widget sandDollarPackage(
     onTap: () {
       // RevenueCat purchase logic here
       if (title == "100\nSand Dollars") {
-        if (!subscriptionController!.purchasing100SandDollars.value) {
+        if (!subscriptionController.purchasing100SandDollars.value) {
           HapticFeedback.lightImpact();
           subscriptionController.purchase100SandDollars();
         }
       } else if (title == "800\nSand Dollars") {
-        if (!subscriptionController!.purchasing800SandDollars.value) {
+        if (!subscriptionController.purchasing800SandDollars.value) {
           HapticFeedback.lightImpact();
           subscriptionController.purchase800SandDollars();
         }
       } else if (title == "14,500\nSand Dollars") {
-        if (!subscriptionController!.purchasing14500SandDollars.value) {
+        if (!subscriptionController.purchasing14500SandDollars.value) {
           HapticFeedback.lightImpact();
           subscriptionController.purchase14500SandDollars();
         }
@@ -945,18 +941,18 @@ Widget sandDollarPackage(
                           padding: const EdgeInsets.all(5.0),
                           child: Row(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 3,
                               ),
                               Text(
-                                subscriptionController!.purchasing800SandDollars
+                                subscriptionController.purchasing800SandDollars
                                                 .value &&
                                             title == "800\nSand Dollars" ||
-                                        subscriptionController!
+                                        subscriptionController
                                                 .purchasing100SandDollars
                                                 .value &&
                                             title == "100\nSand Dollars" ||
-                                        subscriptionController!
+                                        subscriptionController
                                                 .purchasing14500SandDollars
                                                 .value &&
                                             title == "14,500\nSand Dollars"
@@ -1206,7 +1202,7 @@ Widget itemPackage(
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 47, 59, 78),
+                              color: const Color.fromARGB(255, 47, 59, 78),
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Padding(

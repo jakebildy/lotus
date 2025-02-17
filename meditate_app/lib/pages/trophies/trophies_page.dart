@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/level_progress_bar.dart';
-import 'package:meditate_app/components/turtle_image.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/trophies/collections.dart';
 import 'package:meditate_app/pages/trophies/trophy_widget.dart';
-import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 
 class TrophyPage extends StatelessWidget {

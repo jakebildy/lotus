@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
-import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/pages/signup/goal_widget.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 

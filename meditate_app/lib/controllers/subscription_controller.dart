@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:meditate_app/api/user_api.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/egg_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
@@ -16,7 +15,6 @@ import 'package:meditate_app/pages/turtle_hatch_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:meditate_app/api/index.dart' as api;
 
 /// SubscriptionController handles the subscription/purchases
 /// {@category Controllers}

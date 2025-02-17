@@ -1,15 +1,9 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
-import 'package:flame/particles.dart';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/flame/components/butterfly.dart';
-import 'package:meditate_app/flame/components/fish.dart';
-import 'package:meditate_app/flame/components/lilypad.dart';
-import 'package:meditate_app/flame/components/rainbow_lilypad.dart';
 import 'package:meditate_app/flame/components/reef_turtle.dart';
 import 'package:meditate_app/flame/components/reef_world.dart';
 import 'package:meditate_app/flame/components/seafloor_object.dart';

@@ -42,7 +42,7 @@ class OnboardingChecklistPage extends StatelessWidget {
                       height: 8,
                       width: MediaQuery.of(context).size.width - 70,
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(56, 33, 156, 243),
+                        color: const Color.fromARGB(56, 33, 156, 243),
                         borderRadius: BorderRadius.circular(20),
                         border: const Border.fromBorderSide(
                             BorderSide(color: Colors.transparent, width: 2)),

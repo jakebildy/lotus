@@ -67,8 +67,10 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
   void selectVibe(String vibe) {
     HapticFeedback.heavyImpact();
     SaveController save = Get.find();
+    UserController user = Get.find();
     if ((vibe == "🙏" || vibe == "👍" || vibe == "✨") &&
-        !save.isSubscribedToPremium.value) {
+        !save.isSubscribedToPremium.value &&
+        !user.user.value.isPremiumOverride == true) {
       Get.to(const GetSubscriptionPage());
       return;
     }
@@ -168,7 +170,7 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
               ),
             ],
           ),
-          Text("Premium emojis", style: TextStyle(color: Colors.white70)),
+          const Text("Premium emojis", style: TextStyle(color: Colors.white70)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -225,6 +227,7 @@ class _VibeState extends State<Vibe> {
   @override
   Widget build(BuildContext context) {
     SaveController save = Get.find();
+    UserController user = Get.find();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -258,7 +261,9 @@ class _VibeState extends State<Vibe> {
                     widget.vibe,
                     style: const TextStyle(fontSize: 30),
                   ),
-                  widget.premium && !save.isSubscribedToPremium.value
+                  widget.premium &&
+                          !save.isSubscribedToPremium.value &&
+                          !user.user.value.isPremiumOverride == true
                       ? const Icon(Icons.lock, size: 15)
                       : Text(
                           widget.isDisabled

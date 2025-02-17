@@ -85,9 +85,8 @@ class Butterfly extends SpriteAnimationComponent with HasGameRef, Tappable {
 
     // Apply transformation for shadow
 
-    final shadowOffset =
-        unrotateOffset(Offset(15, 20), angle); // Light source direction offset
-    final shadowScale = 1.1; // Slightly scale the shadow for realism
+    final shadowOffset = unrotateOffset(
+        const Offset(15, 20), angle); // Light source direction offset
 
     canvas.translate(shadowOffset.dx, shadowOffset.dy);
 

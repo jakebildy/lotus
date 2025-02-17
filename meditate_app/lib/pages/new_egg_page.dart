@@ -3,16 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:in_app_review/in_app_review.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/shake_widget.dart';
-import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/pages/add_someone_page.dart';
-import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
-import 'package:meditate_app/pages/signup/set_goal_page.dart';
-import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class NewEggPage extends StatefulWidget {

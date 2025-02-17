@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class ChecklistItem extends StatelessWidget {
   final String text;
@@ -30,7 +28,7 @@ class ChecklistItem extends StatelessWidget {
                     fontSize: 14,
                     color: checked ? Colors.lightBlue : Colors.white)),
           ),
-          Spacer(),
+          const Spacer(),
           action != null
               ? IconButton(
                   icon: const Icon(Icons.arrow_forward_outlined, size: 20),

@@ -1,14 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/components/egg_card.dart';
-import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
-import 'package:meditate_app/pages/login/login.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 
@@ -107,12 +101,12 @@ class _Onboarding3State extends State<Onboarding3>
           height: 100,
           width: MediaQuery.of(context).size.width,
         ),
-        Text(
+        const Text(
           "Find eggs by meditating",
           style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
             "Hatch them by meditating three days!",
             textAlign: TextAlign.center,
@@ -125,13 +119,13 @@ class _Onboarding3State extends State<Onboarding3>
           height: 300,
           child: GridView.count(
             crossAxisCount: 3,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: List.generate(numEggs, (index) => buildEgg(index)),
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 50),
           child: Hero(
             tag: "LoginButton",
             child: ElevatedButton(
@@ -142,17 +136,18 @@ class _Onboarding3State extends State<Onboarding3>
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Colors.white, width: 2)))),
+                            side: const BorderSide(
+                                color: Colors.white, width: 2)))),
                 onPressed: () {
                   PostHogService posthog = Get.find();
                   posthog.logEvent("THIRD_ONBOARDING_CONTINUE_PRESSED", {});
                   controller.page.value = 0;
                   controller.update();
                 },
-                child: SizedBox(
+                child: const SizedBox(
                     width: 2000,
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: EdgeInsets.all(12.0),
                       child: Text("Continue",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -168,11 +163,11 @@ class _Onboarding3State extends State<Onboarding3>
             controller.page.value = -3;
             controller.update();
           },
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
             child: Text(
               "Back",
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),

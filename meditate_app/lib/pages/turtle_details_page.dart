@@ -8,7 +8,6 @@ import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/game_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
-import 'package:meditate_app/flame/turtlegame.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
@@ -292,7 +291,7 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                           Get.offAll(const AppPages(),
                               transition: Transition.circularReveal);
                         },
-                        child: Container(
+                        child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           //color: Colors.white24,
                           height: 300,

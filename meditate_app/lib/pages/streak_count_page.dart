@@ -8,6 +8,7 @@ import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/new_gems_page.dart';
 import 'package:meditate_app/pages/turtle_hatch_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:social_share/social_share.dart';
@@ -150,20 +151,20 @@ class _StreakCountPageState extends State<StreakCountPage>
                                   text: (streak + streakPlus).toString(),
                                   strokeColor: Colors.white,
                                   strokeWidth: 5,
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                       fontSize: 120,
                                       fontWeight: FontWeight.bold,
                                       // color gradient from orange to white
 
                                       color: Colors.orange)),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 12,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
                               child: Text("day streak ",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color: Colors.orange,
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold)),
@@ -311,11 +312,11 @@ class _StreakCountPageState extends State<StreakCountPage>
                                                       "https://shellevate.app/get",
                                                 );
                                               } else {
-                                                print(
+                                                logInfo(
                                                     "Screenshot capture failed.");
                                               }
                                             } catch (e) {
-                                              print("Error: $e");
+                                              logInfo("Error: $e");
                                             }
 
                                             setState(() {
@@ -329,9 +330,10 @@ class _StreakCountPageState extends State<StreakCountPage>
                                                       BorderRadius.all(
                                                           Radius.circular(10))),
                                               child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 22.0,
-                                                    horizontal: 100),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 22.0,
+                                                        horizontal: 100),
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -341,8 +343,8 @@ class _StreakCountPageState extends State<StreakCountPage>
                                                     Image.asset(
                                                         "assets/instagram.png",
                                                         height: 22),
-                                                    SizedBox(width: 10),
-                                                    Text(
+                                                    const SizedBox(width: 10),
+                                                    const Text(
                                                       "Share to my story",
                                                       style: TextStyle(
                                                           color: Colors.white,

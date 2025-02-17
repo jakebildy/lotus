@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 
@@ -45,31 +43,31 @@ class PricingWidgetOffer extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Text("\$4.99",
+                        const Text("\$4.99",
                             style: TextStyle(
                                 color: Colors.black26,
                                 // strikethrough
                                 decoration: TextDecoration.lineThrough,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16)),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Text("\$2.99",
+                        const Text("\$2.99",
                             style: TextStyle(
                                 color: Colors.black26,
                                 // strikethrough
                                 decoration: TextDecoration.lineThrough,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16)),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
                             subscription.subscriptionPackageDiscount
                                     ?.storeProduct.priceString ??
                                 "\$0.99",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16))

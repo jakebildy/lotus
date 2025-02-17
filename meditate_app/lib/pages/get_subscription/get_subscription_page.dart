@@ -136,7 +136,8 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                     child: WaveWidget(
                                       config: CustomConfig(
                                         colors: [
-                                          Color.fromRGBO(0, 105, 147, 0.22),
+                                          const Color.fromRGBO(
+                                              0, 105, 147, 0.22),
                                           const Color(0x3300BBF9),
                                         ],
                                         durations: [
@@ -234,7 +235,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                 .size
                                                 .width,
                                             decoration: BoxDecoration(
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   0, 119, 153, 255),
                                               border: Border.all(
                                                 color: const Color.fromARGB(
@@ -259,13 +260,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
-                                                      FeatureCheckbox(),
+                                                      const FeatureCheckbox(),
                                                       Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start, // this will take the minimum space required by the children
                                                         children: [
-                                                          Text(
+                                                          const Text(
                                                             "Calm down easier with breathwork",
                                                             style: TextStyle(
                                                                 fontSize: 16,
@@ -273,13 +274,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                                     FontWeight
                                                                         .bold),
                                                           ),
-                                                          Container(
+                                                          SizedBox(
                                                             width: MediaQuery.of(
                                                                         context)
                                                                     .size
                                                                     .width -
                                                                 100,
-                                                            child: Text(
+                                                            child: const Text(
                                                               "Easy to follow along breathing exercises for different occasions",
                                                               style: TextStyle(
                                                                 fontSize: 14,
@@ -299,13 +300,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                     mainAxisSize:
                                                         MainAxisSize.min, //
                                                     children: [
-                                                      FeatureCheckbox(),
+                                                      const FeatureCheckbox(),
                                                       Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start, // this will take the minimum space required by the children
                                                         children: [
-                                                          Text(
+                                                          const Text(
                                                             "Personalize your meditations",
                                                             style: TextStyle(
                                                                 fontSize: 16,
@@ -313,13 +314,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                                     FontWeight
                                                                         .bold),
                                                           ),
-                                                          Container(
+                                                          SizedBox(
                                                             width: MediaQuery.of(
                                                                         context)
                                                                     .size
                                                                     .width -
                                                                 100,
-                                                            child: Text(
+                                                            child: const Text(
                                                               "12 new soundscapes to meditate in, from rainy days to deep in the jungle",
                                                               style: TextStyle(
                                                                 fontSize: 14,
@@ -339,13 +340,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                     mainAxisSize:
                                                         MainAxisSize.min, //
                                                     children: [
-                                                      FeatureCheckbox(),
+                                                      const FeatureCheckbox(),
                                                       Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start, // this will take the minimum space required by the children
                                                         children: [
-                                                          Text(
+                                                          const Text(
                                                             "Fall asleep faster",
                                                             style: TextStyle(
                                                                 fontSize: 16,
@@ -353,13 +354,13 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                                     FontWeight
                                                                         .bold),
                                                           ),
-                                                          Container(
+                                                          SizedBox(
                                                             width: MediaQuery.of(
                                                                         context)
                                                                     .size
                                                                     .width -
                                                                 100,
-                                                            child: Text(
+                                                            child: const Text(
                                                               "Fall asleep faster with our sleep breathing exercise",
                                                               style: TextStyle(
                                                                 fontSize: 14,
@@ -618,7 +619,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold)),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     height: 50,
                                                   )
                                                 ],

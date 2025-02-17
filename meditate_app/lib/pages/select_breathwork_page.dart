@@ -1,20 +1,15 @@
 import 'dart:ui';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/components/premium_container.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
-import 'package:meditate_app/pages/select_ambience_page.dart';
 import 'package:meditate_app/util/breathwork.dart';
-
-import '../app_pages.dart';
 
 class SelectBreathworkPage extends StatefulWidget {
   const SelectBreathworkPage({super.key});
@@ -50,15 +45,15 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
         appBar: AppBar(
           backgroundColor: Colors.grey[900],
           elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_down),
-            onPressed: () {
-              Get.offAll(const AppPages(), transition: Transition.topLevel);
-            },
-          ),
+          // leading: IconButton(
+          //   icon: const Icon(Icons.keyboard_arrow_down),
+          //   onPressed: () {
+          //     Get.offAll(const AppPages(), transition: Transition.topLevel);
+          //   },
+          // ),
           title: Column(
             children: const [
-              Text("Choose Breathwork"),
+              // Text("Choose Breathwork"),
               Text(
                 "Don't push yourself beyond your limits.",
                 style: TextStyle(fontSize: 12, color: Colors.white38),
@@ -97,7 +92,119 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
             crossAxisSpacing: 4.0,
             mainAxisSpacing: 0,
             childAspectRatio: 1.17,
-            children: List.generate(BREATHWORKS.length, (index) {
+            children: List.generate(BREATHWORKS.length + 1, (index) {
+              if (index == 0) {
+                return Center(
+                  child: Bounce(
+                    duration: const Duration(milliseconds: 110),
+                    onPressed: () {
+                      HapticFeedback.mediumImpact();
+
+                      SaveController save = Get.find();
+                      save.updateBreathworkSelected(false);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 276,
+                        child: Card(
+                            elevation: 0,
+                            color: Colors.transparent,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                color: const Color.fromARGB(255, 84, 84, 84),
+                                child: (Column(
+                                  children: [
+                                    Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Container(
+                                              height: 264,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              color: Colors.black,
+                                            ),
+                                            Opacity(
+                                              opacity: 0.5,
+                                              child: Stack(
+                                                children: [
+                                                  ColorFiltered(
+                                                      colorFilter:
+                                                          ColorFilter.mode(
+                                                        Colors.blue.withOpacity(
+                                                            0.5), // Adjust the opacity as needed
+                                                        BlendMode
+                                                            .color, // Choose a blend mode that suits your design
+                                                      ),
+                                                      child: Image.asset(
+                                                        "assets/breathwork_background.jpg",
+                                                        width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width,
+                                                        height: 264,
+                                                        fit: BoxFit.fill,
+                                                      )),
+                                                  BackdropFilter(
+                                                    filter: ImageFilter.blur(
+                                                      sigmaX:
+                                                          20.0, // Adjust the X blur intensity
+                                                      sigmaY:
+                                                          20.0, // Adjust the Y blur intensity
+                                                    ),
+                                                    child: Container(
+                                                      color: Colors.black
+                                                          .withOpacity(
+                                                              0), // Transparent container to apply blur
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            const Text("Freestyle Meditation",
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20)),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: const [
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            )),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                              color: save.breathworkSelected.value == false
+                                  ? Colors.tealAccent
+                                  : Colors.transparent,
+                              width: 2),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+
               return Center(
                 child: Bounce(
                   duration: const Duration(milliseconds: 110),
@@ -107,7 +214,8 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                     UserController user = Get.find();
 
                     if (user.user.value.hasTriedBreathwork == false &&
-                        !save.isSubscribedToPremium.value) {
+                        !save.isSubscribedToPremium.value &&
+                        !user.user.value.isPremiumOverride == true) {
                       // show a dialog saying this is paid, but you can try it this time for free!
                       showDialog(
                           context: context,
@@ -121,9 +229,8 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                   onPressed: () {
                                     save.updateBreathworkSelected(true);
                                     save.updateSelectedBreathwork(
-                                        BREATHWORKS[index].name);
-                                    Get.to(const SelectAmbiencePage(),
-                                        transition: Transition.topLevel);
+                                        BREATHWORKS[index - 1].name);
+                                    Get.back();
                                   },
                                   child: Container(
                                       decoration: BoxDecoration(
@@ -132,9 +239,9 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                           border: Border.all(
                                               color: Colors.white, width: 2),
                                           color: Colors.lightBlue),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: const Text(
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text(
                                           "Okay",
                                           style: TextStyle(color: Colors.white),
                                         ),
@@ -149,13 +256,11 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                               ],
                             );
                           });
-                    } else if (save.isSubscribedToPremium.value) {
+                    } else if (save.isSubscribedToPremium.value ||
+                        user.user.value.isPremiumOverride == true) {
                       save.updateBreathworkSelected(true);
-                      save.updateSelectedBreathwork(BREATHWORKS[index].name);
-                      Get.to(
-                        const SelectAmbiencePage(),
-                        transition: Transition.topLevel,
-                      );
+                      save.updateSelectedBreathwork(
+                          BREATHWORKS[index - 1].name);
                     } else {
                       Get.to(const GetSubscriptionPage());
                     }
@@ -163,12 +268,12 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height: 272,
+                      height: 276,
                       child: Card(
                           elevation: 0,
                           color: Colors.transparent,
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(10),
                             child: Container(
                               color: const Color.fromARGB(255, 84, 84, 84),
                               child: (Column(
@@ -192,7 +297,7 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                                 ColorFiltered(
                                                     colorFilter:
                                                         ColorFilter.mode(
-                                                      BREATHWORKS[index]
+                                                      BREATHWORKS[index - 1]
                                                           .color
                                                           .withOpacity(
                                                               0.5), // Adjust the opacity as needed
@@ -227,17 +332,18 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                       ),
                                       Column(
                                         children: [
-                                          Text(BREATHWORKS[index].emoji,
+                                          Text(BREATHWORKS[index - 1].emoji,
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 50)),
-                                          Text(BREATHWORKS[index].whenToUse,
+                                          Text(BREATHWORKS[index - 1].whenToUse,
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 26)),
-                                          BREATHWORKS[index].advanced == true
+                                          BREATHWORKS[index - 1].advanced ==
+                                                  true
                                               ? Padding(
                                                   padding:
                                                       const EdgeInsets.all(8.0),
@@ -275,7 +381,7 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                                     const EdgeInsets.fromLTRB(
                                                         0, 20, 0, 4),
                                                 child: Text(
-                                                  BREATHWORKS[index].name,
+                                                  BREATHWORKS[index - 1].name,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -284,7 +390,8 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                                           save.selectedAmbience
                                                                       .value ==
                                                                   BREATHWORKS[
-                                                                          index]
+                                                                          index -
+                                                                              1]
                                                                       .name
                                                               ? Colors
                                                                   .tealAccent
@@ -292,29 +399,14 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                                                 ),
                                               ),
                                               Text(
-                                                BREATHWORKS[index].description,
-                                                style: TextStyle(
+                                                BREATHWORKS[index - 1]
+                                                    .description,
+                                                style: const TextStyle(
                                                     color: Colors.grey),
                                               ),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(40),
-                                                  border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 2),
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Icon(Icons.play_arrow,
-                                                      color: Colors.black),
-                                                ),
-                                              )
                                             ],
                                           ),
                                         ],
@@ -327,6 +419,13 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                           )),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            color: save.selectedBreathwork.value ==
+                                        BREATHWORKS[index - 1].name &&
+                                    save.breathworkSelected.value == true
+                                ? Colors.tealAccent
+                                : Colors.transparent,
+                            width: 2),
                       ),
                     ),
                   ),

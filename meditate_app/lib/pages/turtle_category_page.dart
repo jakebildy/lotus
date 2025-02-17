@@ -57,7 +57,7 @@ class TurtleCategoryPage extends StatelessWidget {
                               : TURTLES[id].name == "Aether Turtle"
                                   ? "Breathwork"
                                   : TURTLES[id].foundIn != null
-                                      ? "${TURTLES[id].foundIn!.name}"
+                                      ? TURTLES[id].foundIn!.name
                                       : "Level " + TURTLES[id].level.toString(),
                           style: const TextStyle(
                               fontSize: 12,

@@ -17,13 +17,11 @@ import 'package:meditate_app/controllers/search_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/search/add_friends.dart';
-import 'package:meditate_app/pages/search/search.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/helpful_tips.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -118,10 +116,10 @@ class _ProfilePageState extends State<ProfilePage>
                                 width: 2,
                               ),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
                                   vertical: 8.0, horizontal: 8.0),
-                              child: const Text("   Edit Profile   ",
+                              child: Text("   Edit Profile   ",
                                   style: TextStyle(color: Colors.grey)),
                             )),
                       ),
@@ -195,7 +193,8 @@ class _ProfilePageState extends State<ProfilePage>
                     ),
                   ],
                 ),
-                save.isSubscribedToPremium.value
+                save.isSubscribedToPremium.value ||
+                        userController.user.value.isPremiumOverride == true
                     ? const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Center(
@@ -589,7 +588,7 @@ class _ProfilePageState extends State<ProfilePage>
                                                         textAlign:
                                                             TextAlign.center,
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 5,
                                                       ),
                                                     ],
@@ -607,19 +606,19 @@ class _ProfilePageState extends State<ProfilePage>
                               ],
                             ),
                           ),
-                          Divider(),
-                          SizedBox(
+                          const Divider(),
+                          const SizedBox(
                             height: 10,
                           ),
-                          Text(
+                          const Text(
                             "Minutes meditated this week",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
-                          StreakChart(
+                          const StreakChart(
                             height: 180,
                           ),
                         ],
@@ -859,7 +858,7 @@ class _ProfilePageState extends State<ProfilePage>
                                                             color:
                                                                 Colors.grey)),
                                                   ]),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 20,
                                               ),
                                               Text(
@@ -869,7 +868,7 @@ class _ProfilePageState extends State<ProfilePage>
                                                         .toStringAsFixed(1) +
                                                     " minutes/day this week.\n\nReach Rainbow to find Rainbow Turtles.\n",
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 16,
                                                 ),
                                               ),
@@ -957,8 +956,7 @@ class _ProfilePageState extends State<ProfilePage>
                           SizedBox(
                             height: 40 +
                                 (selectedTab == 0
-                                    ? followController.usersFollowing.length ==
-                                            0
+                                    ? followController.usersFollowing.isEmpty
                                         ? 60
                                         : followController
                                                 .usersFollowing.length *

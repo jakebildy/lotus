@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/egg_card.dart';
-import 'package:meditate_app/components/turtle_card.dart';
 import 'package:meditate_app/components/turtle_card_new.dart';
 import 'package:meditate_app/components/turtle_category.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/trophies/trophies_page.dart';
-import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 class TurtlesPage extends StatefulWidget {
@@ -103,11 +101,11 @@ class _TurtlesPageState extends State<TurtlesPage> {
                 ),
                 Tab(
                   child: Column(
-                    children: [
-                      const SizedBox(
+                    children: const [
+                      SizedBox(
                         height: 5,
                       ),
-                      const Text("Collections",
+                      Text("Collections",
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold)),
                       Icon(
@@ -139,8 +137,6 @@ class _TurtlesPageState extends State<TurtlesPage> {
 
               ListView(
                 shrinkWrap: true,
-                physics:
-                    NeverScrollableScrollPhysics(), // Prevents unnecessary scrolling conflicts
                 children: [
                   // Unlocked Turtles
                   userController.user.value.eggs == 0

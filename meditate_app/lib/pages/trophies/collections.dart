@@ -13,7 +13,6 @@ class Collection {
 }
 
 // ignore: non_constant_identifier_names
-
 List<Collection> COLLECTIONS = [
   const Collection(title: "My First Turtle", xp: 5, turtles: [
     [0, 0],

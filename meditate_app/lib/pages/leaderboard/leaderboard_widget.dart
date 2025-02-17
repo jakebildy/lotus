@@ -16,7 +16,6 @@ class LeaderboardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FollowController follow = Get.find();
     UserController userController = Get.find();
     final DateTime lastSentAtUtc =
         user.emojisSentAt[userController.user.value.id] ??

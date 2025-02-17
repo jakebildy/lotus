@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/pages/countdown_demo_page.dart';
@@ -28,15 +26,15 @@ class Onboarding1 extends StatelessWidget {
               height: 30,
               width: MediaQuery.of(context).size.width,
             ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
+            const Padding(
+              padding: EdgeInsets.all(18.0),
               child: Text(
                 "Meditation made into a game, so you can build a habit",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 0,
             ),
             // ClipRRect(
@@ -57,9 +55,9 @@ class Onboarding1 extends StatelessWidget {
             //     style: TextStyle(fontSize: 16),
             //   ),
             // ),
-            Spacer(),
+            const Spacer(),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50),
+              padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Hero(
                 tag: "LoginButton",
                 child: ElevatedButton(
@@ -71,7 +69,7 @@ class Onboarding1 extends StatelessWidget {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Colors.white, width: 2)))),
                     onPressed: () {
                       controller.page.value = -2;
@@ -80,10 +78,10 @@ class Onboarding1 extends StatelessWidget {
                       PostHogService posthog = Get.find();
                       posthog.logEvent("FIRST_ONBOARDING_CONTINUE_PRESSED", {});
                     },
-                    child: SizedBox(
+                    child: const SizedBox(
                         width: 2000,
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Text("Continue",
                               textAlign: TextAlign.center,
                               style: TextStyle(
@@ -98,12 +96,11 @@ class Onboarding1 extends StatelessWidget {
               onTap: () {
                 Get.to(const Login());
               },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+              child: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   "I already have an account",
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -113,12 +110,12 @@ class Onboarding1 extends StatelessWidget {
         ),
         Transform.scale(
           scale: 0.6,
-          child: Container(
+          child: SizedBox(
             height: 600,
             width: 300,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(30),
-              child: CountdownDemoPage(
+              child: const CountdownDemoPage(
                 ambience: "Rain",
                 breathwork: true,
               ),

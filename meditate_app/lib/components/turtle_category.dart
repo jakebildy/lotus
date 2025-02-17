@@ -183,7 +183,7 @@ class TurtleCategory extends StatelessWidget {
                                       : TURTLES[id].name == "Litback Turtle"
                                           ? "Add Friends to Find"
                                           : TURTLES[id].foundIn != null
-                                              ? "${TURTLES[id].foundIn!.name}"
+                                              ? TURTLES[id].foundIn!.name
                                               : "Level " +
                                                   TURTLES[id].level.toString(),
                                   style: const TextStyle(

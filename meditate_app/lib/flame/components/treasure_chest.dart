@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -84,7 +81,7 @@ class TreasureChest extends SpriteComponent with HasGameRef, Tappable {
             ),
             content: SingleChildScrollView(
               child: ListBody(
-                children: <Widget>[
+                children: const <Widget>[
                   Text('Meditate 3 minutes to open this treasure chest?'),
                 ],
               ),

@@ -66,13 +66,13 @@ class _Onboarding0State extends State<Onboarding0> {
                 child: Container(
                   height: 100,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        const Color(0xFF709bcc),
-                        const Color(0x00358fb9),
+                        Color(0xFF709bcc),
+                        Color(0x00358fb9),
                       ],
                     ),
                   ),
@@ -109,20 +109,20 @@ class _Onboarding0State extends State<Onboarding0> {
                   height: 100,
                   width: MediaQuery.of(context).size.width,
                 ),
-                Text(
+                const Text(
                   "Welcome to",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
-                Text(
+                const Text(
                   "shellevate",
                   style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
                 ),
                 const SizedBox(height: 10),
-                Text(
+                const Text(
                   "Let's personalize your experience",
                   style: TextStyle(fontSize: 16),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   child: Hero(
@@ -136,7 +136,8 @@ class _Onboarding0State extends State<Onboarding0> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Colors.white, width: 2),
+                            side:
+                                const BorderSide(color: Colors.white, width: 2),
                           ),
                         ),
                       ),
@@ -160,10 +161,10 @@ class _Onboarding0State extends State<Onboarding0> {
                           });
                         });
                       },
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: double.infinity,
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.all(12.0),
                           child: Text(
                             "Continue",
                             textAlign: TextAlign.center,
@@ -183,8 +184,8 @@ class _Onboarding0State extends State<Onboarding0> {
                   onTap: () {
                     Get.to(const Login());
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       "I already have an account",
                       style:

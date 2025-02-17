@@ -5,7 +5,6 @@ import 'package:meditate_app/controllers/login_controller.dart';
 import 'package:meditate_app/pages/login/forgot_password_reset_page.dart';
 import 'package:meditate_app/api/index.dart' as api;
 import 'package:meditate_app/util/logger.dart';
-import '../signup/signup.dart';
 
 class ForgotPasswordEmailPage extends StatefulWidget {
   const ForgotPasswordEmailPage({super.key});

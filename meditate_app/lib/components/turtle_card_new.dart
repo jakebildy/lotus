@@ -6,7 +6,6 @@ import 'package:meditate_app/components/locked_turtle.dart';
 import 'package:meditate_app/pages/turtle_details_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/turtles.dart';
-import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TurtleCardNew extends StatelessWidget {
@@ -44,7 +43,7 @@ class TurtleCardNew extends StatelessWidget {
               unlocked
                   ? Hero(
                       tag: "turtle-$id-$color",
-                      child: Container(
+                      child: SizedBox(
                         height: 100,
                         child: Stack(
                           alignment: Alignment.center,
@@ -116,7 +115,7 @@ class TurtleCardNew extends StatelessWidget {
                             )
                           : Container()
                     ]),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
@@ -130,9 +129,9 @@ class TurtleCardNew extends StatelessWidget {
                           (TURTLE_COLORS_NAME[color] +
                               " " +
                               TURTLES[id].name.replaceAll(" Turtle", "")),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 12, fontWeight: FontWeight.w600)),
-                      SizedBox(
+                      const SizedBox(
                         height: 4,
                       ),
                       // Container(

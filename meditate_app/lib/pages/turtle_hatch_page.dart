@@ -312,12 +312,12 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                                   ])),
                         )),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
                           hatched
                               ? "Your egg hatched!"
                               : "Tap to hatch your egg",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold)),
                     ),
                     Padding(
@@ -360,8 +360,8 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
                                   title: Column(
-                                    children: [
-                                      const Text(
+                                    children: const [
+                                      Text(
                                         "Enjoying Shellevate?",
                                         style: TextStyle(
                                           fontSize: 18,
@@ -370,7 +370,7 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                                         ),
                                         textAlign: TextAlign.center,
                                       ),
-                                      const Text("⭐️⭐️⭐️⭐️⭐️",
+                                      Text("⭐️⭐️⭐️⭐️⭐️",
                                           style: TextStyle(
                                             fontSize: 20,
                                             color: Colors.white,
@@ -489,8 +489,8 @@ class _TurtleHatchPageState extends State<TurtleHatchPage>
                         onPointerUp: (event) => hatchEgg(),
                         behavior: HitTestBehavior.translucent,
                         child: ShatterGlass(
-                            duration: Duration(seconds: 4),
-                            key: ValueKey('ShatterGlass'),
+                            duration: const Duration(seconds: 4),
+                            key: const ValueKey('ShatterGlass'),
                             child: Stack(
                               children: [
                                 Image.asset(

@@ -1,18 +1,10 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/components/egg_card.dart';
-import 'package:meditate_app/components/shake_widget.dart';
 import 'package:meditate_app/controllers/signup_controller.dart';
 import 'package:meditate_app/effects/shatter/shatter_glass.dart';
-import 'package:meditate_app/pages/login/login.dart';
-import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'dart:math' as math;
@@ -118,7 +110,7 @@ class _OnboardingEggState extends State<OnboardingEgg>
         height: 80,
         width: MediaQuery.of(context).size.width,
       ),
-      Text(
+      const Text(
         "Hatch your first egg!",
         style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
       ),
@@ -192,13 +184,13 @@ class _OnboardingEggState extends State<OnboardingEgg>
                               ])),
                     )),
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
                       hatched
                           ? "You found a Brown Swamp Turtle!"
                           : "Tap to hatch",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
                 // Padding(
                 //   padding: const EdgeInsets.all(8.0),
@@ -248,8 +240,8 @@ class _OnboardingEggState extends State<OnboardingEgg>
                     onPointerUp: (event) => hatchEgg(),
                     behavior: HitTestBehavior.translucent,
                     child: ShatterGlass(
-                        duration: Duration(seconds: 4),
-                        key: ValueKey('ShatterGlass'),
+                        duration: const Duration(seconds: 4),
+                        key: const ValueKey('ShatterGlass'),
                         child: Stack(
                           children: [
                             Image.asset(

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/search/friend_suggestions.dart';
 import 'package:meditate_app/services/posthog_service.dart';
@@ -22,7 +19,7 @@ class AddFriends extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         elevation: 0,
-        title: Text(
+        title: const Text(
           "",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -34,15 +31,15 @@ class AddFriends extends StatelessWidget {
       ),
       backgroundColor: Colors.grey[900],
       body: ListView(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
             "Add my friends",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text("Start your meditation circle by inviting friends!"),
         ),
         const SizedBox(
@@ -86,8 +83,8 @@ class AddFriends extends StatelessWidget {
                               color: Colors.grey[900],
                               borderRadius: BorderRadius.circular(50),
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
+                            child: const Padding(
+                              padding: EdgeInsets.all(2.0),
                               child: Icon(
                                 Icons.ios_share_outlined,
                                 color: Colors.tealAccent,
@@ -127,22 +124,22 @@ class AddFriends extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 60,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
             "Friend suggestions",
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 10,
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: const FriendSuggestions(),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: FriendSuggestions(),
         ),
       ]),
     );

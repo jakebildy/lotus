@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
-import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/search_controller.dart';
-import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/search/friend_suggestions.dart';
-import 'package:share_plus/share_plus.dart';
 
 class Search extends StatelessWidget {
   const Search({Key? key}) : super(key: key);
@@ -47,8 +44,8 @@ class Search extends StatelessWidget {
                   const SearchResults(),
                   searchController.queryValue.value != ''
                       ? Container()
-                      : Padding(
-                          padding: const EdgeInsets.all(8.0),
+                      : const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Text("Friend Suggestions",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 20)),

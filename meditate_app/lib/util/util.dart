@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/pages/trophies/collections.dart';
+import 'package:meditate_app/util/logger.dart';
 import 'package:meditate_app/util/turtles.dart';
 
 // ignore: constant_identifier_names
@@ -190,8 +191,8 @@ int getUserStreak(User user) {
   DateTime today = DateTime.utc(now.year, now.month, now.day);
   DateTime lastMeditatedAdjusted = DateTime.utc(user.lastMeditated.year,
       user.lastMeditated.month, user.lastMeditated.day);
-  print("today: ${user.username} $today");
-  print("lastMeditatedAdjusted: ${user.username} $lastMeditatedAdjusted");
+  logInfo("today: ${user.username} $today");
+  logInfo("lastMeditatedAdjusted: ${user.username} $lastMeditatedAdjusted");
   if (user.streakFreezes == 0) {
     if (lastMeditatedAdjusted
             .isAfter(today.subtract(const Duration(days: 1))) ||

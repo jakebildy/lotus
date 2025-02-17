@@ -190,7 +190,7 @@ class Login extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             // enter your email page (the email should have a code that gets generated)
-                            Get.to(ForgotPasswordEmailPage());
+                            Get.to(const ForgotPasswordEmailPage());
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),

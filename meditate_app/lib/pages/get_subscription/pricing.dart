@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:get/get.dart';
-import 'package:meditate_app/controllers/subscription_controller.dart';
-import 'dart:io' show Platform;
-
 import 'package:meditate_app/util/util.dart';
 
 class PricingWidget extends StatelessWidget {
@@ -12,7 +6,6 @@ class PricingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SubscriptionController subscription = Get.find();
     return Stack(
       alignment: Alignment.topRight,
       children: [
@@ -49,18 +42,18 @@ class PricingWidget extends StatelessWidget {
                     Row(
                       children: [
                         if (isCanada)
-                          Text("\$4.99",
+                          const Text("\$4.99",
                               style: TextStyle(
                                   color: Colors.black26,
                                   decoration: TextDecoration.lineThrough,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16)),
                         if (isCanada)
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                         Text(isCanada ? "\$2.99" : "\$4.99",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16))

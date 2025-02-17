@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
@@ -80,7 +78,7 @@ class OneTimeOfferPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Row(
@@ -90,7 +88,7 @@ class OneTimeOfferPage extends StatelessWidget {
                             onPressed: () {
                               Get.offAll(const AppPages());
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.close,
                               color: Colors.white30,
                             )),
@@ -124,8 +122,8 @@ class OneTimeOfferPage extends StatelessWidget {
                                 const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
                       // color: Color.fromARGB(255, 4, 238, 0)),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: PricingWidgetOffer(),
                     ),
                     const Text(

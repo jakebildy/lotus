@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class FeatureCheckbox extends StatelessWidget {
   const FeatureCheckbox({super.key});
@@ -15,10 +13,10 @@ class FeatureCheckbox extends StatelessWidget {
           Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: Color.fromARGB(255, 214, 214, 214)),
+                  color: const Color.fromARGB(255, 214, 214, 214)),
               height: 30,
               width: 30),
-          Text("✓",
+          const Text("✓",
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w900,

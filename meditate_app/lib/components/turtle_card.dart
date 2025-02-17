@@ -39,7 +39,7 @@ class TurtleCard extends StatelessWidget {
           HapticFeedback.lightImpact();
           ScaffoldMessenger.of(context).clearSnackBars();
 
-          if (this.color == 18) {
+          if (color == 18) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 key: UniqueKey(),
                 backgroundColor: Colors.deepPurpleAccent,

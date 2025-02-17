@@ -2,12 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
 import 'package:meditate_app/api/index.dart' as api;
-import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
-import 'package:meditate_app/pages/signup/first_meditation_onboarding_page.dart';
 import 'package:meditate_app/pages/signup/set_goal_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';

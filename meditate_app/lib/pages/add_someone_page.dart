@@ -35,48 +35,47 @@ class _AddSomeonePageState extends State<AddSomeonePage> {
         ),
         backgroundColor: Colors.grey[900],
         bottomNavigationBar: Container(
-            child: Container(
-                color: Colors.grey[900],
-                height: 100,
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
-                  child: follow.usersFollowing.isNotEmpty || shareLinkTapped
-                      ? GestureDetector(
-                          onTap: () {
-                            PostHogService posthog = Get.find();
-                            posthog.logEvent("CONTINUE_ADD_FRIENDS_TAPPED", {});
-                            Get.offAll(const AppPages());
-                          },
-                          child: Container(
-                              decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 16, 77, 127),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 100),
-                                child: Text(
-                                  "Continue",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20),
-                                ),
-                              )))
-                      : GestureDetector(
-                          onTap: () {
-                            PostHogService posthog = Get.find();
-                            posthog.logEvent("SKIP_ADD_FRIENDS_TAPPED", {});
-                            Get.offAll(const AppPages());
-                          },
-                          child: const Text(
-                            "Skip",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                )))),
+            color: Colors.grey[900],
+            height: 100,
+            child: Center(
+                child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+              child: follow.usersFollowing.isNotEmpty || shareLinkTapped
+                  ? GestureDetector(
+                      onTap: () {
+                        PostHogService posthog = Get.find();
+                        posthog.logEvent("CONTINUE_ADD_FRIENDS_TAPPED", {});
+                        Get.offAll(const AppPages());
+                      },
+                      child: Container(
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 16, 77, 127),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 12.0, horizontal: 100),
+                            child: Text(
+                              "Continue",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+                            ),
+                          )))
+                  : GestureDetector(
+                      onTap: () {
+                        PostHogService posthog = Get.find();
+                        posthog.logEvent("SKIP_ADD_FRIENDS_TAPPED", {});
+                        Get.offAll(const AppPages());
+                      },
+                      child: const Text(
+                        "Skip",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+            ))),
         body: ListView(children: [
           Padding(
             padding: const EdgeInsets.all(16.0),

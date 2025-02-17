@@ -215,7 +215,7 @@ class CountdownController extends GetxController {
       posthog.logEvent("APP_CLOSED_MEDITATION", {});
     }
 
-    print("resumeApp() + " +
+    logInfo("resumeApp() + " +
         isPaused.value.toString() +
         " " +
         appStateSetPaused.toString());
@@ -223,7 +223,7 @@ class CountdownController extends GetxController {
       logSuccess("App resumed, calculating time passed");
 
       // if the page is 'CountdownPage' then log the event
-      print(Get.currentRoute);
+      logInfo(Get.currentRoute);
 
       DateTime now = DateTime.now();
       logInfo("Last time: $lastCountdownTimerTime");
