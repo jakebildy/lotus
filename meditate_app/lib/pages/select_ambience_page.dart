@@ -9,6 +9,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/util/ambiences.dart';
+import 'package:meditate_app/util/util.dart';
 
 class SelectAmbiencePage extends StatefulWidget {
   const SelectAmbiencePage({super.key});
@@ -83,7 +84,9 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
 
                     if (!AMBIENCES[index].premium ||
                         save.isSubscribedToPremium.value ||
-                        user.user.value.isPremiumOverride == true) {
+                        user.user.value.isPremiumOverride == true ||
+                        user.user.value.createdAt
+                            .isBefore(PREMIUM_BEFORE_DATE)) {
                       save.updateSelectedAmbience(AMBIENCES[index].name);
                       // Get.offAll(const AppPages(),
                       //     transition: Transition.topLevel);

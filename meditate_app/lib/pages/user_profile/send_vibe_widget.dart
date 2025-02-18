@@ -8,6 +8,7 @@ import "package:meditate_app/api/index.dart" as api;
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/services/posthog_service.dart';
 import 'package:meditate_app/util/logger.dart';
+import 'package:meditate_app/util/util.dart';
 
 class SendVibeWidget extends StatefulWidget {
   final String targetUserId;
@@ -70,7 +71,8 @@ class _SendVibeWidgetState extends State<SendVibeWidget> {
     UserController user = Get.find();
     if ((vibe == "🙏" || vibe == "👍" || vibe == "✨") &&
         !save.isSubscribedToPremium.value &&
-        !user.user.value.isPremiumOverride == true) {
+        !user.user.value.isPremiumOverride == true &&
+        !userController.user.value.createdAt.isBefore(PREMIUM_BEFORE_DATE)) {
       Get.to(const GetSubscriptionPage());
       return;
     }
@@ -263,7 +265,9 @@ class _VibeState extends State<Vibe> {
                   ),
                   widget.premium &&
                           !save.isSubscribedToPremium.value &&
-                          !user.user.value.isPremiumOverride == true
+                          !user.user.value.isPremiumOverride == true &&
+                          !user.user.value.createdAt
+                              .isBefore(PREMIUM_BEFORE_DATE)
                       ? const Icon(Icons.lock, size: 15)
                       : Text(
                           widget.isDisabled

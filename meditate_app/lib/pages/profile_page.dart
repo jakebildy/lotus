@@ -194,7 +194,9 @@ class _ProfilePageState extends State<ProfilePage>
                   ],
                 ),
                 save.isSubscribedToPremium.value ||
-                        userController.user.value.isPremiumOverride == true
+                        userController.user.value.isPremiumOverride == true ||
+                        userController.user.value.createdAt
+                            .isBefore(PREMIUM_BEFORE_DATE)
                     ? const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Center(

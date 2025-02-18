@@ -10,6 +10,7 @@ import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/util/breathwork.dart';
+import 'package:meditate_app/util/util.dart';
 
 class SelectBreathworkPage extends StatefulWidget {
   const SelectBreathworkPage({super.key});
@@ -215,7 +216,9 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
 
                     if (user.user.value.hasTriedBreathwork == false &&
                         !save.isSubscribedToPremium.value &&
-                        !user.user.value.isPremiumOverride == true) {
+                        !user.user.value.isPremiumOverride == true &&
+                        !user.user.value.createdAt
+                            .isBefore(PREMIUM_BEFORE_DATE)) {
                       // show a dialog saying this is paid, but you can try it this time for free!
                       showDialog(
                           context: context,
@@ -257,7 +260,9 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
                             );
                           });
                     } else if (save.isSubscribedToPremium.value ||
-                        user.user.value.isPremiumOverride == true) {
+                        user.user.value.isPremiumOverride == true ||
+                        user.user.value.createdAt
+                            .isBefore(PREMIUM_BEFORE_DATE)) {
                       save.updateBreathworkSelected(true);
                       save.updateSelectedBreathwork(
                           BREATHWORKS[index - 1].name);

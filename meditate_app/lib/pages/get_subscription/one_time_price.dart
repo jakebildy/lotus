@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meditate_app/util/util.dart';
 
-class PricingWidget extends StatelessWidget {
+class OneTimePricingWidget extends StatelessWidget {
   final bool selected;
-  const PricingWidget({super.key, this.selected = false});
+  const OneTimePricingWidget({super.key, this.selected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +37,14 @@ class PricingWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "1 month",
+                          "Lifetime",
                           style: TextStyle(
                               color: selected ? Colors.blue : Colors.black87,
                               fontWeight: FontWeight.w900,
                               fontSize: 16),
                         ),
                         Text(
-                          "1 week free trial",
+                          "One-time purchase, unlock forever",
                           style: TextStyle(
                               color: selected ? Colors.blue : Colors.black87,
                               // fontWeight: FontWeight.w900,
@@ -55,7 +55,7 @@ class PricingWidget extends StatelessWidget {
                     Row(
                       children: [
                         if (isCanada)
-                          const Text("\$4.99",
+                          const Text("\$25",
                               style: TextStyle(
                                   color: Colors.black26,
                                   decoration: TextDecoration.lineThrough,
@@ -65,7 +65,7 @@ class PricingWidget extends StatelessWidget {
                           const SizedBox(
                             width: 5,
                           ),
-                        Text(isCanada ? "\$2.99" : "\$4.99",
+                        Text(isCanada ? "\$11" : "\$4.99",
                             style: const TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

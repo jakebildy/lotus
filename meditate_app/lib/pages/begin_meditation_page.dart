@@ -351,386 +351,281 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                                   ),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: (() {
-                                  PostHogService posthog = Get.find();
-                                  posthog
-                                      .logEvent("MEDITATION_TYPE_TAPPED", {});
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 47, 111, 129),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
+                              Column(
+                                children: [
+                                  MediaQuery.of(context).size.height < 680
+                                      ? Container()
+                                      : const SizedBox(
+                                          height: 16,
                                         ),
-                                        title: const Text(
-                                          "Select Meditation Type",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            ListTile(
-                                              leading: const Icon(
-                                                Icons.self_improvement,
-                                                color: Colors.white,
-                                              ),
-                                              title: const Text(
-                                                "Freestyle Meditation",
-                                                style: TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                              onTap: () {
-                                                Navigator.of(context).pop();
-                                                SaveController save =
-                                                    Get.find();
-                                                save.updateBreathworkSelected(
-                                                    false);
-                                                Get.to(
-                                                    const SelectAmbiencePage(),
-                                                    transition:
-                                                        Transition.downToUp);
-                                              },
-                                            ),
-                                            const Divider(
-                                                color: Colors.white54),
-                                            ListTile(
-                                              leading: const Icon(
-                                                Icons.air,
-                                                color: Colors.white,
-                                              ),
-                                              title: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: const [
-                                                  Text(
-                                                    "Breathwork",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 4,
-                                                  ),
-                                                  SizedBox(
-                                                      width: 80,
-                                                      child:
-                                                          TryForFreeContainer())
-                                                ],
-                                              ),
-                                              onTap: () {
-                                                Navigator.of(context).pop();
-
-                                                Get.to(
-                                                  const SelectBreathworkPage(),
-                                                  transition:
-                                                      Transition.downToUp,
-                                                );
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }),
-                                child: Column(
-                                  children: [
-                                    MediaQuery.of(context).size.height < 680
-                                        ? Container()
-                                        : const SizedBox(
-                                            height: 16,
-                                          ),
-                                    Obx(
-                                      () => Text(
-                                        (saveController.breathworkSelected.value
-                                                ? saveController
-                                                    .selectedBreathwork.value
-                                                : "Meditation") +
-                                            " - " +
-                                            (saveController
-                                                .selectedAmbience.value),
-                                        style: const TextStyle(
-                                            fontSize: 13,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                  Obx(
+                                    () => Text(
+                                      (saveController.breathworkSelected.value
+                                              ? saveController
+                                                  .selectedBreathwork.value
+                                              : "Meditation") +
+                                          " - " +
+                                          (saveController
+                                              .selectedAmbience.value),
+                                      style: const TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    // OverlayTooltipItem(
-                                    //   displayIndex: 1,
-                                    //   tooltipVerticalPosition:
-                                    //       TooltipVerticalPosition.TOP,
-                                    //   tooltipHorizontalPosition:
-                                    //       TooltipHorizontalPosition.CENTER,
-                                    //   tooltip: (controller) {
-                                    //     return Padding(
-                                    //       padding: const EdgeInsets.only(bottom: 5),
-                                    //       child: OnboardingTooltip(
-                                    //           title:
-                                    //               'Change the soundscape and meditation type here. Breathwork is here as well!',
-                                    //           controller: controller),
-                                    //     );
-                                    //   },
-                                    //   child: Container(
-                                    //     decoration: BoxDecoration(
-                                    //         border: Border.all(
-                                    //           color: Colors.white54,
-                                    //           width: 2,
-                                    //         ),
-                                    //         boxShadow: [
-                                    //           BoxShadow(
-                                    //             color:
-                                    //                 Colors.black.withOpacity(0.2),
-                                    //             spreadRadius: 1,
-                                    //             blurRadius: 5,
-                                    //             offset: const Offset(0, 3),
-                                    //           ),
-                                    //         ],
-                                    //         color:
-                                    //             const Color.fromARGB(0, 48, 48, 48),
-                                    //         borderRadius:
-                                    //             BorderRadius.circular(100)),
-                                    //     child: Padding(
-                                    //       padding: const EdgeInsets.all(8.0),
-                                    //       child: Row(
-                                    //         mainAxisSize: MainAxisSize.min,
-                                    //         children: [
-                                    //           saveController
-                                    //                   .breathworkSelected.value
-                                    //               ? Icon(
-                                    //                   Icons.air,
-                                    //                   size: 30,
-                                    //                 )
-                                    //               : Icon(
-                                    //                   Icons.self_improvement,
-                                    //                   size: 30,
-                                    //                 ),
-                                    //           Column(
-                                    //             children: [
-                                    //               Text(
-                                    //                 (saveController
-                                    //                             .breathworkSelected
-                                    //                             .value
-                                    //                         ? saveController
-                                    //                             .selectedBreathwork
-                                    //                             .value
-                                    //                         : "Meditation") +
-                                    //                     " - " +
-                                    //                     (saveController
-                                    //                         .selectedAmbience
-                                    //                         .value),
-                                    //                 style: const TextStyle(
-                                    //                     fontSize: 13,
-                                    //                     color: Colors.white,
-                                    //                     fontWeight:
-                                    //                         FontWeight.bold),
-                                    //               ),
-                                    //               Text("Tap to change",
-                                    //                   style: TextStyle(
-                                    //                       fontSize: 10,
-                                    //                       color: Colors.white70,
-                                    //                       fontWeight:
-                                    //                           FontWeight.bold)),
-                                    //             ],
-                                    //           ),
-                                    //           const Icon(Icons.arrow_drop_down,
-                                    //               color: Colors.white)
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 20.0),
-                                      child: _duration == noTime ||
-                                              _duration <
-                                                  (DEBUG_MODE == true
-                                                      ? const Duration(
-                                                          minutes: 1)
-                                                      : const Duration(
-                                                          minutes: 1))
-                                          ? const SizedBox(
-                                              height: 50,
-                                              child: Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 30.0),
-                                                child: Text(
-                                                  "Meditate for at least one minute to build a habit!",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ))
-                                          : OverlayTooltipItem(
-                                              displayIndex: 2,
-                                              tooltipVerticalPosition:
-                                                  TooltipVerticalPosition.TOP,
-                                              tooltipHorizontalPosition:
-                                                  TooltipHorizontalPosition
-                                                      .CENTER,
-                                              tooltip: (controller) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 5),
-                                                  child: OnboardingTooltip(
-                                                      title:
-                                                          'Press this button to start your meditation',
-                                                      controller: controller),
-                                                );
-                                              },
-                                              child: GestureDetector(
-                                                  onTap: (() async {
-                                                    HapticFeedback
-                                                        .heavyImpact();
+                                  ),
+                                  // OverlayTooltipItem(
+                                  //   displayIndex: 1,
+                                  //   tooltipVerticalPosition:
+                                  //       TooltipVerticalPosition.TOP,
+                                  //   tooltipHorizontalPosition:
+                                  //       TooltipHorizontalPosition.CENTER,
+                                  //   tooltip: (controller) {
+                                  //     return Padding(
+                                  //       padding: const EdgeInsets.only(bottom: 5),
+                                  //       child: OnboardingTooltip(
+                                  //           title:
+                                  //               'Change the soundscape and meditation type here. Breathwork is here as well!',
+                                  //           controller: controller),
+                                  //     );
+                                  //   },
+                                  //   child: Container(
+                                  //     decoration: BoxDecoration(
+                                  //         border: Border.all(
+                                  //           color: Colors.white54,
+                                  //           width: 2,
+                                  //         ),
+                                  //         boxShadow: [
+                                  //           BoxShadow(
+                                  //             color:
+                                  //                 Colors.black.withOpacity(0.2),
+                                  //             spreadRadius: 1,
+                                  //             blurRadius: 5,
+                                  //             offset: const Offset(0, 3),
+                                  //           ),
+                                  //         ],
+                                  //         color:
+                                  //             const Color.fromARGB(0, 48, 48, 48),
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(100)),
+                                  //     child: Padding(
+                                  //       padding: const EdgeInsets.all(8.0),
+                                  //       child: Row(
+                                  //         mainAxisSize: MainAxisSize.min,
+                                  //         children: [
+                                  //           saveController
+                                  //                   .breathworkSelected.value
+                                  //               ? Icon(
+                                  //                   Icons.air,
+                                  //                   size: 30,
+                                  //                 )
+                                  //               : Icon(
+                                  //                   Icons.self_improvement,
+                                  //                   size: 30,
+                                  //                 ),
+                                  //           Column(
+                                  //             children: [
+                                  //               Text(
+                                  //                 (saveController
+                                  //                             .breathworkSelected
+                                  //                             .value
+                                  //                         ? saveController
+                                  //                             .selectedBreathwork
+                                  //                             .value
+                                  //                         : "Meditation") +
+                                  //                     " - " +
+                                  //                     (saveController
+                                  //                         .selectedAmbience
+                                  //                         .value),
+                                  //                 style: const TextStyle(
+                                  //                     fontSize: 13,
+                                  //                     color: Colors.white,
+                                  //                     fontWeight:
+                                  //                         FontWeight.bold),
+                                  //               ),
+                                  //               Text("Tap to change",
+                                  //                   style: TextStyle(
+                                  //                       fontSize: 10,
+                                  //                       color: Colors.white70,
+                                  //                       fontWeight:
+                                  //                           FontWeight.bold)),
+                                  //             ],
+                                  //           ),
+                                  //           const Icon(Icons.arrow_drop_down,
+                                  //               color: Colors.white)
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20.0),
+                                    child: _duration == noTime ||
+                                            _duration <
+                                                (DEBUG_MODE == true
+                                                    ? const Duration(minutes: 1)
+                                                    : const Duration(
+                                                        minutes: 1))
+                                        ? const SizedBox(
+                                            height: 50,
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 30.0),
+                                              child: Text(
+                                                "Meditate for at least one minute to build a habit!",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ))
+                                        : OverlayTooltipItem(
+                                            displayIndex: 2,
+                                            tooltipVerticalPosition:
+                                                TooltipVerticalPosition.TOP,
+                                            tooltipHorizontalPosition:
+                                                TooltipHorizontalPosition
+                                                    .CENTER,
+                                            tooltip: (controller) {
+                                              return Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 5),
+                                                child: OnboardingTooltip(
+                                                    title:
+                                                        'Press this button to start your meditation',
+                                                    controller: controller),
+                                              );
+                                            },
+                                            child: GestureDetector(
+                                                onTap: (() async {
+                                                  HapticFeedback.heavyImpact();
 
-                                                    //Log the event to PostHog
+                                                  //Log the event to PostHog
+                                                  PostHogService posthog =
+                                                      Get.find();
+                                                  posthog.logEvent(
+                                                      "MEDITATION_TAPPED", {
+                                                    "time": _duration.inMinutes
+                                                        .toString()
+                                                  });
+
+                                                  if (saveController
+                                                      .breathworkSelected
+                                                      .value) {
                                                     PostHogService posthog =
                                                         Get.find();
                                                     posthog.logEvent(
-                                                        "MEDITATION_TAPPED", {
+                                                        "BREATHWORK_TAPPED", {
                                                       "time": _duration
                                                           .inMinutes
                                                           .toString()
                                                     });
+                                                  }
 
+                                                  CountdownController
+                                                      countdownController =
+                                                      Get.find();
+                                                  countdownController
+                                                          .totalSeconds.value =
+                                                      _duration.inSeconds;
+                                                  countdownController.update();
+
+                                                  if (_duration.inMinutes >=
+                                                      1) {
+                                                    saveController
+                                                        .updateDefaultMeditationTime(
+                                                            _duration
+                                                                .inMinutes);
+                                                  }
+
+                                                  if (saveController.getValue(
+                                                          "GUIDE_SHOWN") ==
+                                                      "TRUE") {
                                                     if (saveController
-                                                        .breathworkSelected
-                                                        .value) {
-                                                      PostHogService posthog =
-                                                          Get.find();
-                                                      posthog.logEvent(
-                                                          "BREATHWORK_TAPPED", {
-                                                        "time": _duration
-                                                            .inMinutes
-                                                            .toString()
-                                                      });
-                                                    }
-
-                                                    CountdownController
-                                                        countdownController =
-                                                        Get.find();
-                                                    countdownController
-                                                            .totalSeconds
-                                                            .value =
-                                                        _duration.inSeconds;
-                                                    countdownController
-                                                        .update();
-
-                                                    if (_duration.inMinutes >=
-                                                        1) {
+                                                            .selectedAmbience
+                                                            .value ==
+                                                        "Random") {
                                                       saveController
-                                                          .updateDefaultMeditationTime(
-                                                              _duration
-                                                                  .inMinutes);
+                                                          .updateSelectedAmbience(
+                                                              AMBIENCES[Random()
+                                                                      .nextInt(
+                                                                          AMBIENCES
+                                                                              .length)]
+                                                                  .name);
                                                     }
-
-                                                    if (saveController.getValue(
-                                                            "GUIDE_SHOWN") ==
-                                                        "TRUE") {
-                                                      if (saveController
-                                                              .selectedAmbience
-                                                              .value ==
-                                                          "Random") {
-                                                        saveController.updateSelectedAmbience(
-                                                            AMBIENCES[Random()
-                                                                    .nextInt(
-                                                                        AMBIENCES
-                                                                            .length)]
-                                                                .name);
-                                                      }
-                                                      Get.to(
-                                                          CountdownPage(
-                                                              time: _duration,
-                                                              ambience:
-                                                                  saveController
-                                                                      .selectedAmbience
-                                                                      .value),
-                                                          transition: Transition
-                                                              .circularReveal,
-                                                          duration:
-                                                              const Duration(
-                                                                  seconds: 1));
-                                                    } else {
-                                                      Get.to(
-                                                          MeditationGuide(
-                                                              time: _duration,
-                                                              ambience:
-                                                                  saveController
-                                                                      .selectedAmbience
-                                                                      .value),
-                                                          transition: Transition
-                                                              .circularReveal,
-                                                          duration:
-                                                              const Duration(
-                                                                  seconds: 1));
-                                                      saveController.saveValue(
-                                                          "GUIDE_SHOWN",
-                                                          "TRUE");
-                                                    }
-                                                  }),
-                                                  child: Stack(
-                                                    children: [
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                // border: Border.all(
-                                                                //     color: Colors.cyan),
-                                                                boxShadow: [
-                                                              BoxShadow(
-                                                                color: Colors
-                                                                    .black
-                                                                    .withOpacity(
-                                                                        0.5),
-                                                                spreadRadius: 1,
-                                                                blurRadius: 5,
-                                                                offset:
-                                                                    const Offset(
-                                                                        0, 3),
-                                                              ),
-                                                            ],
-                                                                color:
-                                                                    Colors.cyan,
-                                                                border: Border.all(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    width: 2),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            60)),
-                                                        child: const Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: Hero(
-                                                              tag:
-                                                                  "PLAY_BUTTON",
-                                                              child: Icon(
-                                                                Icons
-                                                                    .play_arrow,
-                                                                size: 50,
-                                                                color: Colors
-                                                                    .white,
-                                                              )),
-                                                        ),
+                                                    Get.to(
+                                                        CountdownPage(
+                                                            time: _duration,
+                                                            ambience: saveController
+                                                                .selectedAmbience
+                                                                .value),
+                                                        transition: Transition
+                                                            .circularReveal,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1));
+                                                  } else {
+                                                    Get.to(
+                                                        MeditationGuide(
+                                                            time: _duration,
+                                                            ambience: saveController
+                                                                .selectedAmbience
+                                                                .value),
+                                                        transition: Transition
+                                                            .circularReveal,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1));
+                                                    saveController.saveValue(
+                                                        "GUIDE_SHOWN", "TRUE");
+                                                  }
+                                                }),
+                                                child: Stack(
+                                                  children: [
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                          // border: Border.all(
+                                                          //     color: Colors.cyan),
+                                                          boxShadow: [
+                                                            BoxShadow(
+                                                              color: Colors
+                                                                  .black
+                                                                  .withOpacity(
+                                                                      0.5),
+                                                              spreadRadius: 1,
+                                                              blurRadius: 5,
+                                                              offset:
+                                                                  const Offset(
+                                                                      0, 3),
+                                                            ),
+                                                          ],
+                                                          color: Colors.cyan,
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.white,
+                                                              width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      60)),
+                                                      child: const Padding(
+                                                        padding:
+                                                            EdgeInsets.all(8.0),
+                                                        child: Hero(
+                                                            tag: "PLAY_BUTTON",
+                                                            child: Icon(
+                                                              Icons.play_arrow,
+                                                              size: 50,
+                                                              color:
+                                                                  Colors.white,
+                                                            )),
                                                       ),
-                                                    ],
-                                                  )),
-                                            ),
-                                    )
-                                  ],
-                                ),
+                                                    ),
+                                                  ],
+                                                )),
+                                          ),
+                                  )
+                                ],
                               ),
                             ],
                           ),

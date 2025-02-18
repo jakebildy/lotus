@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/models/user.dart';
+import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 
 class TryForFreeContainer extends StatelessWidget {
@@ -14,7 +15,8 @@ class TryForFreeContainer extends StatelessWidget {
     UserController user = Get.find();
     return Obx(
       () => save.isSubscribedToPremium.value == true ||
-              user.user.value.isPremiumOverride == true
+              user.user.value.isPremiumOverride == true ||
+              user.user.value.createdAt.isBefore(PREMIUM_BEFORE_DATE)
           ? Container()
           : Stack(
               children: [

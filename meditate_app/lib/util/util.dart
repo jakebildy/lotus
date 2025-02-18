@@ -593,3 +593,6 @@ bool userHasTurtle(
   }
   return user.unlockedTurtleColors[id].contains(color);
 }
+
+// ignore: non_constant_identifier_names
+DateTime PREMIUM_BEFORE_DATE = DateTime(2024, 2, 20, 0, 0);
