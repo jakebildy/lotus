@@ -95,7 +95,8 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                   extendBodyBehindAppBar: true,
                   // backgroundColor: const Color.fromARGB(255, 47, 111, 129),
                   appBar: TabBar(
-                    padding: const EdgeInsets.fromLTRB(0, 110, 0, 0),
+                    padding: EdgeInsets.fromLTRB(
+                        0, MediaQuery.of(context).size.height / 9, 0, 0),
                     indicatorColor: Colors.white,
                     tabs: [
                       Tab(
@@ -110,11 +111,11 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
+                              children: const [
+                                SizedBox(
                                   height: 10,
                                 ),
-                                const Text(
+                                Text(
                                   "Meditate",
                                   style: TextStyle(
                                       fontSize: 12,
