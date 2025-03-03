@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/components/follower_widget.dart';
-import 'package:meditate_app/controllers/search_controller.dart';
+import 'package:meditate_app/controllers/search_controller.dart' as SC;
 import 'package:meditate_app/pages/search/friend_suggestions.dart';
 
 class Search extends StatelessWidget {
@@ -15,16 +15,17 @@ class Search extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SearchController searchController = Get.put(SearchController());
+    SC.SearchController searchController = Get.put(SC.SearchController());
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey[900],
+          // backgroundColor: Colors.grey[900],
+          forceMaterialTransparency: true,
           centerTitle: false,
           elevation: 0,
           title: SearchBox(),
         ),
-        backgroundColor: Colors.grey[900],
+        // backgroundColor: Colors.grey[900],
         // floatingActionButton: FloatingActionButton(
         //   child: const Icon(Icons.ios_share_outlined),
         //   onPressed: () {
@@ -36,26 +37,26 @@ class Search extends StatelessWidget {
         // ),
         //Search - scafold body
         body: Container(
-            color: Colors.grey[900],
+            // color: Colors.grey[900],
             child: Center(
-              child: ListView(
-                // physics: ClampingScrollPhysics(),
-                children: <Widget>[
-                  const SearchResults(),
-                  searchController.queryValue.value != ''
-                      ? Container()
-                      : const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text("Friend Suggestions",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20)),
-                        ),
-                  searchController.queryValue.value != ''
-                      ? Container()
-                      : const FriendSuggestions(),
-                ],
-              ),
-            )),
+          child: ListView(
+            // physics: ClampingScrollPhysics(),
+            children: <Widget>[
+              const SearchResults(),
+              searchController.queryValue.value != ''
+                  ? Container()
+                  : const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text("Friend Suggestions",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                    ),
+              searchController.queryValue.value != ''
+                  ? Container()
+                  : const FriendSuggestions(),
+            ],
+          ),
+        )),
       ),
     );
   }
@@ -79,7 +80,7 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SearchController searchController = Get.find();
+    SC.SearchController searchController = Get.find();
     return Row(
       children: [
         Expanded(
@@ -115,7 +116,7 @@ class SearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SearchController searchController = Get.find();
+    SC.SearchController searchController = Get.find();
 
     return Obx(
       () => searchController.queryValue.value == ''

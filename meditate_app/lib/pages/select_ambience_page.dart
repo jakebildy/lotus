@@ -48,6 +48,7 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
           preferredSize: const Size.fromHeight(0),
           child: AppBar(
             backgroundColor: Colors.transparent,
+            forceMaterialTransparency: true,
             // backgroundColor: const Color.fromARGB(255, 47, 111, 129),
             elevation: 0,
             // leading: IconButton(

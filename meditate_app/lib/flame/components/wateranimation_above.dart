@@ -61,6 +61,6 @@ class WaterAnimationAbove extends SpriteAnimationComponent with HasGameRef {
 
     // follow the player
     position =
-        gameRef.camera.position - Vector2(-200, -400) + Vector2(0, offset);
+        gameRef.camera.viewfinder.position - Vector2(0, 0) + Vector2(0, offset);
   }
 }

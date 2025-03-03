@@ -1,7 +1,10 @@
 import 'dart:math';
 
+import 'package:flame/camera.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame/events.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/palette.dart';
@@ -35,7 +38,7 @@ import 'package:perlin/perlin.dart';
 
 import 'components/wateranimation.dart';
 
-class TurtleGame extends FlameGame with HasTappables {
+class TurtleGame extends FlameGame with TapCallbacks {
   late Sprite background;
   final TurtleWorld _turtleWorld = TurtleWorld();
   late PlayerBase playerBase;
@@ -75,7 +78,10 @@ class TurtleGame extends FlameGame with HasTappables {
   @override
   Future<void> onLoad() async {
     // playAudio();
+
     add(_turtleWorld);
+
+    add(camera);
 
     double islandThreshold = 0;
     double deepWaterThreshold = -0.3;
@@ -109,10 +115,10 @@ class TurtleGame extends FlameGame with HasTappables {
           // seafloorObjects.add(SeaFloorObject(Vector2(i * 50.0, j * 50.0),
           //     (50 + math.Random().nextInt(30)).toDouble()));
           if (math.Random().nextInt(15) == 1) {
-            add(Lilypad(Vector2(i * 100.0, j * 100.0),
+            camera.world!.add(Lilypad(Vector2(i * 100.0, j * 100.0),
                 (70 + math.Random().nextInt(30)).toDouble()));
           } else if (math.Random().nextInt(15) == 1) {
-            add(RainbowLilypad(Vector2(i * 100, j * 100),
+            camera.world!.add(RainbowLilypad(Vector2(i * 100, j * 100),
                 (70 + math.Random().nextInt(30)).toDouble()));
           }
         } else if (terrainMap[j + 100][i + 100] == 'L') {
@@ -133,14 +139,15 @@ class TurtleGame extends FlameGame with HasTappables {
                   PalmTree(Vector2(i * 100.0, j * 100.0), angle, palmTreeSize));
               palmTreeLocations.add([i * 100.0, j * 100.0]);
 
-              add(PalmTreeShadow(
+              camera.world!.add(PalmTreeShadow(
                   Vector2(i * 100.0, j * 100.0), angle, (palmTreeSize)));
-              add(PalmTreeLeafShadow(
+              camera.world!.add(PalmTreeLeafShadow(
                   Vector2(i * 100.0, j * 100.0), angle, (palmTreeSize)));
             } else if (math.Random().nextInt(80) == 1) {
-              add(TreasureChest(Vector2(i * 100.0, j * 100.0), 70));
+              camera.world!
+                  .add(TreasureChest(Vector2(i * 100.0, j * 100.0), 70));
             } else if (math.Random().nextInt(4) == 1) {
-              add(LandItems(Vector2(i * 100.0, j * 100.0),
+              camera.world!.add(LandItems(Vector2(i * 100.0, j * 100.0),
                   (50 + math.Random().nextInt(30)).toDouble()));
             }
           } else if (elevation[j + 100][i + 100] > 0.2) {
@@ -153,10 +160,11 @@ class TurtleGame extends FlameGame with HasTappables {
             sandTile.opacity = 1; //lowest
             sandTile.priority = 5;
             if (math.Random().nextInt(100) == 1) {
-              add(SandDollar(Vector2(i * 100.0, j * 100.0), (30)));
+              camera.world!
+                  .add(SandDollar(Vector2(i * 100.0, j * 100.0), (30)));
             }
           }
-          add(sandTile);
+          camera.world!.add(sandTile);
         } else {
           // add(DirtTile(variant: math.Random().nextInt(14))
           //   ..position = Vector2(i * 50.0, j * 50.0));
@@ -176,40 +184,45 @@ class TurtleGame extends FlameGame with HasTappables {
     }
 
     for (var seafloorObject in seafloorObjects) {
-      add(seafloorObject);
+      camera.world!.add(seafloorObject);
     }
 
     for (int i = 0; i < 400; i++) {
-      add(Fish(Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+      camera.world!.add(Fish(Vector2(
+          math.Random().nextInt(20000).toDouble() - 10000,
           math.Random().nextInt(20000).toDouble() - 10000)));
     }
 
     for (int i = 0; i < 400; i++) {
-      add(RainbowFish(Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+      camera.world!.add(RainbowFish(Vector2(
+          math.Random().nextInt(20000).toDouble() - 10000,
           math.Random().nextInt(20000).toDouble() - 10000)));
     }
 
-    add(waterAnimation);
+    camera.world!.add(waterAnimation);
 
-    add(waterAnimation2);
+    camera.world!.add(waterAnimation2);
 
     for (int i = 0; i < 100; i++) {
-      add(OtherTurtle(
+      camera.world!.add(OtherTurtle(
           Vector2(math.Random().nextInt(20000).toDouble() - 10000,
               math.Random().nextInt(20000).toDouble() - 10000),
           elevation));
     }
 
-    add(playerBase);
-    add(player);
+    camera.world!.add(playerBase);
+    camera.world!.add(player);
 
-    add(cameraPoint);
+    // add(cameraPoint);
 
-    add(waterAnimation3);
+    camera.world!.add(waterAnimation3);
+    // world.add(waterAnimation3);
 
-    add(waterAnimation4);
+    camera.world!.add(waterAnimation4);
+    // world.add(waterAnimation4);
 
-    add(waterAnimation5);
+    camera.world!.add(waterAnimation5);
+    // world.add(waterAnimation5);
     waterAnimation.priority = 8;
     waterAnimation2.priority = 9;
     waterAnimation3.priority = 10;
@@ -219,15 +232,16 @@ class TurtleGame extends FlameGame with HasTappables {
     //Above the player & lilypads
 
     for (int i = 0; i < 400; i++) {
-      add(Butterfly(Vector2(math.Random().nextInt(20000).toDouble() - 10000,
+      camera.world!.add(Butterfly(Vector2(
+          math.Random().nextInt(20000).toDouble() - 10000,
           math.Random().nextInt(20000).toDouble() - 10000)));
     }
 
     for (var palmTree in palmTrees) {
-      add(palmTree);
+      camera.world!.add(palmTree);
     }
-
-    camera.followComponent(cameraPoint);
+    add(cameraPoint);
+    camera.follow(cameraPoint);
   }
 
   bool canMove = true;
@@ -241,55 +255,72 @@ class TurtleGame extends FlameGame with HasTappables {
   AudioPlayer splash = AudioPlayer();
 
   @override
-  void onTapUp(int pointerId, TapUpInfo info) {
-    super.onTapUp(pointerId, info);
+  void onTapUp(TapUpEvent event) {
+    super.onTapUp(event);
 
-    if (!info.handled && canMove) {
+    if (!event.handled && canMove) {
       debounceCanMove();
+
+      final touchPoint = event.canvasPosition;
+
+      // get maximum canvasPositoin x
+      final maxX = camera.viewport.size.x;
+      final maxY = camera.viewport.size.y;
+      double borderX = touchPoint.x > 10000
+          ? 10000
+          : touchPoint.x < -10000
+              ? -10000
+              : touchPoint.x;
+      double borderY = touchPoint.y > 10000
+          ? 10000
+          : touchPoint.y < -10000
+              ? -10000
+              : touchPoint.y;
+      double moveX = (borderX - maxX / 2);
+      double moveY = (borderY - maxY / 2);
+
+      //The borders of the Shallows
+      if (playerBase.position.y < -10000 && moveY < 0) {
+        moveY = 0;
+      } else if (playerBase.position.y > 10000 && moveY > 0) {
+        moveY = 0;
+      }
+
+      if (playerBase.position.x < -10000 && moveX < 0) {
+        moveX = 0;
+      } else if (playerBase.position.x > 10000 && moveX > 0) {
+        moveX = 0;
+      }
+
       if (playerBase.priority < 100) {
         splash.setAsset('assets/audio/splash.wav');
         splash.play();
 
         HapticFeedback.lightImpact();
-        final touchPoint = info.eventPosition.game;
 
-        double borderX = touchPoint.x > 10000
-            ? 10000
-            : touchPoint.x < -10000
-                ? -10000
-                : touchPoint.x;
-        double borderY = touchPoint.y > 10000
-            ? 10000
-            : touchPoint.y < -10000
-                ? -10000
-                : touchPoint.y;
-
-        player.angle = math.atan2(
-            borderX - player.position.x, -1 * (borderY - player.position.y));
+        player.angle = math.atan2(moveY, moveX) + math.pi / 2;
 
         player.add(
           MoveByEffect(
-              Vector2(borderX - player.position.x, borderY - player.position.y),
+              Vector2(
+                moveX,
+                moveY,
+              ),
               EffectController(
                 duration: 0.6,
               )),
         );
-        playerBase.angle = math.atan2(
-            borderX - player.position.x, -1 * (borderY - player.position.y));
+        playerBase.angle = math.atan2(moveY, moveX) + math.pi / 2;
         playerBase.add(
-          MoveByEffect(
-              Vector2(borderX - player.position.x, borderY - player.position.y),
-              EffectController(duration: 0.6)),
+          MoveByEffect(Vector2(moveX, moveY), EffectController(duration: 0.6)),
         );
         swimAnimation(playerBase);
-        swimParticles();
+        swimParticles(moveX, moveY);
 
-        parallaxMove(borderX, borderY);
+        parallaxMove(moveX, moveY);
 
         cameraPoint.add(
-          MoveByEffect(
-              Vector2(borderX - player.position.x, borderY - player.position.y),
-              EffectController(duration: 0.75)),
+          MoveByEffect(Vector2(moveX, moveY), EffectController(duration: 0.75)),
         );
       } else {
         splash = AudioPlayer();
@@ -297,47 +328,26 @@ class TurtleGame extends FlameGame with HasTappables {
         splash.play();
 
         HapticFeedback.lightImpact();
-        final touchPoint = info.eventPosition.game;
 
-        double borderX = touchPoint.x > 10000
-            ? 10000
-            : touchPoint.x < -10000
-                ? -10000
-                : touchPoint.x;
-        double borderY = touchPoint.y > 10000
-            ? 10000
-            : touchPoint.y < -10000
-                ? -10000
-                : touchPoint.y;
-
-        player.angle = math.atan2(
-            borderX - player.position.x, -1 * (borderY - player.position.y));
+        player.angle = math.atan2(moveY, moveX) + math.pi / 2;
 
         player.add(
           MoveByEffect(
-              Vector2((borderX - player.position.x) / 1,
-                  (borderY - player.position.y) / 1),
+              Vector2(moveX, moveY),
               EffectController(
                 duration: 0.6,
               )),
         );
-        playerBase.angle = math.atan2(
-            borderX - player.position.x, -1 * (borderY - player.position.y));
+        playerBase.angle = math.atan2(moveY, moveX) + math.pi / 2;
         playerBase.add(
-          MoveByEffect(
-              Vector2((borderX - player.position.x) / 1,
-                  (borderY - player.position.y) / 1),
-              EffectController(duration: 0.6)),
+          MoveByEffect(Vector2(moveX, moveY), EffectController(duration: 0.6)),
         );
         swimAnimation(playerBase);
 
-        parallaxMove(borderX, borderY);
+        parallaxMove(moveX, moveY);
 
         cameraPoint.add(
-          MoveByEffect(
-              Vector2((borderX - player.position.x) / 1,
-                  (borderY - player.position.y) / 1),
-              EffectController(duration: 0.75)),
+          MoveByEffect(Vector2(moveX, moveY), EffectController(duration: 0.75)),
         );
       }
     }
@@ -354,14 +364,14 @@ class TurtleGame extends FlameGame with HasTappables {
     // Get.find<GameController>().toggleAudio(false);
   }
 
-  Future<void> swimParticles() async {
+  Future<void> swimParticles(double moveX, double moveY) async {
     Random rnd = Random();
 
     Vector2 randomVector2() =>
         (Vector2.random(rnd) - Vector2.random(rnd)) * 400;
 
     for (int i = 0; i < 4; i++) {
-      add(
+      camera.world!.add(
         ParticleSystemComponent(
           particle: Particle.generate(
             count: 40,
@@ -379,7 +389,7 @@ class TurtleGame extends FlameGame with HasTappables {
         ),
       );
 
-      add(
+      camera.world!.add(
         ParticleSystemComponent(
           particle: Particle.generate(
             count: 40,
@@ -407,17 +417,13 @@ class TurtleGame extends FlameGame with HasTappables {
 
   Future<void> parallaxMove(double x, double y) async {
     double ratio = 8;
-    _turtleWorld.parallax?.baseVelocity = Vector2(
-        (x - player.position.x) / ratio * 2,
-        (y - player.position.y) / ratio * 2);
+    _turtleWorld.parallax?.baseVelocity = Vector2(x / ratio * 2, y / ratio * 2);
 
     // For all SeafloorObjects, add parallax
     for (int i = 0; i < seafloorObjects.length; i++) {
       if (seafloorObjects[i].position.distanceTo(player.position) < 600) {
         seafloorObjects[i].add(
-          MoveByEffect(
-              Vector2((x - player.position.x) / (ratio / 4),
-                  (y - player.position.y) / (ratio / 4)),
+          MoveByEffect(Vector2(x / (ratio / 4), y / (ratio / 4)),
               EffectController(duration: 0.6, curve: Curves.linear)),
         );
       } else {
@@ -427,11 +433,9 @@ class TurtleGame extends FlameGame with HasTappables {
     }
 
     for (int i = 0; i < palmTrees.length; i++) {
-      if (palmTrees[i].position.distanceTo(player.position) < 600) {
+      if (palmTrees[i].position.distanceTo(player.position) < 650) {
         palmTrees[i].add(
-          MoveByEffect(
-              Vector2((x - player.position.x) * -0.2,
-                  (y - player.position.y) * -0.2),
+          MoveByEffect(Vector2(x * -0.1, y * -0.1),
               EffectController(duration: 0.6, curve: Curves.linear)),
         );
       } else {
@@ -441,41 +445,40 @@ class TurtleGame extends FlameGame with HasTappables {
     }
 
     waterAnimation.add(
-      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
-          EffectController(duration: 0.6, curve: Curves.linear)),
+      MoveByEffect(
+          Vector2(x, y), EffectController(duration: 0.6, curve: Curves.linear)),
     );
 
     waterAnimation2.add(
-      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
-          EffectController(duration: 0.6, curve: Curves.linear)),
+      MoveByEffect(
+          Vector2(x, y), EffectController(duration: 0.6, curve: Curves.linear)),
     );
 
     waterAnimation3.add(
-      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
-          EffectController(duration: 0.6, curve: Curves.linear)),
+      MoveByEffect(
+          Vector2(x, y), EffectController(duration: 0.6, curve: Curves.linear)),
     );
 
     waterAnimation4.add(
-      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
-          EffectController(duration: 0.6, curve: Curves.linear)),
+      MoveByEffect(
+          Vector2(x, y), EffectController(duration: 0.6, curve: Curves.linear)),
     );
 
     waterAnimation5.add(
-      MoveByEffect(Vector2((x - player.position.x), (y - player.position.y)),
-          EffectController(duration: 0.6, curve: Curves.linear)),
+      MoveByEffect(
+          Vector2(x, y), EffectController(duration: 0.6, curve: Curves.linear)),
     );
 
     await Future.delayed(const Duration(milliseconds: 600));
 
-    _turtleWorld.parallax?.baseVelocity = Vector2(
-        (-1 * x - player.position.x) / (ratio * 10),
-        (-1 * y - player.position.y) / (ratio * 10));
+    _turtleWorld.parallax?.baseVelocity =
+        Vector2((-1 * x) / (ratio * 10), (-1 * y) / (ratio * 10));
     await Future.delayed(const Duration(milliseconds: 50));
     _turtleWorld.parallax?.baseVelocity = Vector2(0, 0);
   }
 }
 
-class Player extends SpriteAnimationComponent with HasGameRef, Tappable {
+class Player extends SpriteAnimationComponent with HasGameRef, TapCallbacks {
   static const speed = 0.25;
   static const squareSize = 200.0;
 
@@ -604,7 +607,7 @@ enum PlayerState {
 }
 
 class PlayerBase extends SpriteGroupComponent<PlayerState>
-    with HasGameRef, Tappable {
+    with HasGameRef, TapCallbacks {
   static const speed = 0.25;
   static const squareSize = 200.0;
 
@@ -672,7 +675,7 @@ class PlayerBase extends SpriteGroupComponent<PlayerState>
   // }
 }
 
-class CameraPoint extends SpriteComponent with HasGameRef, Tappable {
+class CameraPoint extends SpriteComponent with HasGameRef, TapCallbacks {
   static const speed = 0.25;
   static const squareSize = 200.0;
 

@@ -33,7 +33,7 @@ class FollowerWidget extends StatelessWidget {
           Get.to(UserProfilePage(user: user), preventDuplicates: false);
         },
         child: Container(
-          color: color,
+          color: Colors.transparent,
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Column(

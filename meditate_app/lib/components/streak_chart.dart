@@ -20,153 +20,64 @@ class StreakChart extends StatelessWidget {
           height: height,
           child: LineChart(
             LineChartData(
-                borderData: FlBorderData(show: false),
-                titlesData: FlTitlesData(
-                  bottomTitles: SideTitles(showTitles: false),
-                  leftTitles: SideTitles(showTitles: true),
-                  rightTitles: SideTitles(showTitles: false),
-                  topTitles: SideTitles(showTitles: false),
+              borderData: FlBorderData(show: false),
+              titlesData: FlTitlesData(
+                bottomTitles:
+                    AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 40,
+                    getTitlesWidget: (value, meta) {
+                      return Text(value.toInt().toString(),
+                          style: const TextStyle(color: Colors.white));
+                    },
+                  ),
                 ),
-                minY: 0,
-                maxY: getMaxValueForStreakChart(
-                        userController.user.value.meditationHistory)
-                    .toDouble(),
-                lineBarsData: [
-                  LineChartBarData(
+                rightTitles:
+                    AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                topTitles:
+                    AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              ),
+              minY: 0,
+              maxY: getMaxValueForStreakChart(
+                      userController.user.value.meditationHistory)
+                  .toDouble(),
+              lineBarsData: [
+                LineChartBarData(
+                  color: Colors.white, // Single color instead of list
+                  isCurved: true,
+                  barWidth: 5,
+                  belowBarData: BarAreaData(
+                    show: true,
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
                       colors: [
-                        Colors.white,
+                        // Colors.green.withOpacity(0.8),
+                        // Colors.yellow.withOpacity(0.6),
+                        // Colors.blue.withOpacity(0.4),
+                        // Colors.purpleAccent.withOpacity(0.2),
+                        Colors.green.withOpacity(0.2),
+                        Colors.green.withOpacity(0.4),
+                        Colors.green.withOpacity(0.6),
+                        Colors.green.withOpacity(0.8),
                       ],
-                      isCurved: true,
-                      barWidth: 5,
-                      belowBarData: BarAreaData(
-                        show: true,
-                        gradientFrom: const Offset(1, 1),
-                        gradientTo: const Offset(1, 0),
-                        gradientColorStops: [
-                          0.05 *
-                              80 /
-                              getMaxValueForStreakChart(
-                                  userController.user.value.meditationHistory),
-                          0.15 *
-                              80 /
-                              getMaxValueForStreakChart(
-                                  userController.user.value.meditationHistory),
-                          0.35 *
-                              80 /
-                              getMaxValueForStreakChart(
-                                  userController.user.value.meditationHistory),
-                          1 *
-                              80 /
-                              getMaxValueForStreakChart(
-                                  userController.user.value.meditationHistory)
-                        ],
-                        colors: [
-                          // Color.fromARGB(0, 255, 153, 0),
-                          Colors.green,
-                          Colors.yellow,
-                          Colors.blue,
-                          Colors.purpleAccent
-                        ],
-                      ),
-                      spots: [
-                        FlSpot(
-                            1,
-                            (userController.user.value.meditationHistory.map(
-                                        (key, value) =>
-                                            MapEntry(
-                                                DateTime.utc(key.year,
-                                                    key.month, key.day),
-                                                value))[DateTime.utc(
-                                            DateTime.now().year,
-                                            DateTime.now().month,
-                                            DateTime.now().day)
-                                        .subtract(const Duration(days: 6))] ??
-                                    0)
-                                .toDouble()),
-                        FlSpot(
-                            2,
-                            (userController.user.value.meditationHistory.map(
-                                        (key, value) =>
-                                            MapEntry(
-                                                DateTime.utc(key.year,
-                                                    key.month, key.day),
-                                                value))[DateTime.utc(
-                                            DateTime.now().year,
-                                            DateTime.now().month,
-                                            DateTime.now().day)
-                                        .subtract(const Duration(days: 5))] ??
-                                    0)
-                                .toDouble()),
-                        FlSpot(
-                            3,
-                            (userController.user.value.meditationHistory.map(
-                                        (key, value) =>
-                                            MapEntry(
-                                                DateTime.utc(key.year,
-                                                    key.month, key.day),
-                                                value))[DateTime.utc(
-                                            DateTime.now().year,
-                                            DateTime.now().month,
-                                            DateTime.now().day)
-                                        .subtract(const Duration(days: 4))] ??
-                                    0)
-                                .toDouble()),
-                        FlSpot(
-                            4,
-                            (userController.user.value.meditationHistory.map(
-                                        (key, value) =>
-                                            MapEntry(
-                                                DateTime.utc(key.year,
-                                                    key.month, key.day),
-                                                value))[DateTime.utc(
-                                            DateTime.now().year,
-                                            DateTime.now().month,
-                                            DateTime.now().day)
-                                        .subtract(const Duration(days: 3))] ??
-                                    0)
-                                .toDouble()),
-                        FlSpot(
-                            5,
-                            (userController.user.value.meditationHistory.map(
-                                        (key, value) =>
-                                            MapEntry(
-                                                DateTime.utc(key.year,
-                                                    key.month, key.day),
-                                                value))[DateTime.utc(
-                                            DateTime.now().year,
-                                            DateTime.now().month,
-                                            DateTime.now().day)
-                                        .subtract(const Duration(days: 2))] ??
-                                    0)
-                                .toDouble()),
-                        FlSpot(
-                            6,
-                            (userController.user.value.meditationHistory.map(
-                                        (key, value) =>
-                                            MapEntry(
-                                                DateTime.utc(key.year,
-                                                    key.month, key.day),
-                                                value))[DateTime.utc(
-                                            DateTime.now().year,
-                                            DateTime.now().month,
-                                            DateTime.now().day)
-                                        .subtract(const Duration(days: 1))] ??
-                                    0)
-                                .toDouble()),
-                        FlSpot(
-                            7,
-                            (userController.user.value.meditationHistory.map(
-                                        (key, value) => MapEntry(
-                                            DateTime.utc(
-                                                key.year, key.month, key.day),
-                                            value))[DateTime.utc(
-                                        DateTime.now().year,
-                                        DateTime.now().month,
-                                        DateTime.now().day)] ??
-                                    0)
-                                .toDouble()),
-                      ])
-                ]),
+                    ),
+                  ),
+                  spots: List.generate(7, (index) {
+                    DateTime date =
+                        DateTime.now().subtract(Duration(days: 6 - index));
+                    double value = (userController.user.value.meditationHistory[
+                                DateTime.utc(
+                                    date.year, date.month, date.day)] ??
+                            0)
+                        .toDouble();
+                    return FlSpot(index + 1, value);
+                  }),
+                ),
+              ],
+            ),
           ),
         ),
       ),

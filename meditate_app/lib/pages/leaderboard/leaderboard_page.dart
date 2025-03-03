@@ -40,8 +40,10 @@ class LeaderboardPage extends StatelessWidget {
           )
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.grey[900]!,
-              title: const Text('Leaderboard'),
+              // backgroundColor: Colors.grey[900]!,
+              title: const Text('Leaderboard',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              forceMaterialTransparency: true,
             ),
             body: Obx(() {
               // Get all users including current user and sort

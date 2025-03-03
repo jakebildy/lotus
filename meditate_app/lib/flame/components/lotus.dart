@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 
-class Lotus extends SpriteComponent with HasGameRef, Tappable {
+class Lotus extends SpriteComponent with HasGameRef {
   static const speed = 0.25;
   static const squareSize = 100.0;
 

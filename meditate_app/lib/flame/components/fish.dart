@@ -6,7 +6,7 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
+class Fish extends SpriteAnimationComponent with HasGameRef {
   static const speed = 0.25;
   static const squareSize = 70.0;
 
@@ -24,7 +24,7 @@ class Fish extends SpriteAnimationComponent with HasGameRef, Tappable {
   void update(double dt) {
     super.update(dt);
 
-    if (position.distanceTo(gameRef.camera.position) < 600) {
+    if (gameRef.camera.canSee(this)) {
       directionResetCounter += 1;
       angle = math.atan2((position.x + xOffset * 100) - position.x,
           -1 * ((position.y + yOffset * 100) - position.y));

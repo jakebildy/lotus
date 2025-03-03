@@ -39,7 +39,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
         length: 3,
         // initialIndex: totalTurtles == 0 ? 1 : 0,
         child: Scaffold(
-          backgroundColor: Colors.grey[900],
+          // backgroundColor: Colors.grey[900],
           // floatingActionButton: FloatingActionButton(
           //   onPressed: () {
           //     PostHogService posthog = Get.find();
@@ -63,9 +63,11 @@ class _TurtlesPageState extends State<TurtlesPage> {
           // ),
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: Colors.grey[900],
+            // backgroundColor: Colors.grey[900],
             title: TabBar(
               indicatorColor: Colors.white,
+              labelColor: Colors.white,
+              indicatorSize: TabBarIndicatorSize.tab,
               tabs: [
                 Tab(
                   child: Column(
@@ -170,7 +172,10 @@ class _TurtlesPageState extends State<TurtlesPage> {
                           .expand((entry) {
                         int turtleType = entry.key; // Turtle type index
                         List<int> colors = entry.value; // Unlocked colors
-
+                        // for the first turtle type, ensure the first color is 1
+                        if (turtleType == 0) {
+                          colors[0] = 0;
+                        }
                         return colors
                             .where((color) => color != -1)
                             .map((color) {

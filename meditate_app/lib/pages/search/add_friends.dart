@@ -17,7 +17,8 @@ class AddFriends extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[900],
+        // backgroundColor: Colors.grey[900],
+        forceMaterialTransparency: true,
         elevation: 0,
         title: const Text(
           "",
@@ -29,7 +30,7 @@ class AddFriends extends StatelessWidget {
               Navigator.of(context).pop();
             }),
       ),
-      backgroundColor: Colors.grey[900],
+      // backgroundColor: Colors.grey[900],
       body: ListView(children: [
         const Padding(
           padding: EdgeInsets.all(8.0),

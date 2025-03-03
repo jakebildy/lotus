@@ -18,7 +18,8 @@ class _StatsPageState extends State<StatsPage> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey[850],
+          // backgroundColor: Colors.grey[850],
+          forceMaterialTransparency: true,
           elevation: 0,
           title: const Text("My Stats"),
         ),

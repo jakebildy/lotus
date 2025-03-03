@@ -21,7 +21,7 @@ class EggCard extends StatelessWidget {
     return Stack(
       children: [
         Card(
-          color: Colors.grey[850],
+          // color: Colors.transparent,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: EggWidget(

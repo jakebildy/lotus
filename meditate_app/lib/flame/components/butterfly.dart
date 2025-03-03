@@ -8,7 +8,7 @@ import 'dart:math' as math;
 
 import 'package:meditate_app/util/util.dart';
 
-class Butterfly extends SpriteAnimationComponent with HasGameRef, Tappable {
+class Butterfly extends SpriteAnimationComponent with HasGameRef {
   static const speed = 0.25;
   static const squareSize = 40.0;
 
@@ -26,7 +26,7 @@ class Butterfly extends SpriteAnimationComponent with HasGameRef, Tappable {
   void update(double dt) {
     super.update(dt);
 
-    if (position.distanceTo(gameRef.camera.position) < 600) {
+    if (gameRef.camera.canSee(this)) {
       directionResetCounter += 1;
       angle = math.atan2((position.x + xOffset * 100) - position.x,
           -1 * ((position.y + yOffset * 100) - position.y));
@@ -91,7 +91,7 @@ class Butterfly extends SpriteAnimationComponent with HasGameRef, Tappable {
     canvas.translate(shadowOffset.dx, shadowOffset.dy);
 
     // Render the shadow as a distorted version of the sprite
-    animation?.getSprite().render(
+    animationTicker?.getSprite().render(
           canvas,
           position: Vector2.zero(),
           size: size,

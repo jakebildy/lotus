@@ -20,12 +20,17 @@ class TrophyPage extends StatelessWidget {
           //   backgroundColor: Colors.grey[900],
           //   title: const Text("Collections"),
           // ),
-          backgroundColor: Colors.grey[900],
+          // backgroundColor: Colors.grey[900],s
           bottomNavigationBar: SafeArea(
               child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Divider(),
+              const Divider(
+                height: 0,
+              ),
+              SizedBox(
+                height: 5,
+              ),
               Text(
                 "Level " +
                     calculateLevel(user.user.value.levelPoints, user.user.value)

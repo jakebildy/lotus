@@ -8,7 +8,7 @@ import 'dart:math' as math;
 
 import 'package:meditate_app/util/turtles.dart';
 
-class RainbowFish extends SpriteAnimationComponent with HasGameRef, Tappable {
+class RainbowFish extends SpriteAnimationComponent with HasGameRef {
   static const speed = 0.25;
   static const squareSize = 70.0;
 

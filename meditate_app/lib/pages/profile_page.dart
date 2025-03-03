@@ -13,7 +13,7 @@ import 'package:meditate_app/components/streak_chart.dart';
 import 'package:meditate_app/controllers/follow_controller.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
-import 'package:meditate_app/controllers/search_controller.dart';
+import 'package:meditate_app/controllers/search_controller.dart' as SC;
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/edit_profile/edit_profile.dart';
 import 'package:meditate_app/pages/search/add_friends.dart';
@@ -66,8 +66,8 @@ class _ProfilePageState extends State<ProfilePage>
     } else {
       followController = Get.put(FollowController());
     }
-    if (!Get.isRegistered<SearchController>()) {
-      Get.put(SearchController());
+    if (!Get.isRegistered<SC.SearchController>()) {
+      Get.put(SC.SearchController());
     }
 
     NetworkStatusController network = Get.find();
@@ -904,6 +904,10 @@ class _ProfilePageState extends State<ProfilePage>
                             height: 10,
                           ),
                           TabBar(
+                              //  make iit tabs not labels
+                              indicatorColor: Colors.white,
+                              labelColor: Colors.white,
+                              indicatorSize: TabBarIndicatorSize.tab,
                               controller: tabController,
                               onTap: (int val) {
                                 setState(() {
@@ -1026,7 +1030,7 @@ class _ProfilePageState extends State<ProfilePage>
                                                         FollowerWidget(
                                                           user: user,
                                                           color: const Color
-                                                                  .fromARGB(
+                                                              .fromARGB(
                                                               255, 29, 29, 29),
                                                         ))
                                               ],

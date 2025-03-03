@@ -20,7 +20,8 @@ import 'package:meditate_app/util/util.dart';
 
 import '../../models/user.dart';
 
-class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
+class OtherTurtle extends SpriteAnimationComponent
+    with HasGameRef, TapCallbacks {
   static const speed = 0.25;
   static const squareSize = 200.0;
   final List<List<double>> elevation;
@@ -35,7 +36,7 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   void update(double dt) {
     super.update(dt);
 
-    if (position.distanceTo(gameRef.camera.position) < 600) {
+    if (gameRef.camera.canSee(this)) {
       directionResetCounter += 1;
       angle = math.atan2((position.x + xOffset * 100) - position.x,
           -1 * ((position.y + yOffset * 100) - position.y));
@@ -151,14 +152,14 @@ class OtherTurtle extends SpriteAnimationComponent with HasGameRef, Tappable {
   }
 
   @override
-  bool onTapUp(TapUpInfo info) {
+  void onTapUp(TapUpEvent event) {
     HapticFeedback.mediumImpact();
     GameController game = Get.find();
     if (game.localContext != null) {
       _showTurtleDialog(turtleColor, turtleType);
     }
-    info.handled = true;
-    return true;
+    event.handled = true;
+    return;
   }
 }
 

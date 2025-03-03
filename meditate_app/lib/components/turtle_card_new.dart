@@ -35,8 +35,8 @@ class TurtleCardNew extends StatelessWidget {
         }
       },
       child: Card(
-          color: unlocked ? Colors.white12 : Colors.transparent,
-          elevation: null,
+          color: unlocked ? null : Colors.transparent,
+          // elevation: null,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/pages/countdown/countdown_box_decoration.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as CS;
 import 'package:meditate_app/pages/get_subscription/build_table_row.dart';
 import 'package:meditate_app/pages/get_subscription/checklist_item_feature.dart';
 import 'package:meditate_app/pages/get_subscription/feature_checkbox.dart';
@@ -333,8 +332,8 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                           fontWeight:
                                                               FontWeight.bold)),
 
-                                                  CarouselSlider(
-                                                    options: CarouselOptions(
+                                                  CS.CarouselSlider(
+                                                    options: CS.CarouselOptions(
                                                       autoPlay: false,
                                                       enableInfiniteScroll:
                                                           true,

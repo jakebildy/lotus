@@ -6,7 +6,10 @@ import 'package:meditate_app/flame/turtlegame.dart';
 class TurtleWorld extends ParallaxComponent<TurtleGame> {
   @override
   Future<void> onLoad() async {
-    parallax = await gameRef.loadParallax(
+    super.onLoad(); // Call to the parent class's onLoad method.
+
+    // Access the gameRef through the component context.
+    parallax = await game.loadParallax(
       [
         ParallaxImageData('game/sand.jpeg'),
         // ParallaxImageData('game/water.png'),

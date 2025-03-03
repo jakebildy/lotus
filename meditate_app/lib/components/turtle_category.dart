@@ -61,7 +61,7 @@ class TurtleCategory extends StatelessWidget {
         // }
       },
       child: Card(
-          color: unlocked ? null : Colors.white10,
+          color: unlocked ? null : Colors.transparent,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

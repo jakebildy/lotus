@@ -11,7 +11,7 @@ import 'package:meditate_app/models/user.dart';
 
 import '../../../controllers/game_controller.dart';
 
-class SandDollar extends SpriteComponent with HasGameRef, Tappable {
+class SandDollar extends SpriteComponent with HasGameRef, TapCallbacks {
   static const speed = 0.25;
 
   static Paint white = BasicPalette.white.paint();
@@ -32,14 +32,14 @@ class SandDollar extends SpriteComponent with HasGameRef, Tappable {
   }
 
   @override
-  bool onTapUp(TapUpInfo info) {
+  void onTapUp(TapUpEvent event) {
     HapticFeedback.mediumImpact();
     GameController game = Get.find();
     if (game.localContext != null) {
       _showFoundSandDollarDialog();
     }
-    info.handled = true;
-    return true;
+    event.handled = true;
+    return;
   }
 
   Future<void> _showFoundSandDollarDialog() async {

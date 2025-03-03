@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:meditate_app/components/onboarding/onboarding_progress_bar.dart';
@@ -9,17 +10,20 @@ import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
 import 'package:meditate_app/flame/turtlegame.dart';
+import 'package:meditate_app/pages/add_someone_page.dart';
 import 'package:meditate_app/pages/begin_meditation_page.dart';
 import 'package:meditate_app/pages/get_subscription/get_subscription_page.dart';
 import 'package:meditate_app/pages/leaderboard/leaderboard_page.dart';
 import 'package:meditate_app/pages/loading_page.dart';
 import 'package:meditate_app/pages/profile_page.dart';
+import 'package:meditate_app/pages/search/add_friends.dart';
 import 'package:meditate_app/pages/signup/signup.dart';
 import 'package:meditate_app/pages/stats_page.dart';
 import 'package:meditate_app/pages/turtles_page.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:meditate_app/util/util.dart';
 import 'pages/shop_page.dart';
+import 'services/posthog_service.dart';
 
 class AppPages extends StatefulWidget {
   const AppPages({Key? key}) : super(key: key);
@@ -54,16 +58,18 @@ class _AppPagesState extends State<AppPages> {
                       userController.user.value.createdAt
                           .isBefore(PREMIUM_BEFORE_DATE)
                   ? Scaffold(
-                      extendBodyBehindAppBar: true,
+                      extendBodyBehindAppBar:
+                          appPages.page.value == 0 || appPages.page.value == 2,
                       appBar: PreferredSize(
                         preferredSize:
                             Size.fromHeight(network.offline.value ? 66 : 56),
                         child: AppBar(
+                            forceMaterialTransparency: true,
                             elevation: 0,
                             backgroundColor: appPages.page.value == 0 ||
                                     appPages.page.value == 2
                                 ? Colors.transparent
-                                : Colors.grey[900],
+                                : null,
                             centerTitle: true,
                             title: Column(
                               children: [
@@ -212,8 +218,40 @@ class _AppPagesState extends State<AppPages> {
                                                 ),
                                               ),
                                               const SizedBox(
-                                                width: 10,
+                                                width: 15,
                                               ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        appPages.page.value == 2
+                                                            ? Colors.black26
+                                                            : Colors.white12,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50)),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(6.0),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      PostHogService posthog =
+                                                          Get.find();
+                                                      posthog.logEvent(
+                                                          "ADD_FRIENDS_TAPPED",
+                                                          {});
+                                                      HapticFeedback
+                                                          .mediumImpact();
+                                                      Get.to(const AddFriends(),
+                                                          transition: Transition
+                                                              .downToUp);
+                                                    },
+                                                    child: const Icon(
+                                                      Icons.person_add_rounded,
+                                                      size: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
                                             ],
                                           )),
                                     ),
@@ -222,7 +260,7 @@ class _AppPagesState extends State<AppPages> {
                               ],
                             )),
                       ),
-                      backgroundColor: Colors.grey[900],
+                      // backgroundColor: Colors.grey[900],
                       body: Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
@@ -265,7 +303,9 @@ class _AppPagesState extends State<AppPages> {
                         ],
                       ),
                       bottomNavigationBar: BottomNavigationBar(
-                          backgroundColor: Colors.grey[900],
+                          backgroundColor: appPages.page.value == 0
+                              ? Colors.grey[900]
+                              : null,
                           onTap: ((value) => setState(() {
                                 appPages.page.value = value;
                               })),

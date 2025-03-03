@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:meditate_app/controllers/app_pages_controller.dart';
 import 'package:meditate_app/controllers/auth_controller.dart';
 import 'package:meditate_app/controllers/cookie_controller.dart';
@@ -196,8 +197,32 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       title: 'Meditate',
-      darkTheme: ThemeData.dark(),
-      theme: ThemeData.dark(),
+      darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          textTheme: GoogleFonts.nunitoTextTheme(
+            // Setting default font to Roboto
+            // color shhould be white
+            Theme.of(context)
+                .copyWith(
+                    textTheme: Theme.of(context).textTheme.apply(
+                          bodyColor: Colors.white,
+                          displayColor: Colors.white,
+                        ))
+                .textTheme, // It keeps existing text styles (if any)
+          )),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        textTheme: GoogleFonts.varelaRoundTextTheme(
+          // Setting default font to Roboto
+          Theme.of(context)
+              .copyWith(
+                  textTheme: Theme.of(context).textTheme.apply(
+                        bodyColor: Colors.white,
+                        displayColor: Colors.white,
+                      ))
+              .textTheme, // It keeps existing text styles (if any)
+        ),
+      ),
       home: const Shellevate(),
     );
   }

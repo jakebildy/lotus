@@ -4,7 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 
-class Rock extends SpriteComponent with HasGameRef, Tappable {
+class Rock extends SpriteComponent with HasGameRef {
   static const speed = 0.25;
 
   static Paint white = BasicPalette.white.paint();
@@ -22,11 +22,4 @@ class Rock extends SpriteComponent with HasGameRef, Tappable {
     angle = Random().nextDouble() * 2 * pi;
     anchor = Anchor.center;
   }
-
-  // @override
-  // bool onTapUp(TapUpInfo info) {
-  //   removeFromParent();
-  //   info.handled = true;
-  //   return true;
-  // }
 }

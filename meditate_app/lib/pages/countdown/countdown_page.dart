@@ -11,7 +11,7 @@ import 'package:meditate_app/pages/countdown/countdown_box_decoration.dart';
 import 'package:meditate_app/pages/countdown/countdown_waves_and_art.dart';
 import 'package:meditate_app/util/breathwork.dart';
 import 'package:meditate_app/util/logger.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class CountdownPage extends StatefulWidget {
   const CountdownPage({Key? key, required this.time, required this.ambience})
@@ -41,7 +41,7 @@ class _CountdownPageState extends State<CountdownPage>
     _playPauseController.forward();
 
     logInfo("⚡️ ENABLING WAKELOCK");
-    Wakelock.enable();
+    WakelockPlus.enable();
 
     startTime = DateTime.now();
     CountdownController countdownController = Get.find();
@@ -55,7 +55,7 @@ class _CountdownPageState extends State<CountdownPage>
     _playPauseController.dispose();
     countdownController.disposeTimer();
     logInfo("⚡️ DISABLING WAKELOCK");
-    Wakelock.disable();
+    WakelockPlus.disable();
     super.dispose();
   }
 
@@ -386,7 +386,7 @@ class _CountdownPageState extends State<CountdownPage>
                                                                 10))),
                                                 child: Padding(
                                                   padding: const EdgeInsets
-                                                          .symmetric(
+                                                      .symmetric(
                                                       vertical: 12.0,
                                                       horizontal: 100),
                                                   child: Text(

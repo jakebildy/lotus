@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 
-class Bubble extends SpriteComponent with HasGameRef, Tappable {
+class Bubble extends SpriteComponent with HasGameRef {
   static const speed = 0.25;
   static const squareSize = 20.0;
 

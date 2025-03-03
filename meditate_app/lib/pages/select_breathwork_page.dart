@@ -44,8 +44,8 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.grey[900],
           elevation: 0,
+          forceMaterialTransparency: true,
           // leading: IconButton(
           //   icon: const Icon(Icons.keyboard_arrow_down),
           //   onPressed: () {
@@ -70,7 +70,7 @@ class _SelectBreathworkPageState extends State<SelectBreathworkPage> {
             ],
           ),
         ),
-        backgroundColor: Colors.grey[900],
+
         // extendBody: true,
         // bottomNavigationBar: SafeArea(
         //   child: Container(

@@ -9,7 +9,7 @@ enum _OffsetProps { x, y }
 /// This class Creates the animation of the bubbles flowing from bottom to top in the screen.
 class BubbleFloatingAnimation {
   /// Creates a tween between x and y coordinates.
-  late MultiTween<_OffsetProps> tween;
+  late MovieTween tween;
 
   /// Size of the bubble
   late double size;
@@ -42,47 +42,29 @@ class BubbleFloatingAnimation {
       -0.2,
     );
 
-    tween = MultiTween<_OffsetProps>()
-      ..add(
-        _OffsetProps.x,
-        Tween(
-          begin: startPosition.dx,
-          end: endPosition.dx,
-        ),
-      )
-      ..add(
-        _OffsetProps.y,
-        Tween(
-          begin: startPosition.dy,
-          end: endPosition.dy,
-        ),
-      );
+    tween = MovieTween()
+      ..scene(duration: const Duration(milliseconds: 30000)).tween(
+          _OffsetProps.x, Tween(begin: startPosition.dx, end: endPosition.dx))
+      ..scene(duration: const Duration(milliseconds: 30000)).tween(
+          _OffsetProps.y, Tween(begin: startPosition.dy, end: endPosition.dy));
 
-    duration = const Duration(
-          milliseconds: 30000,
-        ) +
-        Duration(
-          milliseconds: random.nextInt(
-            6000,
-          ),
-        );
+    duration = const Duration(milliseconds: 30000) +
+        Duration(milliseconds: random.nextInt(6000));
 
-    startTime = Duration(
-      milliseconds: DateTime.now().millisecondsSinceEpoch,
-    );
+    startTime = Duration(milliseconds: DateTime.now().millisecondsSinceEpoch);
 
     /// Size of each Bubble is calculated through this.
     size = 0.2 + random.nextDouble() * 0.4;
   }
 
-  /// Shuffles the position of bubbles around the screen.s
+  /// Shuffles the position of bubbles around the screen.
   void _shuffle() {
     startTime -= Duration(
       milliseconds: (random.nextDouble() * duration.inMilliseconds).round(),
     );
   }
 
-  /// A Function to Check if a bubble needs to be recontructed in the ui.
+  /// A Function to Check if a bubble needs to be reconstructed in the UI.
   checkIfBubbleNeedsToBeRestarted() {
     if (progress() == 1.0) {
       _restart();
@@ -93,9 +75,8 @@ class BubbleFloatingAnimation {
   ///
   /// if the progress returns 1, then that bubble has reached the top.
   double progress() {
-    return ((Duration(
-                  milliseconds: DateTime.now().millisecondsSinceEpoch,
-                ).inMicroseconds -
+    return ((Duration(milliseconds: DateTime.now().millisecondsSinceEpoch)
+                    .inMicroseconds -
                 startTime.inMicroseconds) /
             duration.inMicroseconds)
         .clamp(0.0, 1.0)
@@ -114,7 +95,7 @@ class BubbleModel extends CustomPainter {
   /// Opacity of the bubbles.
   final int opacity;
 
-  ///Painting Style of the bubbles.
+  /// Painting Style of the bubbles.
   final PaintingStyle paintingStyle;
 
   /// Stroke Width of the bubbles. This value is effective only if [Painting Style]
@@ -143,9 +124,9 @@ class BubbleModel extends CustomPainter {
       final paint = Paint()
         ..color = particle.color.withAlpha(opacity)
         ..style = paintingStyle
-        ..strokeWidth = strokeWidth; //can be from 5 to 15.
+        ..strokeWidth = strokeWidth;
       final progress = particle.progress();
-      final MultiTweenValues animation = particle.tween.transform(progress);
+      final animation = particle.tween.transform(progress);
       final position = Offset(
         animation.get<double>(_OffsetProps.x) * size.width,
         animation.get<double>(_OffsetProps.y) * size.height,

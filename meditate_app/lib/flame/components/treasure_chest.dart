@@ -9,7 +9,7 @@ import 'package:meditate_app/pages/countdown/countdown_page.dart';
 
 import '../../util/util.dart';
 
-class TreasureChest extends SpriteComponent with HasGameRef, Tappable {
+class TreasureChest extends SpriteComponent with HasGameRef, TapCallbacks {
   final double xSize;
 
   TreasureChest(Vector2 position, this.xSize) : super(position: position);
@@ -24,14 +24,14 @@ class TreasureChest extends SpriteComponent with HasGameRef, Tappable {
   }
 
   @override
-  bool onTapUp(TapUpInfo info) {
+  void onTapUp(TapUpEvent event) {
     HapticFeedback.mediumImpact();
     GameController game = Get.find();
     if (game.localContext != null) {
       _showXDialog();
     }
-    info.handled = true;
-    return true;
+    event.handled = true;
+    return;
   }
 
   @override

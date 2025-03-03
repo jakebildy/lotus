@@ -96,22 +96,25 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                   // backgroundColor: const Color.fromARGB(255, 47, 111, 129),
                   appBar: TabBar(
                     padding: EdgeInsets.fromLTRB(
-                        0, MediaQuery.of(context).size.height / 9, 0, 0),
+                        0, MediaQuery.of(context).size.height / 8, 0, 0),
                     indicatorColor: Colors.white,
-                    tabs: [
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.white.withAlpha(120),
+                    dividerColor: Colors.transparent,
+                    tabs: const [
                       Tab(
                         child: Row(
                           children: [
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                               child: Icon(Icons.play_arrow),
                             ),
-                            const SizedBox(
+                            SizedBox(
                               width: 4,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
+                              children: [
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -137,15 +140,15 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                       Tab(
                         child: Row(
                           children: [
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                               child: Icon(Icons.settings),
                             ),
-                            const SizedBox(
+                            SizedBox(
                               width: 4,
                             ),
                             Column(
-                              children: const [
+                              children: [
                                 Text(
                                   "Choose\nMeditation",
                                   style: TextStyle(
@@ -164,15 +167,15 @@ class _BeginMeditationPageState extends State<BeginMeditationPage> {
                       Tab(
                         child: Row(
                           children: [
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                               child: Icon(Icons.music_note),
                             ),
-                            const SizedBox(
+                            SizedBox(
                               width: 4,
                             ),
                             Column(
-                              children: const [
+                              children: [
                                 Text(
                                   "Choose\nSounds",
                                   style: TextStyle(

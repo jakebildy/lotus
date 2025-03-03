@@ -38,6 +38,7 @@ class _UserProfilePageState extends State<UserProfilePage>
 
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,

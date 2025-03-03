@@ -219,7 +219,8 @@ class TrophyWidget extends StatelessWidget {
                               percentage:
                                   turtlesUnlocked / turtles.length * 100,
                               fillColor: Colors.lightBlue,
-                              backgroundColor: Colors.white24,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 45, 45, 45),
                             ),
                           ),
                           const SizedBox(

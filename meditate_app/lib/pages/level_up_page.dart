@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:foil/foil.dart';
 import 'package:get/get.dart';
 import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
@@ -177,11 +176,10 @@ class _LevelUpPageState extends State<LevelUpPage>
                                           ),
                                           const Opacity(
                                             opacity: 0.4,
-                                            child: Foil(
-                                                child: Text(
+                                            child: Text(
                                               "⭐️",
                                               style: TextStyle(fontSize: 140),
-                                            )),
+                                            ),
                                           ),
                                           Shimmer.fromColors(
                                             baseColor: Colors.white12,
