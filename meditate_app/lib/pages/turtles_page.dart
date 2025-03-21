@@ -80,7 +80,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                         style: TextStyle(
                             fontSize: 14, fontWeight: FontWeight.bold),
                       ),
-                      Text("${totalTurtles + 1}",
+                      Text("${totalTurtles}",
                           style: const TextStyle(fontSize: 12)),
                     ],
                   ),
@@ -96,7 +96,7 @@ class _TurtlesPageState extends State<TurtlesPage> {
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold)),
                       Text(
-                          "${totalTurtles + 1}/${TURTLES.length * TURTLE_COLORS.length}",
+                          "${totalTurtles}/${TURTLES.length * TURTLE_COLORS.length}",
                           style: const TextStyle(fontSize: 12)),
                     ],
                   ),

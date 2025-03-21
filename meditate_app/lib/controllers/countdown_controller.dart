@@ -374,6 +374,11 @@ class CountdownController extends GetxController {
       gemsToGive += timeInMinutes;
     }
 
+    int timeInMinutesForLevelPoints = timeInMinutes;
+    if (timeInMinutesForLevelPoints > 60) {
+      timeInMinutesForLevelPoints = 60;
+    }
+
     SaveController saveController = Get.find();
     int xpBoostMultiplier =
         DateTime.now().difference(saveController.xpBoostedAt.value) <
@@ -385,12 +390,12 @@ class CountdownController extends GetxController {
             userController.user.value.levelPoints, userController.user.value) <
         calculateLevel(
             userController.user.value.levelPoints +
-                timeInMinutes * xpBoostMultiplier,
+                timeInMinutesForLevelPoints * xpBoostMultiplier,
             userController.user.value);
     userController.updateProperty(
         UserProperty.levelPoints,
         (userController.user.value.levelPoints +
-            timeInMinutes * xpBoostMultiplier));
+            timeInMinutesForLevelPoints * xpBoostMultiplier));
 
     // Logs the meditation (updates lastMeditated, totalMinutes, and meditationHistory)
     userController.logMeditation(timeInMinutes, date);

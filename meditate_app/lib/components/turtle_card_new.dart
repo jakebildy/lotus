@@ -44,7 +44,7 @@ class TurtleCardNew extends StatelessWidget {
                   ? Hero(
                       tag: "turtle-$id-$color",
                       child: SizedBox(
-                        height: 100,
+                        height: 93,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [

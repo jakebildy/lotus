@@ -595,4 +595,4 @@ bool userHasTurtle(
 }
 
 // ignore: non_constant_identifier_names
-DateTime PREMIUM_BEFORE_DATE = DateTime(2025, 2, 25, 0, 0);
+DateTime PREMIUM_BEFORE_DATE = DateTime(2022, 2, 25, 0, 0);

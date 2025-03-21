@@ -194,7 +194,7 @@ class TurtleCategory extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                          "${unlocked ? (uniqueQuantity + (id == 0 ? 1 : 0)) : '0'} of ${TURTLE_COLORS.length}",
+                          "${unlocked ? (uniqueQuantity) : '0'} of ${TURTLE_COLORS.length}",
                           style: const TextStyle(fontSize: 12))
                     ],
                   ),
