@@ -142,7 +142,9 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
             )),
             ListView(
               // scrollable = false
-              physics: const NeverScrollableScrollPhysics(),
+              physics: MediaQuery.of(context).size.height <= 700
+                  ? const ClampingScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
               children: [
                 const SizedBox(
                   height: 40,
@@ -354,7 +356,8 @@ class _TurtleDetailsPageState extends State<TurtleDetailsPage>
                               child: Column(
                                 children: [
                                   Text(
-                                    "${widget.id == 0 ? userController.user.value.unlockedTurtleColors[widget.id].length + 1 : userController.user.value.unlockedTurtleColors[widget.id].length}",
+                                    // note: this is where there used to be a +1 for the first turtle
+                                    "${widget.id == 0 ? userController.user.value.unlockedTurtleColors[widget.id].length : userController.user.value.unlockedTurtleColors[widget.id].length}",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,

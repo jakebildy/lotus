@@ -19,6 +19,14 @@ class _TurtlesPageState extends State<TurtlesPage> {
   Widget build(BuildContext context) {
     UserController userController = Get.find();
 
+    // Ensure the first turtle (id 0) with color 0 is always unlocked
+    if (userController.user.value.unlockedTurtleColors.isNotEmpty) {
+      if (userController.user.value.unlockedTurtleColors[0].isEmpty) {
+        userController.user.value.unlockedTurtleColors[0] = [-1];
+      }
+      userController.user.value.unlockedTurtleColors[0][0] = 0;
+    }
+
     return Obx(() {
       int totalTurtles = 0;
       if (userController.user.value.unlockedTurtles.isNotEmpty &&
@@ -101,9 +109,9 @@ class _TurtlesPageState extends State<TurtlesPage> {
                     ],
                   ),
                 ),
-                Tab(
+                const Tab(
                   child: Column(
-                    children: const [
+                    children: [
                       SizedBox(
                         height: 5,
                       ),
