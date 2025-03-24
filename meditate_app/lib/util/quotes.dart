@@ -64,6 +64,7 @@ List<String> quotes = [
   "“I am not afraid of storms, for I am learning how to sail my ship.” \n- Louisa May Alcott",
   "“If you look the right way, you can see that the whole world is a garden.” \n- Frances Hodgson Burnett",
   "“Where you tend a rose, my lad, a thistle cannot grow.” \n- Frances Hodgson Burnett",
+  "True failure is giving up. If you grow from it, and scale your abilities, it's not a failure, it's a “scalure”."
 ];
 
 String randomQuote() {

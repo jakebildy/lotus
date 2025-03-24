@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/try_for_free_container.dart';
 import 'package:meditate_app/controllers/network_status_controller.dart';
 import 'package:meditate_app/controllers/save_controller.dart';
@@ -45,26 +46,30 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
       () => Scaffold(
         // backgroundColor: const Color.fromARGB(255, 47, 111, 129),
         appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(0),
+          preferredSize: const Size.fromHeight(40),
           child: AppBar(
             backgroundColor: Colors.transparent,
             forceMaterialTransparency: true,
             // backgroundColor: const Color.fromARGB(255, 47, 111, 129),
             elevation: 0,
-            // leading: IconButton(
-            //   icon: const Icon(Icons.keyboard_arrow_down),
-            //   onPressed: () {
-            //     Get.offAll(const AppPages(), transition: Transition.topLevel);
-            //   },
-            // ),
+            leading: IconButton(
+              icon: const Icon(Icons.keyboard_arrow_down),
+              onPressed: () {
+                Get.offAll(const AppPages(), transition: Transition.topLevel);
+              },
+            ),
             title: Column(
-              children: const [
-                // Text("Choose Soundscape"),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  "Choose Soundscape",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
                 // network.offline.value
                 //     ? const Text(
                 //         "Premium ambiences are not available offline",
-                //         style:
-                //             TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                //         style: TextStyle(
+                //             fontSize: 12, fontWeight: FontWeight.bold),
                 //       )
                 //     : Container(),
               ],
@@ -89,6 +94,7 @@ class _SelectAmbiencePageState extends State<SelectAmbiencePage> {
                         user.user.value.createdAt
                             .isBefore(PREMIUM_BEFORE_DATE)) {
                       save.updateSelectedAmbience(AMBIENCES[index].name);
+                      Get.back();
                       // Get.offAll(const AppPages(),
                       //     transition: Transition.topLevel);
                     } else {
