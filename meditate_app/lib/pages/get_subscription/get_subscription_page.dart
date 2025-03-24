@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:meditate_app/app_pages.dart';
 import 'package:meditate_app/components/bubbles/bubbles.dart';
 import 'package:meditate_app/controllers/subscription_controller.dart';
 import 'package:meditate_app/controllers/user_controller.dart';
@@ -7,13 +8,10 @@ import 'package:meditate_app/pages/countdown/countdown_box_decoration.dart';
 import 'package:carousel_slider/carousel_slider.dart' as CS;
 import 'package:meditate_app/pages/get_subscription/build_table_row.dart';
 import 'package:meditate_app/pages/get_subscription/checklist_item_feature.dart';
-import 'package:meditate_app/pages/get_subscription/feature_checkbox.dart';
-import 'package:meditate_app/pages/get_subscription/one_time_offer_page.dart';
 import 'package:meditate_app/pages/get_subscription/one_time_price.dart';
 import 'package:meditate_app/pages/get_subscription/pricing.dart';
 import 'package:meditate_app/pages/get_subscription/review.dart';
 import 'package:meditate_app/services/posthog_service.dart';
-import 'package:meditate_app/util/util.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
@@ -128,7 +126,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                     opacity: 0.9,
                                     child: Container(
                                       color: Colors.black54,
-                                      height: 1650,
+                                      height: 2450,
                                       width: MediaQuery.of(context).size.width,
                                     )),
                                 Padding(
@@ -168,35 +166,35 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const SizedBox(height: 75),
-                                    // Row(
-                                    //   mainAxisAlignment: MainAxisAlignment.end,
-                                    //   children: [
-                                    //     IconButton(
-                                    //         onPressed: () {
-                                    //           if ((widget.isOnboarding &&
-                                    //                   isCanada) ||
-                                    //               userController.user.value
-                                    //                       .username ==
-                                    //                   "tonya25") {
-                                    //             //todo, add boolean to check if coming from onboarding
-                                    //             Get.offAll(
-                                    //                 const OneTimeOfferPage());
-                                    //           } else {
-                                    //             Get.offAll(const AppPages());
-                                    //           }
-                                    //         },
-                                    //         icon: const Icon(
-                                    //           Icons.close,
-                                    //           color: Colors.white30,
-                                    //         )),
-                                    //     // Padding(
-                                    //     //   padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                    //     //   child: Container(
-                                    //     //       width: 80, child: PremiumContainer()),
-                                    //     // ),
-                                    //   ],
-                                    // ),
+                                    const SizedBox(height: 25),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
+                                              // if ((widget.isOnboarding &&
+                                              //         isCanada) ||
+                                              //     userController.user.value
+                                              //             .username ==
+                                              //         "tonya25") {
+                                              //   //todo, add boolean to check if coming from onboarding
+                                              //   Get.offAll(
+                                              //       const OneTimeOfferPage());
+                                              // } else {
+                                              Get.offAll(const AppPages());
+                                              // }
+                                            },
+                                            icon: const Icon(
+                                              Icons.close,
+                                              color: Colors.white30,
+                                            )),
+                                        // Padding(
+                                        //   padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                        //   child: Container(
+                                        //       width: 80, child: PremiumContainer()),
+                                        // ),
+                                      ],
+                                    ),
                                     Padding(
                                       padding: const EdgeInsets.all(16.0),
                                       child: RichText(
@@ -275,29 +273,29 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
 
                                                   const SizedBox(height: 16),
                                                   //Features
-                                                  const ChecklistItemFeature(
-                                                    title: "Build a streak",
-                                                    description:
-                                                        "Meditate daily to build a streak and earn rewards",
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 18,
-                                                  ),
-                                                  const ChecklistItemFeature(
-                                                    title:
-                                                        "Hatch unique turtles",
-                                                    description:
-                                                        "Discover and collect turtles by meditating",
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 18,
-                                                  ),
-                                                  const ChecklistItemFeature(
-                                                    title:
-                                                        "Track your progress",
-                                                    description:
-                                                        "See your meditation stats and journey",
-                                                  ),
+                                                  // const ChecklistItemFeature(
+                                                  //   title: "Build a streak",
+                                                  //   description:
+                                                  //       "Meditate daily to build a streak and earn rewards",
+                                                  // ),
+                                                  // const SizedBox(
+                                                  //   height: 18,
+                                                  // ),
+                                                  // const ChecklistItemFeature(
+                                                  //   title:
+                                                  //       "Hatch unique turtles",
+                                                  //   description:
+                                                  //       "Discover and collect turtles by meditating",
+                                                  // ),
+                                                  // const SizedBox(
+                                                  //   height: 18,
+                                                  // ),
+                                                  // const ChecklistItemFeature(
+                                                  //   title:
+                                                  //       "Track your progress",
+                                                  //   description:
+                                                  //       "See your meditation stats and journey",
+                                                  // ),
                                                   const SizedBox(
                                                     height: 18,
                                                   ),
@@ -324,6 +322,15 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                     description:
                                                         "Fall asleep faster with our sleep breathing exercise",
                                                   ),
+                                                  const SizedBox(
+                                                    height: 18,
+                                                  ),
+                                                  const ChecklistItemFeature(
+                                                    title:
+                                                        "Exclusive turtles and emojis",
+                                                    description:
+                                                        "Find exclusive turtles in new soundscapes, and cheer on your friends by sending them brand new emojis",
+                                                  ),
                                                   const SizedBox(height: 50),
                                                   const Text(
                                                       "What our users say",
@@ -338,7 +345,7 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                       enableInfiniteScroll:
                                                           true,
                                                       viewportFraction: 0.8,
-                                                      height: 330.0,
+                                                      height: 370.0,
                                                     ),
                                                     items: [
                                                       {
@@ -370,154 +377,154 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                   ),
 
                                                   const SizedBox(height: 100),
-                                                  // const Text(
-                                                  //   "The tools you need to make meditation a lifetime habit.",
-                                                  //   style: TextStyle(
-                                                  //       fontWeight:
-                                                  //           FontWeight.bold,
-                                                  //       fontSize: 20),
-                                                  //   textAlign: TextAlign.center,
-                                                  // ),
-                                                  // const SizedBox(height: 10),
-                                                  // Table(
-                                                  //   border: TableBorder.all(
-                                                  //       borderRadius:
-                                                  //           BorderRadius
-                                                  //               .circular(20),
-                                                  //       color: Colors.grey),
-                                                  //   columnWidths: const {
-                                                  //     0: FlexColumnWidth(
-                                                  //         2), // Feature column
-                                                  //     1: FlexColumnWidth(
-                                                  //         1), // Free column
-                                                  //     2: FlexColumnWidth(
-                                                  //         1), // Premium column
-                                                  //   },
-                                                  //   children: [
-                                                  //     TableRow(
-                                                  //       children: [
-                                                  //         Padding(
-                                                  //           padding:
-                                                  //               const EdgeInsets
-                                                  //                   .all(8.0),
-                                                  //           child: Column(
-                                                  //             children: const [
-                                                  //               Text("🪷",
-                                                  //                   style: TextStyle(
-                                                  //                       fontSize:
-                                                  //                           30)),
-                                                  //               Text(
-                                                  //                 "Features",
-                                                  //                 style: TextStyle(
-                                                  //                     fontWeight:
-                                                  //                         FontWeight
-                                                  //                             .bold),
-                                                  //                 textAlign:
-                                                  //                     TextAlign
-                                                  //                         .center,
-                                                  //               ),
-                                                  //             ],
-                                                  //           ),
-                                                  //         ),
-                                                  //         Padding(
-                                                  //           padding:
-                                                  //               const EdgeInsets
-                                                  //                   .all(8.0),
-                                                  //           child: Column(
-                                                  //             children: const [
-                                                  //               Text("🤔",
-                                                  //                   style: TextStyle(
-                                                  //                       fontSize:
-                                                  //                           30)),
-                                                  //               Text(
-                                                  //                 "Basic",
-                                                  //                 style: TextStyle(
-                                                  //                     fontWeight:
-                                                  //                         FontWeight
-                                                  //                             .bold),
-                                                  //                 textAlign:
-                                                  //                     TextAlign
-                                                  //                         .center,
-                                                  //               ),
-                                                  //             ],
-                                                  //           ),
-                                                  //         ),
-                                                  //         Container(
-                                                  //           decoration:
-                                                  //               const BoxDecoration(
-                                                  //             color: Colors
-                                                  //                 .white12,
-                                                  //             borderRadius:
-                                                  //                 BorderRadius
-                                                  //                     .only(
-                                                  //               topRight: Radius
-                                                  //                   .circular(
-                                                  //                       20),
-                                                  //             ),
-                                                  //           ),
-                                                  //           child: Padding(
-                                                  //             padding:
-                                                  //                 const EdgeInsets
-                                                  //                     .all(8.0),
-                                                  //             child: Column(
-                                                  //               children: const [
-                                                  //                 Text("🌟",
-                                                  //                     style: TextStyle(
-                                                  //                         fontSize:
-                                                  //                             30)),
-                                                  //                 Text(
-                                                  //                   "Premium",
-                                                  //                   style: TextStyle(
-                                                  //                       fontWeight:
-                                                  //                           FontWeight.bold),
-                                                  //                   textAlign:
-                                                  //                       TextAlign
-                                                  //                           .center,
-                                                  //                 ),
-                                                  //               ],
-                                                  //             ),
-                                                  //           ),
-                                                  //         ),
-                                                  //       ],
-                                                  //     ),
-                                                  //     buildTableRow(
-                                                  //         "Offline Access",
-                                                  //         "✅",
-                                                  //         "✅",
-                                                  //         0),
-                                                  //     buildTableRow(
-                                                  //         "Basic Meditations",
-                                                  //         "✅",
-                                                  //         "✅",
-                                                  //         1),
-                                                  //     buildTableRow(
-                                                  //         "Breathwork",
-                                                  //         "❌",
-                                                  //         "✅",
-                                                  //         2),
-                                                  //     buildTableRow(
-                                                  //         "Diverse Soundscapes",
-                                                  //         "❌",
-                                                  //         "✅",
-                                                  //         3),
-                                                  //     buildTableRow(
-                                                  //         "Sleep Breathing Exercise",
-                                                  //         "❌",
-                                                  //         "✅",
-                                                  //         4),
-                                                  //     buildTableRow(
-                                                  //         "Exclusive Turtles",
-                                                  //         "❌",
-                                                  //         "✅",
-                                                  //         5),
-                                                  //     buildTableRow(
-                                                  //         "Send Exclusive Emojis to Friends",
-                                                  //         "❌",
-                                                  //         "✅",
-                                                  //         5),
-                                                  //   ],
-                                                  // ),
-                                                  // const SizedBox(height: 100),
+                                                  const Text(
+                                                    "The tools you need to make meditation a lifetime habit.",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Table(
+                                                    border: TableBorder.all(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        color: Colors.grey),
+                                                    columnWidths: const {
+                                                      0: FlexColumnWidth(
+                                                          2), // Feature column
+                                                      1: FlexColumnWidth(
+                                                          1), // Free column
+                                                      2: FlexColumnWidth(
+                                                          1), // Premium column
+                                                    },
+                                                    children: [
+                                                      TableRow(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Column(
+                                                              children: const [
+                                                                Text("🪷",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            30)),
+                                                                Text(
+                                                                  "Features",
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: Column(
+                                                              children: const [
+                                                                Text("🤔",
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            30)),
+                                                                Text(
+                                                                  "Basic",
+                                                                  style: TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            decoration:
+                                                                const BoxDecoration(
+                                                              color: Colors
+                                                                  .white12,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        20),
+                                                              ),
+                                                            ),
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child: Column(
+                                                                children: const [
+                                                                  Text("🌟",
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              30)),
+                                                                  Text(
+                                                                    "Premium",
+                                                                    style: TextStyle(
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      buildTableRow(
+                                                          "Offline Access",
+                                                          "✅",
+                                                          "✅",
+                                                          0),
+                                                      buildTableRow(
+                                                          "Basic Meditation",
+                                                          "✅",
+                                                          "✅",
+                                                          1),
+                                                      buildTableRow(
+                                                          "Breathwork",
+                                                          "❌",
+                                                          "✅",
+                                                          2),
+                                                      buildTableRow(
+                                                          "Diverse Soundscapes",
+                                                          "❌",
+                                                          "✅",
+                                                          3),
+                                                      buildTableRow(
+                                                          "Sleep Breathing Exercise",
+                                                          "❌",
+                                                          "✅",
+                                                          4),
+                                                      buildTableRow(
+                                                          "Exclusive Turtles",
+                                                          "❌",
+                                                          "✅",
+                                                          5),
+                                                      buildTableRow(
+                                                          "Send Exclusive Emojis to Friends",
+                                                          "❌",
+                                                          "✅",
+                                                          5),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 100),
                                                   const SizedBox(height: 20),
 
                                                   const Text(
@@ -528,7 +535,19 @@ class _GetSubscriptionPageState extends State<GetSubscriptionPage> {
                                                           fontWeight:
                                                               FontWeight.bold)),
                                                   const SizedBox(
-                                                    height: 50,
+                                                    height: 20,
+                                                  ),
+                                                  const Text(
+                                                      "It costs less than one coffee per month ☕️ \n\n Help us make meditation accessible to everyone!",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  const SizedBox(
+                                                    height: 20,
                                                   ),
                                                   // const Text(
                                                   //     "Can't afford Shellevate? Let me know your situation and I'll provide it to you for free.",
