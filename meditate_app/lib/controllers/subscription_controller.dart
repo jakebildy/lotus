@@ -51,13 +51,13 @@ class SubscriptionController extends GetxController {
     update();
     if (subscriptionPackage != null) {
       try {
-        CustomerInfo customerInfo =
+        PurchaseResult purchaseResult =
             await Purchases.purchasePackage(subscriptionPackage!);
         // UserController user = Get.find();
         // api.user.userSubscribed(user.user.value.email);
         logSuccess("Purchased!");
-        if (customerInfo.entitlements.all["Premium"] != null &&
-            customerInfo.entitlements.all["Premium"]!.isActive) {
+        if (purchaseResult.customerInfo.entitlements.all["Premium"] != null &&
+            purchaseResult.customerInfo.entitlements.all["Premium"]!.isActive) {
           // Unlock that great "pro" content
           logInfo('Unlocking premium content');
           SaveController save = Get.find();
@@ -113,13 +113,13 @@ class SubscriptionController extends GetxController {
     update();
     if (subscriptionPackageDiscount != null) {
       try {
-        CustomerInfo customerInfo =
+        PurchaseResult purchaseResult =
             await Purchases.purchasePackage(subscriptionPackageDiscount!);
         // UserController user = Get.find();
         // api.user.userSubscribed(user.user.value.email);
         logSuccess("Purchased!");
-        if (customerInfo.entitlements.all["Premium"] != null &&
-            customerInfo.entitlements.all["Premium"]!.isActive) {
+        if (purchaseResult.customerInfo.entitlements.all["Premium"] != null &&
+            purchaseResult.customerInfo.entitlements.all["Premium"]!.isActive) {
           // Unlock that great "pro" content
           logInfo('Unlocking premium content');
           SaveController save = Get.find();
@@ -168,13 +168,13 @@ class SubscriptionController extends GetxController {
     update();
     if (subscriptionPackageLifetime != null) {
       try {
-        CustomerInfo customerInfo =
+        PurchaseResult purchaseResult =
             await Purchases.purchasePackage(subscriptionPackageLifetime!);
         // UserController user = Get.find();
         // api.user.userSubscribed(user.user.value.email);
         logSuccess("Purchased!");
-        if (customerInfo.entitlements.all["Premium"] != null &&
-            customerInfo.entitlements.all["Premium"]!.isActive) {
+        if (purchaseResult.customerInfo.entitlements.all["Premium"] != null &&
+            purchaseResult.customerInfo.entitlements.all["Premium"]!.isActive) {
           // Unlock that great "pro" content
           logInfo('Unlocking premium content');
           SaveController save = Get.find();
@@ -289,7 +289,7 @@ class SubscriptionController extends GetxController {
     if (subscriptionController.sandDollars800Package != null) {
       try {
         purchasing800SandDollars.value = true;
-        CustomerInfo customerInfo = await Purchases.purchasePackage(
+        PurchaseResult purchaseResult = await Purchases.purchasePackage(
             subscriptionController.sandDollars800Package!);
         logSuccess("Purchased!");
         UserController user = Get.find();
@@ -313,7 +313,7 @@ class SubscriptionController extends GetxController {
     if (subscriptionController.sandDollars100Package != null) {
       try {
         purchasing100SandDollars.value = true;
-        CustomerInfo customerInfo = await Purchases.purchasePackage(
+        PurchaseResult purchaseResult = await Purchases.purchasePackage(
             subscriptionController.sandDollars100Package!);
         logSuccess("Purchased!");
         UserController user = Get.find();
@@ -337,7 +337,7 @@ class SubscriptionController extends GetxController {
     if (subscriptionController.sandDollars14500Package != null) {
       try {
         purchasing14500SandDollars.value = true;
-        CustomerInfo customerInfo = await Purchases.purchasePackage(
+        PurchaseResult purchaseResult = await Purchases.purchasePackage(
             subscriptionController.sandDollars14500Package!);
         logSuccess("Purchased!");
         UserController user = Get.find();
@@ -361,7 +361,7 @@ class SubscriptionController extends GetxController {
     if (subscriptionController.eggHatchPackage != null) {
       try {
         purchasingEggHatch.value = true;
-        CustomerInfo customerInfo = await Purchases.purchasePackage(
+        PurchaseResult purchaseResult = await Purchases.purchasePackage(
             subscriptionController.eggHatchPackage!);
         logSuccess("Purchased!");
         // pop the popup that's open

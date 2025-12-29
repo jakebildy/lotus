@@ -55,21 +55,21 @@ class AuthController extends GetxController {
     try {
       logInfo("Cropping image...");
 
-      File? croppedFile = await (ImageCropper()).cropImage(
-          sourcePath: image.path,
-          aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
-          androidUiSettings: const AndroidUiSettings(
-              toolbarTitle: 'Crop Profile Photo',
-              toolbarColor: Colors.black,
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.square,
-              hideBottomControls: true,
-              lockAspectRatio: true),
-          iosUiSettings: const IOSUiSettings(
-            title: 'Crop Profile Photo',
-            aspectRatioLockEnabled: true,
-            aspectRatioPickerButtonHidden: true,
-          ));
+      CroppedFile? croppedFile = await (ImageCropper()).cropImage(
+        sourcePath: image.path,
+        aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+        // androidUiSettings: const AndroidUiSettings(
+        //     toolbarTitle: 'Crop Profile Photo',
+        //     toolbarColor: Colors.black,
+        //     toolbarWidgetColor: Colors.white,
+        //     initAspectRatio: CropAspectRatioPreset.square,
+        //     hideBottomControls: true,
+        //     lockAspectRatio: true),
+        // iosUiSettings: const IOSUiSettings(
+        //   title: 'Crop Profile Photo',
+        //   aspectRatioLockEnabled: true,
+        //   aspectRatioPickerButtonHidden: true,
+      );
       if (croppedFile != null) {
         logInfo("Cropped file is about to be uploaded");
         croppedFile.readAsBytes().then((bytes) {

@@ -15,7 +15,7 @@ import 'package:meditate_app/util/eggquation.dart';
 import 'package:meditate_app/util/turtles.dart';
 import 'package:meditate_app/util/util.dart';
 import 'package:audioplayers/audioplayers.dart' as audioplayers;
-import 'package:flutter_app_badger/flutter_app_badger.dart';
+// import 'package:flutter_app_badger/flutter_app_badger.dart';
 import '../util/DEBUG_MODE.dart';
 import '../util/logger.dart';
 
@@ -307,7 +307,9 @@ class CountdownController extends GetxController {
 
   //This does not appear to have any bugs...
   Future<void> submitMeditation() async {
-    FlutterAppBadger.removeBadge();
+    // TODO: recreate this with new package
+    // FlutterAppBadger.removeBadge();
+
     // Update the button to a loading state so you can't press it again
     loading.value = true;
     update();
