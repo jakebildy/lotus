@@ -1,5 +1,7 @@
-import mongoose, { ObjectId } from 'mongoose';
-const defaultImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+import mongoose, { ObjectId } from "mongoose";
+
+const defaultImage =
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
 export interface UserI {
   _id?: string | ObjectId;
@@ -9,24 +11,24 @@ export interface UserI {
   password?: string;
 
   avatar?: string;
-  lastSeenActivity?: Date,
-  deviceToken?: string,
-  timezoneOffset?: number,
+  lastSeenActivity?: Date;
+  deviceToken?: string;
+  timezoneOffset?: number;
 
-  streak?: number,
-  streakValueNeverReset?: number,
-  totalMinutes?: number,
-  gems?: number,
-  totalEggs?: number,
-  hatchProgressEggOne?: number,
+  streak?: number;
+  streakValueNeverReset?: number;
+  totalMinutes?: number;
+  gems?: number;
+  totalEggs?: number;
+  hatchProgressEggOne?: number;
 
-  lastMeditated?: Date,
-  streakLostAndSeenAt?: Date,
-  meditationTimes?: Array<number>,
-  meditationTimesAsOf?: Date,
+  lastMeditated?: Date;
+  streakLostAndSeenAt?: Date;
+  meditationTimes?: Array<number>;
+  meditationTimesAsOf?: Date;
 
   meditationHistory?: { [key: string]: number };
-  unlockedTurtles?: Array<any>; // Replace 'any' with a more specific type if applicable
+  unlockedTurtles?: Array<any>;
   unlockedTurtleColors?: Array<Array<number>>;
   eggs?: number;
   streakFreezes?: number;
@@ -64,14 +66,14 @@ const UserSchema = new mongoose.Schema<UserI>(
     streakLostAndSeenAt: { type: Date, required: false },
     meditationTimes: { type: Array, required: false },
     meditationTimesAsOf: { type: Date, required: false },
-    
+
     meditationHistory: { type: Map, of: Number },
     unlockedTurtles: { type: Array, required: false },
     unlockedTurtleColors: { type: [[Number]], required: false },
     eggs: { type: Number, required: false },
     streakFreezes: { type: Number, required: false, default: 0 },
     levelPoints: { type: Number, required: false, default: 0 },
-    eggTypes: {type: Array, required: false},
+    eggTypes: { type: Array, required: false },
 
     emojisSentAt: { type: Map, of: Date, required: false },
     sentEmojis: { type: Map, of: String, required: false },
@@ -83,8 +85,8 @@ const UserSchema = new mongoose.Schema<UserI>(
   {
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
-UserSchema.index({ fullName: 'text', username: 'text' });
-export const User = mongoose.model('User', UserSchema);
+UserSchema.index({ fullName: "text", username: "text" });
+export const User = mongoose.model("User", UserSchema);

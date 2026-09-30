@@ -1,10 +1,8 @@
-import mongoose from 'mongoose';
-import { ObjectId, Schema } from 'mongoose';
-import { UserI } from './user.model';
-
+import mongoose, { ObjectId } from "mongoose";
+import { UserI } from "./user.model";
 
 export enum FollowType {
-  Stylist = 'Stylist'
+  Stylist = "Stylist",
 }
 
 export interface FollowI {
@@ -16,15 +14,18 @@ export interface FollowI {
 
 const FollowSchema = new mongoose.Schema<FollowI>(
   {
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     type: { type: String, required: true, enum: Object.values(FollowType) },
-    stylist: { type: Schema.Types.ObjectId, ref: 'User', required: false },
+    stylist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
   },
   {
     versionKey: false,
     timestamps: true,
-  }
+  },
 );
 
-
-export const Follow = mongoose.model('Follow', FollowSchema);
+export const Follow = mongoose.model("Follow", FollowSchema);

@@ -1,51 +1,35 @@
-import fs from 'fs';
-import { Storage } from '@google-cloud/storage';
+import { Storage } from "@google-cloud/storage";
 import { File, FileI } from "../models/file.model";
-import { ObjectId } from 'mongoose';
-import { UserI } from '../models/user.model';
+import { ObjectId } from "mongoose";
+import { UserI } from "../models/user.model";
 
 const storage = new Storage();
-const myBucket = storage.bucket('shellevate');
+const myBucket = storage.bucket("shellevate");
 
-const STORAGE_BASE_URL = 'https://storage.googleapis.com/shellevate/';
+const STORAGE_BASE_URL = "https://storage.googleapis.com/shellevate/";
 
 export const toUrl = (fileName: string): string => {
   return STORAGE_BASE_URL + fileName;
 };
 
 export const getExtension = (name: string): string => {
-  const _extension: string | undefined = name.split('.').pop();
-  if (!_extension) throw "cannot get extension from file name";
-  return _extension;
+  const extension: string | undefined = name.split(".").pop();
+  if (!extension) throw "cannot get extension from file name";
+  return extension;
 };
 
-export const uploadFile = async (upload: FileI, userId: string | ObjectId | UserI | null): Promise<FileI | null> => {
+// Saves a base64 encoded upload to cloud storage and records it in mongo.
+export const uploadFile = async (
+  upload: FileI,
+  userId: string | ObjectId | UserI | null,
+): Promise<FileI | null> => {
   if (!upload.data) throw "no data found, cannot upload file";
-  const oldName = upload.name;
-  const extension = getExtension(oldName);
+  const extension = getExtension(upload.name);
   let file = await new File(upload).save();
   const name = `${file._id}.${extension}`;
 
   const cloudFile = myBucket.file(name);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const data: string = upload.data;
-  // console.log(data);
-
-  // const matches = data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-  //   response = {};
-
-  // if (matches?.length !== 3) {
-  //   throw new Error('Invalid input string');
-  // }
-
-  // response.type = matches[1];
-  // response.data = new Buffer(matches[2], 'base64');
-
-
-  // const decodedFile = data;// Buffer.from(data, "base64");
-  // const decodedFile = Buffer.from(matches[2], "base64");
-  const decodedFile = Buffer.from(data, "base64");
-  // console.log(decodedFile);
+  const decodedFile = Buffer.from(upload.data, "base64");
 
   await cloudFile.save(decodedFile);
 
@@ -53,33 +37,26 @@ export const uploadFile = async (upload: FileI, userId: string | ObjectId | User
   file.url = toUrl(name);
   file.extension = extension;
 
-  //@ts-ignore
-  file.userId = userId;
+  // NOTE: `userId` is not a field on the File schema (the schema field is `user`),
+  // so this value is not persisted.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (file as any).userId = userId;
   file = await file.save();
 
   return file;
 };
 
-export const uploadFiles = async (uploads: FileI[], userId: string | UserI | ObjectId): Promise<FileI[] | null> => {
-  const filePromises: FileI[] = [];
+export const uploadFiles = async (
+  uploads: FileI[],
+  userId: string | UserI | ObjectId,
+): Promise<FileI[] | null> => {
+  const files: FileI[] = [];
   for (const upload of uploads) {
     const file = await uploadFile(upload, userId);
-    if (file)
-      filePromises.push(file);
+    if (file) files.push(file);
     else {
       console.log("failed to upload file: ");
       console.log(upload, userId);
-    }
-  }
-
-  const settledFiles = await Promise.allSettled(filePromises);
-  const files: FileI[] = [];
-
-  for (const settledFile of settledFiles) {
-    if (settledFile.status == 'fulfilled') {
-      files.push(settledFile.value);
-    } else {
-      console.error(settledFile.reason);
     }
   }
 
@@ -93,8 +70,8 @@ const deleteCloudFile = async (gcloudFileName: string) => {
 };
 
 export const deleteFile = async (file: FileI): Promise<FileI | null> => {
-  //@ts-ignore
-  file = File.findByIdAndDelete(file._id);
-  await deleteCloudFile(file.name);
-  return file;
+  const deletedFile = await File.findByIdAndDelete(file._id);
+  if (!deletedFile) return null;
+  await deleteCloudFile(deletedFile.name);
+  return deletedFile;
 };

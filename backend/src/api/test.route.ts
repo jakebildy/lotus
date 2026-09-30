@@ -1,18 +1,18 @@
-import express, {Response } from "express";
+import express, { Response } from "express";
 import { RequestI } from "../types/request";
 export const router = express.Router();
 
-async function test(req: RequestI, res: Response) {
+async function test(_req: RequestI, res: Response) {
   try {
-    res.status(200).json({message: "hello world"});
+    res.status(200).json({ message: "hello world" });
   } catch (e) {
     res.status(500).send(e);
   }
 }
 
-async function health(req: RequestI, res: Response) {
+async function health(_req: RequestI, res: Response) {
   try {
-    res.status(200).json({status: "ok"});
+    res.status(200).json({ status: "ok" });
   } catch (e) {
     res.status(500).send(e);
   }

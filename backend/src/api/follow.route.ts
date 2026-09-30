@@ -1,4 +1,3 @@
-
 import express, { Response } from "express";
 import * as FollowService from "../services/follow.service";
 import { RequestI } from "../types/request";
@@ -41,7 +40,6 @@ async function getEveryUserFollowers(req: RequestI, res: Response) {
 
 async function getStylistFollowing(req: RequestI, res: Response) {
   try {
-    // if (!req.user) throw "Not logged in - unauthorized";
     const follows = await FollowService.getFollowing(req.params.id);
     return res.json(follows);
   } catch (e) {
@@ -52,7 +50,6 @@ async function getStylistFollowing(req: RequestI, res: Response) {
 
 async function getStylistNotFollowing(req: RequestI, res: Response) {
   try {
-    // if (!req.user) throw "Not logged in - unauthorized";
     const follows = await FollowService.getNotFollowing(req.params.id);
     return res.json(follows);
   } catch (e) {
@@ -63,7 +60,6 @@ async function getStylistNotFollowing(req: RequestI, res: Response) {
 
 async function getStylistFollowers(req: RequestI, res: Response) {
   try {
-    //  if (!req.user) throw "Not logged in - unauthorized";
     const follows = await FollowService.getFollowers(req.params.id);
     return res.json(follows);
   } catch (e) {
@@ -86,14 +82,17 @@ async function followStylist(req: RequestI, res: Response) {
 async function sendEmoji(req: RequestI, res: Response) {
   try {
     if (!req.user) throw "Not logged in - unauthorized";
-    await FollowService.sendEmoji(req.user, req.params.targetUser, req.params.emoji);
+    await FollowService.sendEmoji(
+      req.user,
+      req.params.targetUser,
+      req.params.emoji,
+    );
     return res.status(200).send();
   } catch (e) {
     console.log(e);
     res.status(500).send(e);
   }
 }
-
 
 async function unfollowStylist(req: RequestI, res: Response) {
   try {
@@ -105,7 +104,6 @@ async function unfollowStylist(req: RequestI, res: Response) {
     res.status(500).send(e);
   }
 }
-
 
 router.get("/follow/following", userAuth, getFollowing);
 router.get("/follow/followers/", userAuth, getFollowers);

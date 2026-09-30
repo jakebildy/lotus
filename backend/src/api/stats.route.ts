@@ -1,15 +1,12 @@
-
-import express, { Request, Response } from "express";
-import * as UserService from "../services/user.service"
+import express, { Response } from "express";
+import * as UserService from "../services/user.service";
 import { RequestI } from "../types/request";
 import * as AnalyticsService from "../services/analytics.service";
 import { userAuth } from "../middleware/auth.middleware";
-import { assert } from "console";
-
 
 export const router = express.Router();
 
-async function getUsers(req: RequestI, res: Response) {
+async function getUsers(_req: RequestI, res: Response) {
   try {
     const users = await UserService.getUsers();
     return res.json(users);
@@ -23,7 +20,10 @@ async function logUserEvent(req: RequestI, res: Response) {
   try {
     if (!req.user) throw "user not authenticated. weird";
 
-    const userEvent = await AnalyticsService.logUserEvent(req.params.name, req.user);
+    const userEvent = await AnalyticsService.logUserEvent(
+      req.params.name,
+      req.user,
+    );
     return res.json(userEvent);
   } catch (e) {
     console.log(e);
@@ -33,7 +33,6 @@ async function logUserEvent(req: RequestI, res: Response) {
 
 async function dau(req: RequestI, res: Response) {
   try {
-
     const list = await AnalyticsService.getDailyActive(req.params.name);
     return res.json(list);
   } catch (e) {
@@ -44,7 +43,6 @@ async function dau(req: RequestI, res: Response) {
 
 async function freq(req: RequestI, res: Response) {
   try {
-
     const list = await AnalyticsService.getUserFrequency(req.params.name);
     return res.json(list);
   } catch (e) {
@@ -55,7 +53,6 @@ async function freq(req: RequestI, res: Response) {
 
 async function wau(req: RequestI, res: Response) {
   try {
-
     const list = await AnalyticsService.getWeeklyActive(req.params.name);
     return res.json(list);
   } catch (e) {
@@ -66,7 +63,6 @@ async function wau(req: RequestI, res: Response) {
 
 async function mau(req: RequestI, res: Response) {
   try {
-
     const list = await AnalyticsService.getMonthlyActive(req.params.name);
     return res.json(list);
   } catch (e) {
@@ -77,7 +73,6 @@ async function mau(req: RequestI, res: Response) {
 
 async function all(req: RequestI, res: Response) {
   try {
-
     const list = await AnalyticsService.getAllUserEvents(req.params.name);
     return res.json(list);
   } catch (e) {

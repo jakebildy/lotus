@@ -1,0 +1,50 @@
+# ---------------------------------------------------------------------------
+# Secrets and credentials - never commit these
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+backend/shellevate-gcloud.json
+backend/src/firebase/firebase.json
+*.pem
+*.p8
+*.p12
+*.jks
+*.keystore
+key.properties
+
+# ---------------------------------------------------------------------------
+# Dependencies
+# ---------------------------------------------------------------------------
+node_modules/
+
+# ---------------------------------------------------------------------------
+# Build output
+# ---------------------------------------------------------------------------
+# Compiled backend (tsc output, rebuilt by `npm run build` / gcp-build)
+backend/dist/
+# Gradle build output and reports
+meditate_app/android/build/
+# NOTE: backend/build/ is intentionally still tracked. The backend serves it
+# as static files at runtime and nothing in this repo regenerates it.
+
+# ---------------------------------------------------------------------------
+# OS and editor junk
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+
+# ---------------------------------------------------------------------------
+# Backup and autosave files (Krita, GIMP, editors)
+# ---------------------------------------------------------------------------
+*~
+*-autosave.kra
+
+# ---------------------------------------------------------------------------
+# Logs
+# ---------------------------------------------------------------------------
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
